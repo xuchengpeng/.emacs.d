@@ -11,6 +11,7 @@ addons:
     update: true
 
 before_install:
+  - mv -f ../.emacs.d ~/.emacs.d
   - (cd $HOME/.evm && git pull) || git clone https://github.com/rejeep/evm.git $HOME/.evm
   - export PATH=$HOME/.evm/bin:$PATH
   - evm config path /tmp
@@ -27,8 +28,8 @@ matrix:
     - env: EVM_EMACS=emacs-git-snapshot-travis
 
 script:
-  - chmod +x ./test-startup.sh
-  - lsb_release -a && ./test-startup.sh
+  - emacs --version
+  - emacs --batch -l init.el
 
 branches:
   only:

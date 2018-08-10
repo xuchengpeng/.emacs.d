@@ -55,9 +55,9 @@ by Prelude.")
 (defun dotemacs-finalize ()
   (setq file-name-handler-alist file-name-handler-alist-old
         gc-cons-threshold 800000
-        gc-cons-percentage 0.1)
-  (dotemacs-initialize-modules))
+        gc-cons-percentage 0.1))
 
+(add-hook 'after-init-hook #'dotemacs-initialize-modules)
 (add-hook 'emacs-startup-hook #'dotemacs-finalize t)
 
 (require 'server)

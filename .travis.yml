@@ -29,7 +29,7 @@ matrix:
 
 script:
   - emacs --version
-  - emacs --batch -l init.el
+  - emacs --batch -l init.test.el
 
 branches:
   only:

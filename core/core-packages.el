@@ -45,45 +45,6 @@ missing) and shouldn't be deleted.")
 
 (dotemacs-set-package-archives dotemacs-package-archives)
 
-(defun dotemacs-keyword-to-name-str (keyword)
-  "Remove the colon in KEYWORD symbol and turn it into string.
-
-i.e. :keyword to \"keyword\"."
-  (replace-regexp-in-string "^:" "" (symbol-name keyword)))
-
-(defmacro dotemacs! (&rest modules-list)
-  "Declare stars in STAR-LIST.
-Separate stars with sub-directories' name.
-Basically adding path to star to `moon-star-path-list'.
-
-Example: (moon| :feature evil :ui custom) for star/feature/evil
-and star/ui/custom.
-If called multiple times, the stars declared first will be
-in the front of moon-star-list.
-
-`moon|' can be used in star's `package.el',
-but try to only depend on stars in `:basic' sub directory.
-
-Because a star's dependencies' dependency will not be added automatically.
-If your star's dependency star denpend of some other star,
-that star will not be included by lunarymacs framework
-when loading and installing packages.
-
-In a word, denpend of stars that don't depend on other stars!"
-  (dolist (module modules-list)
-    (cond ((keywordp module) (setq mode module))
-          ((not      mode) (error "No sub-folder specified in `moon|' for %s" module))
-          (t               (let ((module-path (format "%s%s/%s/" dotemacs-modules-dir (dotemacs-keyword-to-name-str mode) module)))
-                             (add-to-list 'doteamcs-modules-path-list module-path t))))))
-
-(defmacro package! (&rest packages-list)
-  "Add packages in PACKAGE-LIST to ¡®dotemacs-packages¡¯.
-
-Can take multiple packages.
-e.g. (package! evil evil-surround)"
-  `(dolist (package ',packages-list)
-     (add-to-list 'dotemacs-packages package)))
-
 (defun dotemacs-install-packages (packages-list)
   (when-let* ((core-packages (cl-remove-if #'package-installed-p packages-list)))
     (unless package-archive-contents
@@ -124,5 +85,45 @@ e.g. (package! evil evil-surround)"
 (defun dotemacs-initialize-modules ()
   (dotemacs-modules-load-package doteamcs-modules-path-list)
   (dotemacs-modules-load-config doteamcs-modules-path-list))
+
+(defun dotemacs-keyword-to-name-str (keyword)
+  "Remove the colon in KEYWORD symbol and turn it into string.
+
+i.e. :keyword to \"keyword\"."
+  (replace-regexp-in-string "^:" "" (symbol-name keyword)))
+
+(defmacro dotemacs! (&rest modules-list)
+  "Declare stars in STAR-LIST.
+Separate stars with sub-directories' name.
+Basically adding path to star to `moon-star-path-list'.
+
+Example: (moon| :feature evil :ui custom) for star/feature/evil
+and star/ui/custom.
+If called multiple times, the stars declared first will be
+in the front of moon-star-list.
+
+`moon|' can be used in star's `package.el',
+but try to only depend on stars in `:basic' sub directory.
+
+Because a star's dependencies' dependency will not be added automatically.
+If your star's dependency star denpend of some other star,
+that star will not be included by lunarymacs framework
+when loading and installing packages.
+
+In a word, denpend of stars that don't depend on other stars!"
+  (dolist (module modules-list)
+    (cond ((keywordp module) (setq mode module))
+          ((not      mode) (error "No sub-folder specified in `moon|' for %s" module))
+          (t               (let ((module-path (format "%s%s/%s/" dotemacs-modules-dir (dotemacs-keyword-to-name-str mode) module)))
+                             (add-to-list 'doteamcs-modules-path-list module-path t)))))
+  (dotemacs-initialize-modules))
+
+(defmacro package! (&rest packages-list)
+  "Add packages in PACKAGE-LIST to ¡®dotemacs-packages¡¯.
+
+Can take multiple packages.
+e.g. (package! evil evil-surround)"
+  `(dolist (package ',packages-list)
+     (add-to-list 'dotemacs-packages package)))
 
 (provide 'core-packages)

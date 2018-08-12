@@ -1,10 +1,6 @@
+language: emacs-lisp
 dist: trusty
-sudo: true
-language: ruby
-
-cache:
-  directories:
-    - $HOME/.evm
+sudo: false
 
 addons:
   apt:
@@ -29,7 +25,7 @@ matrix:
 
 script:
   - emacs --version
-  - emacs --batch -l init.test.el
+  - emacs -l init.test.el --eval "(add-hook 'dotemacs-post-init-hook #'dotemacs|run-test t)"
 
 branches:
   only:

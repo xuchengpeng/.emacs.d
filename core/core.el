@@ -22,6 +22,18 @@ by Prelude.")
 (defconst dotemacs-cache-dir (concat dotemacs-dir ".cache/")
   "Where cache files are stored.")
 
+(defvar dotemacs-init-hook ()
+  "A list of hooks run when Emacs is initialized, before `moon-post-init-hook'.")
+
+(defvar dotemacs-post-init-hook ()
+  "A list of hooks that run after Emacs initialization is complete, and after `moon-init-hook'.")
+
+;;;###autoload
+(defun dotemacs|run-test ()
+  "Run tests."
+  (interactive)
+  (save-buffers-kill-emacs))
+
 (defvar file-name-handler-alist-old file-name-handler-alist)
 (setq garbage-collection-messages t)
 (setq file-name-handler-alist nil
@@ -50,14 +62,20 @@ by Prelude.")
   (require 'core-ui)
   (require 'core-editor))
 
-(dotemacs-initialize)
-
 (defun dotemacs-finalize ()
+  (dotemacs-initialize-modules)
+  
+  (unless noninteractive
+    (dolist (hook '(dotemacs-init-hook dotemacs-post-init-hook))
+    (run-hook-with-args hook)))
+  
   (setq file-name-handler-alist file-name-handler-alist-old
         gc-cons-threshold 800000
         gc-cons-percentage 0.1))
 
 (add-hook 'emacs-startup-hook #'dotemacs-finalize t)
+
+(dotemacs-initialize)
 
 (require 'server)
 (unless (server-running-p)

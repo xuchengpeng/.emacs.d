@@ -115,8 +115,7 @@ In a word, denpend of stars that don't depend on other stars!"
     (cond ((keywordp module) (setq mode module))
           ((not      mode) (error "No sub-folder specified in `moon|' for %s" module))
           (t               (let ((module-path (format "%s%s/%s/" dotemacs-modules-dir (dotemacs-keyword-to-name-str mode) module)))
-                             (add-to-list 'doteamcs-modules-path-list module-path t)))))
-  (dotemacs-initialize-modules))
+                             (add-to-list 'doteamcs-modules-path-list module-path t))))))
 
 (defmacro package! (&rest packages-list)
   "Add packages in PACKAGE-LIST to ¡®dotemacs-packages¡¯.

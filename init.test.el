@@ -23,9 +23,9 @@
            snippets
            :lang
            cc
-           data
-           javascript
+           ;; data
+           ;; javascript
            markdown
            ;; org
-           web
+           ;; web
            )

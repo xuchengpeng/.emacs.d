@@ -2,10 +2,6 @@ language: emacs-lisp
 dist: trusty
 sudo: false
 
-addons:
-  apt:
-    update: true
-
 before_install:
   - mv -f ../.emacs.d ~/.emacs.d
   - (cd $HOME/.evm && git pull) || git clone https://github.com/rejeep/evm.git $HOME/.evm
@@ -25,13 +21,8 @@ matrix:
 
 script:
   - emacs --version
-  - emacs -l init.test.el --eval "(add-hook 'dotemacs-post-init-hook #'dotemacs|run-test t)"
+  - ./test-startup.sh
 
 branches:
   only:
     - master
-
-# Local Variables:
-# indent-tabs-mode: nil
-# coding: utf-8
-# End:

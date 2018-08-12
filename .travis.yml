@@ -21,7 +21,7 @@ matrix:
 
 script:
   - emacs --version
-  - ./test-startup.sh
+  - chmod +x ./test-startup.sh && ./test-startup.sh
 
 branches:
   only:

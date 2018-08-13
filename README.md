@@ -26,7 +26,6 @@ For example:
 (setq dotemacs-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china, tuna or custom
 (setq dotemacs-color-theme 'dotemacs-one)       ; Color theme: default, dark, light or dotemacs-themes
 (setq dotemacs-company-enable-yas t)            ; Enable/disable yasnippet for company: t or nil
-(setq dotemacs-benchmark-enabled t)             ; Enable/disable initialization benchmark: t or nil
 ```
 
 If `dotemacs-package-archives` is set to `custom`, you need to set `dotemacs-custom-package-archives`.

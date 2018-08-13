@@ -68,11 +68,6 @@
   :type 'boolean
   :group 'dotemacs)
 
-(defcustom dotemacs-benchmark-enabled nil
-  "Enable/disable(t/nil) the init benchmark."
-  :type 'boolean
-  :group 'dotemacs)
-
 (provide 'core-custom)
 
 ;;; core-custom.el ends here

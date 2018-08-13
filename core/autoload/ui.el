@@ -58,7 +58,7 @@
 (defun dotemacs-set-font()
   (dotemacs-set-english-chinese-font
     '("DejaVu Sans Mono" "Source Code Pro" "Monaco" "Consolas") 11
-    '("STXihei" "STHeiti" "STFangsong" "STZhongsong" "Microsoft Yahei" "ºÚÌå" "ĞÂËÎÌå" "ËÎÌå") 16))
+    '("STXihei" "STHeiti" "STFangsong" "STZhongsong" "Microsoft Yahei" "é»‘ä½“" "æ–°å®‹ä½“" "å®‹ä½“") 16))
 
 ;; Solution 2
 ;;

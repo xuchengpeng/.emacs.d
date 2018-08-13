@@ -147,20 +147,20 @@ i.e. :keyword to \"keyword\"."
   (replace-regexp-in-string "^:" "" (symbol-name keyword)))
 
 (defmacro dotemacs! (&rest modules-list)
-  "Declare stars in MODULES-LIST.
+  "Declare modules in MODULES-LIST.
 Separate modules with sub-directories' name.
 Basically adding modules path to `doteamcs-modules-path-list'.
 
-Example: (dotemacs| :feature evil :ui custom) for modules/feature/evil
+Example: (dotemacs! :feature evil :ui custom) for modules/feature/evil
 and modules/ui/custom."
   (dolist (module modules-list)
     (cond ((keywordp module) (setq mode module))
-          ((not      mode) (error "No sub-folder specified in `dotemacs|' for %s" module))
+          ((not      mode) (error "No sub-folder specified in `dotemacs!' for %s" module))
           (t               (let ((module-path (format "%s%s/%s/" dotemacs-modules-dir (dotemacs-keyword-to-name-str mode) module)))
                              (add-to-list 'doteamcs-modules-path-list module-path t))))))
 
 (defmacro package! (&rest packages-list)
-  "Add packages in PACKAGE-LIST to ‘dotemacs-packages’.
+  "Add packages in PACKAGES-LIST to ‘dotemacs-packages’.
 
 Can take multiple packages.
 e.g. (package! evil evil-surround)"

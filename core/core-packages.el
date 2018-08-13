@@ -74,11 +74,16 @@ missing) and shouldn't be deleted.")
   	      (load file t t t))))))
 
 (defun dotemacs-modules-load-autoload ()
-  "Load autoload.el in each module."
+  "Load autoload.el and autoload/*.el in each module."
   (dolist (m-path doteamcs-modules-path-list)
-    (let ((path (concat m-path "autoload.el")))
+    (let ((path (concat m-path "autoload.el"))
+          (autoload-path (concat m-path "autoload/")))
       (when (file-exists-p path)
-        (load path t t t)))))
+        (load path t t t))
+      (when (file-directory-p autoload-path)
+        (let ((file-list (directory-files autoload-path t "^[^#\.].*el$")))
+          (dolist (file file-list)
+  	        (load file t t t)))))))
 
 (defun dotemacs-modules-load-package ()
   "Load packages.el in each module."

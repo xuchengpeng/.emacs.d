@@ -5,7 +5,6 @@
 (dotemacs! :ui
            themes
            modeline
-           window-select
            :feature
            editor
            project

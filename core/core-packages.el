@@ -1,4 +1,4 @@
-;; core-packages.el --- Initialize core packages configurations.
+;;; core-packages.el --- Initialize core packages configurations. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2018 xuchengpeng
 ;;
@@ -78,6 +78,7 @@ missing) and shouldn't be deleted.")
 (dotemacs-set-package-archives dotemacs-package-archives)
 
 (defun dotemacs-install-packages (packages-list)
+  "Install packages defined by PACKAGES-LIST."
   (when-let* ((core-packages (cl-remove-if #'package-installed-p packages-list)))
     (unless package-archive-contents
       (package-refresh-contents))
@@ -134,6 +135,7 @@ missing) and shouldn't be deleted.")
         (message (format "%s does not exist!" path))))))
 
 (defun dotemacs-initialize-modules ()
+  "Initialize modules."
   (dotemacs-modules-load-autoload)
   (dotemacs-modules-load-package)
   (dotemacs-modules-load-config))

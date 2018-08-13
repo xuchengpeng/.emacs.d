@@ -1,4 +1,4 @@
-;; core.el --- Initialize core configurations.
+;;; core.el --- Initialize core configurations. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2018 xuchengpeng
 ;;
@@ -84,6 +84,19 @@ by Prelude.")
 (require 'core-packages)
 
 (defun dotemacs-initialize ()
+  "dotemacs initialize function.
+The load order is as follows:
+
+  ~/.emacs.d/init.el
+  ~/.emacs.d/core/core.el
+  Module packages.el files
+  Module config.el files
+  `after-init-hook'
+  `emacs-startup-hook'
+  dotemacs-init-hook
+  dotemacs-post-init-hook
+  
+Module load order is determined by your `dotemacs!' block."
   (dotemacs-load-core-autoload)
   (dotemacs-ensure-packages-initialized)
   (dotemacs-ensure-core-packages)
@@ -92,6 +105,7 @@ by Prelude.")
   (require 'core-editor))
 
 (defun dotemacs-finalize ()
+  "dotemacs finalize function."
   (dotemacs-initialize-modules)
   
   (unless noninteractive

@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; font configurations
 ;; Solution 1
 
@@ -17,6 +19,7 @@
 
 ;;;###autoload
 (defun dotemacs-make-font-string (font-name font-size)
+  "Make font string with FONT-NAME and FONT-SIZE."
   (if (and (stringp font-size)
            (equal ":" (string (elt font-size 0))))
       (format "%s%s" font-name font-size)
@@ -27,6 +30,8 @@
                                           english-font-size
                                           chinese-fonts
                                           &optional chinese-font-size chinese-fonts-scale)
+  "Set english(with ENGLISH-FONTS and ENGLISH-FONT-SIZE) and chinese(with CHINESE-FONTS,
+CHINESE-FONT-SIZE and CHINESE-FONTS-SCALE) font."
   (setq chinese-font-size (or chinese-font-size 16)
         chinese-fonts-scale (or chinese-fonts-scale 1.2))
 
@@ -56,6 +61,7 @@
 
 ;;;###autoload
 (defun dotemacs-set-font()
+  "Set fonts."
   (dotemacs-set-english-chinese-font
     '("DejaVu Sans Mono" "Source Code Pro" "Monaco" "Consolas") 11
     '("STXihei" "STHeiti" "STFangsong" "STZhongsong" "Microsoft Yahei" "黑体" "新宋体" "宋体") 16))

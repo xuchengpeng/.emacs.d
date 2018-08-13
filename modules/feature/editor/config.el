@@ -1,4 +1,4 @@
-;;; feature/editor/config.el
+;;; feature/editor/config.el -*- lexical-binding: t; -*-
 
 (if (fboundp 'display-line-numbers-mode)
     (global-display-line-numbers-mode)

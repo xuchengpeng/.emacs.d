@@ -1,4 +1,4 @@
-;;; lang/org/config.el
+;;; lang/org/config.el -*- lexical-binding: t; -*-
 
 (use-package org
   :mode (("\\.org$" . org-mode)
@@ -54,11 +54,11 @@
     (add-to-list 'org-capture-templates
                  '("tt" "Task" entry
                    (file+headline "task.org" "Task")
-                   "* TODO %^{任务名}\n%u\n%a\n" :clock-in t :clock-resume t))
+                   "* TODO %^{浠诲姟鍚峿\n%u\n%a\n" :clock-in t :clock-resume t))
     (add-to-list 'org-capture-templates
                  '("tw" "Work Task" entry
                    (file+headline "work.org" "Work")
-                   "* TODO %^{任务名}\n%u\n%a\n" :clock-in t :clock-resume t))
+                   "* TODO %^{浠诲姟鍚峿\n%u\n%a\n" :clock-in t :clock-resume t))
     )
   )
 

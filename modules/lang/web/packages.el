@@ -1,3 +1,3 @@
-;;; lang/web/packages.el
+;;; lang/web/packages.el -*- lexical-binding: t; -*-
 
 (package! web-mode)

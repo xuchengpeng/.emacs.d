@@ -1,4 +1,4 @@
-;;; lang/cc/config.el
+;;; lang/cc/config.el -*- lexical-binding: t; -*-
 
 ;; c
 (add-hook 'c-mode-common-hook

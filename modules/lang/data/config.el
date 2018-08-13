@@ -1,4 +1,4 @@
-;;; lang/data/config.el
+;;; lang/data/config.el -*- lexical-binding: t; -*-
 
 (use-package json-mode
   :mode ("\\.json$" . json-mode))

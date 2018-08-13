@@ -1,4 +1,4 @@
-;;; lang/web/config.el
+;;; lang/web/config.el -*- lexical-binding: t; -*-
 
 ;; web
 (use-package web-mode

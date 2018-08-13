@@ -1,4 +1,4 @@
-;; config.el --- Initialize modeline.
+;; config.el --- Initialize modeline. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2018 xuchengpeng
 ;;

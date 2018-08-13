@@ -1,4 +1,4 @@
-;; config.el --- Initialize benchmark.
+;;; config.el --- Initialize benchmark. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2018 xuchengpeng
 ;;

@@ -1,4 +1,4 @@
-;;; ui/window-select/config.el
+;;; ui/window-select/config.el -*- lexical-binding: t; -*-
 
 (use-package ace-window
   :bind ("M-o" . ace-window))

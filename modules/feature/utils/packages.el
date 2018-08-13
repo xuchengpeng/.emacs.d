@@ -1,4 +1,4 @@
-;;; feature/utils/packages.el
+;;; feature/utils/packages.el -*- lexical-binding: t; -*-
 
 (package! which-key
           hydra)

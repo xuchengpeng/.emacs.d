@@ -1,4 +1,4 @@
-;;; completion/ivy/packages.el
+;;; completion/ivy/packages.el -*- lexical-binding: t; -*-
 
 (package! ivy
           counsel

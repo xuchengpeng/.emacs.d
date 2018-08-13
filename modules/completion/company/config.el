@@ -1,4 +1,4 @@
-;;; completion/company/config.el
+;;; completion/company/config.el -*- lexical-binding: t; -*-
 
 (use-package company
   :diminish company-mode

@@ -1,3 +1,3 @@
-;;; feature/project/packages.el
+;;; feature/project/packages.el -*- lexical-binding: t; -*-
 
 (package! projectile)

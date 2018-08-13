@@ -1,4 +1,4 @@
-;; core-custom.el --- Customizations.
+;;; core-custom.el --- Customizations. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2018 xuchengpeng
 ;;

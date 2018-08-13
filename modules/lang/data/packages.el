@@ -1,4 +1,4 @@
-;;; lang/data/packages.el
+;;; lang/data/packages.el -*- lexical-binding: t; -*-
 
 (package! json-mode
           toml-mode

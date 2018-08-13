@@ -1,4 +1,4 @@
-;; core-editor.el --- Initialize core editor configurations.
+;;; core-editor.el --- Initialize core editor configurations. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2018 xuchengpeng
 ;;

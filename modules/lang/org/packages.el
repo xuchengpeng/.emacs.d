@@ -1,4 +1,4 @@
-;;; lang/org/packages.el
+;;; lang/org/packages.el -*- lexical-binding: t; -*-
 
 (package! org-plus-contrib
           ox-hugo)

@@ -1,4 +1,4 @@
-;;; completion/helm/config.el
+;;; completion/helm/config.el -*- lexical-binding: t; -*-
 
 (use-package helm
   :bind (("M-x" . helm-M-x)

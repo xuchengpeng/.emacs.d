@@ -1,4 +1,4 @@
-;;; tools/magit/config.el
+;;; tools/magit/config.el -*- lexical-binding: t; -*-
 
 (use-package magit
   :bind (("C-x g" . magit-status)

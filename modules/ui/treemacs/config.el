@@ -1,4 +1,4 @@
-;;; ui/treemacs/config.el
+;;; ui/treemacs/config.el -*- lexical-binding: t; -*-
 
 (use-package treemacs
   :commands (treemacs)

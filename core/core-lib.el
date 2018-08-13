@@ -1,4 +1,4 @@
-;; core-lib.el --- Initialize core lib configurations.
+;;; core-lib.el --- Initialize core lib configurations. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2018 xuchengpeng
 ;;

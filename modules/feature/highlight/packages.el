@@ -1,4 +1,4 @@
-;;; feature/highlight/packages.el
+;;; feature/highlight/packages.el -*- lexical-binding: t; -*-
 
 (package! symbol-overlay
           ;; highlight-symbol

@@ -1,4 +1,4 @@
-;;; tools/magit/packages.el
+;;; tools/magit/packages.el -*- lexical-binding: t; -*-
 
 (package! magit
           magithub

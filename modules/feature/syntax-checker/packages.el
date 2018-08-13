@@ -1,3 +1,3 @@
-;;; feature/syntax-checker/packages.el
+;;; feature/syntax-checker/packages.el -*- lexical-binding: t; -*-
 
 (package! flycheck)

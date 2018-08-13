@@ -1,4 +1,4 @@
-;;; feature/utils/config.el
+;;; feature/utils/config.el -*- lexical-binding: t; -*-
 
 (use-package which-key
   :diminish which-key-mode

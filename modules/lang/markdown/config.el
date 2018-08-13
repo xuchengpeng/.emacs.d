@@ -1,4 +1,4 @@
-;;; lang/markdown/config.el
+;;; lang/markdown/config.el -*- lexical-binding: t; -*-
 
 ;; markdown
 (use-package markdown-mode

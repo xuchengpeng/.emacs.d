@@ -1,3 +1,5 @@
+;;; ui/themes/cofig.el  -*- lexical-binding: t; -*-
+
 (defun dotemacs-set-custom-theme (theme)
   "Set dotemacs-themes"
   (require 'dotemacs-themes)

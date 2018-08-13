@@ -1,4 +1,4 @@
-;; core-ui.el --- Initialize core ui configurations.
+;;; core-ui.el --- Initialize core ui configurations. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2018 xuchengpeng
 ;;

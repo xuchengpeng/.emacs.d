@@ -68,14 +68,16 @@ by Prelude.")
 
 (setq package-enable-at-startup nil)
 (setq custom-file (concat dotemacs-local-dir "custom.el"))
-(load custom-file t t t)
+(load custom-file 'noerror 'nomessage 'nosuffix)
 
 (add-to-list 'load-path dotemacs-core-dir)
 
 ;; preload the personal settings from `dotemacs-personal-preload-dir'
-(when (file-exists-p dotemacs-personal-preload-dir)
-  (message "Loading personal configuration files in %s..." dotemacs-personal-preload-dir)
-  (mapc 'load (directory-files dotemacs-personal-preload-dir 't "^[^#\.].*el$")))
+(let ((file-list (directory-files dotemacs-personal-preload-dir t "^[^#\.].*el$")))
+  (when file-list
+    (message "Loading personal configuration files in %s..." dotemacs-personal-preload-dir)
+    (dolist (file file-list)
+     (load file 'noerror 'nomessage 'nosuffix))))
 
 (require 'core-custom)
 (require 'core-lib)
@@ -105,9 +107,11 @@ by Prelude.")
 (dotemacs-initialize)
 
 ;; load the personal settings from `dotemacs-personal-dir`
-(when (file-exists-p dotemacs-personal-dir)
-  (message "Loading personal configuration files in %s..." dotemacs-personal-dir)
-  (mapc 'load (directory-files dotemacs-personal-dir 't "^[^#\.].*el$")))
+(let ((file-list (directory-files dotemacs-personal-dir t "^[^#\.].*el$")))
+  (when file-list
+    (message "Loading personal configuration files in %s..." dotemacs-personal-dir)
+    (dolist (file file-list)
+     (load file 'noerror 'nomessage 'nosuffix))))
 
 (provide 'core)
 

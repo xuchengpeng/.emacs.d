@@ -23,10 +23,10 @@ by Prelude.")
   "Where cache files are stored.")
 
 (defvar dotemacs-init-hook ()
-  "A list of hooks run when Emacs is initialized, before `moon-post-init-hook'.")
+  "A list of hooks run when Emacs is initialized, before `dotemacs-post-init-hook'.")
 
 (defvar dotemacs-post-init-hook ()
-  "A list of hooks that run after Emacs initialization is complete, and after `moon-init-hook'.")
+  "A list of hooks that run after Emacs initialization is complete, and after `dotemacs-init-hook'.")
 
 (defvar file-name-handler-alist-old file-name-handler-alist)
 (setq garbage-collection-messages t)

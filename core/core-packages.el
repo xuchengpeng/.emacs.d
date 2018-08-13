@@ -110,27 +110,15 @@ i.e. :keyword to \"keyword\"."
   (replace-regexp-in-string "^:" "" (symbol-name keyword)))
 
 (defmacro dotemacs! (&rest modules-list)
-  "Declare stars in STAR-LIST.
-Separate stars with sub-directories' name.
-Basically adding path to star to `moon-star-path-list'.
+  "Declare stars in MODULES-LIST.
+Separate modules with sub-directories' name.
+Basically adding modules path to `doteamcs-modules-path-list'.
 
-Example: (moon| :feature evil :ui custom) for star/feature/evil
-and star/ui/custom.
-If called multiple times, the stars declared first will be
-in the front of moon-star-list.
-
-`moon|' can be used in star's `package.el',
-but try to only depend on stars in `:basic' sub directory.
-
-Because a star's dependencies' dependency will not be added automatically.
-If your star's dependency star denpend of some other star,
-that star will not be included by lunarymacs framework
-when loading and installing packages.
-
-In a word, denpend of stars that don't depend on other stars!"
+Example: (dotemacs| :feature evil :ui custom) for modules/feature/evil
+and modules/ui/custom."
   (dolist (module modules-list)
     (cond ((keywordp module) (setq mode module))
-          ((not      mode) (error "No sub-folder specified in `moon|' for %s" module))
+          ((not      mode) (error "No sub-folder specified in `dotemacs|' for %s" module))
           (t               (let ((module-path (format "%s%s/%s/" dotemacs-modules-dir (dotemacs-keyword-to-name-str mode) module)))
                              (add-to-list 'doteamcs-modules-path-list module-path t))))))
 

@@ -73,14 +73,12 @@ missing) and shouldn't be deleted.")
         (dolist (file file-list)
   	      (load file t t t))))))
 
-(defun dotemacs-load-modules-autoload ()
-  "Load autoload file in each module."
+(defun dotemacs-modules-load-autoload ()
+  "Load autoload.el in each module."
   (dolist (m-path doteamcs-modules-path-list)
-    (let ((autoload-path (concat m-path "autoload/")))
-      (when (file-directory-p autoload-path)
-        (let ((file-list (directory-files autoload-path t "^[^#\.].*el$")))
-          (dolist (file file-list)
-  	        (load file t t t)))))))
+    (let ((path (concat m-path "autoload.el")))
+      (when (file-exists-p path)
+        (load path t t t)))))
 
 (defun dotemacs-modules-load-package ()
   "Load packages.el in each module."
@@ -99,7 +97,7 @@ missing) and shouldn't be deleted.")
         (message (format "%s does not exist!" path))))))
 
 (defun dotemacs-initialize-modules ()
-  (dotemacs-load-modules-autoload)
+  (dotemacs-modules-load-autoload)
   (dotemacs-modules-load-package)
   (dotemacs-modules-load-config))
 

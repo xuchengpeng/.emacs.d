@@ -1,6 +1,6 @@
 .cache/
 .local/
-org/
+org/*.*
 personal/*.el*
 personal/preload/*.el*
 server/

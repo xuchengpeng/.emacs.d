@@ -34,24 +34,24 @@
 (when (version< emacs-version "25.2")
   (error "Emacs version should be 25.2 or higher"))
 
-(defconst dotemacs-dir (file-truename user-emacs-directory)
+(defvar dotemacs-dir (file-truename user-emacs-directory)
   "The path to this emacs.d directory.")
-(defconst dotemacs-core-dir (concat dotemacs-dir "core/")
+(defvar dotemacs-core-dir (concat dotemacs-dir "core/")
   "Where core files are stored.")
-(defconst dotemacs-modules-dir (concat dotemacs-dir "modules/")
+(defvar dotemacs-modules-dir (concat dotemacs-dir "modules/")
   "Where modules files are stored.")
-(defconst dotemacs-local-dir (concat dotemacs-dir ".local/")
+(defvar dotemacs-local-dir (concat dotemacs-dir ".local/")
   "Root directory for local Emacs files.")
-(defconst dotemacs-packages-dir (concat dotemacs-local-dir "packages/")
+(defvar dotemacs-packages-dir (concat dotemacs-local-dir "packages/")
   "Where packages are stored.")
-(defconst dotemacs-personal-dir (concat dotemacs-dir "personal/")
+(defvar dotemacs-personal-dir (concat dotemacs-dir "personal/")
   "This directory is for your personal configuration.
 Users of Emacs Prelude are encouraged to keep their personal configuration
 changes in this directory.  All Emacs Lisp files there are loaded automatically
 by Prelude.")
-(defconst dotemacs-personal-preload-dir (concat dotemacs-personal-dir "preload/")
+(defvar dotemacs-personal-preload-dir (concat dotemacs-personal-dir "preload/")
   "This directory is for your personal configuration, that you want loaded before dotemacs.")
-(defconst dotemacs-cache-dir (concat dotemacs-dir ".cache/")
+(defvar dotemacs-cache-dir (concat dotemacs-dir ".cache/")
   "Where cache files are stored.")
 
 (defvar dotemacs-init-hook ()

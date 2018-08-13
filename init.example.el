@@ -14,6 +14,7 @@
            syntax-checker
            highlight
            utils
+           snippets
            :completion
            ;; helm
            ivy
@@ -21,7 +22,6 @@
            :tools
            eshell
            magit
-           snippets
            :lang
            cc
            data

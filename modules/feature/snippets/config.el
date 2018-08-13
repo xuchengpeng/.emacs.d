@@ -1,4 +1,4 @@
-;;; tools/snippets/config.el
+;;; feature/snippets/config.el -*- lexical-binding: t; -*-
 
 (use-package yasnippet
   :diminish yas-minor-mode

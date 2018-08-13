@@ -1,18 +1,18 @@
 
 (load (concat (expand-file-name user-emacs-directory) "core/core"))
 
-(dotemacs! :feature
+(dotemacs! :ui
+           themes
+           modeline
+           treemacs
+           window-select
+           :feature
            ;; benchmark
            editor
            project
            syntax-checker
            highlight
            utils
-           :ui
-           themes
-           modeline
-           treemacs
-           window-select
            :completion
            ;; helm
            ivy

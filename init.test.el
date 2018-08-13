@@ -1,14 +1,14 @@
 
 (load (concat (expand-file-name user-emacs-directory) "core/core"))
 
-(dotemacs! :feature
-           editor
-           project
-           utils
-           :ui
+(dotemacs! :ui
            themes
            modeline
            window-select
+           :feature
+           editor
+           project
+           utils
            :completion
            ;; helm
            ivy

@@ -65,26 +65,43 @@ missing) and shouldn't be deleted.")
   (dotemacs-install-packages dotemacs-core-packages)
   (setq use-package-verbose t))
 
-(defun dotemacs-modules-load-package (path-list)
-  "Load packages.el in each star in PATH-LIST."
-  (dolist (m-path path-list)
+(defun dotemacs-load-core-autoload ()
+  "Load core autoload file."
+  (let ((autoload-path (concat dotemacs-core-dir "autoload/")))
+    (when (file-directory-p autoload-path)
+      (let ((file-list (directory-files autoload-path t "^[^#\.].*el$")))
+        (dolist (file file-list)
+  	      (load file t t t))))))
+
+(defun dotemacs-load-modules-autoload ()
+  "Load autoload file in each module."
+  (dolist (m-path doteamcs-modules-path-list)
+    (let ((autoload-path (concat m-path "autoload/")))
+      (when (file-directory-p autoload-path)
+        (let ((file-list (directory-files autoload-path t "^[^#\.].*el$")))
+          (dolist (file file-list)
+  	        (load file t t t)))))))
+
+(defun dotemacs-modules-load-package ()
+  "Load packages.el in each module."
+  (dolist (m-path doteamcs-modules-path-list)
     (let ((path (concat m-path "packages.el")))
       (when (file-exists-p path)
-        (load path))))
+        (load path t t t))))
   (dotemacs-install-packages dotemacs-packages))
 
-(defun dotemacs-modules-load-config (path-list)
-  "Load config.el in each star in PATH-LIST."
-  (dolist (m-path path-list)
+(defun dotemacs-modules-load-config ()
+  "Load config.el in each module."
+  (dolist (m-path doteamcs-modules-path-list)
     (let ((path (concat m-path "config.el")))
       (if (file-exists-p path)
-          (load path)
-        (message (format "%s does not exist!" path)))
-      )))
+          (load path t t t)
+        (message (format "%s does not exist!" path))))))
 
 (defun dotemacs-initialize-modules ()
-  (dotemacs-modules-load-package doteamcs-modules-path-list)
-  (dotemacs-modules-load-config doteamcs-modules-path-list))
+  (dotemacs-load-modules-autoload)
+  (dotemacs-modules-load-package)
+  (dotemacs-modules-load-config))
 
 (defun dotemacs-keyword-to-name-str (keyword)
   "Remove the colon in KEYWORD symbol and turn it into string.

@@ -1,4 +1,4 @@
-;;; completion/ivy/config.el
+;;; completion/ivy/config.el -*- lexical-binding: t -*-
 
 (use-package ivy
   :diminish ivy-mode
@@ -95,7 +95,7 @@
   (counsel-mode))
 
 (use-package counsel-projectile
-  :disabled
+  :preface (setq projectile-keymap-prefix (kbd "C-c p"))
   :after (counsel projectile)
   :config
   (counsel-projectile-mode))

@@ -1,6 +1,6 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
-(load (concat (expand-file-name user-emacs-directory) "core/core"))
+(require 'core (concat user-emacs-directory "core/core"))
 
 (dotemacs! :ui
            themes

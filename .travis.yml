@@ -1,4 +1,4 @@
-language: emacs-lisp
+language: generic
 dist: trusty
 sudo: false
 
@@ -21,7 +21,7 @@ matrix:
 
 script:
   - emacs --version
-  - chmod +x ./test-startup.sh && ./test-startup.sh
+  - emacs --batch -l init.test.el
 
 branches:
   only:

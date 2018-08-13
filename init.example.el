@@ -1,3 +1,4 @@
+;;; init.el -*- lexical-binding: t; -*-
 
 (load (concat (expand-file-name user-emacs-directory) "core/core"))
 

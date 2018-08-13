@@ -104,10 +104,6 @@ by Prelude.")
 
 (dotemacs-initialize)
 
-(require 'server)
-(unless (server-running-p)
-  (server-start))
-
 ;; load the personal settings from `dotemacs-personal-dir`
 (when (file-exists-p dotemacs-personal-dir)
   (message "Loading personal configuration files in %s..." dotemacs-personal-dir)

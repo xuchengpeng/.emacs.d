@@ -36,6 +36,9 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+(setq user-full-name    dotemacs-full-name
+      user-mail-address dotemacs-mail-address)
+
 (setq-default indent-tabs-mode nil
               tab-width 4)
 
@@ -123,17 +126,23 @@
 
 ;; recent files
 (use-package recentf
-  :hook (after-init . recentf-mode)
+  :commands recentf-open-files
   :config
   (setq recentf-save-file (concat dotemacs-cache-dir "recentf")
         recentf-max-saved-items 500
         recentf-max-menu-items 15
-        recentf-auto-cleanup 600
+        recentf-auto-cleanup 'never
         recentf-exclude (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
-                              "^/var/folders/.+$" "/elpa/")))
+                              "^/var/folders/.+$" "/.cache/"))
+  (recentf-mode +1))
 
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
+
+(use-package server
+  :config
+  (unless (server-running-p)
+    (server-start)))
 
 (provide 'core-editor)
 

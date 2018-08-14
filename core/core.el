@@ -78,7 +78,7 @@ by dotemacs.")
 
 (setq package-enable-at-startup nil)
 (setq custom-file (concat dotemacs-local-dir "custom.el"))
-(load custom-file 'noerror 'nomessage 'nosuffix)
+(load custom-file t t)
 
 (add-to-list 'load-path dotemacs-core-dir)
 
@@ -87,7 +87,7 @@ by dotemacs.")
   (when file-list
     (message "Loading personal configuration files in %s..." dotemacs-personal-preload-dir)
     (dolist (file file-list)
-     (load file 'noerror 'nomessage 'nosuffix))))
+     (load file t t))))
 
 (defun dotemacs-initialize ()
   "dotemacs initialize function.
@@ -140,7 +140,7 @@ Module load order is determined by your `dotemacs!' block."
   (when file-list
     (message "Loading personal configuration files in %s..." dotemacs-personal-dir)
     (dolist (file file-list)
-     (load file 'noerror 'nomessage 'nosuffix))))
+     (load file t t))))
 
 (provide 'core)
 

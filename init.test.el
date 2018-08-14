@@ -20,4 +20,4 @@
            markdown
            )
 
-(dotemacs-initialize-modules)
+(dotemacs-finalize)

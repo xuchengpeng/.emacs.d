@@ -23,23 +23,6 @@
   (org-clock-persistence-insinuate)
   
   (dotemacs-after-load 'org-capture
-    (defun dotemacs-org-hugo-new-subtree-post-capture-template ()
-      "Returns `org-capture' template string for new Hugo post.
-       See `org-capture-templates' for more information."
-      (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
-             (fname (org-hugo-slug title))
-             (date (format-time-string (org-time-stamp-format :long :inactive) (org-current-time))))
-        (mapconcat #'identity
-                   `(
-                     ,(concat "* TODO " title)
-                     ":PROPERTIES:"
-                     ,(concat ":EXPORT_FILE_NAME: " fname)
-                     ,(concat ":EXPORT_DATE: " date)
-                     ":EXPORT_HUGO_CUSTOM_FRONT_MATTER: :comments true :mathjax false"
-                     ":END:"
-                     "%?\n")          ;Place the cursor here finally
-                   "\n")))
-    
     (add-to-list 'org-capture-templates
                  '("h"                ;`org-capture' binding + h
                    "Hugo post"
@@ -58,9 +41,7 @@
     (add-to-list 'org-capture-templates
                  '("tw" "Work Task" entry
                    (file+headline "work.org" "Work")
-                   "* TODO %^{任务名}\n%u\n%a\n" :clock-in t :clock-resume t))
-    )
-  )
+                   "* TODO %^{任务名}\n%u\n%a\n" :clock-in t :clock-resume t))))
 
 (use-package ox-hugo
   :after ox)

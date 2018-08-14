@@ -38,10 +38,9 @@
    (t
     (error "Unknown color theme: '%s'" theme))))
 
-;;;###autoload
 (when load-file-name
   (let* ((base (file-name-directory load-file-name))
-         (dir (expand-file-name "themes/" base)))
+         (dir (expand-file-name "dotemacs-themes/" base)))
     (add-to-list 'load-path
                  (or (and (file-directory-p dir) dir)
                      base))))

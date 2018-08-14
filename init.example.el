@@ -22,6 +22,7 @@
            :tools
            eshell
            magit
+           ;; package-manager
            :lang
            cc
            data

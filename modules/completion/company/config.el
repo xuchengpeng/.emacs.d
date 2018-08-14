@@ -12,6 +12,7 @@
          :map company-search-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next))
+  :hook (dotemacs-init . global-company-mode)
   :config
   (setq company-idle-delay 0.2
         company-tooltip-limit 20
@@ -21,16 +22,4 @@
         company-dabbrev-ignore-case nil
         company-require-match nil)
   
-  (defvar company-mode/enable-yas dotemacs-company-enable-yas
-    "Enable yasnippet for all backends.")
-
-  (defun company-mode/backend-with-yas (backend)
-    (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-        backend
-      (append (if (consp backend) backend (list backend))
-              '(:with company-yasnippet))))
-  
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-  
-  (global-company-mode)
-  )
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))

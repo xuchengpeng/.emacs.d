@@ -41,9 +41,6 @@ missing) and shouldn't be deleted.")
 (defvar doteamcs-modules-path-list ()
   "The path to each modules.")
 
-(defvar dotemacs-autoload-file (concat dotemacs-local-dir "autoload.el")
-  "The path of autoload file which has all the autoload functions.")
-
 (setq package-user-dir (concat dotemacs-packages-dir "elpa/")
       load-prefer-newer t
       package-enable-at-startup nil)
@@ -212,4 +209,4 @@ e.g. (package! evil evil-surround)"
 
 (provide 'core-packages)
 
-;;; core.el ends here
+;;; core-packages.el ends here

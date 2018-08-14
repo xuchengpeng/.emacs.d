@@ -36,23 +36,33 @@
 
 (defvar dotemacs-dir (file-truename user-emacs-directory)
   "The path to this emacs.d directory.")
+
 (defvar dotemacs-core-dir (concat dotemacs-dir "core/")
   "Where core files are stored.")
+
 (defvar dotemacs-modules-dir (concat dotemacs-dir "modules/")
   "Where modules files are stored.")
+
 (defvar dotemacs-local-dir (concat dotemacs-dir ".local/")
   "Root directory for local Emacs files.")
-(defvar dotemacs-packages-dir (concat dotemacs-local-dir "packages/")
-  "Where packages are stored.")
+
 (defvar dotemacs-personal-dir (concat dotemacs-dir "personal/")
   "This directory is for your personal configuration.
-Users of Emacs Prelude are encouraged to keep their personal configuration
+Users of dotemacs are encouraged to keep their personal configuration
 changes in this directory.  All Emacs Lisp files there are loaded automatically
-by Prelude.")
+by dotemacs.")
+
 (defvar dotemacs-personal-preload-dir (concat dotemacs-personal-dir "preload/")
   "This directory is for your personal configuration, that you want loaded before dotemacs.")
+
 (defvar dotemacs-cache-dir (concat dotemacs-dir ".cache/")
   "Where cache files are stored.")
+
+(defvar dotemacs-packages-dir (concat dotemacs-local-dir "packages/")
+  "Where packages are stored.")
+
+(defvar dotemacs-autoload-file (concat dotemacs-local-dir "autoload.el")
+  "The path of autoload file which has all the autoload functions.")
 
 (defvar dotemacs-init-hook ()
   "A list of hooks run when Emacs is initialized, before `dotemacs-post-init-hook'.")

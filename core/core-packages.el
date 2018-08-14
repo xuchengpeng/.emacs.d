@@ -83,7 +83,8 @@ missing) and shouldn't be deleted.")
     (unless package-archive-contents
       (package-refresh-contents))
     (dolist (package core-packages)
-      (package-install package)
+      (let ((inhibit-message t))
+        (package-install package))
       (if (package-installed-p package)
           (message "dotemacs installed %s" package)
         (error "dotemacs couldn't install %s" package)))))
@@ -153,9 +154,9 @@ This should be run whenever init.el or an autoload file is modified."
       (dolist (file (reverse targets))
         (message
          (cond ((update-file-autoloads file t dotemacs-autoload-file)
-                "✕ Nothing in %s")
+                "Nothing in %s")
                (t
-                "✓ Scanned %s"))
+                "Scanned %s"))
          (file-relative-name file dotemacs-dir)))
       (princ "\n")))
 

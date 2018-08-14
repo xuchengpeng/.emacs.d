@@ -318,8 +318,7 @@ buffer where knowing the current project directory is important."
                 (if active (setq face 'font-lock-doc-face))))
         (concat " "
                 (propertize (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
-                            'face (if active face))
-                " ")))))
+                            'face (if active face)))))))
 
 ;;
 (dotemacs-modeline-def-modeline-segment flycheck
@@ -334,7 +333,7 @@ icons."
               (face (cond (no-errors 'dotemacs-modeline-urgent)
                           (no-warnings 'dotemacs-modeline-warning)
                           (t 'dotemacs-modeline-info))))
-         (propertize (format "[%s/%s]" (or no-errors 0) (or no-warnings 0))
+         (propertize (format " [%s/%s]" (or no-errors 0) (or no-warnings 0))
                      'face (if (dotemacs-modeline--active) face))))
       (`interrupted " -")
       (`suspicious '(propertize " ?" 'face (if (dotemacs-modeline--active) 'dotemacs-modeline-warning)))

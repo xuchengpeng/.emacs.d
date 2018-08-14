@@ -89,24 +89,24 @@ by dotemacs.")
     (dolist (file file-list)
      (load file 'noerror 'nomessage 'nosuffix))))
 
-(require 'core-custom)
-(require 'core-lib)
-(require 'core-packages)
-
 (defun dotemacs-initialize ()
   "dotemacs initialize function.
 The load order is as follows:
 
   ~/.emacs.d/init.el
   ~/.emacs.d/core/core.el
-  Module packages.el files
-  Module config.el files
   `after-init-hook'
   `emacs-startup-hook'
+  Module packages.el files
+  Module config.el files
   dotemacs-init-hook
   dotemacs-post-init-hook
-  
+
 Module load order is determined by your `dotemacs!' block."
+  (require 'core-custom)
+  (require 'core-lib)
+  (require 'core-packages)
+  
   (dotemacs-ensure-packages-initialized)
   (dotemacs-ensure-core-packages)
   
@@ -123,13 +123,17 @@ Module load order is determined by your `dotemacs!' block."
     (dolist (hook '(dotemacs-init-hook dotemacs-post-init-hook))
       (run-hook-with-args hook)))
   
+  (when (display-graphic-p)
+    (require 'server)
+    (unless (server-running-p)
+      (server-start)))
+  
   (setq file-name-handler-alist file-name-handler-alist-old
         gc-cons-threshold 800000
         gc-cons-percentage 0.1))
 
-(add-hook 'emacs-startup-hook #'dotemacs-finalize t)
-
 (dotemacs-initialize)
+(add-hook 'emacs-startup-hook #'dotemacs-finalize t)
 
 ;; load the personal settings from `dotemacs-personal-dir`
 (let ((file-list (directory-files dotemacs-personal-dir t "^[^#\.].*el$")))

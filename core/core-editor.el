@@ -139,11 +139,6 @@
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 
-(use-package server
-  :config
-  (unless (server-running-p)
-    (server-start)))
-
 (provide 'core-editor)
 
 ;;; core-editor.el ends here

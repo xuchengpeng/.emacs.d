@@ -4,5 +4,6 @@ org/*.*
 personal/*.el*
 personal/preload/*.el*
 server/
+/init.el
 *.elc
 *~

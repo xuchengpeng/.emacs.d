@@ -31,6 +31,11 @@
 
 ;;; Code:
 
+;; maximized startup
+(unless (frame-parameter nil 'fullscreen)
+  (toggle-frame-maximized))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 (setq inhibit-startup-message t
       initial-scratch-message ""
       initial-major-mode 'text-mode)
@@ -42,11 +47,6 @@
   (scroll-bar-mode -1))
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
-
-;; maximized startup
-(unless (frame-parameter nil 'fullscreen)
-  (toggle-frame-maximized))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
@@ -61,6 +61,87 @@
 
 (setq display-time-24hr-format t)
 (add-hook 'after-init-hook #'display-time-mode)
+
+(defun dotemacs-mode-line-fill (face reserve)
+  "Return empty space using FACE and leaving RESERVE space on the right."
+  (unless reserve
+    (setq reserve 20))
+  (when (and (display-graphic-p) (eq 'right (get-scroll-bar-mode)))
+    (setq reserve (- reserve 3)))
+  (propertize " "
+              'display `((space :align-to
+                                (- (+ right right-fringe right-margin) ,reserve)))
+              'face face))
+
+(defun dotemacs-buffer-encoding-abbrev ()
+  "The line ending convention used in the buffer."
+  (let ((buf-coding (format "%s" buffer-file-coding-system)))
+    (if (string-match "\\(dos\\|unix\\|mac\\)" buf-coding)
+        (match-string 1 buf-coding)
+      buf-coding)))
+
+;; set default modeline
+(setq-default mode-line-format
+                (list
+                 "%e"
+                 mode-line-front-space
+                 ;; mode-line-mule-info
+                 ;; mode-line-client
+                 ;; mode-line-modified
+                 ;; mode-line-remote
+                 ;; mode-line-frame-identification
+                 " "
+                 ;; mode-line-buffer-identification
+                 '(:eval (propertize "%b" 'face 'font-lock-keyword-face
+                                     'help-echo (buffer-file-name)))
+                 
+                 " [" ;; insert vs overwrite mode, input-method in a tooltip
+                 '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
+                                     'face 'font-lock-preprocessor-face
+                                     'help-echo (concat "Buffer is in "
+                                                        (if overwrite-mode
+                                                            "overwrite"
+                                                          "insert") " mode")))
+
+                 ;; was this buffer modified since the last save?
+                 '(:eval (when (buffer-modified-p)
+                           (concat "," (propertize "Mod"
+                                                   'face 'font-lock-warning-face
+                                                   'help-echo "Buffer has been modified"))))
+
+                 ;; is this buffer read-only?
+                 '(:eval (when buffer-read-only
+                           (concat "," (propertize "RO"
+                                                   'face 'font-lock-type-face
+                                                   'help-echo "Buffer is read-only"))))
+                 "] "
+                 
+                 "["
+                 (propertize "%p" 'face 'font-lock-constant-face)
+                 "/"
+                 (propertize "%I" 'face 'font-lock-constant-face)
+                 "] "
+                 
+                 mode-line-modes
+                 
+                 "   "
+                 '(:eval `(vc-mode vc-mode))
+                 "   "
+                 
+                 ;; (dotemacs-mode-line-fill 'mode-line 35)
+                 
+                 ;;mode-line-position
+                 " ("
+                 (propertize "%l" 'face 'font-lock-type-face)
+                 ","
+                 (propertize "%c" 'face 'font-lock-type-face)
+                 ") "
+                 
+                 '(:eval (dotemacs-buffer-encoding-abbrev))
+                 "  "
+                 '(:eval mode-line-misc-info)
+                 
+                 mode-line-end-spaces))
 
 ;; font configurations
 ;; Solution 1

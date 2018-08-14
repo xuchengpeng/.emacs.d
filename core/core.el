@@ -97,7 +97,6 @@ The load order is as follows:
   dotemacs-post-init-hook
   
 Module load order is determined by your `dotemacs!' block."
-  (dotemacs-load-core-autoload)
   (dotemacs-ensure-packages-initialized)
   (dotemacs-ensure-core-packages)
   
@@ -106,6 +105,8 @@ Module load order is determined by your `dotemacs!' block."
 
 (defun dotemacs-finalize ()
   "dotemacs finalize function."
+  (dotemacs-load-autoload)
+  
   (dotemacs-initialize-modules)
   
   (unless noninteractive

@@ -315,7 +315,7 @@ buffer where knowing the current project directory is important."
                ((memq state '(removed conflict unregistered))
                 (if active (setq face 'dotemacs-modeline-urgent)))
                (t
-                (if active (setq face 'font-lock-doc-face))))
+                (if active (setq face 'dotemacs-modeline-info))))
         (concat " "
                 (propertize (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))
                             'face (if active face)))))))
@@ -462,13 +462,13 @@ See `mode-line-percent-position'.")
 ;;
 
 (defun dotemacs-modeline-init ()
-  "Set the default modeline."
-  (dotemacs-set-modeline 'main t)
-
+  "Initialize modeline."
+  
   ;; This scratch buffer is already created and doesn't get a modeline. For the
   ;; love of Emacs, someone give the man a modeline!
-  (with-current-buffer "*scratch*"
-    (dotemacs-set-modeline 'main)))
+  (dolist (bname '("*scratch*" "*Messages*"))
+    (with-current-buffer bname
+      (dotemacs-set-modeline 'special))))
 
 (defun dotemacs-modeline|set-special-modeline ()
   "Set sepcial mode-line."
@@ -486,8 +486,8 @@ See `mode-line-percent-position'.")
 ;; Bootstrap
 ;;
 
-(dotemacs-modeline-init)
-;; (add-hook 'after-init-hook #'dotemacs-modeline-init)
+(dotemacs-set-modeline 'main t)  ;; set default modeline
+(add-hook 'dotemacs-init-hook #'dotemacs-modeline-init)
 ;; (add-hook 'dotemacs-scratch-buffer-hook #'dotemacs-modeline|set-special-modeline)
 ;; (add-hook 'dotemacs-dashboard-mode-hook #'dotemacs-modeline|set-project-modeline)
 

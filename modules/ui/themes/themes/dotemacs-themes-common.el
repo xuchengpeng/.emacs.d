@@ -211,6 +211,10 @@
 
 
     ;; --- plugin faces -----------------------
+    ;; anzu
+    (anzu-replace-highlight :background base0 :foreground red   :weight 'bold :strike-through t)
+    (anzu-replace-to        :background base0 :foreground green :weight 'bold)
+    
     ;; avy
     (avy-background-face :foreground comments)
     (avy-lead-face :background highlight :foreground bg :distant-foreground fg :weight 'bold)
@@ -1041,14 +1045,14 @@
     (notmuch-wash-toggle-button :foreground fg)
 
     ;; outline
-    (outline-1 :foreground blue     :background base3  :weight 'ultra-bold :height 1.25)
-    (outline-2 :foreground magenta                     :weight 'semi-bold)
-    (outline-3 :foreground violet                      :weight 'semi-bold)
-    (outline-4 :foreground (dotemacs-lighten blue 0.25)    :weight 'semi-bold)
-    (outline-5 :foreground (dotemacs-lighten magenta 0.25) :weight 'semi-bold)
-    (outline-6 :foreground (dotemacs-lighten blue 0.5)     :weight 'semi-bold)
-    (outline-7 :foreground (dotemacs-lighten magenta 0.5)  :weight 'semi-bold)
-    (outline-8 :foreground (dotemacs-lighten blue 0.8)     :weight 'semi-bold)
+    (outline-1 :foreground blue     :background base3  :weight 'bold :height 1.25)
+    (outline-2 :foreground magenta                     :weight 'bold)
+    (outline-3 :foreground violet                      :weight 'bold)
+    (outline-4 :foreground (dotemacs-lighten blue 0.25)    :weight 'bold)
+    (outline-5 :foreground (dotemacs-lighten magenta 0.25) :weight 'bold)
+    (outline-6 :foreground (dotemacs-lighten blue 0.5)     :weight 'bold)
+    (outline-7 :foreground (dotemacs-lighten magenta 0.5)  :weight 'bold)
+    (outline-8 :foreground (dotemacs-lighten blue 0.8)     :weight 'bold)
 
     ;; org-mode
     (org-archived                 :foreground doc-comments)
@@ -1130,6 +1134,15 @@
     (rpm-spec-doc-face          :foreground orange)
     (rpm-spec-ghost-face        :foreground comments)
     (rpm-spec-section-face      :foreground magenta)
+    
+    ;; rst-mode
+    (rst-block :inherit 'font-lock-constant-face)
+    (rst-level-1 :inherit 'rst-adornment :weight 'bold)
+    (rst-level-2 :inherit 'rst-adornment :weight 'bold)
+    (rst-level-3 :inherit 'rst-adornment :weight 'bold)
+    (rst-level-4 :inherit 'rst-adornment :weight 'bold)
+    (rst-level-5 :inherit 'rst-adornment :weight 'bold)
+    (rst-level-6 :inherit 'rst-adornment :weight 'bold)
 
     ;; typescript-mode
     (typescript-jsdoc-tag :foreground doc-comments)

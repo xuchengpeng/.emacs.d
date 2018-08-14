@@ -6,6 +6,7 @@
            themes
            modeline
            treemacs
+           ;; neotree
            window-select
            :feature
            ;; benchmark

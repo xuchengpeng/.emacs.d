@@ -283,7 +283,7 @@ buffers.")
   :on-hooks (find-file-hook after-save-hook after-revert-hook)
   :init " %b"
   :faces t
-  (concat (if buffer-file-name " %I ")
+  (concat " "
           (if buffer-file-name
               (funcall +modeline-buffer-path-function buffer-file-name)
             "%b")))

@@ -90,6 +90,6 @@ LOAD-DURATION is the time taken in milliseconds to load FEATURE.")
 
 (defun dotemacs/show-init-time ()
   (message "dotemacs init completed in %.2fms"
-           (dotemacs/time-subtract-millis after-init-time before-init-time)))
+           (dotemacs/time-subtract-millis (current-time) before-init-time)))
 
-(add-hook 'after-init-hook 'dotemacs/show-init-time)
+(add-hook 'dotemacs-post-init-hook 'dotemacs/show-init-time)

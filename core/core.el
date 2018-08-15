@@ -87,7 +87,8 @@ line or use --debug-init to enable this.")
 (set-terminal-coding-system  'utf-8)   ; pretty
 (set-keyboard-coding-system  'utf-8)   ; pretty
 (set-selection-coding-system 'utf-8)   ; perdy
-(setq locale-coding-system   'utf-8)   ; please
+(setq locale-coding-system   'utf-8
+      system-time-locale "C")          ; please
 (setq-default buffer-file-coding-system 'utf-8) ; with sugar on top
 
 (setq-default

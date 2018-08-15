@@ -70,6 +70,44 @@ by dotemacs.")
 (defvar dotemacs-post-init-hook ()
   "A list of hooks that run after Emacs initialization is complete, and after `dotemacs-init-hook'.")
 
+(defvar dotemacs-debug-mode (or (getenv "DEBUG") init-file-debug)
+  "If non-nil, all dotemacs functions will be verbose. Set DEBUG=1 in the command
+line or use --debug-init to enable this.")
+
+
+;;
+;; Emacs core configuration
+;;
+
+;; UTF-8 as the default coding system
+(when (fboundp 'set-charset-priority)
+  (set-charset-priority 'unicode))     ; pretty
+(prefer-coding-system        'utf-8)   ; pretty
+(set-default-coding-systems  'utf-8)
+(set-terminal-coding-system  'utf-8)   ; pretty
+(set-keyboard-coding-system  'utf-8)   ; pretty
+(set-selection-coding-system 'utf-8)   ; perdy
+(setq locale-coding-system   'utf-8)   ; please
+(setq-default buffer-file-coding-system 'utf-8) ; with sugar on top
+
+(setq-default
+  auto-mode-case-fold nil
+  autoload-compute-prefixes nil
+  debug-on-error dotemacs-debug-mode
+  ;; keep the point out of the minibuffer
+  minibuffer-prompt-properties '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
+  ;; byte compilation
+  byte-compile-verbose dotemacs-debug-mode
+  byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
+  ;; be quiet at startup; don't load or display anything unnecessary
+  inhibit-startup-message t
+  inhibit-startup-echo-area-message user-login-name
+  inhibit-default-init t
+  initial-scratch-message ""
+  initial-major-mode 'text-mode
+  ;; files
+  custom-file (concat dotemacs-local-dir "custom.el"))
+
 (defvar file-name-handler-alist-old file-name-handler-alist)
 (setq garbage-collection-messages t)
 (setq file-name-handler-alist nil
@@ -77,17 +115,14 @@ by dotemacs.")
       gc-cons-percentage 0.6)
 
 (setq package-enable-at-startup nil)
-(setq custom-file (concat dotemacs-local-dir "custom.el"))
-(load custom-file t t)
 
 (add-to-list 'load-path dotemacs-core-dir)
 
-;; preload the personal settings from `dotemacs-personal-preload-dir'
-(let ((file-list (directory-files dotemacs-personal-preload-dir t "^[^#\.].*el$")))
-  (when file-list
-    (message "Loading personal configuration files in %s..." dotemacs-personal-preload-dir)
-    (dolist (file file-list)
-     (load file t t))))
+(load custom-file t t)
+
+;;
+;; Bootstrap functions
+;;
 
 (defun dotemacs-initialize ()
   "dotemacs initialize function.
@@ -103,6 +138,13 @@ The load order is as follows:
   dotemacs-post-init-hook
 
 Module load order is determined by your `dotemacs!' block."
+  ;; preload the personal settings from `dotemacs-personal-preload-dir'
+  (let ((file-list (directory-files dotemacs-personal-preload-dir t "^[^#\.].*el$")))
+    (when file-list
+      (message "Loading personal configuration files in %s..." dotemacs-personal-preload-dir)
+      (dolist (file file-list)
+       (load file t t))))
+
   (require 'core-custom)
   (require 'core-lib)
   (require 'core-packages)
@@ -128,19 +170,23 @@ Module load order is determined by your `dotemacs!' block."
     (unless (server-running-p)
       (server-start)))
   
+  ;; load the personal settings from `dotemacs-personal-dir`
+  (let ((file-list (directory-files dotemacs-personal-dir t "^[^#\.].*el$")))
+    (when file-list
+      (message "Loading personal configuration files in %s..." dotemacs-personal-dir)
+      (dolist (file file-list)
+       (load file t t))))
+  
   (setq file-name-handler-alist file-name-handler-alist-old
         gc-cons-threshold 800000
         gc-cons-percentage 0.1))
 
+;;
+;; Bootstrap dotemacs
+;;
+
 (dotemacs-initialize)
 (add-hook 'emacs-startup-hook #'dotemacs-finalize t)
-
-;; load the personal settings from `dotemacs-personal-dir`
-(let ((file-list (directory-files dotemacs-personal-dir t "^[^#\.].*el$")))
-  (when file-list
-    (message "Loading personal configuration files in %s..." dotemacs-personal-dir)
-    (dolist (file file-list)
-     (load file t t))))
 
 (provide 'core)
 

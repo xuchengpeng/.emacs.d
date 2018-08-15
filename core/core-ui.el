@@ -36,10 +36,6 @@
   (toggle-frame-maximized))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-(setq inhibit-startup-message t
-      initial-scratch-message ""
-      initial-major-mode 'text-mode)
-
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))

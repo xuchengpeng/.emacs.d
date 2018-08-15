@@ -3,8 +3,7 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (dotemacs! :ui
-           themes
-           modeline
+           window-select
            :feature
            editor
            project
@@ -16,8 +15,8 @@
            :tools
            eshell
            :lang
-           cc
            markdown
+           web
            )
 
 (dotemacs-finalize)

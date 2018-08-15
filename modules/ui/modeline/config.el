@@ -431,7 +431,7 @@ See `mode-line-percent-position'.")
 
 (def-modeline-segment! +modeline-misc-info
   (propertize (format-time-string " %H:%M  ")
-              'help-echo (format-time-string "%c")))
+              'help-echo (format-time-string "%Y-%m-%d %a %H:%M")))
 
 ;;
 ;; Preset modeline formats
@@ -440,7 +440,7 @@ See `mode-line-percent-position'.")
 (def-modeline-format! :main
   '(+modeline-buffer-id
     +modeline-buffer-position)
-  `(mode-line-misc-info " "
+  `(+modeline-misc-info
     +modeline-encoding
     +modeline-major-mode " "
     (vc-mode ("" +modeline-vcs " "))

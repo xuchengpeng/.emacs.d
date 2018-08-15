@@ -5,6 +5,7 @@
 (dotemacs! :ui
            themes
            modeline
+           ;; modeline-old
            treemacs
            ;; neotree
            window-select

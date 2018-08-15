@@ -150,7 +150,7 @@ This should be run whenever init.el or an autoload file is modified."
               (push file targets)))))
       (when (file-exists-p dotemacs-autoload-file)
         (delete-file dotemacs-autoload-file)
-        (message "Deleted old autoload.el"))
+        (message "Deleted old autoloads.el"))
       (dolist (file (reverse targets))
         (message
          (cond ((update-file-autoloads file nil dotemacs-autoload-file)
@@ -172,7 +172,7 @@ This should be run whenever init.el or an autoload file is modified."
                       (setq current-sexp (read (thing-at-point 'sexp t)))
                       (eval current-sexp t))
                     (forward-char))
-                  (message "Finished generating autoload.el!"))
+                  (message "Finished generating autoloads.el!"))
               ('error
                (delete-file dotemacs-autoload-file)
                (error "Error in autoloads.el: (%s %s ...) %s -- %s"

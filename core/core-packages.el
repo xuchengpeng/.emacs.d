@@ -236,7 +236,7 @@ they were loaded at startup.
 If RETURN-P, return the message as a string instead of displaying it."
   (funcall (if return-p #'format #'message)
            "dotemacs loaded %s packages across %d modules in %.03fs"
-           (length dotemacs-packages)
+           (length package-activated-list)
            (length dotemacs-modules-path-list)
            (float-time (time-subtract (current-time) before-init-time))))
 (add-hook 'dotemacs-post-init-hook #'dotemacs|display-benchmark)

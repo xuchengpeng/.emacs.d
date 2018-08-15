@@ -427,6 +427,12 @@ See `mode-line-percent-position'.")
   "The buffer position information."
   '(" " mode-line-position " "))
 
+;; misc-info
+
+(def-modeline-segment! +modeline-misc-info
+  (propertize (format-time-string " %H:%M  ")
+              'help-echo (format-time-string "%c")))
+
 ;;
 ;; Preset modeline formats
 ;;
@@ -434,7 +440,7 @@ See `mode-line-percent-position'.")
 (def-modeline-format! :main
   '(+modeline-buffer-id
     +modeline-buffer-position)
-  `(mode-line-misc-info
+  `(mode-line-misc-info " "
     +modeline-encoding
     +modeline-major-mode " "
     (vc-mode ("" +modeline-vcs " "))

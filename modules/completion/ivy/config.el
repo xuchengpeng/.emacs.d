@@ -23,7 +23,7 @@
         ivy-format-function #'ivy-format-function-line
         projectile-completion-system 'ivy)
   ;; Integration with `magit'
-  (dotemacs-after-load 'magit
+  (after-load! 'magit
     (setq magit-completing-read-function 'ivy-completing-read))
   (ivy-mode))
 

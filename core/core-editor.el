@@ -74,15 +74,15 @@
 (setq global-auto-revert-non-file-buffers t
       auto-revert-verbose nil)
 
-(dotemacs-after-load 'abbrev
+(after-load! 'abbrev
   (diminish 'abbrev-mode))
-(dotemacs-after-load 'eldoc
+(after-load! 'eldoc
   (diminish 'eldoc-mode))
-(dotemacs-after-load 'autorevert
+(after-load! 'autorevert
   (diminish 'auto-revert-mode))
-(dotemacs-after-load 'simple
-              (diminish 'auto-fill-function)
-              (diminish 'visual-line-mode))
+(after-load! 'simple
+  (diminish 'auto-fill-function)
+  (diminish 'visual-line-mode))
 
 ;; (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 ;; (global-set-key (kbd "C-r") 'isearch-backward-regexp)

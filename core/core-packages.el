@@ -38,7 +38,7 @@ missing) and shouldn't be deleted.")
 (defvar dotemacs-packages ()
   "A list of packages to install. Packages are represented by symbols.")
 
-(defvar doteamcs-modules-path-list ()
+(defvar dotemacs-modules-path-list ()
   "The path to each modules.")
 
 (setq package-user-dir (concat dotemacs-packages-dir "elpa/")
@@ -109,7 +109,7 @@ missing) and shouldn't be deleted.")
 
 (defun dotemacs-load-modules-autoload ()
   "Load autoload.el and autoload/*.el in each module."
-  (dolist (path doteamcs-modules-path-list)
+  (dolist (path dotemacs-modules-path-list)
     (let ((auto-dir  (expand-file-name "autoload" path))
           (auto-file (expand-file-name "autoload.el" path)))
       (when (file-exists-p auto-file)
@@ -140,7 +140,7 @@ This should be run whenever init.el or an autoload file is modified."
   (let ((targets
            (file-expand-wildcards
             (expand-file-name "autoload/*.el" dotemacs-core-dir))))
-      (dolist (path doteamcs-modules-path-list)
+      (dolist (path dotemacs-modules-path-list)
         (let ((auto-dir  (expand-file-name "autoload" path))
               (auto-file (expand-file-name "autoload.el" path)))
           (when (file-exists-p auto-file)
@@ -183,7 +183,7 @@ This should be run whenever init.el or an autoload file is modified."
 
 (defun dotemacs-modules-load-package ()
   "Load packages.el in each module."
-  (dolist (m-path doteamcs-modules-path-list)
+  (dolist (m-path dotemacs-modules-path-list)
     (let ((path (concat m-path "packages.el")))
       (when (file-exists-p path)
         (load path t t))))
@@ -191,7 +191,7 @@ This should be run whenever init.el or an autoload file is modified."
 
 (defun dotemacs-modules-load-config ()
   "Load config.el in each module."
-  (dolist (m-path doteamcs-modules-path-list)
+  (dolist (m-path dotemacs-modules-path-list)
     (let ((path (concat m-path "config.el")))
       (if (file-exists-p path)
           (load path t t)
@@ -211,7 +211,7 @@ i.e. :keyword to \"keyword\"."
 (defmacro dotemacs! (&rest modules-list)
   "Declare modules in MODULES-LIST.
 Separate modules with sub-directories' name.
-Basically adding modules path to `doteamcs-modules-path-list'.
+Basically adding modules path to `dotemacs-modules-path-list'.
 
 Example: (dotemacs! :feature evil :ui custom) for modules/feature/evil
 and modules/ui/custom."
@@ -219,7 +219,7 @@ and modules/ui/custom."
     (cond ((keywordp module) (setq mode module))
           ((not      mode) (error "No sub-folder specified in `dotemacs!' for %s" module))
           (t               (let ((module-path (format "%s%s/%s/" dotemacs-modules-dir (dotemacs-keyword-to-name-str mode) module)))
-                             (add-to-list 'doteamcs-modules-path-list module-path t))))))
+                             (add-to-list 'dotemacs-modules-path-list module-path t))))))
 
 (defmacro package! (&rest packages-list)
   "Add packages in PACKAGES-LIST to ‘dotemacs-packages’.
@@ -227,7 +227,19 @@ and modules/ui/custom."
 Can take multiple packages.
 e.g. (package! evil evil-surround)"
   `(dolist (package ',packages-list)
-     (add-to-list 'dotemacs-packages package)))
+     (add-to-list 'dotemacs-packages package t)))
+
+(defun dotemacs|display-benchmark (&optional return-p)
+  "Display a benchmark, showing number of packages and modules, and how quickly
+they were loaded at startup.
+
+If RETURN-P, return the message as a string instead of displaying it."
+  (funcall (if return-p #'format #'message)
+           "dotemacs loaded %s packages across %d modules in %.03fs"
+           (length dotemacs-packages)
+           (length dotemacs-modules-path-list)
+           (float-time (time-subtract (current-time) before-init-time))))
+(add-hook 'dotemacs-post-init-hook #'dotemacs|display-benchmark)
 
 (provide 'core-packages)
 

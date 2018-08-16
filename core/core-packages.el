@@ -259,7 +259,7 @@ MODULES must be in mplist format.
 e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
   (unless dotemacs-modules
     (setq dotemacs-modules (make-hash-table :test #'equal
-                                            :size (+ 5 (length modules))
+                                            :size (if modules (length modules) 100)
                                             :rehash-threshold 1.0)))
   (let (mode)
     (dolist (m modules)
@@ -347,7 +347,7 @@ If RETURN-P, return the message as a string instead of displaying it."
   (funcall (if return-p #'format #'message)
            "dotemacs loaded %s packages across %d modules in %.03fs"
            (length package-activated-list)
-           (hash-table-size dotemacs-modules)
+           (if dotemacs-modules (hash-table-count dotemacs-modules) 0)
            (float-time (time-subtract (current-time) before-init-time))))
 (add-hook 'dotemacs-init-hook #'dotemacs|display-benchmark)
 

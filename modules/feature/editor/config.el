@@ -30,18 +30,18 @@
 ;; Treat undo history as a tree
 (use-package undo-tree
   :diminish undo-tree-mode
+  :hook (after-init . global-undo-tree-mode)
   :config
   (setq undo-tree-history-directory-alist `(("." . ,(concat dotemacs-cache-dir "undo")))
         undo-tree-auto-save-history t
         undo-tree-visualizer-timestamps t
-        undo-tree-visualizer-diff t)
-  (global-undo-tree-mode))
+        undo-tree-visualizer-diff t))
 
 (use-package smartparens
   :diminish smartparens-mode
+  :hook (after-init . smartparens-global-mode)
   :config
   (require 'smartparens-config)
-  (smartparens-global-mode)
   ;; (add-hook 'prog-mode-hook #'smartparens-strict-mode)
   )
 

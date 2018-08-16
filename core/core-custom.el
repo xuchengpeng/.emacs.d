@@ -31,10 +31,6 @@
 
 ;;; Code:
 
-(defgroup dotemacs nil
-  "Custom configuration for dotemacs."
-  :group 'convenience)
-
 (defcustom dotemacs-full-name "Chuck"
   "Set user full name."
   :type 'string

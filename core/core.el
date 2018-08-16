@@ -74,6 +74,9 @@ by dotemacs.")
   "If non-nil, all dotemacs functions will be verbose. Set DEBUG=1 in the command
 line or use --debug-init to enable this.")
 
+(defgroup dotemacs nil
+  "dotemacs, an Emacs configuration."
+  :group 'emacs)
 
 ;;
 ;; Emacs core configuration
@@ -98,6 +101,7 @@ line or use --debug-init to enable this.")
   ;; keep the point out of the minibuffer
   minibuffer-prompt-properties '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
   ;; byte compilation
+  byte-compile-dynamic nil
   byte-compile-verbose dotemacs-debug-mode
   byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
   ;; be quiet at startup; don't load or display anything unnecessary
@@ -144,24 +148,17 @@ Module load order is determined by your `dotemacs!' block."
     (when file-list
       (message "Loading personal configuration files in %s..." dotemacs-personal-preload-dir)
       (dolist (file file-list)
-       (load file t t))))
+        (load file t t))))
 
   (require 'core-custom)
   (require 'core-lib)
   (require 'core-packages)
-  
-  (dotemacs-ensure-packages-initialized)
-  (dotemacs-ensure-core-packages)
-  
+  (dotemacs-initialize-core)
   (require 'core-ui)
   (require 'core-editor))
 
 (defun dotemacs-finalize ()
   "dotemacs finalize function."
-  (dotemacs-load-autoload)
-  
-  (dotemacs-initialize-modules)
-  
   (unless noninteractive
     (dolist (hook '(dotemacs-init-hook dotemacs-post-init-hook))
       (run-hook-with-args hook)))
@@ -176,7 +173,7 @@ Module load order is determined by your `dotemacs!' block."
     (when file-list
       (message "Loading personal configuration files in %s..." dotemacs-personal-dir)
       (dolist (file file-list)
-       (load file t t))))
+        (load file t t))))
   
   (setq file-name-handler-alist file-name-handler-alist-old
         gc-cons-threshold 800000

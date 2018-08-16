@@ -46,8 +46,6 @@
 (eval-and-compile
   (unless EMACS26+
     (with-no-warnings
-      ;; if-let and when-let are deprecated in Emacs 26+ in favor of their
-      ;; if-let* variants, so we alias them for 25 users.
       (defalias 'if-let* #'if-let)
       (defalias 'when-let* #'when-let))))
 
@@ -61,28 +59,20 @@
        '(progn ,@body))))
 
 ;;
-;; Functions
+;; Helpers
 ;;
-
-(defun add-auto-mode! (mode &rest patterns)
-  "Add entries to `auto-mode-alist' to use `MODE' for all given file `PATTERNS'."
-  (dolist (pattern patterns)
-    (add-to-list 'auto-mode-alist (cons pattern mode))))
 
 (defun dotemacs-unquote (exp)
   "Return EXP unquoted."
-  (declare (pure t) (side-effect-free t))
   (while (memq (car-safe exp) '(quote function))
     (setq exp (cadr exp)))
   exp)
 
 (defun dotemacs-enlist (exp)
   "Return EXP wrapped in a list, or as-is if already a list."
-  (declare (pure t) (side-effect-free t))
   (if (listp exp) exp (list exp)))
 
 (defun dotemacs--resolve-hook-forms (hooks)
-  (declare (pure t) (side-effect-free t))
   (cl-loop with quoted-p = (eq (car-safe hooks) 'quote)
            for hook in (dotemacs-enlist (dotemacs-unquote hooks))
            if (eq (car-safe hook) 'quote)
@@ -92,7 +82,7 @@
            else collect (intern (format "%s-hook" (symbol-name hook)))))
 
 ;;
-;; Macros
+;; Library
 ;;
 
 (defmacro λ! (&rest body)
@@ -102,45 +92,33 @@
 
 (defalias 'lambda! 'λ!)
 
-(defmacro after! (targets &rest body)
+(defmacro after! (feature &rest forms)
   "A smart wrapper around `with-eval-after-load'. Supresses warnings during
-compilation. This will no-op on features that have been disabled by the user."
+compilation."
   (declare (indent defun) (debug t))
-  (unless (symbolp targets)
-    (list (if (or (not (bound-and-true-p byte-compile-current-file))
-                  (dolist (next (dotemacs-enlist targets))
-                    (unless (keywordp next)
-                      (if (symbolp next)
-                          (require next nil :no-error)
-                        (load next :no-message :no-error)))))
-              #'progn
-            #'with-no-warnings)
-          (if (symbolp targets)
-              `(with-eval-after-load ',targets ,@body)
-            (pcase (car-safe targets)
-              ((or :or :any)
-               (macroexp-progn
-                (cl-loop for next in (cdr targets)
-                         collect `(after! ,next ,@body))))
-              ((or :and :all)
-               (dolist (next (cdr targets))
-                 (setq body `((after! ,next ,@body))))
-               (car body))
-              (_ `(after! (:and ,@targets) ,@body)))))))
+  `(,(if (or (not (bound-and-true-p byte-compile-current-file))
+             (if (symbolp feature)
+                 (require feature nil :no-error)
+               (load feature :no-message :no-error)))
+         #'progn
+       #'with-no-warnings)
+    (with-eval-after-load ',feature ,@forms)))
 
 (defmacro quiet! (&rest forms)
-  "Run FORMS without making any output."
-  `(let ((old-fn (symbol-function 'write-region)))
-     (cl-letf* ((standard-output (lambda (&rest _)))
-                ((symbol-function 'load-file) (lambda (file) (load file nil t)))
-                ((symbol-function 'message) (lambda (&rest _)))
-                ((symbol-function 'write-region)
-                 (lambda (start end filename &optional append visit lockname mustbenew)
-                   (unless visit (setq visit 'no-message))
-                   (funcall old-fn start end filename append visit lockname mustbenew)))
-                (inhibit-message t)
-                (save-silently t))
-       ,@forms)))
+  "Run FORMS without making any noise."
+  `(if dotemacs-debug-mode
+       (progn ,@forms)
+     (let ((old-fn (symbol-function 'write-region)))
+       (cl-letf* ((standard-output (lambda (&rest _)))
+                  ((symbol-function 'load-file) (lambda (file) (load file nil t)))
+                  ((symbol-function 'message) (lambda (&rest _)))
+                  ((symbol-function 'write-region)
+                   (lambda (start end filename &optional append visit lockname mustbenew)
+                     (unless visit (setq visit 'no-message))
+                     (funcall old-fn start end filename append visit lockname mustbenew)))
+                  (inhibit-message t)
+                  (save-silently t))
+         ,@forms))))
 
 (defmacro add-hook! (&rest args)
   "A convenience macro for `add-hook'. Takes, in order:
@@ -197,23 +175,6 @@ Body forms can access the hook's arguments through the let-bound variable
 `add-hook!'."
   (declare (indent defun) (debug t))
   `(add-hook! :remove ,@args))
-
-(defmacro setq-hook! (hooks &rest rest)
-  "Convenience macro for setting buffer-local variables in a hook.
-
-  (setq-hook! 'markdown-mode-hook
-    line-spacing 2
-    fill-column 80)"
-  (declare (indent 1))
-  (unless (= 0 (% (length rest) 2))
-    (signal 'wrong-number-of-arguments (length rest)))
-  `(add-hook! ,hooks
-     ,@(let (forms)
-         (while rest
-           (let ((var (pop rest))
-                 (val (pop rest)))
-             (push `(setq-local ,var ,val) forms)))
-         (nreverse forms))))
 
 (provide 'core-lib)
 

@@ -3,7 +3,7 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (dotemacs! :ui
-           window-select
+           (window-select +ace-window)
            :feature
            editor
            project

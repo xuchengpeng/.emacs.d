@@ -112,7 +112,7 @@ missing) and shouldn't be deleted.")
 
 (defun dotemacs-initialize-autoload ()
   (if (file-exists-p dotemacs-autoload-file)
-      (load dotemacs-autoload-file t t)
+      (load dotemacs-autoload-file t (not dotemacs-debug-mode))
     (let ((targets
            (file-expand-wildcards
             (expand-file-name "autoload/*.el" dotemacs-core-dir))))
@@ -125,7 +125,7 @@ missing) and shouldn't be deleted.")
             (dolist (file (directory-files-recursively auto-dir "\\.el$"))
               (push file targets)))))
       (dolist (file (reverse targets))
-        (load file t t)))))
+        (load file t (not dotemacs-debug-mode))))))
 
 (defun dotemacs-generate-autoload-file ()
   "Generate the autoloads.el file, specified by `dotemacs-autoload-file'.
@@ -139,8 +139,8 @@ This should be run whenever init.el or an autoload file is modified."
   (interactive)
   
   (let ((targets
-           (file-expand-wildcards
-            (expand-file-name "autoload/*.el" dotemacs-core-dir))))
+         (file-expand-wildcards
+          (expand-file-name "autoload/*.el" dotemacs-core-dir))))
       (dolist (path (dotemacs-module-paths))
         (let ((auto-dir  (expand-file-name "autoload" path))
               (auto-file (expand-file-name "autoload.el" path)))
@@ -185,7 +185,7 @@ This should be run whenever init.el or an autoload file is modified."
 (defun dotemacs-load-modules-file (file)
   "Load packages.el in each module."
   (dolist (path (dotemacs-module-paths file))
-    (load path t t)))
+    (load path t (not dotemacs-debug-mode))))
 
 (defun dotemacs-initialize-modules ()
   "Initialize modules."

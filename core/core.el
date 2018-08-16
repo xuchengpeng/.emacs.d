@@ -123,7 +123,7 @@ line or use --debug-init to enable this.")
 
 (add-to-list 'load-path dotemacs-core-dir)
 
-(load custom-file t t)
+(load custom-file t (not dotemacs-debug-mode))
 
 ;;
 ;; Bootstrap functions
@@ -135,20 +135,20 @@ The load order is as follows:
 
   ~/.emacs.d/init.el
   ~/.emacs.d/core/core.el
-  `after-init-hook'
-  `emacs-startup-hook'
   Module packages.el files
   Module config.el files
+  `after-init-hook'
+  `emacs-startup-hook'
   dotemacs-init-hook
   dotemacs-post-init-hook
 
 Module load order is determined by your `dotemacs!' block."
   ;; preload the personal settings from `dotemacs-personal-preload-dir'
-  (let ((file-list (directory-files dotemacs-personal-preload-dir t "^[^#\.].*el$")))
-    (when file-list
-      (message "Loading personal configuration files in %s..." dotemacs-personal-preload-dir)
-      (dolist (file file-list)
-        (load file t t))))
+  (let ((file-list
+         (file-expand-wildcards
+          (expand-file-name "*.el" dotemacs-personal-preload-dir))))
+    (dolist (file file-list)
+      (load file t (not dotemacs-debug-mode))))
 
   (require 'core-custom)
   (require 'core-lib)
@@ -169,11 +169,11 @@ Module load order is determined by your `dotemacs!' block."
       (server-start)))
   
   ;; load the personal settings from `dotemacs-personal-dir`
-  (let ((file-list (directory-files dotemacs-personal-dir t "^[^#\.].*el$")))
-    (when file-list
-      (message "Loading personal configuration files in %s..." dotemacs-personal-dir)
-      (dolist (file file-list)
-        (load file t t))))
+  (let ((file-list
+         (file-expand-wildcards
+          (expand-file-name "*.el" dotemacs-personal-dir))))
+    (dolist (file file-list)
+      (load file t (not dotemacs-debug-mode))))
   
   (setq file-name-handler-alist file-name-handler-alist-old
         gc-cons-threshold 800000

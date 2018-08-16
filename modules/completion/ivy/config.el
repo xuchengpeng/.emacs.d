@@ -95,7 +95,6 @@
   (counsel-mode))
 
 (use-package counsel-projectile
-  :preface (setq projectile-keymap-prefix (kbd "C-c p"))
   :after (counsel projectile)
   :config
   (counsel-projectile-mode))

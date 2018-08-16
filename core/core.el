@@ -95,23 +95,24 @@ line or use --debug-init to enable this.")
 (setq-default buffer-file-coding-system 'utf-8) ; with sugar on top
 
 (setq-default
-  auto-mode-case-fold nil
-  autoload-compute-prefixes nil
-  debug-on-error dotemacs-debug-mode
-  ;; keep the point out of the minibuffer
-  minibuffer-prompt-properties '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
-  ;; byte compilation
-  byte-compile-dynamic nil
-  byte-compile-verbose dotemacs-debug-mode
-  byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
-  ;; be quiet at startup; don't load or display anything unnecessary
-  inhibit-startup-message t
-  inhibit-startup-echo-area-message user-login-name
-  inhibit-default-init t
-  initial-scratch-message ""
-  initial-major-mode 'text-mode
-  ;; files
-  custom-file (concat dotemacs-local-dir "custom.el"))
+ auto-mode-case-fold nil
+ autoload-compute-prefixes nil
+ debug-on-error dotemacs-debug-mode
+ idle-update-delay 2 ;; update ui less often
+ ;; keep the point out of the minibuffer
+ minibuffer-prompt-properties '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
+ ;; byte compilation
+ byte-compile-dynamic nil
+ byte-compile-verbose dotemacs-debug-mode
+ byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
+ ;; be quiet at startup; don't load or display anything unnecessary
+ inhibit-startup-message t
+ inhibit-startup-echo-area-message user-login-name
+ inhibit-default-init t
+ initial-scratch-message ""
+ initial-major-mode 'text-mode
+ ;; files
+ custom-file (concat dotemacs-local-dir "custom.el"))
 
 (defvar file-name-handler-alist-old file-name-handler-alist)
 (setq garbage-collection-messages t)

@@ -12,7 +12,7 @@
          :map company-search-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next))
-  :hook (dotemacs-init . global-company-mode)
+  :hook (dotemacs-post-init . global-company-mode)
   :config
   (setq company-idle-delay 0.2
         company-tooltip-limit 20

@@ -18,5 +18,3 @@
            markdown
            web
            )
-
-(dotemacs-finalize)

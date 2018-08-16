@@ -21,7 +21,7 @@ matrix:
 
 script:
   - emacs --version
-  - emacs --batch -l init.test.el
+  - emacs --debug-init --batch -l init.test.el
 
 branches:
   only:

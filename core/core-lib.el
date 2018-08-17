@@ -72,6 +72,18 @@
   "Return EXP wrapped in a list, or as-is if already a list."
   (if (listp exp) exp (list exp)))
 
+(defun dotemacs-keyword-intern (str)
+  "Converts STR (a string) into a keyword (`keywordp')."
+  (declare (pure t) (side-effect-free t))
+  (cl-check-type str string)
+  (intern (concat ":" str)))
+
+(defun dotemacs-keyword-name (keyword)
+  "Returns the string name of KEYWORD (`keywordp') minus the leading colon."
+  (declare (pure t) (side-effect-free t))
+  (cl-check-type :test keyword)
+  (substring (symbol-name keyword) 1))
+
 (defun dotemacs--resolve-hook-forms (hooks)
   (cl-loop with quoted-p = (eq (car-safe hooks) 'quote)
            for hook in (dotemacs-enlist (dotemacs-unquote hooks))
@@ -85,6 +97,18 @@
 ;; Library
 ;;
 
+(defun FILE! ()
+  "Return the emacs lisp file this macro is called from."
+  (cond ((bound-and-true-p byte-compile-current-file))
+        (load-file-name)
+        (buffer-file-name)
+        ((stringp (car-safe current-load-list)) (car current-load-list))))
+
+(defun DIR! ()
+  "Returns the directory of the emacs lisp file this macro is called from."
+  (let ((file (FILE!)))
+    (and file (file-name-directory file))))
+
 (defmacro λ! (&rest body)
   "A shortcut for inline interactive lambdas."
   (declare (doc-string 1))
@@ -92,17 +116,31 @@
 
 (defalias 'lambda! 'λ!)
 
-(defmacro after! (feature &rest forms)
+(defmacro after! (targets &rest body)
   "A smart wrapper around `with-eval-after-load'. Supresses warnings during
-compilation."
+compilation. This will no-op on features that have been disabled by the user."
   (declare (indent defun) (debug t))
-  `(,(if (or (not (bound-and-true-p byte-compile-current-file))
-             (if (symbolp feature)
-                 (require feature nil :no-error)
-               (load feature :no-message :no-error)))
-         #'progn
-       #'with-no-warnings)
-    (with-eval-after-load ',feature ,@forms)))
+  (unless (symbolp targets)
+    (list (if (or (not (bound-and-true-p byte-compile-current-file))
+                  (dolist (next (dotemacs-enlist targets))
+                    (unless (keywordp next)
+                      (if (symbolp next)
+                          (require next nil :no-error)
+                        (load next :no-message :no-error)))))
+              #'progn
+            #'with-no-warnings)
+          (if (symbolp targets)
+              `(with-eval-after-load ',targets ,@body)
+            (pcase (car-safe targets)
+              ((or :or :any)
+               (macroexp-progn
+                (cl-loop for next in (cdr targets)
+                         collect `(after! ,next ,@body))))
+              ((or :and :all)
+               (dolist (next (cdr targets))
+                 (setq body `((after! ,next ,@body))))
+               (car body))
+              (_ `(after! (:and ,@targets) ,@body)))))))
 
 (defmacro quiet! (&rest forms)
   "Run FORMS without making any noise."
@@ -175,6 +213,23 @@ Body forms can access the hook's arguments through the let-bound variable
 `add-hook!'."
   (declare (indent defun) (debug t))
   `(add-hook! :remove ,@args))
+
+(defmacro setq-hook! (hooks &rest rest)
+  "Convenience macro for setting buffer-local variables in a hook.
+
+  (setq-hook! 'markdown-mode-hook
+    line-spacing 2
+    fill-column 80)"
+  (declare (indent 1))
+  (unless (= 0 (% (length rest) 2))
+    (signal 'wrong-number-of-arguments (length rest)))
+  `(add-hook! ,hooks
+     ,@(let (forms)
+         (while rest
+           (let ((var (pop rest))
+                 (val (pop rest)))
+             (push `(setq-local ,var ,val) forms)))
+         (nreverse forms))))
 
 (provide 'core-lib)
 

@@ -187,17 +187,15 @@ This should be run whenever init.el or an autoload file is modified."
                       (car ex) (error-message-string ex))))
           (kill-buffer buf)))))
 
-(defun dotemacs-load-modules-file (file)
-  "Load packages.el in each module."
-  (dolist (path (dotemacs-module-load-path))
-    (load (expand-file-name file path) t (not dotemacs-debug-mode))))
-
 (defun dotemacs-initialize-modules ()
   "Initialize modules."
   (dotemacs-initialize-autoload)
-  (dotemacs-load-modules-file "packages.el")
-  (dotemacs-install-modules-packages)
-  (dotemacs-load-modules-file "config.el")
+  (let ((path-list (dotemacs-module-load-path)))
+    (dolist (path path-list)
+      (load (expand-file-name "packages.el" path) t (not dotemacs-debug-mode)))
+    (dotemacs-install-modules-packages)
+    (dolist (path path-list)
+      (load (expand-file-name "config.el" path) t (not dotemacs-debug-mode))))
   (message "Emacs modules initialized"))
 
 ;;

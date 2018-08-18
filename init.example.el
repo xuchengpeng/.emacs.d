@@ -31,6 +31,7 @@
            javascript
            markdown
            (org         ; organize your plain life in plain text
+            +capture    ; org-capture in and outside of Emacs
             +export)    ; Exporting org to whatever you want
            web
            )

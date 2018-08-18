@@ -8,7 +8,7 @@
            ;; modeline-old
            treemacs
            ;; neotree
-           window-select
+           (window-select +ace-window)
            :feature
            ;; benchmark
            editor
@@ -30,6 +30,7 @@
            data
            javascript
            markdown
-           org
+           (org         ; organize your plain life in plain text
+            +export)    ; Exporting org to whatever you want
            web
            )

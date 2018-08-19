@@ -38,12 +38,8 @@
    (t
     (error "Unknown color theme: '%s'" theme))))
 
-(when load-file-name
-  (let* ((base (file-name-directory load-file-name))
-         (dir (expand-file-name "dotemacs-themes/" base)))
-    (add-to-list 'load-path
-                 (or (and (file-directory-p dir) dir)
-                     base))))
+(let ((dir (concat (DIR!) "dotemacs-themes/")))
+  (add-to-list 'load-path dir))
 
 ;; Color theme
 (dotemacs-set-theme dotemacs-color-theme)

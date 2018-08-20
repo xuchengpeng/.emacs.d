@@ -25,6 +25,7 @@
            :tools
            eshell
            magit
+           editorconfig
            ;; package-manager
            :lang
            cc

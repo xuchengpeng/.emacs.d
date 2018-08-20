@@ -53,7 +53,7 @@ missing) and shouldn't be deleted.")
       use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1))
 
 (defvar-local package-archives-list '(melpa emacs-china tuna custom))
-(defun dotemacs-set-package-archives (archives)
+(defun dotemacs/set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
   (interactive
    (list
@@ -82,7 +82,7 @@ missing) and shouldn't be deleted.")
 
   (message "Set package archives to '%s'." archives))
 
-(dotemacs-set-package-archives dotemacs-package-archives)
+(dotemacs/set-package-archives dotemacs-package-archives)
 
 ;;
 ;; Functions
@@ -132,7 +132,7 @@ missing) and shouldn't be deleted.")
       (dolist (file (reverse targets))
         (load file t (not dotemacs-debug-mode))))))
 
-(defun dotemacs-generate-autoload-file ()
+(defun dotemacs/generate-autoload-file ()
   "Generate the autoloads.el file, specified by `dotemacs-autoload-file'.
 
 It scans and reads core/autoload/*.el, modules/*/*/autoload.el and

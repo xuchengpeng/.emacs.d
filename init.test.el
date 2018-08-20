@@ -5,6 +5,7 @@
 (dotemacs! :ui
            (window-select +ace-window)
            :feature
+           evil
            editor
            project
            utils

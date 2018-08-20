@@ -11,6 +11,7 @@
            (window-select +ace-window)
            :feature
            ;; benchmark
+           evil
            editor
            project
            syntax-checker

@@ -43,6 +43,14 @@ buffers.")
 ;;
 (defvar +modeline--vspc (propertize " " 'face 'variable-pitch))
 
+;; externs
+(defvar anzu--state nil)
+(defvar evil-mode nil)
+(defvar evil-state nil)
+(defvar evil-visual-selection nil)
+(defvar evil-visual-beginning nil)
+(defvar evil-visual-end nil)
+
 ;;
 ;; Custom faces
 ;;
@@ -151,7 +159,7 @@ buffers.")
 (add-hook 'focus-out-hook #'+modeline|unfocus-all-windows)
 (advice-add #'posframe-hide :after #'+modeline|focus-all-windows)
 (advice-add #'posframe-delete :after #'+modeline|focus-all-windows)
-(when (fboundp 'helm-mode)
+(when (featurep! :completion helm)
   (add-hook 'helm-before-initialize-hook #'+modeline|unfocus-all-windows)
   (add-hook 'helm-cleanup-hook #'+modeline|focus-all-windows))
 
@@ -346,14 +354,17 @@ segment.")
 (add-hook 'text-mode-hook #'+modeline|enable-word-count)
 
 (def-modeline-segment! +modeline-selection-info
-  (let ((beg (region-beginning))
-        (end (region-end)))
+  (let ((beg (or evil-visual-beginning (region-beginning)))
+        (end (or evil-visual-end (region-end))))
     (propertize
      (let ((lines (count-lines beg (min end (point-max)))))
-       (concat (cond ((bound-and-true-p rectangle-mark-mode)
+       (concat (cond ((or (bound-and-true-p rectangle-mark-mode)
+                          (eq 'block evil-visual-selection))
                       (let ((cols (abs (- (dotemacs-column end)
                                           (dotemacs-column beg)))))
                         (format "%dx%dB" lines cols)))
+                     ((eq evil-visual-selection 'line)
+                      (format "%dL" lines))
                      ((> lines 1)
                       (format "%dC %dL" (- end beg) lines))
                      ((format "%dC" (- end beg))))
@@ -365,8 +376,11 @@ segment.")
   (add-to-list '+modeline-format-left '+modeline-selection-info t #'eq))
 (defun +modeline|disable-selection-info ()
   (setq +modeline-format-left (delq '+modeline-selection-info +modeline-format-left)))
-(add-hook 'activate-mark-hook #'+modeline|enable-selection-info)
-(add-hook 'deactivate-mark-hook #'+modeline|disable-selection-info)
+(cond ((featurep! :feature evil)
+       (add-hook 'evil-visual-state-entry-hook #'+modeline|enable-selection-info)
+       (add-hook 'evil-visual-state-exit-hook #'+modeline|disable-selection-info))
+      ((add-hook 'activate-mark-hook #'+modeline|enable-selection-info)
+       (add-hook 'deactivate-mark-hook #'+modeline|disable-selection-info)))
 
 ;; flycheck
 

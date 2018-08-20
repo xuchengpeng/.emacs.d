@@ -50,6 +50,7 @@ buffers.")
 (defvar evil-visual-selection nil)
 (defvar evil-visual-beginning nil)
 (defvar evil-visual-end nil)
+(defvar iedit-mode nil)
 
 ;;
 ;; Custom faces
@@ -79,6 +80,11 @@ buffers.")
 
 (defface dotemacs-modeline-highlight '((t (:inherit mode-line-emphasis)))
   "Face for bright segments of the mode-line."
+  :group '+modeline)
+
+(defface dotemacs-modeline-panel '((t (:inherit mode-line-highlight)))
+  "Face for 'X out of Y' segments, such as `+modeline--anzu',
+`+modeline--evil-substitute' and `iedit'"
   :group '+modeline)
 
 (defface dotemacs-modeline-info `((t (:inherit (success bold))))
@@ -340,6 +346,83 @@ buffers.")
   (propertize (format-mode-line mode-name)
               'face (if (active) 'dotemacs-modeline-buffer-major-mode)))
 
+(defun +modeline--macro-recording ()
+  "Display current Emacs or evil macro being recorded."
+  (when (and (active) (or defining-kbd-macro executing-kbd-macro))
+    (let ((sep (propertize " " 'face 'dotemacs-modeline-panel)))
+      (concat sep
+              (propertize (if (bound-and-true-p evil-this-macro)
+                              (char-to-string evil-this-macro)
+                            "Macro")
+                          'face 'dotemacs-modeline-panel)
+              sep))))
+
+(defsubst +modeline--anzu ()
+  "Show the match index and total number thereof. Requires `anzu', also
+`evil-anzu' if using `evil-mode' for compatibility with `evil-search'."
+  (when (and anzu--state (not iedit-mode))
+    (propertize
+     (let ((here anzu--current-position)
+           (total anzu--total-matched))
+       (cond ((eq anzu--state 'replace-query)
+              (format " %d replace " total))
+             ((eq anzu--state 'replace)
+              (format " %d/%d " here total))
+             (anzu--overflow-p
+              (format " %s+ " total))
+             ((format " %s/%d " here total))))
+     'face (if (active) 'dotemacs-modeline-panel))))
+
+(defsubst +modeline--evil-substitute ()
+  "Show number of matches for evil-ex substitutions and highlights in real time."
+  (when (and evil-mode
+             (or (assq 'evil-ex-substitute evil-ex-active-highlights-alist)
+                 (assq 'evil-ex-global-match evil-ex-active-highlights-alist)
+                 (assq 'evil-ex-buffer-match evil-ex-active-highlights-alist)))
+    (propertize
+     (let ((range (if evil-ex-range
+                      (cons (car evil-ex-range) (cadr evil-ex-range))
+                    (cons (line-beginning-position) (line-end-position))))
+           (pattern (car-safe (evil-delimited-arguments evil-ex-argument 2))))
+       (if pattern
+           (format " %s matches " (how-many pattern (car range) (cdr range)))
+         " - "))
+     'face (if (active) 'dotemacs-modeline-panel))))
+
+(defun dotemacs-themes--overlay-sort (a b)
+  (< (overlay-start a) (overlay-start b)))
+
+(defsubst +modeline--iedit ()
+  "Show the number of iedit regions matches + what match you're on."
+  (when (and iedit-mode iedit-occurrences-overlays)
+    (propertize
+     (let ((this-oc (or (let ((inhibit-message t))
+                          (iedit-find-current-occurrence-overlay))
+                        (progn (iedit-prev-occurrence)
+                               (iedit-find-current-occurrence-overlay))))
+           (length (length iedit-occurrences-overlays)))
+       (format " %s/%d "
+               (if this-oc
+                   (- length
+                      (length (memq this-oc (sort (append iedit-occurrences-overlays nil)
+                                                  #'dotemacs-themes--overlay-sort)))
+                      -1)
+                 "-")
+               length))
+     'face (if (active) 'dotemacs-modeline-panel))))
+
+(def-modeline-segment! +modeline-matches
+  "Displays: 1. the currently recording macro, 2. A current/total for the
+current search term (with anzu), 3. The number of substitutions being conducted
+with `evil-ex-substitute', and/or 4. The number of active `iedit' regions."
+  (let ((meta (concat (+modeline--macro-recording)
+                      (+modeline--anzu)
+                      (+modeline--evil-substitute)
+                      (+modeline--iedit)
+                      " ")))
+     (or (and (not (equal meta " ")) meta)
+         (if buffer-file-name " %I"))))
+
 ;;
 (defsubst dotemacs-column (pos)
   (save-excursion (goto-char pos)
@@ -452,7 +535,8 @@ See `mode-line-percent-position'.")
 ;;
 
 (def-modeline-format! :main
-  '(+modeline-buffer-id
+  '(+modeline-matches
+    +modeline-buffer-id
     +modeline-buffer-position)
   `(+modeline-misc-info
     +modeline-encoding
@@ -462,11 +546,12 @@ See `mode-line-percent-position'.")
     +modeline-flycheck))
 
 (def-modeline-format! :minimal
-  '(+modeline-buffer-id)
+  '(+modeline-matches
+    +modeline-buffer-id)
   '(+modeline-major-mode))
 
 (def-modeline-format! :special
-  '(" %b " +modeline-buffer-position)
+  '(+modeline-matches " %b " +modeline-buffer-position)
   '(+modeline-encoding +modeline-major-mode mode-line-process))
 
 (def-modeline-format! :project

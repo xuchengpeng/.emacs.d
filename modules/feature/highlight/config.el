@@ -1,13 +1,12 @@
 ;;; feature/highlight/config.el -*- lexical-binding: t; -*-
 
 ;; Highlight symbols
-(use-package highlight-symbol
-  :disabled
-  :diminish highlight-symbol-mode
-  :commands (highlight-symbol-mode)
-  :hook (prog-mode . highlight-symbol-mode)
-  :config
-  (setq highlight-symbol-idle-delay 0.5))
+;; (use-package highlight-symbol
+;;   :diminish highlight-symbol-mode
+;;   :commands (highlight-symbol-mode)
+;;   :hook (prog-mode . highlight-symbol-mode)
+;;   :config
+;;   (setq highlight-symbol-idle-delay 0.5))
 
 ;; Highlight symbols
 (use-package symbol-overlay
@@ -28,7 +27,7 @@
 ;; Highlight uncommitted changes
 (use-package diff-hl
   :diminish diff-hl-mode
-  :hook (after-init . global-diff-hl-mode)
+  :hook ((prog-mode after-save) . diff-hl-mode)
   :config
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))

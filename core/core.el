@@ -173,6 +173,11 @@ The load order is as follows:
   `emacs-startup-hook'
 
 Module load order is determined by your `dotemacs!' block."
+  ;; Make sure all essential local directories exist
+  (dolist (dir (list dotemacs-local-dir dotemacs-cache-dir dotemacs-packages-dir))
+    (unless (file-directory-p dir)
+      (make-directory dir t)))
+  
   ;; preload the personal settings from `dotemacs-personal-preload-dir'
   (let ((file-list
          (file-expand-wildcards

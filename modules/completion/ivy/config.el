@@ -66,6 +66,7 @@
 
 (use-package counsel
   :diminish counsel-mode
+  :hook (ivy-mode . counsel-mode)
   :bind (("M-x"     . counsel-M-x)
          ("M-y"     . counsel-yank-pop)
          ("M-i"     . counsel-grep-or-swiper)
@@ -91,8 +92,7 @@
   (setq counsel-rg-base-command "rg --smart-case --no-heading --line-number --color never %s ."
         counsel-ag-base-command "ag --smart-case --nocolor --nogroup --numbers %s")
   (when (executable-find "rg")
-    (setq counsel-git-cmd "rg --files"))
-  (counsel-mode))
+    (setq counsel-git-cmd "rg --files")))
 
 (use-package counsel-projectile
   :after (counsel projectile)

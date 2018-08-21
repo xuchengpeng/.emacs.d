@@ -2,6 +2,7 @@
 
 (use-package company
   :diminish company-mode
+  :commands (company-complete-common company-manual-begin company-grab-line)
   :bind (("M-/" . company-complete)
           ("C-c C-y" . company-yasnippet)
           :map company-active-map
@@ -14,7 +15,6 @@
           :map company-search-map
           ("C-p" . company-select-previous)
           ("C-n" . company-select-next))
-  :hook (after-init . global-company-mode)
   :config
   (setq company-idle-delay 0.2
         company-tooltip-limit 20
@@ -25,4 +25,6 @@
         company-require-match nil
         company-global-modes '(not comint-mode erc-mode message-mode help-mode gud-mode eshell-mode))
   
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends)))
+  (setq company-backends (mapcar #'+company/backend-with-yas company-backends))
+  
+  (global-company-mode +1))

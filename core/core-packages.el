@@ -350,39 +350,13 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
     `(setq dotemacs-modules ',dotemacs-modules))
   (dotemacs-initialize-modules))
 
-(defmacro load! (filename &optional path noerror)
-  "Load a file relative to the current executing file (`load-file-name').
+(defmacro package! (&rest packages-list)
+  "Add packages in PACKAGES-LIST to ‘dotemacs-packages’.
 
-FILENAME is either a file path string or a form that should evaluate to such a
-string at run time. PATH is where to look for the file (a string representing a
-directory path). If omitted, the lookup is relative to either `load-file-name',
-`byte-compile-current-file' or `buffer-file-name' (checked in that order).
-
-If NOERROR is non-nil, don't throw an error if the file doesn't exist."
-  (unless path
-    (setq path (or (DIR!)
-                   (error "Could not detect path to look for '%s' in"
-                          filename))))
-  (let ((file (if path `(expand-file-name ,filename ,path) filename)))
-    (if (file-exists-p file)
-        `(load ,file ,noerror ,(not dotemacs-debug-mode))
-      (unless noerror
-        (error "Could not load file '%s' from '%s'" file path)))))
-
-(defmacro require! (category module &rest plist)
-  "Loads the module specified by CATEGORY (a keyword) and MODULE (a symbol)."
-  `(let ((module-path (dotemacs-module-locate-path ,category ',module)))
-     (dotemacs-module-set ,category ',module ,@plist)
-     (if (directory-name-p module-path)
-         (condition-case-unless-debug ex
-             (load! "config" module-path :noerror)
-           ('error
-            (lwarn 'dotemacs-modules :error
-                   "%s in '%s %s' -> %s"
-                   (car ex) ,category ',module
-                   (error-message-string ex))))
-       (warn 'dotemacs-modules :warning "Couldn't find module '%s %s'"
-             ,category ',module))))
+Can take multiple packages.
+e.g. (package! evil evil-surround)"
+  `(dolist (package ',packages-list)
+     (add-to-list 'dotemacs-packages package t)))
 
 (defmacro featurep! (category &optional module flag)
   "Returns t if CATEGORY MODULE is enabled. If FLAG is provided, returns t if
@@ -405,13 +379,52 @@ omitted. eg. (featurep! +flag1)"
                 (memq category (dotemacs-module-get (car module-pair) (cdr module-pair) :flags)))))
        t))
 
-(defmacro package! (&rest packages-list)
-  "Add packages in PACKAGES-LIST to ‘dotemacs-packages’.
+(defmacro load! (filename &optional path noerror)
+  "Load a file relative to the current executing file (`load-file-name').
 
-Can take multiple packages.
-e.g. (package! evil evil-surround)"
-  `(dolist (package ',packages-list)
-     (add-to-list 'dotemacs-packages package t)))
+FILENAME is either a file path string or a form that should evaluate to such a
+string at run time. PATH is where to look for the file (a string representing a
+directory path). If omitted, the lookup is relative to either `load-file-name',
+`byte-compile-current-file' or `buffer-file-name' (checked in that order).
+
+If NOERROR is non-nil, don't throw an error if the file doesn't exist."
+  (unless path
+    (setq path (or (DIR!)
+                   (error "Could not detect path to look for '%s' in"
+                          filename))))
+  (let ((file (if path `(expand-file-name ,filename ,path) filename)))
+    `(condition-case e
+         (load ,file ,noerror ,(not dotemacs-debug-mode))
+       ((debug dotemacs-error) (signal (car e) (cdr e)))
+       ((debug error)
+        (let* ((source (file-name-sans-extension ,file))
+               (err (cond ((file-in-directory-p source dotemacs-core-dir)
+                           (cons 'dotemacs-error dotemacs-core-dir))
+                          ((file-in-directory-p source dotemacs-private-dir)
+                           (cons 'dotemacs-private-error dotemacs-private-dir))
+                          ((cons 'dotemacs-module-error dotemacs-emacs-dir)))))
+          (signal (car err)
+                  (list (file-relative-name
+                         (concat source ".el")
+                         (cdr err))
+                        e)))))))
+
+(defmacro require! (category module &rest plist)
+  "Loads the module specified by CATEGORY (a keyword) and MODULE (a symbol)."
+  `(let ((module-path (dotemacs-module-locate-path ,category ',module)))
+     (dotemacs-module-set ,category ',module ,@plist)
+     (if (directory-name-p module-path)
+         (condition-case-unless-debug ex
+             (progn
+               (load! "init" module-path :noerror)
+               (load! "config" module-path :noerror))
+           ('error
+            (lwarn 'dotemacs-modules :error
+                   "%s in '%s %s' -> %s"
+                   (car ex) ,category ',module
+                   (error-message-string ex))))
+       (warn 'dotemacs-modules :warning "Couldn't find module '%s %s'"
+             ,category ',module))))
 
 ;;
 ;; benchmark

@@ -39,11 +39,15 @@
 
 (use-package smartparens
   :diminish smartparens-mode
-  :hook (after-init . smartparens-global-mode)
+  :hook ((prog-mode . smartparens-mode)
+         ;; (prog-mode . smartparens-strict-mode)
+         )
   :config
-  (require 'smartparens-config)
-  ;; (add-hook 'prog-mode-hook #'smartparens-strict-mode)
-  )
+  (require 'smartparens-config))
+
+;; (use-package paredit
+;;   :diminish paredit-mode
+;;   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode))
 
 (use-package avy
   :bind (("C-:" . avy-goto-char)

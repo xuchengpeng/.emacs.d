@@ -5,6 +5,7 @@
           multiple-cursors
           undo-tree
           smartparens
+          ;; paredit
           avy)
 
 (unless (fboundp 'display-line-numbers-mode)

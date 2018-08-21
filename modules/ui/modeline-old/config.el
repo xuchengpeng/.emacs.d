@@ -487,7 +487,7 @@ See `mode-line-percent-position'.")
 ;;
 
 (dotemacs-set-modeline 'main t)  ;; set default modeline
-(add-hook 'dotemacs-init-hook #'dotemacs-modeline-init)
+(add-hook 'dotemacs-post-init-hook #'dotemacs-modeline-init)
 ;; (add-hook 'dotemacs-scratch-buffer-hook #'dotemacs-modeline|set-special-modeline)
 ;; (add-hook 'dotemacs-dashboard-mode-hook #'dotemacs-modeline|set-project-modeline)
 

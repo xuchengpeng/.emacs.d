@@ -244,7 +244,7 @@ buffers.")
   (if +modeline-bar-at-end
       (setq +modeline-bar-end '+modeline-bar)
     (setq +modeline-bar-start '+modeline-bar)))
-(add-hook 'dotemacs-init-hook #'+modeline|setup-bars)
+(add-hook 'dotemacs-post-init-hook #'+modeline|setup-bars)
 
 (defun +modeline|setup-bars-after-change (sym val op _where)
   (when (eq op 'set)

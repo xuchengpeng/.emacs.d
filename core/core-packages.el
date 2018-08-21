@@ -190,12 +190,25 @@ This should be run whenever init.el or an autoload file is modified."
 (defun dotemacs-initialize-modules ()
   "Initialize modules."
   (dotemacs-initialize-autoload)
-  (let ((path-list (dotemacs-module-load-path)))
-    (dolist (path path-list)
-      (load (expand-file-name "packages.el" path) t (not dotemacs-debug-mode)))
-    (dotemacs-install-modules-packages)
-    (dolist (path path-list)
-      (load (expand-file-name "config.el" path) t (not dotemacs-debug-mode))))
+  
+  (maphash (lambda (key plist)
+             (let ((path (plist-get plist :path)))
+               (load (expand-file-name "packages.el" path) t (not dotemacs-debug-mode))))
+           dotemacs-modules)
+  (dotemacs-install-modules-packages)
+  
+  (maphash (lambda (key plist)
+             (let ((path (plist-get plist :path)))
+               (load (expand-file-name "init.el" path) t (not dotemacs-debug-mode))))
+           dotemacs-modules)
+  (run-hook-wrapped 'dotemacs-init-hook #'dotemacs-try-run-hook)
+  
+  (maphash (lambda (key plist)
+             (let ((path (plist-get plist :path)))
+               (load (expand-file-name "config.el" path) t (not dotemacs-debug-mode))))
+           dotemacs-modules)
+  (run-hook-wrapped 'dotemacs-post-init-hook #'dotemacs-try-run-hook)
+
   (message "Emacs modules initialized"))
 
 ;;
@@ -414,7 +427,7 @@ If RETURN-P, return the message as a string instead of displaying it."
            (length package-activated-list)
            (if dotemacs-modules (hash-table-count dotemacs-modules) 0)
            (float-time (time-subtract (current-time) before-init-time))))
-(add-hook 'dotemacs-init-hook #'dotemacs|display-benchmark)
+(add-hook 'dotemacs-post-init-hook #'dotemacs|display-benchmark)
 
 (provide 'core-packages)
 

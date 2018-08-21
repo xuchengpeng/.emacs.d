@@ -82,6 +82,17 @@ line or use --debug-init to enable this.")
   :group 'emacs)
 
 ;;
+;; Custom error types
+;;
+
+(define-error 'dotemacs-error "Error in dotemacs Emacs core")
+(define-error 'dotemacs-hook-error "Error in a dotemacs startup hook" 'dotemacs-error)
+(define-error 'dotemacs-autoload-error "Error in an autoloads file" 'dotemacs-error)
+(define-error 'dotemacs-module-error "Error in a dotemacs module" 'dotemacs-error)
+(define-error 'dotemacs-private-error "Error in private config" 'dotemacs-error)
+(define-error 'dotemacs-package-error "Error with packages" 'dotemacs-error)
+
+;;
 ;; Emacs core configuration
 ;;
 
@@ -133,6 +144,20 @@ line or use --debug-init to enable this.")
 ;; Bootstrap functions
 ;;
 
+(defun dotemacs-try-run-hook (hook)
+  "Run HOOK (a hook function), but marks thrown errors to make it a little
+easier to tell where the came from.
+
+Meant to be used with `run-hook-wrapped'."
+  (when dotemacs-debug-mode
+    (message "Running dotemacs hook: %s" hook))
+  (condition-case e
+      (funcall hook)
+    ((debug error)
+     (signal 'dotemacs-hook-error (list hook e))))
+  ;; return nil so `run-hook-wrapped' won't short circuit
+  nil)
+
 (defun dotemacs-initialize ()
   "dotemacs initialize function.
 The load order is as follows:
@@ -140,11 +165,12 @@ The load order is as follows:
   ~/.emacs.d/init.el
   ~/.emacs.d/core/core.el
   Module packages.el files
+  Module init.el files
+  `dotemacs-init-hook'
   Module config.el files
+  `dotemacs-post-init-hook'
   `after-init-hook'
   `emacs-startup-hook'
-  dotemacs-init-hook
-  dotemacs-post-init-hook
 
 Module load order is determined by your `dotemacs!' block."
   ;; preload the personal settings from `dotemacs-personal-preload-dir'
@@ -162,11 +188,7 @@ Module load order is determined by your `dotemacs!' block."
   (require 'core-editor))
 
 (defun dotemacs-finalize ()
-  "dotemacs finalize function."
-  (unless noninteractive
-    (dolist (hook '(dotemacs-init-hook dotemacs-post-init-hook))
-      (run-hook-with-args hook)))
-  
+  "dotemacs finalize function."  
   (when (display-graphic-p)
     (require 'server)
     (unless (server-running-p)

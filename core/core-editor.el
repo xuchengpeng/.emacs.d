@@ -122,14 +122,14 @@
 ;; recent files
 (use-package recentf
   :commands recentf-open-files
+  :hook (after-init . recentf-mode)
   :config
   (setq recentf-save-file (concat dotemacs-cache-dir "recentf")
         recentf-max-saved-items 500
         recentf-max-menu-items 15
         recentf-auto-cleanup 'never
         recentf-exclude (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
-                              "^/var/folders/.+$" "/.cache/"))
-  (recentf-mode +1))
+                              "^/var/folders/.+$" "/.cache/")))
 
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))

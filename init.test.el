@@ -5,17 +5,13 @@
 (dotemacs! :ui
            (window-select +ace-window)
            :feature
-           evil
            editor
            project
-           utils
            :completion
-           ;; helm
            ivy
            company
            :tools
            eshell
            :lang
            markdown
-           web
-           )
+           web)

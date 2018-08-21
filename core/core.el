@@ -184,6 +184,7 @@ Module load order is determined by your `dotemacs!' block."
   (require 'core-lib)
   (require 'core-packages)
   (dotemacs-initialize-core)
+  (require 'core-modules)
   (require 'core-ui)
   (require 'core-editor))
 

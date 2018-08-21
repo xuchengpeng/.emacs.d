@@ -65,7 +65,7 @@
 (setq bookmark-default-file  (concat dotemacs-cache-dir "bookmarks")
       bookmark-save-flag     1)
 
-(add-hook 'after-init-hook 'global-auto-revert-mode)
+(add-hook 'find-file-hook 'global-auto-revert-mode)
 (setq global-auto-revert-non-file-buffers t
       auto-revert-verbose nil)
 
@@ -85,14 +85,14 @@
 ;; (global-set-key (kbd "C-M-r") 'isearch-backward)
 
 ;; Highlight the current line
-(add-hook 'after-init-hook #'global-hl-line-mode)
+(use-package hl-line ; built-in
+  :hook ((prog-mode text-mode conf-mode) . hl-line-mode))
 
 ;; Highlight matching paren
-(add-hook 'after-init-hook #'show-paren-mode)
-;; (setq show-paren-style 'expression)
+(add-hook 'find-file-hook #'show-paren-mode)
 
 (when (fboundp 'winner-mode)
-  (add-hook 'after-init-hook #'winner-mode))
+  (add-hook 'window-configuration-change-hook #'winner-mode))
 
 (use-package dired
   :defer t
@@ -122,7 +122,7 @@
 ;; recent files
 (use-package recentf
   :commands recentf-open-files
-  :hook (after-init . recentf-mode)
+  :hook (find-file . recentf-mode)
   :config
   (setq recentf-save-file (concat dotemacs-cache-dir "recentf")
         recentf-max-saved-items 500

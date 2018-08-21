@@ -196,12 +196,6 @@ buffers.")
                   concat (if (eq idx len) "\"};" "\",\n")))
         'xpm t :ascent 'center)))))
 
-(defun dotemacs-project-root ()
-  "Return the root of your project, or `default-directory' if none was found."
-  (when (fboundp 'projectile-project-root)
-    (let (projectile-require-project-root)
-      (projectile-project-root))))
-
 (defun +modeline-file-path (&optional path)
   (let ((buffer-file-name (or path buffer-file-name))
         (root (dotemacs-project-root)))

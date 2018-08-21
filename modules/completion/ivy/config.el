@@ -95,7 +95,7 @@
     (setq counsel-git-cmd "rg --files")))
 
 (use-package counsel-projectile
-  :after (counsel projectile)
+  :after (:any counsel projectile)
   :config
   (counsel-projectile-mode))
 

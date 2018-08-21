@@ -55,9 +55,6 @@
 (column-number-mode t)
 (size-indication-mode t)
 
-(setq display-time-24hr-format t)
-(add-hook 'after-init-hook #'display-time-mode)
-
 ;; font configurations
 ;; Solution 1
 (defun dotemacs-font-existsp (font)

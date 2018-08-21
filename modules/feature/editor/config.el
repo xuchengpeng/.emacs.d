@@ -30,7 +30,7 @@
 ;; Treat undo history as a tree
 (use-package undo-tree
   :diminish undo-tree-mode
-  :hook (after-init . global-undo-tree-mode)
+  :hook (find-file . global-undo-tree-mode)
   :config
   (setq undo-tree-history-directory-alist `(("." . ,(concat dotemacs-cache-dir "undo")))
         undo-tree-auto-save-history t

@@ -3,8 +3,7 @@
 (use-package which-key
   :diminish which-key-mode
   :commands which-key-mode
-  :init
-  (which-key-mode 1))
+  :hook (pre-command . which-key-mode))
 
 (use-package hydra
   :bind (("C-c f" . hydra-flycheck/body)

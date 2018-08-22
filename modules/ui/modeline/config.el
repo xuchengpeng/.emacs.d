@@ -274,18 +274,22 @@ buffers.")
              after-save-hook
              after-revert-hook)
   (let ((icon (cond (buffer-read-only
-                     (propertize "RO"
+                     (propertize "<R>"
                                  'face 'dotemacs-modeline-warning
                                  'help-echo "Buffer is read-only"))
                     ((buffer-modified-p)
-                     (propertize "MOD"
+                     (propertize "<M>"
                                  'face 'dotemacs-modeline-buffer-modified
                                  'help-echo "Buffer has been modified"))
                     ((and buffer-file-name (not (file-exists-p buffer-file-name)))
-                     (propertize "MOD"
+                     (propertize "<E>"
                                  'face 'dotemacs-modeline-urgent
-                                 'help-echo "Buffer not exists")))))
-    (if icon (concat " [" icon "] "))))
+                                 'help-echo "Buffer does not exists"))
+                    (t
+                     (propertize "<N>"
+                                 'face 'dotemacs-modeline-info
+                                 'help-echo "Buffer is in normal state")))))
+    (if icon (concat " " icon))))
 
 (def-modeline-segment! +modeline-buffer-id
   :on-hooks (find-file-hook after-save-hook after-revert-hook)
@@ -529,7 +533,8 @@ See `mode-line-percent-position'.")
 ;;
 
 (def-modeline-format! :main
-  '(+modeline-matches
+  '(+modeline-buffer-state
+    +modeline-matches
     +modeline-buffer-id
     +modeline-buffer-position)
   `(+modeline-misc-info
@@ -540,12 +545,13 @@ See `mode-line-percent-position'.")
     +modeline-flycheck))
 
 (def-modeline-format! :minimal
-  '(+modeline-matches
+  '(+modeline-buffer-state
+    +modeline-matches
     +modeline-buffer-id)
   '(+modeline-major-mode))
 
 (def-modeline-format! :special
-  '(+modeline-matches " %b " +modeline-buffer-position)
+  '(+modeline-buffer-state +modeline-matches " %b " +modeline-buffer-position)
   '(+modeline-encoding +modeline-major-mode mode-line-process))
 
 (def-modeline-format! :project

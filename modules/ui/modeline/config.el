@@ -1,18 +1,5 @@
 ;;; ui/modeline/config.el -*- lexical-binding: t; -*-
 
-;; This mode-line is experimental, Emacs 26+ only, may have buggy and is likely
-;; to change. It also isn't feature complete, compared to :ui dotemacs-modeline, but
-;; it will eventually replace it.
-;;
-;; However, it is at least ten times faster than the original modeline, and more
-;; flexible, what with `+modeline-format-left', `+modeline-format-right', and a
-;; more powerful API for defining modelines and modeline segments.
-
-;;;; Benchmarks
-;; (benchmark-run 1000 (format-mode-line mode-line-format))
-;; Old system: ~0.563 - 0.604
-;; New system: ~0.036 - 0.061
-
 (defvar +modeline-width 3
   "How wide the mode-line bar should be (only respected in GUI emacs).")
 
@@ -268,27 +255,28 @@ buffers.")
 (advice-add #'undo-tree-undo :after #'+modeline--set-+modeline-buffer-state)
 
 (def-modeline-segment! +modeline-buffer-state
-  :on-hooks (find-file-hook
-             read-only-mode-hook
-             after-change-functions
-             after-save-hook
-             after-revert-hook)
-  (let ((icon (cond (buffer-read-only
-                     (propertize "<R>"
-                                 'face 'dotemacs-modeline-warning
-                                 'help-echo "Buffer is read-only"))
-                    ((buffer-modified-p)
-                     (propertize "<M>"
-                                 'face 'dotemacs-modeline-buffer-modified
-                                 'help-echo "Buffer has been modified"))
-                    ((and buffer-file-name (not (file-exists-p buffer-file-name)))
-                     (propertize "<E>"
-                                 'face 'dotemacs-modeline-urgent
-                                 'help-echo "Buffer does not exists"))
-                    (t
-                     (propertize "<N>"
-                                 'face 'dotemacs-modeline-info
-                                 'help-echo "Buffer is in normal state")))))
+  ;; :on-hooks (find-file-hook
+  ;;            read-only-mode-hook
+  ;;            after-change-functions
+  ;;            after-save-hook
+  ;;            after-revert-hook)
+  (let* ((active (active))
+         (icon (cond (buffer-read-only
+                      (propertize "<R>"
+                                  'face (if active 'dotemacs-modeline-warning)
+                                  'help-echo "Buffer is read-only"))
+                     ((buffer-modified-p)
+                      (propertize "<M>"
+                                  'face (if active 'dotemacs-modeline-buffer-modified)
+                                  'help-echo "Buffer has been modified"))
+                     ((and buffer-file-name (not (file-exists-p buffer-file-name)))
+                      (propertize "<E>"
+                                  'face (if active 'dotemacs-modeline-urgent)
+                                  'help-echo "Buffer does not exists"))
+                     (t
+                      (propertize "<N>"
+                                  'face (if active 'dotemacs-modeline-info)
+                                  'help-echo "Buffer is in normal state")))))
     (if icon (concat " " icon))))
 
 (def-modeline-segment! +modeline-buffer-id

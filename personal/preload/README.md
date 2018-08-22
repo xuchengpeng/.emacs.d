@@ -1,1 +1,0 @@
-This directory is for your personal configuration, that you want loaded before dotemacs.

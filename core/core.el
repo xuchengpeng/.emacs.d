@@ -46,15 +46,6 @@
 (defvar dotemacs-local-dir (concat dotemacs-dir ".local/")
   "Root directory for local Emacs files.")
 
-(defvar dotemacs-personal-dir (concat dotemacs-dir "personal/")
-  "This directory is for your personal configuration.
-Users of dotemacs are encouraged to keep their personal configuration
-changes in this directory.  All Emacs Lisp files there are loaded automatically
-by dotemacs.")
-
-(defvar dotemacs-personal-preload-dir (concat dotemacs-personal-dir "preload/")
-  "This directory is for your personal configuration, that you want loaded before dotemacs.")
-
 (defvar dotemacs-cache-dir (concat dotemacs-dir ".cache/")
   "Where cache files are stored.")
 
@@ -177,13 +168,6 @@ Module load order is determined by your `dotemacs!' block."
   (dolist (dir (list dotemacs-local-dir dotemacs-cache-dir dotemacs-packages-dir))
     (unless (file-directory-p dir)
       (make-directory dir t)))
-  
-  ;; preload the personal settings from `dotemacs-personal-preload-dir'
-  (let ((file-list
-         (file-expand-wildcards
-          (expand-file-name "*.el" dotemacs-personal-preload-dir))))
-    (dolist (file file-list)
-      (load file t (not dotemacs-debug-mode))))
 
   (require 'core-custom)
   (require 'core-lib)
@@ -199,13 +183,6 @@ Module load order is determined by your `dotemacs!' block."
     (require 'server)
     (unless (server-running-p)
       (server-start)))
-  
-  ;; load the personal settings from `dotemacs-personal-dir`
-  (let ((file-list
-         (file-expand-wildcards
-          (expand-file-name "*.el" dotemacs-personal-dir))))
-    (dolist (file file-list)
-      (load file t (not dotemacs-debug-mode))))
   
   (setq file-name-handler-alist file-name-handler-alist-old
         gc-cons-threshold 800000

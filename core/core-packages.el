@@ -44,13 +44,12 @@ missing) and shouldn't be deleted.")
       use-package-verbose dotemacs-debug-mode
       use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1))
 
-(defvar-local package-archives-list '(melpa emacs-china tuna custom))
 (defun dotemacs/set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
   (interactive
    (list
     (intern (completing-read "Switch to archives: "
-                             package-archives-list))))
+                             '(melpa emacs-china tuna)))))
   (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                       (not (gnutls-available-p))))
          (proto (if no-ssl "http" "https")))
@@ -67,14 +66,13 @@ missing) and shouldn't be deleted.")
       (setq package-archives `(,(cons "gnu"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
                                ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))
                                ,(cons "org"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))))
-     ((eq archives 'custom)
-      (setq package-archives dotemacs-custom-package-archives))
      (t
       (error "Unknown archives: '%s'" archives))))
 
   (message "Set package archives to '%s'." archives))
 
-(dotemacs/set-package-archives dotemacs-package-archives)
+(unless (eq dotemacs-package-archives 'custom)
+  (dotemacs/set-package-archives dotemacs-package-archives))
 
 ;;
 ;; Functions

@@ -54,8 +54,6 @@
       uniquify-after-kill-buffer-p t
       uniquify-ignore-buffers-re "^\\*")
 
-(setq-default major-mode 'text-mode)
-
 (setq-default
   make-backup-files nil
   auto-save-default nil
@@ -85,8 +83,7 @@
 ;; (global-set-key (kbd "C-M-r") 'isearch-backward)
 
 ;; Highlight the current line
-(use-package hl-line ; built-in
-  :hook ((prog-mode text-mode conf-mode) . hl-line-mode))
+(add-hook 'after-init-hook #'global-hl-line-mode)
 
 ;; Highlight matching paren
 (add-hook 'find-file-hook #'show-paren-mode)

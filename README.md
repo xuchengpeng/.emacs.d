@@ -36,7 +36,7 @@ If `dotemacs-package-archives` is set to `custom`, you need to set `package-arch
                                   ("org"   . "/home/user/elpa-mirror/org/")))
 ```
 
-You and can use [emacs-china](https://elpa.emacs-china.org/) or [tuna](https://mirror.tuna.tsinghua.edu.cn/help/elpa/), or clone it from [elpa-mirror](https://github.com/xuchengpeng/elpa-mirror) to local disk.
+Customize it with melpa, [emacs-china](https://elpa.emacs-china.org/) or [tuna](https://mirror.tuna.tsinghua.edu.cn/help/elpa/), or clone it from [elpa-mirror](https://github.com/xuchengpeng/elpa-mirror) to local disk.
 
 ## Install fonts(Optional)
 

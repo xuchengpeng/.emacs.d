@@ -204,6 +204,11 @@ between 0 and 1)."
   (require 'dotemacs-themes-org))
 
 ;;;###autoload
+(defun dotemacs-themes-neotree-config ()
+  "Install dotemacs-themes' neotree configuration."
+  (require 'dotemacs-themes-neotree))
+
+;;;###autoload
 (defun dotemacs-themes-treemacs-config ()
   "Install dotemacs-themes' treemacs configuration."
   (require 'dotemacs-themes-treemacs))

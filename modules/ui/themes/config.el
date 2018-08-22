@@ -20,6 +20,8 @@
   
   ;; For treemacs users
   (dotemacs-themes-treemacs-config)
+  ;; Or for neotree users
+  ;;(dotemacs-themes-neotree-config)
   
   (message "Set custom color theme '%s'." theme))
 

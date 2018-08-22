@@ -20,4 +20,6 @@ A comprehensive configuration example:
 
 ;; For treemacs users
 (dotemacs-themes-treemacs-config)
+;; Or for neotree users
+(dotemacs-themes-neotree-config)
 ```

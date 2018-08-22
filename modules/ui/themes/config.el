@@ -18,6 +18,9 @@
   ;; Corrects (and improves) org-mode's native fontification.
   (dotemacs-themes-org-config)
   
+  ;; For treemacs users
+  (dotemacs-themes-treemacs-config)
+  
   (message "Set custom color theme '%s'." theme))
 
 (defun dotemacs-set-theme (theme)

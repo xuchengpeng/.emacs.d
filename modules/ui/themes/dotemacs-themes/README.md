@@ -17,4 +17,7 @@ A comprehensive configuration example:
 
 ;; Corrects (and improves) org-mode's native fontification.
 (dotemacs-themes-org-config)
+
+;; For treemacs users
+(dotemacs-themes-treemacs-config)
 ```

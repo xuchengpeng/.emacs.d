@@ -204,6 +204,11 @@ between 0 and 1)."
   (require 'dotemacs-themes-org))
 
 ;;;###autoload
+(defun dotemacs-themes-treemacs-config ()
+  "Install dotemacs-themes' treemacs configuration."
+  (require 'dotemacs-themes-treemacs))
+
+;;;###autoload
 (defun dotemacs-themes-visual-bell-config ()
   "Enable flashing the mode-line on error."
   (setq ring-bell-function #'dotemacs-themes-visual-bell-fn

@@ -6,8 +6,8 @@
            editor
            project
            :completion
-           ivy
            company
+           ivy
            :ui
            (window-select +ace-window)
            :tools

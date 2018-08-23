@@ -4,28 +4,29 @@
 
 (dotemacs! :feature
            ;; benchmark
-           ;; evil
            editor
-           project
-           syntax-checker
+           ;; evil
            highlight
-           utils
+           lookup
+           project
            snippets
+           syntax-checker
+           utils
            :completion
+           company
            ;; helm
            ivy
-           company
            :ui
-           themes
            modeline
            ;; modeline-old
-           treemacs
            ;; neotree
+           themes
+           treemacs
            (window-select +ace-window)
            :tools
+           editorconfig
            eshell
            magit
-           editorconfig
            ;; package-manager
            :lang
            cc

@@ -255,11 +255,11 @@ buffers.")
 (advice-add #'undo-tree-undo :after #'+modeline--set-+modeline-buffer-state)
 
 (def-modeline-segment! +modeline-buffer-state
-  ;; :on-hooks (find-file-hook
-  ;;            read-only-mode-hook
-  ;;            after-change-functions
-  ;;            after-save-hook
-  ;;            after-revert-hook)
+  :on-hooks (find-file-hook
+             read-only-mode-hook
+             after-change-functions
+             after-save-hook
+             after-revert-hook)
   (let* ((active (active))
          (icon (cond (buffer-read-only
                       (propertize "<R>"

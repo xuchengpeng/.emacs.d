@@ -35,7 +35,7 @@
   "A hash table of enabled modules. Set by marco `dotemacs!'.")
 
 (defvar dotemacs-modules-dirs
-  (list (if dotemacs-private-dir (expand-file-name "modules/" dotemacs-private-dir))
+  (list dotemacs-private-dir
         dotemacs-modules-dir)
   "A list of module root directories. Order determines priority.")
 
@@ -51,18 +51,24 @@
              (let ((path (plist-get plist :path)))
                (load (expand-file-name "packages.el" path) t (not dotemacs-debug-mode))))
            dotemacs-modules)
+  (when dotemacs-private-dir
+    (load (expand-file-name "packages.el" dotemacs-private-dir) t (not dotemacs-debug-mode)))
   (dotemacs-install-packages dotemacs-packages)
   
   (maphash (lambda (key plist)
              (let ((path (plist-get plist :path)))
                (load (expand-file-name "init.el" path) t (not dotemacs-debug-mode))))
            dotemacs-modules)
+  (when dotemacs-private-dir
+    (load (expand-file-name "init.el" dotemacs-private-dir) t (not dotemacs-debug-mode)))
   (run-hook-wrapped 'dotemacs-init-hook #'dotemacs-try-run-hook)
   
   (maphash (lambda (key plist)
              (let ((path (plist-get plist :path)))
                (load (expand-file-name "config.el" path) t (not dotemacs-debug-mode))))
            dotemacs-modules)
+  (when dotemacs-private-dir
+    (load (expand-file-name "config.el" dotemacs-private-dir) t (not dotemacs-debug-mode)))
   (run-hook-wrapped 'dotemacs-post-init-hook #'dotemacs-try-run-hook)
 
   (message "Emacs modules initialized"))
@@ -238,7 +244,7 @@ This doesn't require modules to be enabled. For enabled modules us
   (declare (pure t) (side-effect-free t))
   (append (cl-loop for plist being the hash-values of (dotemacs-modules)
                    collect (plist-get plist :path))
-          (if dotemacs-private-dir (list dotemacs-private-dir))))
+          (list dotemacs-private-dir)))
 
 (defun dotemacs-modules (&optional refresh-p)
   "Minimally initialize `dotemacs-modules' (a hash table) and return it."

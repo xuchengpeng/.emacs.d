@@ -52,7 +52,7 @@
 (defvar dotemacs-packages-dir (concat dotemacs-local-dir "packages/")
   "Where packages are stored.")
 
-(defvar dotemacs-private-dir ()
+(defvar dotemacs-private-dir nil
   "Where your private customizations are placed. Must end in a slash.")
 
 (defvar dotemacs-autoload-file (concat dotemacs-local-dir "autoloads.el")

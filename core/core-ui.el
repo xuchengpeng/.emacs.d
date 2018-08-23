@@ -72,26 +72,6 @@
   (if (display-graphic-p)
     (dotemacs-set-font)))
 
-(use-package dotemacs-themes
-  :load-path "themes"
-  :defer t
-  :init
-  (unless dotemacs-theme
-    (setq dotemacs-theme 'dotemacs-one))
-  :config
-  ;; Enable flashing mode-line on errors
-  (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-visual-bell-config)
-  
-  ;; Corrects (and improves) org-mode's native fontification.
-  (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-org-config)
-  
-  ;; For treemacs users
-  (when (fboundp 'treemacs)
-    (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-treemacs-config))
-  ;; or for neotree users
-  (when (fboundp 'neotree)
-    (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-neotree-config)))
-
 (defun dotemacs*load-theme-hooks (theme &rest _)
   "Set up `dotemacs-load-theme-hook' to run after `load-theme' is called."
   (run-hooks 'dotemacs-load-theme-hook))
@@ -99,10 +79,26 @@
 
 (defun dotemacs|init-theme ()
   "Set the theme."
-  (when dotemacs-theme
-    (when (string-prefix-p "dotemacs" (symbol-name dotemacs-theme))
-      (require 'dotemacs-themes))
-    (load-theme dotemacs-theme t)))
+  (use-package dotemacs-themes
+    :load-path "themes"
+    :init
+    (unless dotemacs-theme
+      (setq dotemacs-theme 'dotemacs-one))
+    :config
+    (load-theme dotemacs-theme t)
+    
+    ;; Enable flashing mode-line on errors
+    (dotemacs-themes-visual-bell-config)
+    
+    ;; Corrects (and improves) org-mode's native fontification.
+    (dotemacs-themes-org-config)
+    
+    ;; For treemacs users
+    (when (fboundp 'treemacs)
+      (dotemacs-themes-treemacs-config))
+    ;; or for neotree users
+    (when (fboundp 'neotree)
+      (dotemacs-themes-neotree-config))))
 
 ;; fonts
 (add-hook 'dotemacs-init-ui-hook #'dotemacs|init-fonts)

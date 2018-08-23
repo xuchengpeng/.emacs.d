@@ -11,6 +11,14 @@ you want to interactive with a project other than the one you're in."
      ,@body))
 
 ;;;###autoload
+(defmacro project-file-exists-p! (files)
+  "Checks if the project has the specified FILES.
+Paths are relative to the project root, unless they start with ./ or ../ (in
+which case they're relative to `default-directory'). If they start with a slash,
+they are absolute."
+  `(file-exists-p! ,files (dotemacs-project-root)))
+
+;;;###autoload
 (defun dotemacs-project-p (&optional nocache)
   "Return t if this buffer is currently in a project.
 If NOCACHE, don't fetch a cached answer."

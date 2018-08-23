@@ -2,14 +2,7 @@
 
 (require 'core (concat user-emacs-directory "core/core"))
 
-(dotemacs! :ui
-           themes
-           modeline
-           ;; modeline-old
-           treemacs
-           ;; neotree
-           (window-select +ace-window)
-           :feature
+(dotemacs! :feature
            ;; benchmark
            ;; evil
            editor
@@ -22,6 +15,12 @@
            ;; helm
            ivy
            company
+           :ui
+           modeline
+           ;; modeline-old
+           treemacs
+           ;; neotree
+           (window-select +ace-window)
            :tools
            eshell
            magit

@@ -50,13 +50,8 @@
           (const :tag "Custom" custom))
   :group 'dotemacs)
 
-(defcustom dotemacs-color-theme 'default
+(defcustom dotemacs-theme 'dotemacs-one
   "Set color theme."
-  :type '(choice
-          (const :tag "Default theme" default)
-          (const :tag "Dark theme" dark)
-          (const :tag "Light theme" light)
-          symbol)
   :group 'dotemacs)
 
 (defcustom dotemacs-company-enable-yas nil

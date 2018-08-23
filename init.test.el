@@ -2,14 +2,14 @@
 
 (require 'core (concat user-emacs-directory "core/core"))
 
-(dotemacs! :ui
-           (window-select +ace-window)
-           :feature
+(dotemacs! :feature
            editor
            project
            :completion
            ivy
            company
+           :ui
+           (window-select +ace-window)
            :tools
            eshell
            :lang

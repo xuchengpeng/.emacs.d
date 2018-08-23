@@ -196,5 +196,4 @@ Module load order is determined by your `dotemacs!' block."
 (add-hook 'emacs-startup-hook #'dotemacs-finalize t)
 
 (provide 'core)
-
 ;;; core.el ends here

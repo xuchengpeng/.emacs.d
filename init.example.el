@@ -16,6 +16,7 @@
            ivy
            company
            :ui
+           themes
            modeline
            ;; modeline-old
            treemacs

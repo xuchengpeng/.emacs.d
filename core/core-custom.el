@@ -50,15 +50,10 @@
           (const :tag "Custom" custom))
   :group 'dotemacs)
 
-(defcustom dotemacs-theme 'dotemacs-one
-  "Set color theme."
-  :group 'dotemacs)
-
 (defcustom dotemacs-company-enable-yas nil
   "Enable/disable(t/nil) yasnippet for company backends."
   :type 'boolean
   :group 'dotemacs)
 
 (provide 'core-custom)
-
 ;;; core-custom.el ends here

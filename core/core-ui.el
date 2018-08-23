@@ -31,6 +31,9 @@
 
 ;;; Code:
 
+(defvar dotemacs-theme nil
+  "A symbol representing the color theme to load.")
+
 (defvar dotemacs-load-theme-hook nil
   "Hook run when the theme is initialized.")
 
@@ -74,31 +77,14 @@
 
 (defun dotemacs*load-theme-hooks (theme &rest _)
   "Set up `dotemacs-load-theme-hook' to run after `load-theme' is called."
+  (setq dotemacs-theme theme)
   (run-hooks 'dotemacs-load-theme-hook))
 (advice-add #'load-theme :after #'dotemacs*load-theme-hooks)
 
 (defun dotemacs|init-theme ()
   "Set the theme."
-  (use-package dotemacs-themes
-    :load-path "themes"
-    :init
-    (unless dotemacs-theme
-      (setq dotemacs-theme 'dotemacs-one))
-    :config
-    (load-theme dotemacs-theme t)
-    
-    ;; Enable flashing mode-line on errors
-    (dotemacs-themes-visual-bell-config)
-    
-    ;; Corrects (and improves) org-mode's native fontification.
-    (dotemacs-themes-org-config)
-    
-    ;; For treemacs users
-    (when (fboundp 'treemacs)
-      (dotemacs-themes-treemacs-config))
-    ;; or for neotree users
-    (when (fboundp 'neotree)
-      (dotemacs-themes-neotree-config))))
+  (when (and dotemacs-theme (not (memq dotemacs-theme custom-enabled-themes)))
+    (load-theme dotemacs-theme t)))
 
 ;; fonts
 (add-hook 'dotemacs-init-ui-hook #'dotemacs|init-fonts)

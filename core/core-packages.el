@@ -42,7 +42,9 @@ missing) and shouldn't be deleted.")
       load-prefer-newer t
       package-enable-at-startup nil
       use-package-verbose dotemacs-debug-mode
-      use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1))
+      use-package-compute-statistics dotemacs-debug-mode
+      use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1)
+      use-package-expand-minimally (not dotemacs-debug-mode))
 
 (defun dotemacs/set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."

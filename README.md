@@ -24,7 +24,7 @@ For example:
 (setq dotemacs-full-name "user name")           ; User full name
 (setq dotemacs-mail-address "user@email.com")   ; Email address
 (setq dotemacs-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china, tuna or custom
-(setq dotemacs-color-theme 'dotemacs-one)       ; Color theme: default, dark, light or dotemacs-themes
+(setq dotemacs-theme 'dotemacs-one)             ; Color theme: dotemacs-one, dotemacs-one-light...
 (setq dotemacs-company-enable-yas t)            ; Enable/disable yasnippet for company: t or nil
 ```
 

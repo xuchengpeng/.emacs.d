@@ -72,11 +72,6 @@
   (if (display-graphic-p)
     (dotemacs-set-font)))
 
-(defun dotemacs*load-theme-hooks (theme &rest _)
-  "Set up `dotemacs-load-theme-hook' to run after `load-theme' is called."
-  (run-hooks 'dotemacs-load-theme-hook))
-(advice-add #'load-theme :after #'dotemacs*load-theme-hooks)
-
 (use-package dotemacs-themes
   :load-path "themes"
   :defer t
@@ -91,11 +86,16 @@
   (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-org-config)
   
   ;; For treemacs users
-  (when (featurep! :ui treemacs)
+  (when (fboundp 'treemacs)
     (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-treemacs-config))
   ;; or for neotree users
-  (when (featurep! :ui neotree)
+  (when (fboundp 'neotree)
     (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-neotree-config)))
+
+(defun dotemacs*load-theme-hooks (theme &rest _)
+  "Set up `dotemacs-load-theme-hook' to run after `load-theme' is called."
+  (run-hooks 'dotemacs-load-theme-hook))
+(advice-add #'load-theme :after #'dotemacs*load-theme-hooks)
 
 (defun dotemacs|init-theme ()
   "Set the theme."

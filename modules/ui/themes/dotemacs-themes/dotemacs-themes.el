@@ -47,6 +47,14 @@
 ;;   ;; Enable flashing mode-line on errors
 ;;   (dotemacs-themes-visual-bell-config)
 ;;
+;;   ;; Corrects (and improves) org-mode's native fontification.
+;;   (dotemacs-themes-org-config)
+;;
+;;   ;; For treemacs users
+;;   (dotemacs-themes-treemacs-config)
+;;   ;; or for neotree users
+;;   (dotemacs-themes-neotree-config)
+;;
 ;;
 ;;; Code:
 

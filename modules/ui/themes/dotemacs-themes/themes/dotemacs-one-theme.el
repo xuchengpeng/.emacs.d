@@ -121,8 +121,6 @@ determine the exact padding."
     :inherit 'font-lock-comment-face
     :foreground doc-comments)
 
-   (dotemacs-modeline-bar :background (if -modeline-bright modeline-bg highlight))
-
    (mode-line
     :background modeline-bg :foreground modeline-fg
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg)))
@@ -140,6 +138,12 @@ determine the exact padding."
     :inherit 'mode-line-inactive
     :background modeline-bg-inactive-l
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg-inactive-l)))
+   
+   ;; dotemacs modeline
+   (dotemacs-modeline-bar :background (if -modeline-bright modeline-bg highlight))
+   (dotemacs-modeline-buffer-file :inherit 'mode-line-buffer-id :weight 'bold)
+   (dotemacs-modeline-buffer-path :inherit 'mode-line-emphasis :weight 'bold)
+   (dotemacs-modeline-buffer-project-root :foreground green :weight 'bold)
 
    ;; ivy-mode
    (ivy-current-match :background dark-blue :distant-foreground base0 :weight 'normal)

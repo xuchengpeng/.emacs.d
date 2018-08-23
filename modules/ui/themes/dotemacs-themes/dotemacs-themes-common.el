@@ -697,7 +697,7 @@
     (lsp-face-highlight-textual :background dark-blue :foreground base8 :distant-foreground base0 :weight 'bold)
     (lsp-face-highlight-read    :background dark-blue :foreground base8 :distant-foreground base0 :weight 'bold)
     (lsp-face-highlight-write   :background dark-blue :foreground base8 :distant-foreground base0 :weight 'bold)
-    (lsp-ui-peek-filename :inherit 'dotemacs-modeline-buffer-file)
+    (lsp-ui-peek-filename :inherit 'mode-line-buffer-id)
     (lsp-ui-peek-header :foreground fg :background (dotemacs-lighten bg 0.1) :bold bold)
     (lsp-ui-peek-selection :foreground bg :background blue :bold bold)
     (lsp-ui-peek-list :background (dotemacs-darken bg 0.1))

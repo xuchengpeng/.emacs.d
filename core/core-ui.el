@@ -31,6 +31,15 @@
 
 ;;; Code:
 
+(defvar dotemacs-theme nil
+  "A symbol representing the color theme to load.")
+
+(defvar dotemacs-load-theme-hook nil
+  "Hook run when the theme is initialized.")
+
+(defvar dotemacs-init-ui-hook nil
+  "List of hooks to run when the UI has been initialized.")
+
 ;; maximized startup
 (unless (frame-parameter nil 'fullscreen)
   (toggle-frame-maximized))
@@ -152,15 +161,38 @@ CHINESE-FONT-SIZE and CHINESE-FONTS-SCALE) font."
 ;;   (setq face-font-rescale-alist '(("STHeiti" . 1.2) ("STFangsong" . 1.2) ("Microsoft Yahei" . 1.2) ("WenQuanYi Micro Hei Mono" . 1.2)))
 ;;   )
 
-(add-to-list 'after-make-frame-functions
-             (lambda (new-frame)
-               (select-frame new-frame)
-               (if (display-graphic-p)
+(defun dotemacs|init-fonts ()
+  "Set the font."
+  (add-to-list 'after-make-frame-functions
+               (lambda (new-frame)
+                 (select-frame new-frame)
+                 (if (display-graphic-p)
                    (dotemacs-set-font))))
+  
+  (if (display-graphic-p)
+    (dotemacs-set-font)))
 
-(if (display-graphic-p)
-    (dotemacs-set-font))
+(defun dotemacs*load-theme-hooks (theme &rest _)
+  "Set up `dotemacs-load-theme-hook' to run after `load-theme' is called."
+  (setq dotemacs-theme theme)
+  (run-hooks 'dotemacs-load-theme-hook))
+(advice-add #'load-theme :after #'dotemacs*load-theme-hooks)
 
+(defun dotemacs|init-theme ()
+  "Set the theme."
+  (when dotemacs-theme
+    (load-theme dotemacs-theme t)))
+
+;; fonts
+(add-hook 'dotemacs-init-ui-hook #'dotemacs|init-fonts)
+;; themes
+(add-hook 'dotemacs-init-ui-hook #'dotemacs|init-theme)
+
+(defun dotemacs|init-ui ()
+  "Initialize ui."
+  (run-hook-wrapped 'dotemacs-init-ui-hook #'dotemacs-try-run-hook))
+
+(add-hook 'emacs-startup-hook #'dotemacs|init-ui)
 
 (provide 'core-ui)
 

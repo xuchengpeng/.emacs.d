@@ -126,11 +126,10 @@
         recentf-max-menu-items 15
         recentf-auto-cleanup 'never
         recentf-exclude (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
-                              "^/var/folders/.+$" "/.cache/")))
+                              "^/var/folders/.+$" dotemacs-cache-dir dotemacs-packages-dir)))
 
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
 
 (provide 'core-editor)
-
 ;;; core-editor.el ends here

@@ -25,6 +25,20 @@
     (setq helm-grep-ag-command command))
   (helm-mode +1))
 
+(use-package helm-ag
+  :after (helm)
+  :config
+  (let ((command
+         (cond
+          ((executable-find "rg")
+           "rg --color never --smart-case --no-heading --line-number")
+          ((executable-find "ag")
+           "ag --nocolor --smart-case --no-heading")
+          ((executable-find "pt")
+           "pt --nocolor --smart-case --nogroup --numbers")
+          (t helm-ag-base-command))))
+    (setq helm-ag-base-command command)))
+
 (use-package helm-swoop
   :after (helm)
   :bind (("M-i" . helm-swoop)

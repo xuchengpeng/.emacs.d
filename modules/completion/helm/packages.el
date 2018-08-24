@@ -1,5 +1,6 @@
 ;;; completion/helm/packages.el -*- lexical-binding: t; -*-
 
 (package! helm
-          helm-swoop
-          helm-projectile)
+          helm-ag
+          helm-projectile
+          helm-swoop)

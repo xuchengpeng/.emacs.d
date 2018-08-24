@@ -19,6 +19,7 @@
                                dotemacs-opera
                                dotemacs-peacock
                                dotemacs-solarized-light
+                               dotemacs-sourcerer
                                dotemacs-spacegrey
                                dotemacs-tomorrow-day
                                dotemacs-tomorrow-night

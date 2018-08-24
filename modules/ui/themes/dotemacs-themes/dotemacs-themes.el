@@ -15,21 +15,20 @@
 ;;   `dotemacs-vibrant'
 ;;
 ;; Additional themes
-;;   `dotemacs-city-lights' (added by fuxialexnder)
-;;   `dotemacs-darcula' (added by fuxialexnder)
+;;   `dotemacs-city-lights'
+;;   `dotemacs-darcula'
 ;;   `dotemacs-molokai'
-;;   `dotemacs-nord' (added by fuxialexnder)
-;;   `dotemacs-nord-light' (added by fuxialexnder)
-;;   `dotemacs-opera' (added by jwintz)
-;;   `dotemacs-opera-light' (added by jwintz)
-;;   `dotemacs-nova' (added by bigardone)
-;;   `dotemacs-peacock' (added by teesloane)
-;;   `dotemacs-solarized-light' (added by fuxialexnder)
-;;   `dotemacs-spacegrey' (added by teesloane)
+;;   `dotemacs-nord'
+;;   `dotemacs-nord-light'
+;;   `dotemacs-opera'
+;;   `dotemacs-opera-light'
+;;   `dotemacs-nova'
+;;   `dotemacs-peacock'
+;;   `dotemacs-solarized-light'
+;;   `dotemacs-sourcerer'
+;;   `dotemacs-spacegrey'
 ;;   `dotemacs-tomorrow-night'
 ;;   `dotemacs-tomorrow-day'
-;;   `dotemacs-mono-dark' / `dotemacs-mono-light'
-;;   `dotemacs-tron'
 ;;
 ;;
 ;; A comprehensive configuration example:

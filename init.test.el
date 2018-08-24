@@ -7,7 +7,7 @@
            project
            :completion
            company
-           ivy
+           helm
            :ui
            (window-select +ace-window)
            :tools

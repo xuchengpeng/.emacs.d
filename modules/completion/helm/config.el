@@ -23,8 +23,7 @@
            "pt --color --smart-case --nogroup --numbers %s %s %s")
           (t helm-grep-ag-command))))
     (setq helm-grep-ag-command command))
-  (helm-mode 1)
-  )
+  (helm-mode +1))
 
 (use-package helm-swoop
   :after (helm)
@@ -77,8 +76,6 @@
 
 (use-package helm-projectile
   :after (helm)
-  :demand t
   :config
   (setq projectile-completion-system 'helm)
-  (helm-projectile-on)
-  )
+  (helm-projectile-on))

@@ -14,8 +14,8 @@
            utils
            :completion
            company
-           ;; helm
-           ivy
+           helm
+           ;; ivy
            :ui
            modeline
            ;; modeline-old

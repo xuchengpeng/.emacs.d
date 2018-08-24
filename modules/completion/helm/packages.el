@@ -1,4 +1,4 @@
-;;; feature/helm/packages.el -*- lexical-binding: t; -*-
+;;; completion/helm/packages.el -*- lexical-binding: t; -*-
 
 (package! helm
           helm-swoop

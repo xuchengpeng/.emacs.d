@@ -8,11 +8,35 @@
          ("C-x b" . helm-mini)
          ("C-x C-b" . helm-buffers-list))
   :config
-  (require 'helm)
   (require 'helm-config)
+  
   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
   (define-key helm-map (kbd "C-z") 'helm-select-action)
+  
+  (setq helm-display-header-line nil
+        helm-imenu-execute-action-at-once-if-one nil
+        helm-echo-input-in-header-line t
+        helm-bookmark-show-location t)
+  
+  (when (featurep! +fuzzy)
+    (setq helm-M-x-fuzzy-match t
+          helm-ag-fuzzy-match t
+          helm-apropos-fuzzy-match t
+          helm-bookmark-show-location t
+          helm-buffers-fuzzy-matching t
+          helm-completion-in-region-fuzzy-match t
+          helm-ff-fuzzy-matching t
+          helm-file-cache-fuzzy-match t
+          helm-flx-for-helm-locate t
+          helm-imenu-fuzzy-match t
+          helm-lisp-fuzzy-completion t
+          helm-locate-fuzzy-match t
+          helm-mode-fuzzy-match t
+          helm-projectile-fuzzy-match t
+          helm-recentf-fuzzy-match t
+          helm-semantic-fuzzy-match t))
+  
   (let ((command
          (cond
           ((executable-find "rg")
@@ -23,7 +47,11 @@
            "pt --color --smart-case --nogroup --numbers %s %s %s")
           (t helm-grep-ag-command))))
     (setq helm-grep-ag-command command))
-  (helm-mode +1))
+  
+  (helm-mode +1)
+  
+  (setq helm-autoresize-min-height 20)
+  (helm-autoresize-mode +1))
 
 (use-package helm-ag
   :after (helm)
@@ -93,3 +121,12 @@
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
+
+(use-package helm-flx
+  :when (featurep! +fuzzy)
+  :hook (helm-mode . helm-flx-mode)
+  :config (helm-flx-mode +1))
+
+(use-package helm-descbinds
+  :hook (helm-mode . helm-descbinds-mode))
+

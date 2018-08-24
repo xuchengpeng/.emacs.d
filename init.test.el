@@ -7,7 +7,7 @@
            project
            :completion
            company
-           helm
+           (helm +fuzzy)
            :ui
            (window-select +ace-window)
            :tools

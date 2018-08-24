@@ -14,7 +14,7 @@
            utils
            :completion
            company
-           helm
+           (helm +fuzzy)
            ;; ivy
            :ui
            modeline

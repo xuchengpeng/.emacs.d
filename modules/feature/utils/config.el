@@ -1,9 +1,10 @@
 ;;; feature/utils/config.el -*- lexical-binding: t; -*-
 
 (use-package which-key
+  :defer 1
   :diminish which-key-mode
   :commands which-key-mode
-  :hook (pre-command . which-key-mode))
+  :config (which-key-mode +1))
 
 (use-package hydra
   :bind (("C-c f" . hydra-flycheck/body)

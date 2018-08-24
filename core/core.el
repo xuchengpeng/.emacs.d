@@ -178,12 +178,7 @@ Module load order is determined by your `dotemacs!' block."
   (require 'core-editor))
 
 (defun dotemacs-finalize ()
-  "dotemacs finalize function."  
-  (when (display-graphic-p)
-    (require 'server)
-    (unless (server-running-p)
-      (server-start)))
-  
+  "dotemacs finalize function."
   (setq file-name-handler-alist file-name-handler-alist-old
         gc-cons-threshold 800000
         gc-cons-percentage 0.1))

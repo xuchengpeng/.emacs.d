@@ -20,7 +20,13 @@
        eshell-aliases-file (concat dotemacs-local-dir ".eshell-aliases")
        ;; em-prompt
        eshell-prompt-regexp "^.* λ "
-       eshell-prompt-function #'+eshell-prompt))
+       eshell-prompt-function #'+eshell-prompt)
+    
+    (defun +eshell|init-keymap ()
+      "Init eshell keymap."
+      (define-key eshell-mode-map (kbd "C-s") '+eshell/search-history))
+    
+    (add-hook 'eshell-mode-hook #'+eshell|init-keymap))
 
 (use-package shell-pop
   :commands (shell-pop)

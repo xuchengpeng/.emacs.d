@@ -3,24 +3,23 @@
 (use-package eshell
   :commands (eshell eshell-mode)
   :config
-  (setq
-       eshell-buffer-shorthand t
-       eshell-history-size 1000
-       eshell-save-history-on-exit t
-       eshell-kill-processes-on-exit t
-       eshell-hist-ignoredups t
-       eshell-cmpl-ignore-case t
-       ;; em-glob
-       eshell-error-if-no-glob t
-       eshell-glob-case-insensitive t
-       eshell-scroll-to-bottom-on-input 'all
-       eshell-scroll-to-bottom-on-output 'all
-       eshell-directory-name (concat dotemacs-cache-dir "eshell")
-       ;; em-alias
-       eshell-aliases-file (concat dotemacs-local-dir ".eshell-aliases")
-       ;; em-prompt
-       eshell-prompt-regexp "^.* λ "
-       eshell-prompt-function #'+eshell-prompt)
+  (setq eshell-buffer-shorthand t
+        eshell-history-size 1000
+        eshell-save-history-on-exit t
+        eshell-kill-processes-on-exit t
+        eshell-hist-ignoredups t
+        eshell-cmpl-ignore-case t
+        ;; em-glob
+        eshell-error-if-no-glob t
+        eshell-glob-case-insensitive t
+        eshell-scroll-to-bottom-on-input 'all
+        eshell-scroll-to-bottom-on-output 'all
+        eshell-directory-name (concat dotemacs-cache-dir "eshell")
+        ;; em-alias
+        eshell-aliases-file (concat dotemacs-local-dir ".eshell-aliases")
+        ;; em-prompt
+        eshell-prompt-regexp "^.* λ "
+        eshell-prompt-function #'+eshell-prompt)
     
     (defun +eshell|init-keymap ()
       "Init eshell keymap."

@@ -39,6 +39,16 @@
 (use-package ivy-hydra
   :after (ivy hydra))
 
+(use-package flx
+  :when (featurep! +fuzzy)
+  :defer t  ; is loaded by ivy
+  :config
+  (setq ivy-re-builders-alist
+        '((counsel-ag . ivy--regex-plus)
+          (counsel-grep . ivy--regex-plus)
+          (swiper . ivy--regex-plus)
+          (t . ivy--regex-fuzzy))))
+
 ;; ;; Package `prescient' is a library for intelligent sorting and
 ;; ;; filtering in various contexts.
 ;; (use-package prescient

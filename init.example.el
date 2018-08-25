@@ -15,7 +15,7 @@
            :completion
            company
            (helm +fuzzy)
-           ;; ivy
+           ;; (ivy +fuzzy)
            :ui
            modeline
            ;; modeline-old

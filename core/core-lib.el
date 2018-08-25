@@ -84,6 +84,44 @@
   (cl-check-type :test keyword)
   (substring (symbol-name keyword) 1))
 
+(defun dotemacs--resolve-path-forms (spec &optional directory)
+  "Converts a simple nested series of or/and forms into a series of
+`file-exists-p' checks.
+
+For example
+
+  (dotemacs--resolve-path-forms
+    '(or \"some-file\" (and path-var \"/an/absolute/path\"))
+    \"~\")
+
+Returns
+
+  '(let ((_directory \"~\"))
+     (or (file-exists-p (expand-file-name \"some-file\" _directory))
+         (and (file-exists-p (expand-file-name path-var _directory))
+              (file-exists-p \"/an/absolute/path\"))))
+
+This is used by `associate!', `file-exists-p!' and `project-file-exists-p!'."
+  (declare (pure t) (side-effect-free t))
+  (cond ((stringp spec)
+         `(file-exists-p
+           ,(if (file-name-absolute-p spec)
+                spec
+              `(expand-file-name ,spec ,directory))))
+        ((and (listp spec)
+              (memq (car spec) '(or and)))
+         `(,(car spec)
+           ,@(cl-loop for i in (cdr spec)
+                      collect (dotemacs--resolve-path-forms i directory))))
+        ((or (symbolp spec)
+             (listp spec))
+         `(file-exists-p ,(if (and directory
+                                   (or (not (stringp directory))
+                                       (file-name-absolute-p directory)))
+                              `(expand-file-name ,spec ,directory)
+                            spec)))
+        (t spec)))
+
 (defun dotemacs--resolve-hook-forms (hooks)
   (cl-loop with quoted-p = (eq (car-safe hooks) 'quote)
            for hook in (dotemacs-enlist (dotemacs-unquote hooks))
@@ -230,6 +268,51 @@ Body forms can access the hook's arguments through the let-bound variable
                  (val (pop rest)))
              (push `(setq-local ,var ,val) forms)))
          (nreverse forms))))
+
+(defmacro file-exists-p! (spec &optional directory)
+  "Returns t if the files in SPEC all exist.
+
+SPEC can be a single file or a list of forms/files. It understands nested (and
+...) and (or ...), as well.
+
+DIRECTORY is where to look for the files in SPEC if they aren't absolute. This
+doesn't apply to variables, however.
+
+For example:
+
+  (file-exists-p! (or dotemacs-core-dir \"~/.config\" \"some-file\") \"~\")"
+  (if directory
+      `(let ((--directory-- ,directory))
+         ,(dotemacs--resolve-path-forms spec '--directory--))
+    (dotemacs--resolve-path-forms spec)))
+
+(defmacro define-key! (keymaps key def &rest rest)
+  "Like `define-key', but accepts a variable number of KEYMAPS and/or KEY+DEFs.
+
+KEYMAPS can also be (or contain) 'global or 'local, to make this equivalent to
+using `global-set-key' and `local-set-key'.
+
+KEY is a key string or vector. It is *not* piped through `kbd'."
+  (declare (indent defun))
+  (or (cl-evenp (length rest))
+      (signal 'wrong-number-of-arguments (list 'evenp (length rest))))
+  (if (and (listp keymaps)
+           (not (eq (car-safe keymaps) 'quote)))
+      `(dolist (map (list ,@keymaps))
+         ,(macroexpand `(define-key! map ,key ,def ,@rest)))
+    (when (eq (car-safe keymaps) 'quote)
+      (pcase (cadr keymaps)
+        (`global (setq keymaps '(current-global-map)))
+        (`local  (setq keymaps '(current-local-map)))
+        (x (error "%s is not a valid keymap" x))))
+    `(let ((map ,keymaps))
+       (define-key map ,key ,def)
+       ,@(let (forms)
+           (while rest
+             (let ((key (pop rest))
+                   (def (pop rest)))
+               (push `(define-key map ,key ,def) forms)))
+           (nreverse forms)))))
 
 (provide 'core-lib)
 

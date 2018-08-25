@@ -40,6 +40,18 @@
 (defvar dotemacs-init-ui-hook nil
   "List of hooks to run when the UI has been initialized.")
 
+(defvar dotemacs-font nil
+  "The default font to use.")
+
+(defvar dotemacs-font-size nil
+  "The default font size to use.")
+
+(defvar dotemacs-cn-font nil
+  "The default chinese font to use.")
+
+(defvar dotemacs-cn-font-size nil
+  "The default chinese font size to use.")
+
 ;; maximized startup
 (unless (frame-parameter nil 'fullscreen)
   (toggle-frame-maximized))

@@ -19,6 +19,7 @@
            :completion
            company
            (helm +fuzzy)
+           ;; ido
            ;; (ivy +fuzzy)
            :ui
            modeline

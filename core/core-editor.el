@@ -136,8 +136,5 @@
   (unless (server-running-p)
     (server-start)))
 
-(use-package ibuffer
-  :bind ("C-x C-b" . ibuffer))
-
 (provide 'core-editor)
 ;;; core-editor.el ends here

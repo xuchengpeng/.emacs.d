@@ -4,7 +4,7 @@
   "Options for dotemacs's treemacs theme"
   :group 'dotemacs-themes)
 
-(defcustom dotemacs-treemacs-enable-variable-pitch t
+(defcustom dotemacs-treemacs-enable-variable-pitch nil
   "If non-nil, the labels for files, folders and projects are displayed with the
 variable-pitch face."
   :type 'boolean

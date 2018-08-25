@@ -30,17 +30,25 @@ For example:
 
 If `dotemacs-package-archives` is set to `custom`, you need to set `package-archives`.
 ```el
-(setq dotemacs-package-archives 'custom     ; Package repo: melpa, emacs-china, tuna or custom
-      package-archives          '(("gnu"   . "/home/user/elpa-mirror/gnu/")
-                                  ("melpa" . "/home/user/elpa-mirror/melpa/")
-                                  ("org"   . "/home/user/elpa-mirror/org/")))
+(setq dotemacs-package-archives 'custom)
+(setq package-archives '(("gnu"   . "/home/user/elpa-mirror/gnu/")
+                         ("melpa" . "/home/user/elpa-mirror/melpa/")
+                         ("org"   . "/home/user/elpa-mirror/org/")))
 ```
 
 Customize it with melpa, [emacs-china](https://elpa.emacs-china.org/) or [tuna](https://mirror.tuna.tsinghua.edu.cn/help/elpa/), or clone it from [elpa-mirror](https://github.com/xuchengpeng/elpa-mirror) to local disk.
 
 ## Install fonts(Optional)
 
-Install [DejaVu Sans Mono](https://dejavu-fonts.github.io/) or [Source Code Pro](https://github.com/adobe-fonts/source-code-pro).
+Install your favorite fonts, or you can find some popular fonts [here](https://github.com/xuchengpeng/fonts).
+
+For example:
+```el
+(setq dotemacs-font "Fira Mono")    ; default font
+(setq dotemacs-cn-font "STXihei")   ; chinese font
+(setq dotemacs-font-size 11)        ; default font size
+(setq dotemacs-cn-font-size 16)     ; chinese font size
+```
 
 ## Supported Emacs versions
 

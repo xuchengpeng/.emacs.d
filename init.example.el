@@ -29,9 +29,10 @@
            themes
            treemacs
            (window-select +ace-window)
+           :emacs
+           eshell
            :tools
            editorconfig
-           eshell
            ;; impatient-mode
            magit
            ;; package-manager

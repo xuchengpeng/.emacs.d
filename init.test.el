@@ -14,7 +14,7 @@
            (helm +fuzzy)
            :ui
            (window-select +ace-window)
-           :tools
+           :emacs
            eshell
            :lang
            markdown

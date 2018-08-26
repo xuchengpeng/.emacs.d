@@ -1,4 +1,4 @@
-;;; tools/eshell/config.el -*- lexical-binding: t; -*-
+;;; emacs/eshell/config.el -*- lexical-binding: t; -*-
 
 (use-package eshell
   :commands (eshell eshell-mode)

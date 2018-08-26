@@ -1,4 +1,4 @@
-;;; tools/eshell/autoload.el -*- lexical-binding: t; -*-
+;;; emacs/eshell/autoload.el -*- lexical-binding: t; -*-
 
 (defun +eshell--current-git-branch ()
     (let ((branch (car (loop for match in (split-string (shell-command-to-string "git branch") "\n")

@@ -115,12 +115,12 @@ line or use --debug-init to enable this.")
  inhibit-startup-echo-area-message user-login-name
  inhibit-default-init t
  initial-scratch-message ""
- initial-major-mode 'fundamental-mode
- ;; files
- custom-file (concat dotemacs-local-dir "custom.el"))
+ initial-major-mode 'fundamental-mode)
 
 (add-to-list 'load-path dotemacs-core-dir)
 
+(unless custom-file
+  (setq custom-file (concat dotemacs-local-dir "custom.el")))
 (load custom-file t (not dotemacs-debug-mode))
 
 ;;

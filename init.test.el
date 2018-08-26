@@ -7,8 +7,8 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (dotemacs! :feature
-           editor
            project
+           workspaces
            :completion
            company
            (helm +fuzzy)

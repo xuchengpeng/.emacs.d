@@ -16,6 +16,7 @@
            snippets
            syntax-checker
            utils
+           workspaces
            :completion
            company
            (helm +fuzzy)

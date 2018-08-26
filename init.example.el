@@ -32,6 +32,7 @@
            :tools
            editorconfig
            eshell
+           ;; impatient-mode
            magit
            ;; package-manager
            :lang

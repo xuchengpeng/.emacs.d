@@ -30,6 +30,7 @@
            treemacs
            (window-select +ace-window)
            :emacs
+           dired
            eshell
            :tools
            editorconfig

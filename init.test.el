@@ -15,7 +15,7 @@
            :ui
            (window-select +ace-window)
            :emacs
-           eshell
+           dired
            :lang
            markdown
            web)

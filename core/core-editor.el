@@ -83,7 +83,9 @@
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
 ;; Highlight the current line
-(add-hook 'after-init-hook #'global-hl-line-mode)
+(setq display-line-numbers-width 3)
+(use-package hl-line
+  :hook ((prog-mode text-mode conf-mode) . hl-line-mode))
 
 ;; Highlight matching paren
 (add-hook 'find-file-hook #'show-paren-mode)

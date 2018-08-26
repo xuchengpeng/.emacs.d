@@ -31,6 +31,7 @@
            (window-select +ace-window)
            :emacs
            dired
+           ediff
            eshell
            :tools
            editorconfig

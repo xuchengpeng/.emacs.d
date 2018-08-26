@@ -20,6 +20,12 @@ stored in `persp-save-dir'.")
   
   (add-hook 'dotemacs-cleanup-hook #'+workspaces|cleanup-unassociated-buffers)
   
+  ;; Ensure buffers we've opened/switched to are auto-added to the current
+  ;; perspective
+  (setq persp-add-buffer-on-find-file t
+        persp-add-buffer-on-after-change-major-mode t)
+  (add-hook 'persp-add-buffer-on-after-change-major-mode-filter-functions #'dotemacs-unreal-buffer-p)
+  
   ;;
   ;; eshell
   (persp-def-buffer-save/load

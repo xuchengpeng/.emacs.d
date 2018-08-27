@@ -4,20 +4,20 @@
   :diminish company-mode
   :commands (company-complete-common company-manual-begin company-grab-line)
   :bind (("M-/" . company-complete)
-          ("C-c C-y" . company-yasnippet)
-          :map company-active-map
-          ("C-p" . company-select-previous)
-          ("C-n" . company-select-next)
-          ("TAB" . company-complete-common-or-cycle)
-          ("<tab>" . company-complete-common-or-cycle)
-          ("S-TAB" . company-select-previous)
-          ("<backtab>" . company-select-previous)
-          :map company-search-map
-          ("C-p" . company-select-previous)
-          ("C-n" . company-select-next))
+         ("C-c C-y" . company-yasnippet)
+         :map company-active-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next)
+         ("TAB" . company-complete-common-or-cycle)
+         ("<tab>" . company-complete-common-or-cycle)
+         ("S-TAB" . company-select-previous)
+         ("<backtab>" . company-select-previous)
+         :map company-search-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next))
   :config
   (setq company-idle-delay 0.2
-        company-tooltip-limit 20
+        company-tooltip-limit 15
         company-tooltip-align-annotations t
         company-minimum-prefix-length 2
         company-dabbrev-downcase nil

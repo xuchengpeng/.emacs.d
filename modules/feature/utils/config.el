@@ -1,5 +1,22 @@
 ;;; feature/utils/config.el -*- lexical-binding: t; -*-
 
+(if (fboundp 'display-line-numbers-mode)
+    (add-hook 'after-init-hook #'global-display-line-numbers-mode)
+  (use-package nlinum
+    :hook ((prog-mode text-mode conf-mode) . nlinum-mode)
+    :config
+    (setq nlinum-format "%4d"))
+  (use-package nlinum-relative
+    :commands (nlinum-relative-mode
+               nlinum-relative-toggle
+               nlinum-relative-on
+               nlinum-relative-off)
+    :config
+    (setq nlinum-relative-current-symbol ""
+          nlinum-relative-redisplay-delay 0)
+    (when (featurep! :feature evil)
+      (nlinum-relative-setup-evil))))
+
 (use-package which-key
   :defer 1
   :diminish which-key-mode

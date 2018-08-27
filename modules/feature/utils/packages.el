@@ -1,5 +1,9 @@
 ;;; feature/utils/packages.el -*- lexical-binding: t; -*-
 
+(unless (fboundp 'display-line-numbers-mode)
+  (package! nlinum
+            nlinum-relative))
+
 (package! which-key
           hydra)
 

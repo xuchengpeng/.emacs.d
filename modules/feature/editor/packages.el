@@ -7,6 +7,3 @@
           smartparens
           ;; paredit
           avy)
-
-(unless (fboundp 'display-line-numbers-mode)
-  (package! nlinum))

@@ -1,11 +1,5 @@
 ;;; feature/editor/config.el -*- lexical-binding: t; -*-
 
-(if (fboundp 'display-line-numbers-mode)
-    (global-display-line-numbers-mode)
-  (use-package nlinum
-    :config (global-nlinum-mode)
-    ))
-
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
   :diminish aggressive-indent-mode

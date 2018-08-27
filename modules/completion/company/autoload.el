@@ -15,6 +15,10 @@
   "Bring up the completion popup. If only one result, complete it."
   (interactive)
   (require 'company)
+  (when (ignore-errors
+          (/= (point)
+              (cdr (bounds-of-thing-at-point 'symbol))))
+    (save-excursion (insert " ")))
   (when (and (company-manual-begin)
              (= company-candidates-length 1))
     (company-complete-common)))

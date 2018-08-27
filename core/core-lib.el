@@ -314,6 +314,35 @@ KEY is a key string or vector. It is *not* piped through `kbd'."
                (push `(define-key map ,key ,def) forms)))
            (nreverse forms)))))
 
-(provide 'core-lib)
+(defmacro load! (filename &optional path noerror)
+  "Load a file relative to the current executing file (`load-file-name').
 
+FILENAME is either a file path string or a form that should evaluate to such a
+string at run time. PATH is where to look for the file (a string representing a
+directory path). If omitted, the lookup is relative to either `load-file-name',
+`byte-compile-current-file' or `buffer-file-name' (checked in that order).
+
+If NOERROR is non-nil, don't throw an error if the file doesn't exist."
+  (unless path
+    (setq path (or (DIR!)
+                   (error "Could not detect path to look for '%s' in"
+                          filename))))
+  (let ((file (if path `(expand-file-name ,filename ,path) filename)))
+    `(condition-case e
+         (load ,file ,noerror ,(not dotemacs-debug-mode))
+       ((debug dotemacs-error) (signal (car e) (cdr e)))
+       ((debug error)
+        (let* ((source (file-name-sans-extension ,file))
+               (err (cond ((file-in-directory-p source dotemacs-core-dir)
+                           (cons 'dotemacs-error dotemacs-core-dir))
+                          ((file-in-directory-p source dotemacs-private-dir)
+                           (cons 'dotemacs-private-error dotemacs-private-dir))
+                          ((cons 'dotemacs-module-error dotemacs-emacs-dir)))))
+          (signal (car err)
+                  (list (file-relative-name
+                         (concat source ".el")
+                         (cdr err))
+                        e)))))))
+
+(provide 'core-lib)
 ;;; core-lib.el ends here

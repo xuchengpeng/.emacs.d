@@ -48,27 +48,24 @@
   (dotemacs-initialize-autoload)
   
   (maphash (lambda (key plist)
-             (let ((path (plist-get plist :path)))
-               (load (expand-file-name "packages.el" path) t (not dotemacs-debug-mode))))
+             (load! "packages" (plist-get plist :path) t))
            dotemacs-modules)
   (when dotemacs-private-dir
-    (load (expand-file-name "packages.el" dotemacs-private-dir) t (not dotemacs-debug-mode)))
+    (load! "packages" dotemacs-private-dir t))
   (dotemacs-install-packages dotemacs-packages)
   
   (maphash (lambda (key plist)
-             (let ((path (plist-get plist :path)))
-               (load (expand-file-name "init.el" path) t (not dotemacs-debug-mode))))
+             (load! "init" (plist-get plist :path) t))
            dotemacs-modules)
   (when dotemacs-private-dir
-    (load (expand-file-name "init.el" dotemacs-private-dir) t (not dotemacs-debug-mode)))
+    (load! "init" dotemacs-private-dir t))
   (run-hook-wrapped 'dotemacs-init-hook #'dotemacs-try-run-hook)
   
   (maphash (lambda (key plist)
-             (let ((path (plist-get plist :path)))
-               (load (expand-file-name "config.el" path) t (not dotemacs-debug-mode))))
+             (load! "config" (plist-get plist :path) t))
            dotemacs-modules)
   (when dotemacs-private-dir
-    (load (expand-file-name "config.el" dotemacs-private-dir) t (not dotemacs-debug-mode)))
+    (load! "config" dotemacs-private-dir t))
   (run-hook-wrapped 'dotemacs-post-init-hook #'dotemacs-try-run-hook)
 
   (message "Emacs modules initialized"))
@@ -312,36 +309,6 @@ omitted. eg. (featurep! +flag1)"
                   (error "featurep! couldn't detect what module its in! (in %s)" (FILE!)))
                 (memq category (dotemacs-module-get (car module-pair) (cdr module-pair) :flags)))))
        t))
-
-(defmacro load! (filename &optional path noerror)
-  "Load a file relative to the current executing file (`load-file-name').
-
-FILENAME is either a file path string or a form that should evaluate to such a
-string at run time. PATH is where to look for the file (a string representing a
-directory path). If omitted, the lookup is relative to either `load-file-name',
-`byte-compile-current-file' or `buffer-file-name' (checked in that order).
-
-If NOERROR is non-nil, don't throw an error if the file doesn't exist."
-  (unless path
-    (setq path (or (DIR!)
-                   (error "Could not detect path to look for '%s' in"
-                          filename))))
-  (let ((file (if path `(expand-file-name ,filename ,path) filename)))
-    `(condition-case e
-         (load ,file ,noerror ,(not dotemacs-debug-mode))
-       ((debug dotemacs-error) (signal (car e) (cdr e)))
-       ((debug error)
-        (let* ((source (file-name-sans-extension ,file))
-               (err (cond ((file-in-directory-p source dotemacs-core-dir)
-                           (cons 'dotemacs-error dotemacs-core-dir))
-                          ((file-in-directory-p source dotemacs-private-dir)
-                           (cons 'dotemacs-private-error dotemacs-private-dir))
-                          ((cons 'dotemacs-module-error dotemacs-emacs-dir)))))
-          (signal (car err)
-                  (list (file-relative-name
-                         (concat source ".el")
-                         (cdr err))
-                        e)))))))
 
 (defmacro require! (category module &rest plist)
   "Loads the module specified by CATEGORY (a keyword) and MODULE (a symbol)."

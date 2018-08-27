@@ -82,8 +82,9 @@
          ("M-i"     . counsel-grep-or-swiper)
          ("C-x r b" . counsel-bookmark)
          ("C-x C-f" . counsel-find-file)
-         ("C-h f"   . counsel-describe-function)
-         ("C-h v"   . counsel-describe-variable))
+         ;; ("C-h f"   . counsel-describe-function)
+         ;; ("C-h v"   . counsel-describe-variable)
+         )
   :config
   (setq counsel-find-file-ignore-regexp
         (concat

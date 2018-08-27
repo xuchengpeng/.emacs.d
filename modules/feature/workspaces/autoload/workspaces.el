@@ -272,9 +272,12 @@ throws an error."
       (completing-read (format "Delete workspace (default: %s): " current-name)
                        (+workspace-list-names)
                        nil nil current-name))))
-  (+workspace-delete name)
-  (dotemacs/kill-all-buffers)
-  (+workspace-message (format "Deleted '%s' workspace" name) 'success))
+  (let ((workspaces (+workspace-list-names)))
+    (if (not (member name workspaces))
+        (+workspace-message (format "'%s' workspace doesn't exist" name) 'warn)
+      (+workspace-delete name)
+      (dotemacs/kill-all-buffers)
+      (+workspace-message (format "Deleted '%s' workspace" name) 'success))))
 
 ;;;###autoload
 (defun +workspace/kill-session ()

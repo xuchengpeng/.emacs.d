@@ -1,8 +1,7 @@
 ;;; lang/org/config.el -*- lexical-binding: t; -*-
 
 (use-package org
-  :mode (("\\.org$" . org-mode)
-         ("\\.txt$" . org-mode))
+  :mode ("\\.org$" . org-mode)
   :bind (("C-c a" . org-agenda)
          ("C-c c" . org-capture))
   :config

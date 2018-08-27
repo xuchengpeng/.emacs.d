@@ -226,7 +226,7 @@ e.g. project/src/lib/file.c"
   (let* ((project-root (dotemacs-project-root))
          (true-filename (file-truename buffer-file-name))
          (relative-dirs (file-relative-name (file-name-directory true-filename)
-                                            project-root)))
+                                            (file-truename project-root))))
     (list (cons (concat (dotemacs-project-name) "/")
                 'dotemacs-modeline-buffer-project-root)
           (cons (if (equal "./" relative-dirs) "" relative-dirs)

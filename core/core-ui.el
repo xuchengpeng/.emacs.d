@@ -52,21 +52,72 @@
 (defvar dotemacs-cn-font-size nil
   "The default chinese font size to use.")
 
+(setq-default
+ compilation-always-kill t        ; kill compilation process before starting another
+ compilation-ask-about-save nil   ; save all buffers on `compile'
+ compilation-scroll-output 'first-error
+ confirm-nonexistent-file-or-buffer t
+ cursor-in-non-selected-windows nil ; hide cursors in other windows
+ display-line-numbers-width 3
+ enable-recursive-minibuffers nil
+ frame-inhibit-implied-resize t
+ frame-title-format '((:eval (if (buffer-file-name)
+                                 (abbreviate-file-name (buffer-file-name))
+                               "%b")))
+ highlight-nonselected-windows nil
+ indicate-buffer-boundaries nil
+ indicate-empty-lines nil
+ inhibit-compacting-font-caches t
+ mode-line-default-help-echo nil ; disable mode-line mouseovers
+ mouse-yank-at-point t           ; middle-click paste at point, not at click
+ show-help-function nil          ; hide :help-echo text
+ uniquify-buffer-name-style 'forward
+ uniquify-separator "/"
+ uniquify-after-kill-buffer-p t
+ uniquify-ignore-buffers-re "^\\*"
+ user-full-name    dotemacs-full-name
+ user-mail-address dotemacs-mail-address
+ ;; no beeping or blinking please
+ ring-bell-function #'ignore
+ visible-bell nil
+ ;; don't resize emacs in steps, it looks weird
+ window-resize-pixelwise t
+ frame-resize-pixelwise t)
+
 ;; maximized startup
 (unless (frame-parameter nil 'fullscreen)
   (toggle-frame-maximized))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
 
 (fset #'yes-or-no-p #'y-or-n-p) ; y/n instead of yes/no
 
 (line-number-mode t)
 (column-number-mode t)
 (size-indication-mode t)
+
+;;
+;; Built-in packages
+;;
+
+;; undo/redo changes to Emacs' window layout
+(use-package winner
+  :hook (window-configuration-change . winner-mode))
+
+;; Highlight the current line
+(use-package hl-line
+  :hook ((prog-mode text-mode conf-mode) . hl-line-mode))
+
+;; highlight matching delimiters
+(use-package paren
+  :hook (find-file . show-paren-mode)
+  :config
+  (setq show-paren-delay 0.1
+        show-paren-highlight-openparen t
+        show-paren-when-point-inside-paren t))
+
+;;
+;; Theme & font
+;;
 
 (defun dotemacs|init-fonts ()
   "Set the font."

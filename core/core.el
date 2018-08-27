@@ -100,12 +100,19 @@ line or use --debug-init to enable this.")
 (setq-default buffer-file-coding-system 'utf-8) ; with sugar on top
 
 (setq-default
+ ad-redefinition-action 'accept   ; silence advised function warnings
  auto-mode-case-fold nil
  autoload-compute-prefixes nil
  debug-on-error dotemacs-debug-mode
- idle-update-delay 2 ;; update ui less often
+ ffap-machine-p-known 'reject     ; don't ping things that look like domain names
+ idle-update-delay 2              ;; update ui less often
  ;; keep the point out of the minibuffer
  minibuffer-prompt-properties '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
+ ;; History & backup settings
+ auto-save-default nil
+ create-lockfiles nil
+ history-length 250
+ make-backup-files nil
  ;; byte compilation
  byte-compile-dynamic nil
  byte-compile-verbose dotemacs-debug-mode
@@ -114,8 +121,19 @@ line or use --debug-init to enable this.")
  inhibit-startup-message t
  inhibit-startup-echo-area-message user-login-name
  inhibit-default-init t
- initial-scratch-message ""
- initial-major-mode 'fundamental-mode)
+ initial-scratch-message nil
+ initial-major-mode 'fundamental-mode
+ ;; files
+ abbrev-file-name             (concat dotemacs-local-dir "abbrev.el")
+ auto-save-list-file-name     (concat dotemacs-cache-dir "autosave")
+ backup-directory-alist       (list (cons "." (concat dotemacs-cache-dir "backup/")))
+ pcache-directory             (concat dotemacs-cache-dir "pcache/")
+ request-storage-directory    (concat dotemacs-cache-dir "request")
+ tramp-auto-save-directory    (concat dotemacs-cache-dir "tramp-auto-save/")
+ tramp-backup-directory-alist backup-directory-alist
+ tramp-persistency-file-name  (concat dotemacs-cache-dir "tramp-persistency.el")
+ url-cache-directory          (concat dotemacs-cache-dir "url/")
+ url-configuration-directory  (concat dotemacs-cache-dir "url/"))
 
 (add-to-list 'load-path dotemacs-core-dir)
 
@@ -165,9 +183,9 @@ Module load order is determined by your `dotemacs!' block."
   (require 'core-lib)
   (require 'core-packages)
   (dotemacs-initialize-core)
-  (require 'core-modules)
   (require 'core-ui)
-  (require 'core-editor))
+  (require 'core-editor)
+  (require 'core-modules))
 
 ;;
 ;; Bootstrap dotemacs

@@ -31,48 +31,38 @@
 
 ;;; Code:
 
-(setq user-full-name    dotemacs-full-name
-      user-mail-address dotemacs-mail-address)
-
-(setq-default indent-tabs-mode nil
-              tab-width 4)
-
-;; smart tab behavior - indent or complete
-(setq tab-always-indent 'complete)
-
-(setq ring-bell-function 'ignore)
-
-;; Scrolling
-(setq hscroll-margin 2
-      hscroll-step 1
-      scroll-conservatively 1001
-      scroll-margin 0
-      scroll-preserve-screen-position t)
-
-(setq uniquify-buffer-name-style 'forward
-      uniquify-separator "/"
-      uniquify-after-kill-buffer-p t
-      uniquify-ignore-buffers-re "^\\*")
-
 (setq-default
-  make-backup-files nil
-  auto-save-default nil
-  auto-save-list-file-name (concat dotemacs-cache-dir "autosave")
-  backup-directory-alist   (list (cons "." (concat dotemacs-cache-dir "backup/"))))
+ large-file-warning-threshold 30000000
+ ;; Bookmarks
+ bookmark-default-file (concat dotemacs-cache-dir "bookmarks")
+ bookmark-save-flag t
+ ;; Formatting
+ delete-trailing-lines nil
+ fill-column 80
+ sentence-end-double-space nil
+ word-wrap t
+ ;; Scrolling
+ hscroll-margin 2
+ hscroll-step 1
+ scroll-conservatively 1001
+ scroll-margin 0
+ scroll-preserve-screen-position t
+ ;; Whitespace
+ indent-tabs-mode nil
+ require-final-newline t
+ tab-always-indent t
+ tab-width 4
+ ;; Wrapping
+ truncate-lines t
+ truncate-partial-width-windows 50)
 
-(setq bookmark-default-file  (concat dotemacs-cache-dir "bookmarks")
-      bookmark-save-flag     1)
-
-(add-hook 'find-file-hook 'global-auto-revert-mode)
-(setq global-auto-revert-non-file-buffers t
-      auto-revert-verbose nil)
+;; Remove hscroll-margin in shells, otherwise it causes jumpiness
+(setq-hook! '(eshell-mode-hook term-mode-hook) hscroll-margin 0)
 
 (after-load! 'abbrev
   (diminish 'abbrev-mode))
 (after-load! 'eldoc
   (diminish 'eldoc-mode))
-(after-load! 'autorevert
-  (diminish 'auto-revert-mode))
 (after-load! 'simple
   (diminish 'auto-fill-function)
   (diminish 'visual-line-mode))
@@ -82,16 +72,31 @@
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
-;; Highlight the current line
-(setq display-line-numbers-width 3)
-(use-package hl-line
-  :hook ((prog-mode text-mode conf-mode) . hl-line-mode))
+;;
+;; Built-in plugins
+;;
 
-;; Highlight matching paren
-(add-hook 'find-file-hook #'show-paren-mode)
+;; revert buffers for changed files
+(use-package autorevert
+  :hook (find-file . global-auto-revert-mode)
+  :diminish auto-revert-mode
+  :config
+  (setq auto-revert-verbose nil))
 
-(when (fboundp 'winner-mode)
-  (add-hook 'window-configuration-change-hook #'winner-mode))
+;; persist variables across sessions
+(use-package savehist
+  :hook (post-command . savehist-mode)
+  :config
+  (setq savehist-file (concat dotemacs-cache-dir "savehist")
+        savehist-save-minibuffer-history t
+        savehist-autosave-interval nil ; save on kill only
+        savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
+
+;; persistent point location in buffers
+(use-package saveplace
+  :hook ((find-file dired-initial-position) . save-place-mode)
+  :config
+  (setq save-place-file (concat dotemacs-cache-dir "saveplace")))
 
 ;; Hideshow
 (use-package hideshow

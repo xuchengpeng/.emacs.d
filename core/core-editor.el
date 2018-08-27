@@ -103,16 +103,15 @@
 
 ;; recent files
 (use-package recentf
-  :defer 1
   :commands recentf-open-files
+  :hook (find-file . recentf-mode)
   :config
   (setq recentf-save-file (concat dotemacs-cache-dir "recentf")
-        recentf-max-saved-items 500
-        recentf-max-menu-items 15
+        recentf-max-menu-items 0
+        recentf-max-saved-items 300
         recentf-auto-cleanup 'never
         recentf-exclude (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
-                              "^/var/folders/.+$" dotemacs-cache-dir dotemacs-packages-dir))
-  (recentf-mode +1))
+                              "^/var/folders/.+$" dotemacs-cache-dir dotemacs-local-dir)))
 
 (use-package server
   :when (display-graphic-p)

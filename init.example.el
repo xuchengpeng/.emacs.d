@@ -34,6 +34,7 @@
            ediff
            eshell
            :tools
+           ;; deft
            editorconfig
            ;; impatient-mode
            magit

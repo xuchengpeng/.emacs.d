@@ -5,8 +5,7 @@
             nlinum-relative))
 
 (package! which-key
-          hydra
-          helpful)
+          hydra)
 
 (when (memq window-system '(mac ns x))
  (package! exec-path-from-shell))

@@ -2,7 +2,7 @@
 
 (package! helm
           helm-ag
-          ;; helm-descbinds
+          helm-descbinds
           helm-projectile
           helm-swoop)
 

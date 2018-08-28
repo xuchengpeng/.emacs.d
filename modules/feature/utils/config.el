@@ -110,11 +110,3 @@ _q_: Quit
     :config
     ;; (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
     (exec-path-from-shell-initialize)))
-
-;; `helpful' --- a better *help* buffer
-(use-package helpful
-  :bind(("C-h f" . helpful-callable)
-        ("C-h v" . helpful-variable)
-        ("C-h k" . helpful-key)
-        ("C-c C-d" . helpful-at-point)))
-

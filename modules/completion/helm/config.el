@@ -127,6 +127,6 @@
   :hook (helm-mode . helm-flx-mode)
   :config (helm-flx-mode +1))
 
-;; (use-package helm-descbinds
-;;   :hook (helm-mode . helm-descbinds-mode))
+(use-package helm-descbinds
+  :hook (helm-mode . helm-descbinds-mode))
 

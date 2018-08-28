@@ -21,6 +21,6 @@
   (org-clock-persistence-insinuate))
 
 (when (featurep! +capture)
-  (load (expand-file-name "+capture.el" (DIR!)) t (not dotemacs-debug-mode)))
+  (load! "+capture"))
 (when (featurep! +export)
-  (load (expand-file-name "+export.el" (DIR!)) t (not dotemacs-debug-mode)))
+  (load! "+export"))

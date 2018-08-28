@@ -76,7 +76,7 @@
                '("Consolas" "Microsoft Yahei"))))
   
   (let* ((en-font      (or dotemacs-font (car fonts)))
-         (cn-font      (or dotemacs-cn-font (cdr fonts)))
+         (cn-font      (or dotemacs-cn-font (car (cdr fonts))))
          (en-font-size (or dotemacs-font-size 11))
          (cn-font-size (or dotemacs-cn-font-size 16)))
     (set-face-attribute 'default nil :font

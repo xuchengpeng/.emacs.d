@@ -112,9 +112,9 @@ _q_: Quit
     (exec-path-from-shell-initialize)))
 
 ;; `helpful' --- a better *help* buffer
-(define-key! 'global
-  [remap describe-function] #'helpful-callable
-  [remap describe-command]  #'helpful-command
-  [remap describe-variable] #'helpful-variable
-  [remap describe-key]      #'helpful-key)
+(use-package helpful
+  :bind(("C-h f" . helpful-callable)
+        ("C-h v" . helpful-variable)
+        ("C-h k" . helpful-key)
+        ("C-c C-d" . helpful-at-point)))
 

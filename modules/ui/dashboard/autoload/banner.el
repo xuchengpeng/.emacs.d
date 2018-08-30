@@ -1,6 +1,5 @@
 ;;; ui/dashboard/autoload/banner.el -*- lexical-binding: t; -*-
 
-;;;###autoload
 (defun +dashboard/choose-random-text-banner ()
   "Return the full path of a banner chosen randomly."
   (let* ((files (directory-files +dashboard-banner-directory t ".*\.txt"))
@@ -8,7 +7,10 @@
          (choice (random count)))
     (nth choice files)))
 
-;;;###autoload
+(defun +dashboard/get-banner-path (index)
+  "Return the full path to banner with index INDEX."
+  (concat +dashboard-banner-directory (format "%d.txt" index)))
+
 (defun +dashboard/choose-banner ()
   "Chooese banner to insert."
   (when +dashboard-startup-banner
@@ -21,12 +23,6 @@
           (t
            (+dashboard/get-banner-path 1)))))
 
-;;;###autoload
-(defun +dashboard/get-banner-path (index)
-  "Return the full path to banner with index INDEX."
-  (concat +dashboard-banner-directory (format "%d.txt" index)))
-
-;;;###autoload
 (defun +dashboard/insert-ascii-banner-centered (file)
   "Insert the ascii banner contain in file and center it in the window.
 FILE: the path to the file containing the banner."
@@ -46,3 +42,14 @@ FILE: the path to the file containing the banner."
            (insert (make-string margin ?\s))
            (forward-line 1))))
      (buffer-string))))
+
+;;;###autoload
+(defun +dashboard/insert-banner ()
+  "Insert banner."
+  (setq +dashboard-buffer-window-width (if +dashboard-startup-buffer-responsive
+                                           (window-width)
+                                         80))
+  (let ((banner (+dashboard/choose-banner))
+        (buffer-read-only nil))
+    (when banner
+      (+dashboard/insert-ascii-banner-centered banner))))

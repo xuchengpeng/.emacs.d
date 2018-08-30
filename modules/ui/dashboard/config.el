@@ -16,14 +16,8 @@ See `+dashboard-startup-buffer-responsive'.")
 (defvar +dashboard-startup-buffer-responsive t
   "True if the home buffer should respond to resize events.")
 
-(defun +dashboard/insert-banner ()
-  "Insert banner."
-  (setq +dashboard-buffer-window-width (if +dashboard-startup-buffer-responsive
-                                           (window-width)
-                                         80))
-  (let ((banner (+dashboard/choose-banner))
-        (buffer-read-only nil))
-    (when banner
-      (+dashboard/insert-ascii-banner-centered banner))))
+(defun +dashboard/init-dashboard ()
+  "Initialize dashboard."
+  (+dashboard/insert-banner))
 
-(add-hook 'dotemacs-post-init-hook #'+dashboard/insert-banner t)
+(add-hook 'dotemacs-post-init-hook #'+dashboard/init-dashboard t)

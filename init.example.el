@@ -23,6 +23,7 @@
            ;; ido
            ;; (ivy +fuzzy)
            :ui
+           dashboard
            modeline
            ;; modeline-old
            ;; neotree

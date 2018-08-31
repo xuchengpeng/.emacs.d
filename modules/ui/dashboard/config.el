@@ -33,4 +33,17 @@ See `+dashboard-startup-buffer-responsive'.")
       (switch-to-buffer +dashboard-buffer-name)
       (goto-char (point-min)))))
 
+(defun +dashboard/resize-on-hook (&optional _)
+  (let ((space-win (get-buffer-window +dashboard-buffer-name))
+        (frame-win (frame-selected-window)))
+    (when (and space-win
+               (not (window-minibuffer-p frame-win)))
+      (with-selected-window space-win
+        (+dashboard/init-dashboard)))))
+
+(add-hook 'window-setup-hook
+          (lambda ()
+            (add-hook 'window-size-change-functions '+dashboard/resize-on-hook)
+            (+dashboard/resize-on-hook)))
+
 (add-hook 'dotemacs-post-init-hook #'+dashboard/init-dashboard t)

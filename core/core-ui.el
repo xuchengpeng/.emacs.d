@@ -91,9 +91,9 @@
 
 (fset #'yes-or-no-p #'y-or-n-p) ; y/n instead of yes/no
 
-(line-number-mode t)
-(column-number-mode t)
-(size-indication-mode t)
+;; (line-number-mode t)
+;; (column-number-mode t)
+;; (size-indication-mode t)
 
 ;;
 ;; Built-in packages
@@ -145,6 +145,15 @@
 (add-hook 'dotemacs-init-ui-hook #'dotemacs|init-fonts)
 ;; themes
 (add-hook 'dotemacs-init-ui-hook #'dotemacs|init-theme)
+
+;;
+;; Bootstrap
+;;
+
+;; Prevent the glimpse of un-styled Emacs by setting these early.
+(add-to-list 'default-frame-alist '(tool-bar-lines 0))
+(add-to-list 'default-frame-alist '(menu-bar-lines 0))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars))
 
 (defun dotemacs|init-ui ()
   "Initialize ui."

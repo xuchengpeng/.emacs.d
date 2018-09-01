@@ -137,6 +137,13 @@ line or use --debug-init to enable this.")
 
 (add-to-list 'load-path dotemacs-core-dir)
 
+(defvar dotemacs--file-name-handler-alist file-name-handler-alist)
+
+(unless after-init-time
+  (setq file-name-handler-alist nil
+        gc-cons-threshold 402653184
+        gc-cons-percentage 1.0))
+
 (unless custom-file
   (setq custom-file (concat dotemacs-local-dir "custom.el")))
 (load custom-file t (not dotemacs-debug-mode))
@@ -186,6 +193,14 @@ Module load order is determined by your `dotemacs!' block."
   (require 'core-ui)
   (require 'core-editor)
   (require 'core-modules))
+
+(defun dotemacs-finalize ()
+  "dotemacs finalize function."
+  (setq file-name-handler-alist dotemacs--file-name-handler-alist
+        gc-cons-threshold 16777216
+        gc-cons-percentage 0.15))
+
+(add-hook 'emacs-startup-hook #'dotemacs-finalize)
 
 ;;
 ;; Bootstrap dotemacs

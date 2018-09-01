@@ -589,29 +589,9 @@ icons."
 
 ;; position
 
-;; Be compatible with Emacs 25.
-(defvar-local dotemacs-modeline-column-zero-based
-  (or (bound-and-true-p column-number-indicator-zero-based) t)
-  "When non-nil, mode line displays column numbers zero-based.
-See `column-number-indicator-zero-based'.")
-
-(defvar-local dotemacs-modeline-percent-position
-  (or (bound-and-true-p mode-line-percent-position) '(-3 "%p"))
-  "Specification of \"percentage offset\" of window through buffer.
-See `mode-line-percent-position'.")
-
-(setq-default mode-line-position
-              '((line-number-mode
-                 (column-number-mode
-                  (dotemacs-modeline-column-zero-based " %l:%c" " %l:%C")
-                  " %l")
-                 (column-number-mode (dotemacs-modeline-column-zero-based " :%c" " :%C")))
-                (if dotemacs-modeline-percent-position (" " dotemacs-modeline-percent-position))
-                (:eval (when (or line-number-mode column-number-mode dotemacs-modeline-percent-position) " "))))
-
 (def-modeline-segment! +modeline-buffer-position
   "The buffer position information."
-  '(" " mode-line-position " "))
+  '(" " "%l:%c" " " (-3 "%p") " "))
 
 ;; misc-info
 

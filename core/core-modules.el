@@ -39,6 +39,9 @@
         dotemacs-modules-dir)
   "A list of module root directories. Order determines priority.")
 
+(defvar dotemacs-init-time nil
+  "The time it took, in seconds, for Emacs to initialize.")
+
 ;;
 ;; Functions
 ;;
@@ -340,7 +343,8 @@ If RETURN-P, return the message as a string instead of displaying it."
            "Emacs loaded %s packages across %d modules in %.03fs"
            (length package-activated-list)
            (if dotemacs-modules (hash-table-count dotemacs-modules) 0)
-           (float-time (time-subtract (current-time) before-init-time))))
+           (or dotemacs-init-time
+               (setq dotemacs-init-time (float-time (time-subtract (current-time) before-init-time))))))
 (add-hook 'dotemacs-post-init-hook #'dotemacs|display-benchmark)
 
 (provide 'core-modules)

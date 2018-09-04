@@ -58,10 +58,10 @@
 (defvar dotemacs-autoload-file (concat dotemacs-local-dir "autoloads.el")
   "The path of autoload file which has all the autoload functions.")
 
-(defvar dotemacs-init-hook ()
+(defvar dotemacs-init-hook nil
   "A list of hooks run when Emacs is initialized, before `dotemacs-post-init-hook'.")
 
-(defvar dotemacs-post-init-hook ()
+(defvar dotemacs-post-init-hook nil
   "A list of hooks that run after Emacs initialization is complete, and after `dotemacs-init-hook'.")
 
 (defvar dotemacs-debug-mode (or (getenv "DEBUG") init-file-debug)
@@ -71,6 +71,32 @@ line or use --debug-init to enable this.")
 (defgroup dotemacs nil
   "dotemacs, an Emacs configuration."
   :group 'emacs)
+
+;;
+;; Startup optimizations
+;;
+
+(defvar dotemacs-gc-cons-threshold 16777216 ; 16mb
+  "The default value to use for `gc-cons-threshold'. If you experience freezing,
+decrease this. If you experience stuttering, increase this.")
+
+(defvar dotemacs-gc-cons-upper-limit 268435456 ; 256mb
+  "The temporary value for `gc-cons-threshold' to defer it.")
+  
+(defvar dotemacs--file-name-handler-alist file-name-handler-alist)
+
+(defun dotemacs|restore-startup-optimizations ()
+  "Resets garbage collection settings to reasonable defaults (a large
+`gc-cons-threshold' can cause random freezes otherwise) and resets
+`file-name-handler-alist'."
+  (setq file-name-handler-alist dotemacs--file-name-handler-alist
+        gc-cons-threshold dotemacs-gc-cons-threshold))
+
+(unless after-init-time
+  (setq gc-cons-threshold dotemacs-gc-cons-upper-limit
+        file-name-handler-alist nil))
+
+(add-hook 'emacs-startup-hook #'dotemacs|restore-startup-optimizations)
 
 ;;
 ;; Custom error types
@@ -114,7 +140,6 @@ line or use --debug-init to enable this.")
  history-length 250
  make-backup-files nil
  ;; byte compilation
- byte-compile-dynamic nil
  byte-compile-verbose dotemacs-debug-mode
  byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
  ;; be quiet at startup; don't load or display anything unnecessary
@@ -136,13 +161,6 @@ line or use --debug-init to enable this.")
  url-configuration-directory  (concat dotemacs-cache-dir "url/"))
 
 (add-to-list 'load-path dotemacs-core-dir)
-
-(defvar dotemacs--file-name-handler-alist file-name-handler-alist)
-
-(unless after-init-time
-  (setq file-name-handler-alist nil
-        gc-cons-threshold 402653184
-        gc-cons-percentage 1.0))
 
 (unless custom-file
   (setq custom-file (concat dotemacs-local-dir "custom.el")))
@@ -195,10 +213,7 @@ Module load order is determined by your `dotemacs!' block."
   (require 'core-modules))
 
 (defun dotemacs-finalize ()
-  "dotemacs finalize function."
-  (setq file-name-handler-alist dotemacs--file-name-handler-alist
-        gc-cons-threshold 16777216
-        gc-cons-percentage 0.15))
+  "dotemacs finalize function.")
 
 (add-hook 'emacs-startup-hook #'dotemacs-finalize)
 

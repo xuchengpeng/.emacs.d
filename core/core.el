@@ -85,16 +85,16 @@ decrease this. If you experience stuttering, increase this.")
   
 (defvar dotemacs--file-name-handler-alist file-name-handler-alist)
 
+(unless after-init-time
+  (setq gc-cons-threshold dotemacs-gc-cons-upper-limit
+        file-name-handler-alist nil))
+
 (defun dotemacs|restore-startup-optimizations ()
   "Resets garbage collection settings to reasonable defaults (a large
 `gc-cons-threshold' can cause random freezes otherwise) and resets
 `file-name-handler-alist'."
   (setq file-name-handler-alist dotemacs--file-name-handler-alist
         gc-cons-threshold dotemacs-gc-cons-threshold))
-
-(unless after-init-time
-  (setq gc-cons-threshold dotemacs-gc-cons-upper-limit
-        file-name-handler-alist nil))
 
 (add-hook 'emacs-startup-hook #'dotemacs|restore-startup-optimizations)
 
@@ -154,6 +154,7 @@ decrease this. If you experience stuttering, increase this.")
  backup-directory-alist       (list (cons "." (concat dotemacs-cache-dir "backup/")))
  pcache-directory             (concat dotemacs-cache-dir "pcache/")
  request-storage-directory    (concat dotemacs-cache-dir "request")
+ shared-game-score-directory  (concat dotemacs-cache-dir "shared-game-score/")
  tramp-auto-save-directory    (concat dotemacs-cache-dir "tramp-auto-save/")
  tramp-backup-directory-alist backup-directory-alist
  tramp-persistency-file-name  (concat dotemacs-cache-dir "tramp-persistency.el")
@@ -177,12 +178,13 @@ easier to tell where the came from.
 Meant to be used with `run-hook-wrapped'."
   (when dotemacs-debug-mode
     (message "Running dotemacs hook: %s" hook))
-  (condition-case e
-      (funcall hook)
-    ((debug error)
-     (signal 'dotemacs-hook-error (list hook e))))
-  ;; return nil so `run-hook-wrapped' won't short circuit
-  nil)
+  (let ((gc-cons-threshold dotemacs-gc-cons-upper-limit))
+    (condition-case e
+        (funcall hook)
+      ((debug error)
+       (signal 'dotemacs-hook-error (list hook e))))
+    ;; return nil so `run-hook-wrapped' won't short circuit
+    nil))
 
 (defun dotemacs-initialize ()
   "dotemacs initialize function.

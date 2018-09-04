@@ -4,11 +4,7 @@
 	  "Dashboard's buffer name.")
 
 (defconst +dashboard-buffer-window-width 80
-  "Current width of the home buffer if responsive, 80 otherwise.
-See `+dashboard-startup-buffer-responsive'.")
-
-(defvar +dashboard-startup-buffer-responsive t
-  "True if the home buffer should respond to resize events.")
+  "Current width of the home buffer.")
 
 (load! "+banner")
 
@@ -34,16 +30,14 @@ while they run.")
     'face 'font-lock-comment-face)
    "\n"))
 
-(defun +dashboard/init-dashboard (&optional force)
+(defun +dashboard/init (&optional force)
   "Initialize dashboard."
   (let ((buffer-exists (buffer-live-p (get-buffer +dashboard-buffer-name)))
         (save-line nil))
     (when (or (not (eq +dashboard-buffer-window-width (window-width)))
               (not buffer-exists)
               force)
-      (setq +dashboard-buffer-window-width (if +dashboard-startup-buffer-responsive
-                                               (window-width)
-                                             80))
+      (setq +dashboard-buffer-window-width (window-width))
       (with-current-buffer (get-buffer-create +dashboard-buffer-name)
         (let ((buffer-read-only nil)
               (list-separator "\n\n"))
@@ -59,11 +53,17 @@ while they run.")
     (when (and space-win
                (not (window-minibuffer-p frame-win)))
       (with-selected-window space-win
-        (+dashboard/init-dashboard)))))
+        (+dashboard/init)))))
+
+(defun +dashboard/make-frame (frame)
+  "Reload the dashboard after a brief pause. This is necessary for new frames,
+whose dimensions may not be fully initialized by the time this is run."
+  (run-with-timer 0.1 nil #'+dashboard/reload frame))
 
 (add-hook 'window-setup-hook
           (lambda ()
             (add-hook 'window-size-change-functions '+dashboard/resize-on-hook)
+            (add-hook 'after-make-frame-functions #'+dashboard/make-frame)
             (+dashboard/resize-on-hook)))
 
-(add-hook 'dotemacs-post-init-hook #'+dashboard/init-dashboard t)
+(add-hook 'dotemacs-post-init-hook #'+dashboard/init t)

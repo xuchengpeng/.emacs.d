@@ -418,11 +418,8 @@ Meant for `+modeline-buffer-path-function'."
 
 (def-modeline-segment! +modeline-encoding
   :on-hooks (after-revert-hook after-save-hook find-file-hook)
-  :on-set (buffer-file-coding-system indent-tabs-mode tab-width)
-  (concat ;; (format (if indent-tabs-mode "%d" "%d")
-          ;;         tab-width)
-          ;; "  "
-          (pcase (coding-system-eol-type buffer-file-coding-system)
+  :on-set (buffer-file-coding-system)
+  (concat (pcase (coding-system-eol-type buffer-file-coding-system)
             (0 "LF")
             (1 "CRLF")
             (2 "CR"))
@@ -610,7 +607,7 @@ icons."
     +modeline-matches
     +modeline-buffer-id
     +modeline-buffer-position)
-  `(+modeline-misc-info
+  '(+modeline-misc-info
     +modeline-encoding
     +modeline-major-mode " "
     (vc-mode ("" +modeline-vcs " "))
@@ -649,5 +646,3 @@ icons."
 
 ;;
 (set-modeline! :main t)
-;; (add-hook! '+doom-dashboard-mode-hook (set-modeline! :project))
-;; (add-hook! 'doom-scratch-buffer-hook  (set-modeline! :special))

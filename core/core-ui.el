@@ -119,16 +119,38 @@
 ;; Theme & font
 ;;
 
+(defun dotemacs|set-font()
+  "Set english and chinese fonts."
+  (setq fonts
+        (cond ((eq system-type 'darwin)
+               '("Monaco" "STHeiti"))
+              ((eq system-type 'gnu/linux)
+               '("DejaVu Sans Mono" "STHeiti"))
+              ((memq system-type '(cygwin windows-nt ms-dos))
+               '("Consolas" "Microsoft Yahei"))))
+  
+  (let* ((en-font      (or dotemacs-font (car fonts)))
+         (cn-font      (or dotemacs-cn-font (car (cdr fonts))))
+         (en-font-size (or dotemacs-font-size 11))
+         (cn-font-size (or dotemacs-cn-font-size 16)))
+    (set-face-attribute 'default nil :font
+                        (format "%s %d" en-font en-font-size))
+    (dolist (charset '(kana han symbol cjk-misc bopomofo))
+      (set-fontset-font (frame-parameter nil 'font) charset
+                        (font-spec :family cn-font :size cn-font-size)))
+    ;; Fix chinese font width and rescale
+    (setq face-font-rescale-alist '((cn-font . 1.2)))))
+
 (defun dotemacs|init-fonts ()
   "Set the font."
   (add-to-list 'after-make-frame-functions
                (lambda (new-frame)
                  (select-frame new-frame)
                  (if (display-graphic-p)
-                   (dotemacs-set-font))))
+                   (dotemacs|set-font))))
   
   (if (display-graphic-p)
-    (dotemacs-set-font)))
+    (dotemacs|set-font)))
 
 (defun dotemacs*load-theme-hooks (theme &rest _)
   "Set up `dotemacs-load-theme-hook' to run after `load-theme' is called."

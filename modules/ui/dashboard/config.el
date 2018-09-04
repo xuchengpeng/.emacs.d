@@ -12,28 +12,48 @@ See `+dashboard-startup-buffer-responsive'.")
 
 (load! "+banner")
 
-(defvar +dashboard-buffer-last-width nil
-  "Previous width of dashboard-buffer.")
+(defvar +dashboard-widget-functions
+  '(+dashboard/insert-banner
+    +dashboard/insert-benchmark)
+  "List of widget functions to run in the dashboard buffer to construct the
+dashboard. These functions take no arguments and the dashboard buffer is current
+while they run.")
 
-(defun +dashboard/init-dashboard ()
+;; helpers
+(defun +dashboard--center (len s)
+  (concat (make-string (ceiling (max 0 (- len (length s))) 2) ? )
+          s))
+
+(defun +dashboard/insert-benchmark ()
+  (insert
+   "\n\n"
+   (propertize
+    (+dashboard--center
+     +dashboard-buffer-window-width
+     (dotemacs|display-benchmark 'return))
+    'face 'font-lock-comment-face)
+   "\n"))
+
+(defun +dashboard/init-dashboard (&optional force)
   "Initialize dashboard."
   (let ((buffer-exists (buffer-live-p (get-buffer +dashboard-buffer-name)))
         (save-line nil))
-    (when (or (not (eq +dashboard-buffer-last-width (window-width)))
-              (not buffer-exists))
+    (when (or (not (eq +dashboard-buffer-window-width (window-width)))
+              (not buffer-exists)
+              force)
       (setq +dashboard-buffer-window-width (if +dashboard-startup-buffer-responsive
                                                (window-width)
-                                             80)
-            +dashboard-buffer-last-width +dashboard-buffer-window-width)
+                                             80))
       (with-current-buffer (get-buffer-create +dashboard-buffer-name)
         (let ((buffer-read-only nil)
               (list-separator "\n\n"))
           (erase-buffer)
-          (+dashboard/insert-banner)))
+          (run-hooks '+dashboard-widget-functions)))
       (switch-to-buffer +dashboard-buffer-name)
       (goto-char (point-min)))))
 
 (defun +dashboard/resize-on-hook (&optional _)
+  "Hook run on window resize events to redisplay the home buffer."
   (let ((space-win (get-buffer-window +dashboard-buffer-name))
         (frame-win (frame-selected-window)))
     (when (and space-win

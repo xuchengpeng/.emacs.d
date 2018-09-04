@@ -1,22 +1,28 @@
 ;;; ui/dashboard/+banner.el -*- lexical-binding: t; -*-
 
-(defvar +dashboard-banner-logo-title "Welcome to Emacs!"
-   "Specify the startup banner.")
 
-(defvar +dashboard-banner-directory (concat (DIR!) "banners/"))
+(defconst +dashboard-banner-directory (concat (DIR!) "banners/"))
+
+(defconst +dashboard-banner-official-png (concat +dashboard-banner-directory "emacs.png")
+  "Emacs banner image.")
+
+(defvar +dashboard-banner-logo-title "Welcome to Emacs!"
+  "Specify the startup banner.")
 
 (defvar +dashboard-startup-banner 'official
-   "Specify the startup banner. Default value is `official', it displays
+  "Specify the startup banner. Default value is `official', it displays
 the official logo. An integer value is the index of text banner,
-`random' chooses a random text banner in `banners' directory.
-A string value must be a path to a .PNG file.
-If the value is nil then no banner is displayed.
+`random' chooses a random text banner in `banners' directory. A string
+value must be a path to a .PNG file. If the value is nil then no banner
+is displayed.
 
 For example:
  'official
  'random
  1, 2 or ...
- `(expand-file-name \"emacs.png\" +dashboard-banner-directory)'")
+ \"emacs.png\"
+ \"/home/.../*.png\"
+ nil.")
 
 (defun +dashboard/choose-random-text-banner ()
   "Return the full path of a banner chosen randomly."
@@ -33,7 +39,9 @@ For example:
   "Chooese banner to insert."
   (when +dashboard-startup-banner
     (cond ((eq 'official +dashboard-startup-banner)
-           (+dashboard/get-banner-path 1))
+           (if (and (display-graphic-p) (image-type-available-p 'png))
+              +dashboard-banner-official-png
+            (+dashboard/get-banner-path 1)))
           ((eq 'random +dashboard-startup-banner)
            (+dashboard/choose-random-text-banner))
           ((integerp +dashboard-startup-banner)
@@ -42,8 +50,8 @@ For example:
                 (image-type-available-p (intern (file-name-extension
                                                  +dashboard-startup-banner)))
                 (display-graphic-p))
-           (if (file-exists-p +dashboard-startup-banner)
-               +dashboard-startup-banner
+           (if (file-exists-p! +dashboard-startup-banner +dashboard-banner-directory)
+               (expand-file-name +dashboard-startup-banner +dashboard-banner-directory)
              (message (format "could not find banner %s"
                               +dashboard-startup-banner))
              (+dashboard/get-banner-path 1)))

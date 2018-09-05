@@ -60,6 +60,8 @@ while they run.")
 whose dimensions may not be fully initialized by the time this is run."
   (run-with-timer 0.1 nil #'+dashboard/reload frame))
 
+(setq dotemacs-fallback-buffer-name +dashboard-buffer-name)
+
 (add-hook 'window-setup-hook
           (lambda ()
             (add-hook 'window-size-change-functions '+dashboard/resize-on-hook)

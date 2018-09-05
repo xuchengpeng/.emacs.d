@@ -53,6 +53,7 @@
   "The default chinese font size to use.")
 
 (setq-default
+ blink-matching-paren nil         ; don't blink--too distracting
  compilation-always-kill t        ; kill compilation process before starting another
  compilation-ask-about-save nil   ; save all buffers on `compile'
  compilation-scroll-output 'first-error
@@ -75,6 +76,7 @@
  uniquify-separator "/"
  uniquify-after-kill-buffer-p t
  uniquify-ignore-buffers-re "^\\*"
+ use-dialog-box nil              ; always avoid GUI
  user-full-name    dotemacs-full-name
  user-mail-address dotemacs-mail-address
  ;; no beeping or blinking please

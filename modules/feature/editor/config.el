@@ -33,7 +33,7 @@
 
 (use-package smartparens
   :diminish smartparens-mode
-  :hook ((prog-mode . smartparens-mode)
+  :hook ((find-file . smartparens-global-mode)
          ;; (prog-mode . smartparens-strict-mode)
          )
   :config

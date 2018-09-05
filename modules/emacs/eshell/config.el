@@ -25,7 +25,9 @@
       "Init eshell keymap."
       (define-key eshell-mode-map (kbd "C-s") '+eshell/search-history))
     
-    (add-hook 'eshell-mode-hook #'+eshell|init-keymap))
+    (add-hook 'eshell-mode-hook #'+eshell|init-keymap)
+    ;; Consider eshell buffers real
+    (add-hook 'eshell-mode-hook #'dotemacs|mark-buffer-as-real))
 
 (use-package shell-pop
   :commands (shell-pop)

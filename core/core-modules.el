@@ -292,6 +292,19 @@ e.g. (package! evil evil-surround)"
   `(dolist (package ',packages-list)
      (add-to-list 'dotemacs-packages package t)))
 
+(defmacro depends-on! (module submodule &optional flags)
+  "Declares that this module depends on another.
+
+Only use this macro in a module's packages.el file.
+
+MODULE is a keyword, and SUBMODULE is a symbol. Under the hood, this simply
+loads MODULE SUBMODULE's packages.el file."
+  `(let ((dotemacs-modules ,dotemacs-modules)
+         (flags ,flags))
+     (when flags
+       (dotemacs-module-put ,module ',submodule :flags flags))
+     (load! "packages" ,(dotemacs-module-locate-path module submodule) t)))
+
 (defmacro featurep! (category &optional module flag)
   "Returns t if CATEGORY MODULE is enabled. If FLAG is provided, returns t if
 CATEGORY MODULE has FLAG enabled.

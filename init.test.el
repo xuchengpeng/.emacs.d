@@ -13,5 +13,4 @@
            :emacs
            dired
            :lang
-           markdown
-           web)
+           markdown)

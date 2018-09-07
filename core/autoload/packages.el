@@ -4,6 +4,7 @@
 (defun dotemacs/upgrade-packages ()
   "Upgrade installed packages."
   (interactive)
+  (quelpa-upgrade)
   (save-window-excursion
     (package-list-packages t)
     (package-menu-mark-upgrades)

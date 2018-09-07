@@ -582,8 +582,7 @@ segment.")
 (add-hook 'flycheck-status-changed-functions #'dotemacs-modeline|update-flycheck-segment)
 
 (def-modeline-segment! +modeline-flycheck
-  "Displays color-coded flycheck error status in the current buffer with pretty
-icons."
+  "Displays color-coded flycheck error status in the current buffer."
   :init nil)
 
 ;; position
@@ -603,8 +602,7 @@ icons."
 ;;
 
 (def-modeline-format! :main
-  '(+modeline-buffer-state
-    +modeline-matches
+  '(+modeline-matches
     +modeline-buffer-id
     +modeline-buffer-position)
   '(+modeline-misc-info
@@ -615,13 +613,12 @@ icons."
     +modeline-flycheck))
 
 (def-modeline-format! :minimal
-  '(+modeline-buffer-state
-    +modeline-matches
+  '(+modeline-matches
     +modeline-buffer-id)
   '(+modeline-major-mode))
 
 (def-modeline-format! :special
-  '(+modeline-buffer-state +modeline-matches " %b " +modeline-buffer-position)
+  '(+modeline-matches " %b " +modeline-buffer-position)
   '(+modeline-encoding +modeline-major-mode mode-line-process))
 
 (def-modeline-format! :project

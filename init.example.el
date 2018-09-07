@@ -7,7 +7,7 @@
            editor
            ; evil
            highlight
-           lookup
+           ; lookup
            project
            snippets
            syntax-checker

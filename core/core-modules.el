@@ -69,9 +69,7 @@
            dotemacs-modules)
   (when dotemacs-private-dir
     (load! "config" dotemacs-private-dir t))
-  (run-hook-wrapped 'dotemacs-post-init-hook #'dotemacs-try-run-hook)
-
-  (message "Emacs modules initialized"))
+  (run-hook-wrapped 'dotemacs-post-init-hook #'dotemacs-try-run-hook))
 
 (defun dotemacs-initialize-autoload ()
   "Initialize autoloads."
@@ -397,8 +395,7 @@ If RETURN-P, return the message as a string instead of displaying it."
            (if dotemacs-modules (hash-table-count dotemacs-modules) 0)
            (or dotemacs-init-time
                (setq dotemacs-init-time (float-time (time-subtract (current-time) before-init-time))))))
-(add-hook 'dotemacs-post-init-hook #'dotemacs|display-benchmark)
+(add-hook 'emacs-startup-hook #'dotemacs|display-benchmark)
 
 (provide 'core-modules)
-
 ;;; core-modules.el ends here

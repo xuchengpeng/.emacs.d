@@ -38,7 +38,9 @@ missing) and shouldn't be deleted.")
 (defvar dotemacs-packages ()
   "A list of enabled packages.")
 
-(setq package-user-dir (expand-file-name (format "elpa-%s" emacs-version)
+(setq package-user-dir (expand-file-name (format "elpa-%s.%s"
+                                                 emacs-major-version
+                                                 emacs-minor-version)
                                          dotemacs-packages-dir)
       package-gnupghome-dir (expand-file-name "gnupg" dotemacs-packages-dir)
       package-enable-at-startup nil
@@ -77,9 +79,7 @@ missing) and shouldn't be deleted.")
                                ,(cons "melpa" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))
                                ,(cons "org"   (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))))
      (t
-      (error "Unknown archives: '%s'" archives))))
-
-  (message "Set package archives to '%s'." archives))
+      (error "Unknown archives: '%s'" archives)))))
 
 (unless (eq dotemacs-package-archives 'custom)
   (dotemacs/set-package-archives dotemacs-package-archives))

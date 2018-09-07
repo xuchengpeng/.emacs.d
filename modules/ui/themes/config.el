@@ -3,13 +3,12 @@
 (defvar +themes|color-theme nil
   "The color theme to load.")
 
-(use-package dotemacs-themes
-  :load-path "modules/ui/themes/dotemacs-themes"
-  :defer t
-  :init
-  (unless +themes|color-theme
-    (setq +themes|color-theme 'dotemacs-one))
-  :config
+(defun +themes|init-theme ()
+  "Set the theme."
+  (add-to-list 'load-path (concat dotemacs-modules-dir "ui/themes/dotemacs-themes"))
+  
+  (require 'dotemacs-themes)
+  
   ;; Enable flashing mode-line on errors
   (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-visual-bell-config)
   
@@ -21,11 +20,11 @@
     (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-treemacs-config))
   ;; or for neotree users
   (when (featurep! :ui neotree)
-    (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-neotree-config)))
-
-(defun +themes|init-theme ()
-  "Set the theme."
-  (require 'dotemacs-themes)
+    (add-hook 'dotemacs-load-theme-hook #'dotemacs-themes-neotree-config))
+  
+  (unless +themes|color-theme
+    (setq +themes|color-theme 'dotemacs-one))
+  
   (when (and +themes|color-theme (not (memq +themes|color-theme custom-enabled-themes)))
     (load-theme +themes|color-theme t)))
 

@@ -117,7 +117,7 @@
         recentf-auto-cleanup 'never
         recentf-exclude (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
                               "^/var/folders/.+$" dotemacs-cache-dir dotemacs-local-dir))
-  (recentf-mode +1))
+  (quiet! (recentf-mode +1)))
 
 (use-package server
   :when (display-graphic-p)

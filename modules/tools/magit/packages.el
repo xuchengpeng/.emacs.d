@@ -1,5 +1,5 @@
 ;;; tools/magit/packages.el -*- lexical-binding: t; -*-
 
-(package! magit
-          magithub
-          magit-todos)
+(package! magit)
+(package! magithub)
+(package! magit-todos)

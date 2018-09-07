@@ -1,7 +1,7 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; completion/ido/packages.el
 
-(package! flx-ido
-          ido-completing-read+
-          ido-vertical-mode
-          crm-custom)
+(package! flx-ido)
+(package! ido-completing-read+)
+(package! ido-vertical-mode)
+(package! crm-custom)

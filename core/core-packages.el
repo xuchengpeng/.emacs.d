@@ -31,7 +31,7 @@
 
 ;;; Code:
 
-(defvar dotemacs-core-packages '(use-package diminish bind-key)
+(defvar dotemacs-core-packages '(use-package diminish bind-key quelpa)
   "A list of packages that must be installed (and will be auto-installed if
 missing) and shouldn't be deleted.")
 
@@ -46,7 +46,13 @@ missing) and shouldn't be deleted.")
       use-package-verbose dotemacs-debug-mode
       use-package-compute-statistics dotemacs-debug-mode
       use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1)
-      use-package-expand-minimally (not dotemacs-debug-mode))
+      use-package-expand-minimally (not dotemacs-debug-mode)
+      quelpa-checkout-melpa-p nil
+      quelpa-update-melpa-p nil
+      quelpa-melpa-recipe-stores nil
+      quelpa-self-upgrade-p nil
+      quelpa-verbose dotemacs-debug-mode
+      quelpa-dir (expand-file-name "quelpa" dotemacs-packages-dir))
 
 (defun dotemacs/set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
@@ -83,23 +89,68 @@ missing) and shouldn't be deleted.")
 ;;
 
 (defun dotemacs-initialize-core ()
-  "Make sure package.el is initialized."
+  "Initial core packages."
   (require 'package)
   (package-initialize)
   
-  (dotemacs-install-packages dotemacs-core-packages))
-
-(defun dotemacs-install-packages (packages-list)
-  "Install packages defined by PACKAGES-LIST."
-  (when-let* ((core-packages (cl-remove-if #'package-installed-p packages-list)))
-    (unless package-archive-contents
-      (package-refresh-contents))
+  (unless package-archive-contents
+    (package-refresh-contents))
+  
+  (when-let* ((core-packages (cl-remove-if #'package-installed-p dotemacs-core-packages)))
     (dolist (package core-packages)
       (let ((inhibit-message t))
         (package-install package))
       (if (package-installed-p package)
           (message "Emacs installed %s" package)
-        (error "Emacs couldn't install %s" package)))))
+        (error "Emacs couldn't install %s" package))))
+  
+  (require 'use-package)
+  (require 'quelpa))
+
+(defun dotemacs-get-packages (&optional installed-only-p)
+  "Retrieves a list of explicitly installed packages (i.e. non-dependencies).
+Each element is a cons cell, whose car is the package symbol and whose cdr is
+the quelpa recipe (if any).
+
+BACKEND can be 'quelpa or 'elpa, and will instruct this function to return only
+the packages relevant to that backend.
+
+Warning: this function is expensive; it re-evaluates all of dotemacs's config files.
+Be careful not to use it in a loop.
+
+If INSTALLED-ONLY-P, only return packages that are installed."
+  (cl-loop with packages = (append dotemacs-core-packages (mapcar #'car dotemacs-packages))
+           for sym in (cl-delete-duplicates packages)
+           if (and (or (not installed-only-p)
+                       (package-installed-p sym))
+                   (or (assq sym dotemacs-packages)
+                       (and (assq sym package-alist)
+                            (list sym))))
+           collect it))
+
+(defun dotemacs-install-package (name &optional plist)
+  "Installs package NAME with optional quelpa RECIPE (see `quelpa-recipe' for an
+example; the package name can be omitted)."
+  (let* ((inhibit-message (not dotemacs-debug-mode))
+         (plist (or plist (cdr (assq name dotemacs-packages))))
+         (recipe (plist-get plist :recipe))
+         quelpa-upgrade-p)
+    (if recipe
+        (quelpa recipe)
+      (package-install name))
+    (when (package-installed-p name)
+      (cl-pushnew (cons name plist) dotemacs-packages :test #'eq :key #'car)
+      t)))
+
+(defun dotemacs-install-packages ()
+  "Install packages."
+  (dolist (pkg (dotemacs-get-packages))
+    (let* ((pkg-name (car pkg))
+           (pkg-plist (cdr pkg)))
+      (unless (package-installed-p pkg-name)
+        (if (dotemacs-install-package pkg-name pkg-plist)
+            (message "Emacs installed %s" pkg-name)
+          (error "Emacs couldn't install %s" pkg-name))))))
 
 (provide 'core-packages)
 ;;; core-packages.el ends here

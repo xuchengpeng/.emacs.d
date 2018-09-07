@@ -1,4 +1,4 @@
 ;;; emacs/eshell/packages.el -*- lexical-binding: t; -*-
 
-(package! eshell
-          shell-pop)
+(package! eshell)
+(package! shell-pop)

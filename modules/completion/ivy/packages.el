@@ -1,13 +1,13 @@
 ;;; completion/ivy/packages.el -*- lexical-binding: t; -*-
 
-(package! ivy
-          counsel
-          swiper
-          ivy-rich
-          ivy-hydra
-          counsel-projectile
-          ;; smex
-          amx)
+(package! ivy)
+(package! counsel)
+(package! swiper)
+(package! ivy-rich)
+(package! ivy-hydra)
+(package! counsel-projectile)
+; (package! smex)
+(package! amx)
 
 (when (featurep! +fuzzy)
   (package! flx))

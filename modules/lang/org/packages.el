@@ -3,5 +3,5 @@
 (package! org-plus-contrib)
 
 (when (featurep! +export)
-  (package! ox-pandoc
-            ox-hugo))
+  (package! ox-pandoc)
+  (package! ox-hugo))

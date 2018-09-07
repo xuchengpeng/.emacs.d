@@ -1,5 +1,5 @@
 ;;; lang/data/packages.el -*- lexical-binding: t; -*-
 
-(package! json-mode
-          toml-mode
-          yaml-mode)
+(package! json-mode)
+(package! toml-mode)
+(package! yaml-mode)

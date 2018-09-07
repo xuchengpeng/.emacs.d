@@ -55,7 +55,7 @@
            dotemacs-modules)
   (when dotemacs-private-dir
     (load! "packages" dotemacs-private-dir t))
-  (dotemacs-install-packages dotemacs-packages)
+  (dotemacs-install-packages)
   
   (maphash (lambda (key plist)
              (load! "init" (plist-get plist :path) t))
@@ -284,13 +284,52 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
     `(setq dotemacs-modules ',dotemacs-modules))
   (dotemacs-initialize-modules))
 
-(defmacro package! (&rest packages-list)
-  "Add packages in PACKAGES-LIST to ‘dotemacs-packages’.
+(defmacro package! (name &rest plist)
+  "Declares a package and how to install it (if applicable).
+
+This macro is declarative and does not load nor install packages. It is used to
+populate `dotemacs-packages' with metadata about the packages Emacs needs to keep
+track of.
+
+Only use this macro in a module's packages.el file.
+
+Accepts the following properties:
+
+ :recipe RECIPE        Takes a MELPA-style recipe (see `quelpa-recipe' in
+                       `quelpa' for an example); for packages to be installed
+                       from external sources.
+ :pin ARCHIVE-NAME     Instructs ELPA to only look for this package in
+                       ARCHIVE-NAME. e.g. \"org\". Ignored if RECIPE is present.
+ :ignore FORM          Do not install this package if FORM is non-nil.
+ :freeze FORM          Do not update this package if FORM is non-nil."
+  (declare (indent defun))
+  (let* ((old-plist (assq name dotemacs-packages))
+         (pkg-recipe (or (plist-get plist :recipe)
+                         (and old-plist (plist-get old-plist :recipe))))
+         (pkg-pin    (or (plist-get plist :pin)
+                         (and old-plist (plist-get old-plist :pin)))))
+    (when pkg-recipe
+      (when (= 0 (% (length pkg-recipe) 2))
+        (plist-put plist :recipe (cons name pkg-recipe)))
+      (when pkg-pin
+        (plist-put plist :pin nil)))
+    (dolist (prop '(:ignore :freeze))
+      (when-let* ((val (plist-get plist prop)))
+        (plist-put plist prop (eval val))))
+    `(progn
+       (when ,(and pkg-pin t)
+         (cl-pushnew (cons ',name ,pkg-pin) package-pinned-packages
+                     :test #'eq :key #'car))
+       (when ,(and old-plist t)
+         (assq-delete-all ',name dotemacs-packages))
+       (push ',(cons name plist) dotemacs-packages))))
+
+(defmacro packages! (&rest packages)
+  "Add packages in PACKAGES to ‘dotemacs-packages’.
 
 Can take multiple packages.
-e.g. (package! evil evil-surround)"
-  `(dolist (package ',packages-list)
-     (add-to-list 'dotemacs-packages package t)))
+e.g. (packages! evil evil-surround)"
+  `(progn ,@(cl-loop for desc in packages collect `(package! ,@(dotemacs-enlist desc)))))
 
 (defmacro depends-on! (module submodule &optional flags)
   "Declares that this module depends on another.

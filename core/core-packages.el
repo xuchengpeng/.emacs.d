@@ -107,44 +107,26 @@ missing) and shouldn't be deleted.")
   (require 'use-package)
   (require 'quelpa))
 
-(defun dotemacs-get-packages (&optional installed-only-p)
-  "Retrieves a list of explicitly installed packages (i.e. non-dependencies).
-Each element is a cons cell, whose car is the package symbol and whose cdr is
-the quelpa recipe (if any).
-
-BACKEND can be 'quelpa or 'elpa, and will instruct this function to return only
-the packages relevant to that backend.
-
-Warning: this function is expensive; it re-evaluates all of dotemacs's config files.
-Be careful not to use it in a loop.
-
-If INSTALLED-ONLY-P, only return packages that are installed."
-  (cl-loop with packages = (append dotemacs-core-packages (mapcar #'car dotemacs-packages))
-           for sym in (cl-delete-duplicates packages)
-           if (and (or (not installed-only-p)
-                       (package-installed-p sym))
-                   (or (assq sym dotemacs-packages)
-                       (and (assq sym package-alist)
-                            (list sym))))
-           collect it))
-
 (defun dotemacs-install-package (name &optional plist)
   "Installs package NAME with optional quelpa RECIPE (see `quelpa-recipe' for an
 example; the package name can be omitted)."
+  (cl-check-type name symbol)
   (let* ((inhibit-message (not dotemacs-debug-mode))
-         (plist (or plist (cdr (assq name dotemacs-packages))))
-         (recipe (plist-get plist :recipe))
-         quelpa-upgrade-p)
-    (if recipe
-        (quelpa recipe)
+         (plist (or plist (cdr (assq name dotemacs-packages)))))
+    (if-let* ((recipe (plist-get plist :recipe)))
+        (condition-case e
+            (let (quelpa-upgrade-p)
+              (quelpa recipe))
+          ((debug error)
+           (signal (car e) (cdr e))))
       (package-install name))
     (when (package-installed-p name)
-      (cl-pushnew (cons name plist) dotemacs-packages :test #'eq :key #'car)
-      t)))
+      (setf (alist-get name dotemacs-packages) plist)
+      name)))
 
 (defun dotemacs-install-packages ()
-  "Install packages."
-  (dolist (pkg (dotemacs-get-packages))
+  "Install packages defined by dotemacs-packages."
+  (dolist (pkg (reverse dotemacs-packages))
     (let* ((pkg-name (car pkg))
            (pkg-plist (cdr pkg)))
       (unless (package-installed-p pkg-name)

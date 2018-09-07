@@ -74,6 +74,7 @@
   (message "Emacs modules initialized"))
 
 (defun dotemacs-initialize-autoload ()
+  "Initialize autoloads."
   (if (file-exists-p dotemacs-autoload-file)
       (load dotemacs-autoload-file t (not dotemacs-debug-mode))
     (let ((targets
@@ -284,7 +285,7 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
     `(setq dotemacs-modules ',dotemacs-modules))
   (dotemacs-initialize-modules))
 
-(defmacro package! (name &rest plist)
+(cl-defmacro package! (name &rest plist &key recipe pin)
   "Declares a package and how to install it (if applicable).
 
 This macro is declarative and does not load nor install packages. It is used to
@@ -295,34 +296,33 @@ Only use this macro in a module's packages.el file.
 
 Accepts the following properties:
 
- :recipe RECIPE        Takes a MELPA-style recipe (see `quelpa-recipe' in
-                       `quelpa' for an example); for packages to be installed
-                       from external sources.
- :pin ARCHIVE-NAME     Instructs ELPA to only look for this package in
-                       ARCHIVE-NAME. e.g. \"org\". Ignored if RECIPE is present.
- :ignore FORM          Do not install this package if FORM is non-nil.
- :freeze FORM          Do not update this package if FORM is non-nil."
+ :recipe RECIPE
+   Takes a MELPA-style recipe (see `quelpa-recipe' in `quelpa' for an example);
+   for packages to be installed from external sources.
+ :pin ARCHIVE-NAME
+   Instructs ELPA to only look for this package in ARCHIVE-NAME. e.g. \"org\".
+   Ignored if RECIPE is present.
+
+Returns t if package is successfully registered, and nil if it was disabled
+elsewhere."
   (declare (indent defun))
-  (let* ((old-plist (assq name dotemacs-packages))
-         (pkg-recipe (or (plist-get plist :recipe)
-                         (and old-plist (plist-get old-plist :recipe))))
-         (pkg-pin    (or (plist-get plist :pin)
-                         (and old-plist (plist-get old-plist :pin)))))
-    (when pkg-recipe
-      (when (= 0 (% (length pkg-recipe) 2))
-        (plist-put plist :recipe (cons name pkg-recipe)))
-      (when pkg-pin
-        (plist-put plist :pin nil)))
-    (dolist (prop '(:ignore :freeze))
-      (when-let* ((val (plist-get plist prop)))
-        (plist-put plist prop (eval val))))
-    `(progn
-       (when ,(and pkg-pin t)
-         (cl-pushnew (cons ',name ,pkg-pin) package-pinned-packages
-                     :test #'eq :key #'car))
-       (when ,(and old-plist t)
-         (assq-delete-all ',name dotemacs-packages))
-       (push ',(cons name plist) dotemacs-packages))))
+  (let ((plist (append plist (cdr (assq name dotemacs-packages)))))
+    (when recipe
+      (when (cl-evenp (length recipe))
+        (setq plist (plist-put plist :recipe (cons name recipe))))
+      (setq pin nil
+            plist (plist-put plist :pin nil)))
+    (let (newplist)
+      (while plist
+        (unless (null (cadr plist))
+          (push (cadr plist) newplist)
+          (push (car plist) newplist))
+        (pop plist)
+        (pop plist))
+      (setq plist newplist))
+    (macroexp-progn
+     (append (if pin `((setf (alist-get ',name package-pinned-packages) ,pin)))
+             `((setf (alist-get ',name dotemacs-packages) ',plist))))))
 
 (defmacro packages! (&rest packages)
   "Add packages in PACKAGES to ‘dotemacs-packages’.

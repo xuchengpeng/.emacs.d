@@ -3,10 +3,6 @@
 [![Build Status](https://travis-ci.org/xuchengpeng/.emacs.d.svg?branch=master)](https://travis-ci.org/xuchengpeng/.emacs.d)
 [![License GPL 3](https://img.shields.io/badge/license-GPL_3-green.svg)](http://www.gnu.org/licenses/gpl-3.0.txt)
 
-## Documents
-
-http://xuchengpeng.com/
-
 ## Install
 
 ```sh
@@ -37,6 +33,8 @@ If `dotemacs-package-archives` is set to `custom`, you need to set `package-arch
 ```
 
 Customize it with melpa, [emacs-china](https://elpa.emacs-china.org/) or [tuna](https://mirror.tuna.tsinghua.edu.cn/help/elpa/), or clone it from [elpa-mirror](https://github.com/xuchengpeng/elpa-mirror) to local disk.
+
+To add your own private module, customize `dotemacs-private-dir` first, then add your own `packages.el`, `init.el`, `config.el`, `autoload.el` or `autoload/*.el` under this directory, Emacs will load this module automatically on startup, you may need to execute `dotemacs/generate-autoload-file` to update autoloads.
 
 ## Install fonts(Optional)
 

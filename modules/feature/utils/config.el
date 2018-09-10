@@ -1,6 +1,6 @@
 ;;; feature/utils/config.el -*- lexical-binding: t; -*-
 
-(if (fboundp 'display-line-numbers-mode)
+(when EMACS26+
     (add-hook 'after-init-hook #'global-display-line-numbers-mode)
   (use-package nlinum
     :hook ((prog-mode text-mode conf-mode) . nlinum-mode)

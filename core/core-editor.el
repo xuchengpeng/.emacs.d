@@ -74,7 +74,6 @@
 
 ;;
 ;; Built-in plugins
-;;
 
 ;; revert buffers for changed files
 (use-package autorevert
@@ -96,7 +95,12 @@
 (use-package saveplace
   :hook ((find-file dired-initial-position) . save-place-mode)
   :config
-  (setq save-place-file (concat dotemacs-cache-dir "saveplace")))
+  (setq save-place-file (concat dotemacs-cache-dir "saveplace"))
+  (defun dotemacs|recenter-on-load-saveplace (&rest _)
+    "Recenter on cursor when loading a saved place."
+    (if buffer-file-name (ignore-errors (recenter))))
+  (advice-add #'save-place-find-file-hook
+              :after-while #'dotemacs|recenter-on-load-saveplace))
 
 ;; Hideshow
 (use-package hideshow

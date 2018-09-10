@@ -54,7 +54,6 @@ Currently available functions:
 
 ;;
 ;; Custom faces
-;;
 
 (defgroup +modeline nil
   "TODO"
@@ -111,7 +110,6 @@ Currently available functions:
 
 ;;
 ;; Hacks
-;;
 
 ;; Keep `+modeline-current-window' up-to-date
 (defvar +modeline-current-window (frame-selected-window))
@@ -177,7 +175,6 @@ Currently available functions:
 
 ;;
 ;; Helpers
-;;
 
 (defun +modeline--make-xpm (width height &optional color)
   "Create an XPM bitmap. Inspired by `powerline''s `pl/make-xpm'."
@@ -216,7 +213,6 @@ use `buffer-name'."
 
 ;;
 ;; Buffer file path styles
-;;
 
 (defun +modeline-file-path-with-project ()
   "Returns the unaltered buffer file path relative to the project root's
@@ -307,7 +303,6 @@ Meant for `+modeline-buffer-path-function'."
 
 ;;
 ;; Bars
-;;
 
 (defvar +modeline-bar-start nil "TODO")
 (put '+modeline-bar-start 'risky-local-variable t)
@@ -345,7 +340,6 @@ Meant for `+modeline-buffer-path-function'."
 
 ;;
 ;; Segments
-;;
 
 (defun +modeline|update-on-change ()
   (+modeline--set-+modeline-buffer-state)
@@ -601,10 +595,10 @@ segment.")
 
 ;;
 ;; Preset modeline formats
-;;
 
 (def-modeline-format! :main
   '(+modeline-matches
+    +modeline-buffer-state
     +modeline-buffer-id
     +modeline-buffer-position)
   '(+modeline-misc-info
@@ -616,11 +610,12 @@ segment.")
 
 (def-modeline-format! :minimal
   '(+modeline-matches
+    +modeline-buffer-state
     +modeline-buffer-id)
   '(+modeline-major-mode))
 
 (def-modeline-format! :special
-  '(+modeline-matches " %b " +modeline-buffer-position)
+  '(+modeline-matches +modeline-buffer-state " %b " +modeline-buffer-position)
   '(+modeline-encoding +modeline-major-mode mode-line-process))
 
 (def-modeline-format! :project
@@ -629,8 +624,7 @@ segment.")
 
 
 ;;
-;;
-;;
+;; Set modeline format
 
 (def-modeline-segment! +modeline--rest
   (let ((rhs-str (format-mode-line +modeline-format-right)))

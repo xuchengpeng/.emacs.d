@@ -91,6 +91,18 @@
   (toggle-frame-maximized))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+;; removes the GUI elements
+(when (and (fboundp 'scroll-bar-mode) (not (eq scroll-bar-mode -1)))
+  (scroll-bar-mode -1))
+(when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
+  (tool-bar-mode -1))
+(unless IS-MAC
+  (when (and (fboundp 'menu-bar-mode) (not (eq menu-bar-mode -1)))
+    (menu-bar-mode -1)))
+;; tooltips in echo-aera
+(when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
+  (tooltip-mode -1))
+
 (fset #'yes-or-no-p #'y-or-n-p) ; y/n instead of yes/no
 
 ;; (line-number-mode t)
@@ -99,7 +111,6 @@
 
 ;;
 ;; Built-in packages
-;;
 
 ;; undo/redo changes to Emacs' window layout
 (use-package winner
@@ -119,7 +130,6 @@
 
 ;;
 ;; Theme & font
-;;
 
 (defun dotemacs|set-font()
   "Set english and chinese fonts."
@@ -172,12 +182,6 @@
 
 ;;
 ;; Bootstrap
-;;
-
-;; Prevent the glimpse of un-styled Emacs by setting these early.
-(add-to-list 'default-frame-alist '(tool-bar-lines 0))
-(add-to-list 'default-frame-alist '(menu-bar-lines 0))
-(add-to-list 'default-frame-alist '(vertical-scroll-bars))
 
 (defun dotemacs|init-ui ()
   "Initialize ui."

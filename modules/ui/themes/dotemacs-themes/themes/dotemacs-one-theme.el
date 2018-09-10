@@ -143,7 +143,6 @@ determine the exact padding."
    (dotemacs-modeline-bar :background (if -modeline-bright modeline-bg highlight))
    (dotemacs-modeline-buffer-file :inherit 'mode-line-buffer-id :weight 'bold)
    (dotemacs-modeline-buffer-path :inherit 'mode-line-emphasis :weight 'bold)
-   (dotemacs-modeline-buffer-project-root :foreground green :weight 'bold)
 
    ;; ivy-mode
    (ivy-current-match :background dark-blue :distant-foreground base0 :weight 'normal)

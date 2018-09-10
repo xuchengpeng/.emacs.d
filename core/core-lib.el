@@ -34,10 +34,8 @@
 (require 'subr-x)
 (require 'cl-lib)
 
-(defconst EMACS26+
-  (eval-when-compile (not (version< emacs-version "26"))))
-(defconst EMACS27+
-  (eval-when-compile (not (version< emacs-version "27"))))
+(defconst EMACS26+ (> emacs-major-version 25))
+(defconst EMACS27+ (> emacs-major-version 26))
 
 (defconst IS-MAC     (eq system-type 'darwin))
 (defconst IS-LINUX   (eq system-type 'gnu/linux))

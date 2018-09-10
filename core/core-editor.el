@@ -120,7 +120,9 @@
         recentf-max-saved-items 300
         recentf-auto-cleanup 'never
         recentf-exclude (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
-                              "^/var/folders/.+$" dotemacs-cache-dir dotemacs-local-dir))
+                              "^/var/folders/.+$"
+                              (recentf-expand-file-name dotemacs-cache-dir)
+                              (recentf-expand-file-name dotemacs-local-dir)))
   (quiet! (recentf-mode +1)))
 
 (use-package server

@@ -34,7 +34,7 @@
 (when (version< emacs-version "25.2")
   (error "Emacs version should be 25.2 or higher"))
 
-(defvar dotemacs-dir (file-truename user-emacs-directory)
+(defvar dotemacs-dir user-emacs-directory
   "The path to this emacs.d directory.")
 
 (defvar dotemacs-core-dir (concat dotemacs-dir "core/")
@@ -74,7 +74,6 @@ line or use --debug-init to enable this.")
 
 ;;
 ;; Startup optimizations
-;;
 
 (defvar dotemacs-gc-cons-threshold 16777216 ; 16mb
   "The default value to use for `gc-cons-threshold'. If you experience freezing,
@@ -100,7 +99,6 @@ decrease this. If you experience stuttering, increase this.")
 
 ;;
 ;; Custom error types
-;;
 
 (define-error 'dotemacs-error "Error in dotemacs Emacs core")
 (define-error 'dotemacs-hook-error "Error in a dotemacs startup hook" 'dotemacs-error)
@@ -111,7 +109,6 @@ decrease this. If you experience stuttering, increase this.")
 
 ;;
 ;; Emacs core configuration
-;;
 
 ;; UTF-8 as the default coding system
 (when (fboundp 'set-charset-priority)
@@ -169,16 +166,15 @@ decrease this. If you experience stuttering, increase this.")
 
 ;;
 ;; Bootstrap functions
-;;
 
 (defun dotemacs-try-run-hook (hook)
   "Run HOOK (a hook function), but marks thrown errors to make it a little
 easier to tell where the came from.
 
 Meant to be used with `run-hook-wrapped'."
-  (when dotemacs-debug-mode
-    (message "Running dotemacs hook: %s" hook))
   (let ((gc-cons-threshold dotemacs-gc-cons-upper-limit))
+    (when dotemacs-debug-mode
+      (message "Running dotemacs hook: %s" hook))
     (condition-case e
         (funcall hook)
       ((debug error)
@@ -221,7 +217,6 @@ Module load order is determined by your `dotemacs!' block."
 
 ;;
 ;; Bootstrap dotemacs
-;;
 
 (dotemacs-initialize)
 

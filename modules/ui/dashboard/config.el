@@ -9,18 +9,32 @@
 (load! "+banner")
 
 (defvar +dashboard-widget-functions
-  '(+dashboard/insert-banner
-    +dashboard/insert-benchmark)
+  '(+dashboard|insert-banner
+    +dashboard|insert-benchmark)
   "List of widget functions to run in the dashboard buffer to construct the
 dashboard. These functions take no arguments and the dashboard buffer is current
 while they run.")
+
+;;
+;; Major mode
+
+(define-derived-mode +dashboard-mode special-mode "Dashboard"
+  :syntax-table nil
+  :abbrev-table nil
+  "Major mode for the dashboard buffer."
+  (setq buffer-read-only t
+        truncate-lines t)
+  (setq-local whitespace-style nil)
+  (setq-local show-trailing-whitespace nil)
+  (setq-local hscroll-margin 0)
+  (setq-local tab-width 2))
 
 ;; helpers
 (defun +dashboard--center (len s)
   (concat (make-string (ceiling (max 0 (- len (length s))) 2) ? )
           s))
 
-(defun +dashboard/insert-benchmark ()
+(defun +dashboard|insert-benchmark ()
   (insert
    "\n\n"
    (propertize
@@ -30,7 +44,7 @@ while they run.")
     'face 'font-lock-comment-face)
    "\n"))
 
-(defun +dashboard/init (&optional force)
+(defun +dashboard|init (&optional force)
   "Initialize dashboard."
   (let ((buffer-exists (buffer-live-p (get-buffer +dashboard-buffer-name)))
         (save-line nil))
@@ -44,28 +58,27 @@ while they run.")
           (erase-buffer)
           (run-hooks '+dashboard-widget-functions)))
       (switch-to-buffer +dashboard-buffer-name)
+      (+dashboard-mode)
       (goto-char (point-min)))))
 
-(defun +dashboard/resize-on-hook (&optional _)
+(defun +dashboard|resize-on-hook (&optional _)
   "Hook run on window resize events to redisplay the home buffer."
   (let ((space-win (get-buffer-window +dashboard-buffer-name))
         (frame-win (frame-selected-window)))
     (when (and space-win
                (not (window-minibuffer-p frame-win)))
       (with-selected-window space-win
-        (+dashboard/init)))))
+        (+dashboard|init)))))
 
-(defun +dashboard/make-frame (frame)
+(defun +dashboard|make-frame (frame)
   "Reload the dashboard after a brief pause. This is necessary for new frames,
 whose dimensions may not be fully initialized by the time this is run."
-  (run-with-timer 0.1 nil #'+dashboard/reload frame))
+  (run-with-timer 0.1 nil #'+dashboard|reload frame))
 
 (setq dotemacs-fallback-buffer-name +dashboard-buffer-name)
 
 (add-hook 'window-setup-hook
           (lambda ()
-            (add-hook 'window-size-change-functions '+dashboard/resize-on-hook)
-            (add-hook 'after-make-frame-functions #'+dashboard/make-frame)
-            (+dashboard/resize-on-hook)))
-
-(add-hook 'dotemacs-post-init-hook #'+dashboard/init t)
+            (add-hook 'window-size-change-functions '+dashboard|resize-on-hook)
+            (add-hook 'after-make-frame-functions #'+dashboard|make-frame)
+            (+dashboard|init t)))

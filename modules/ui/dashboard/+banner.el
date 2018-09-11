@@ -24,28 +24,28 @@ For example:
  \"/home/.../*.png\"
  nil.")
 
-(defun +dashboard/choose-random-text-banner ()
+(defun +dashboard|choose-random-text-banner ()
   "Return the full path of a banner chosen randomly."
   (let* ((files (directory-files +dashboard-banner-directory t ".*\.txt"))
          (count (length files))
          (choice (random count)))
     (nth choice files)))
 
-(defun +dashboard/get-banner-path (index)
+(defun +dashboard|get-banner-path (index)
   "Return the full path to banner with index INDEX."
   (concat +dashboard-banner-directory (format "%d.txt" index)))
 
-(defun +dashboard/choose-banner ()
+(defun +dashboard|choose-banner ()
   "Chooese banner to insert."
   (when +dashboard-startup-banner
     (cond ((eq 'official +dashboard-startup-banner)
            (if (and (display-graphic-p) (image-type-available-p 'png))
               +dashboard-banner-official-png
-            (+dashboard/get-banner-path 1)))
+            (+dashboard|get-banner-path 1)))
           ((eq 'random +dashboard-startup-banner)
-           (+dashboard/choose-random-text-banner))
+           (+dashboard|choose-random-text-banner))
           ((integerp +dashboard-startup-banner)
-           (+dashboard/get-banner-path +dashboard-startup-banner))
+           (+dashboard|get-banner-path +dashboard-startup-banner))
           ((and +dashboard-startup-banner
                 (image-type-available-p (intern (file-name-extension
                                                  +dashboard-startup-banner)))
@@ -54,11 +54,11 @@ For example:
                (expand-file-name +dashboard-startup-banner +dashboard-banner-directory)
              (message (format "could not find banner %s"
                               +dashboard-startup-banner))
-             (+dashboard/get-banner-path 1)))
+             (+dashboard|get-banner-path 1)))
           (t
-           (+dashboard/get-banner-path 1)))))
+           (+dashboard|get-banner-path 1)))))
 
-(defun +dashboard/insert-ascii-banner-centered (file)
+(defun +dashboard|insert-ascii-banner-centered (file)
   "Insert the ascii banner contain in file and center it in the window.
 FILE: the path to the file containing the banner."
   (insert
@@ -78,7 +78,7 @@ FILE: the path to the file containing the banner."
            (forward-line 1))))
      (buffer-string))))
 
-(defun +dashboard/insert-image-banner (banner)
+(defun +dashboard|insert-image-banner (banner)
   "Display an image banner.
 BANNER: the path to an ascii banner file."
   (when (file-exists-p banner)
@@ -97,11 +97,11 @@ BANNER: the path to an ascii banner file."
                                                  (+ (length title) 1)) 2))) ?\s))
         (insert (format "%s\n\n" title))))))
 
-(defun +dashboard/insert-banner ()
+(defun +dashboard|insert-banner ()
   "Insert banner."
-  (let ((banner (+dashboard/choose-banner))
+  (let ((banner (+dashboard|choose-banner))
         (buffer-read-only nil))
     (when banner
       (if (image-type-available-p (intern (file-name-extension banner)))
-          (+dashboard/insert-image-banner banner)
-        (+dashboard/insert-ascii-banner-centered banner)))))
+          (+dashboard|insert-image-banner banner)
+        (+dashboard|insert-ascii-banner-centered banner)))))

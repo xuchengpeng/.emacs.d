@@ -359,19 +359,19 @@ Meant for `+modeline-buffer-path-function'."
              after-revert-hook)
   (let* ((active (active))
          (icon (cond (buffer-read-only
-                      (propertize "<R>"
+                      (propertize "<ReadOnly>"
                                   'face (if active 'dotemacs-modeline-warning)
                                   'help-echo "Buffer is read-only"))
                      ((buffer-modified-p)
-                      (propertize "<M>"
+                      (propertize "<Modified>"
                                   'face (if active 'dotemacs-modeline-buffer-modified)
                                   'help-echo "Buffer has been modified"))
                      ((and buffer-file-name (not (file-exists-p buffer-file-name)))
-                      (propertize "<E>"
+                      (propertize "<Error>"
                                   'face (if active 'dotemacs-modeline-urgent)
                                   'help-echo "Buffer does not exists"))
                      (t
-                      (propertize "<N>"
+                      (propertize "<Normal>"
                                   'face (if active 'dotemacs-modeline-info)
                                   'help-echo "Buffer is in normal state")))))
     (if icon (concat " " icon))))
@@ -639,3 +639,4 @@ segment.")
 
 ;;
 (set-modeline! :main t)
+(add-hook! '+dashboard-mode-hook (set-modeline! :project))

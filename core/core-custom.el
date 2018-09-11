@@ -46,6 +46,7 @@
   :type '(choice
           (const :tag "Melpa" melpa)
           (const :tag "Emacs-China" emacs-china)
+          (const :tag "Netease" netease)
           (const :tag "Tuna" tuna)
           (const :tag "Custom" custom))
   :group 'dotemacs)

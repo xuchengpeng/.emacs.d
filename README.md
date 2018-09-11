@@ -19,7 +19,7 @@ For example:
 ```el
 (setq dotemacs-full-name "user name")           ; User full name
 (setq dotemacs-mail-address "user@email.com")   ; Email address
-(setq dotemacs-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china, tuna or custom
+(setq dotemacs-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china, netease, tuna or custom
 (setq dotemacs-theme 'dotemacs-one)             ; Color theme: dotemacs-one, dotemacs-one-light...
 (setq dotemacs-company-enable-yas t)            ; Enable/disable yasnippet for company: t or nil
 ```
@@ -32,7 +32,7 @@ If `dotemacs-package-archives` is set to `custom`, you need to set `package-arch
                          ("org"   . "/home/user/elpa-mirror/org/")))
 ```
 
-Customize it with melpa, [emacs-china](https://elpa.emacs-china.org/) or [tuna](https://mirror.tuna.tsinghua.edu.cn/help/elpa/), or clone it from [elpa-mirror](https://github.com/xuchengpeng/elpa-mirror) to local disk.
+Customize it with melpa, [emacs-china](https://elpa.emacs-china.org/), [netease](http://mirrors.163.com/elpa/) or [tuna](https://mirror.tuna.tsinghua.edu.cn/help/elpa/), or clone it from [elpa-mirror](https://github.com/xuchengpeng/elpa-mirror) to local disk.
 
 To add your own private module, customize `dotemacs-private-dir` first, then add your own `packages.el`, `init.el`, `config.el`, `autoload.el` or `autoload/*.el` under this directory, Emacs will load this module automatically on startup, you may need to execute `dotemacs/generate-autoload-file` to update autoloads.
 

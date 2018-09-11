@@ -134,11 +134,11 @@
 (defun dotemacs|set-font()
   "Set english and chinese fonts."
   (setq fonts
-        (cond ((eq system-type 'darwin)
+        (cond (IS-MAC
                '("Monaco" "STHeiti"))
-              ((eq system-type 'gnu/linux)
+              (IS-LINUX
                '("DejaVu Sans Mono" "STHeiti"))
-              ((memq system-type '(cygwin windows-nt ms-dos))
+              (IS-WINDOWS
                '("Consolas" "Microsoft Yahei"))))
   
   (let* ((en-font      (or dotemacs-font (car fonts)))

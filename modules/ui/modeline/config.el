@@ -591,7 +591,7 @@ segment.")
 
 (def-modeline-segment! +modeline-misc-info
   (propertize (format-time-string " %H:%M  ")
-              'help-echo (format-time-string "%Y-%m-%d %a %H:%M")))
+              'help-echo (format-time-string "%Y-%m-%d %H:%M")))
 
 ;;
 ;; Preset modeline formats

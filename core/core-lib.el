@@ -34,13 +34,6 @@
 (require 'subr-x)
 (require 'cl-lib)
 
-(defconst EMACS26+ (> emacs-major-version 25))
-(defconst EMACS27+ (> emacs-major-version 26))
-
-(defconst IS-MAC     (eq system-type 'darwin))
-(defconst IS-LINUX   (eq system-type 'gnu/linux))
-(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
-
 (eval-and-compile
   (unless EMACS26+
     (with-no-warnings
@@ -58,7 +51,6 @@
 
 ;;
 ;; Helpers
-;;
 
 (defun dotemacs-unquote (exp)
   "Return EXP unquoted."
@@ -131,7 +123,6 @@ This is used by `associate!', `file-exists-p!' and `project-file-exists-p!'."
 
 ;;
 ;; Library
-;;
 
 (defun FILE! ()
   "Return the emacs lisp file this macro is called from."

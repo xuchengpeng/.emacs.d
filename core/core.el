@@ -108,18 +108,31 @@ decrease this. If you experience stuttering, increase this.")
 (define-error 'dotemacs-package-error "Error with packages" 'dotemacs-error)
 
 ;;
+;; Constants
+
+(defconst EMACS26+ (> emacs-major-version 25))
+(defconst EMACS27+ (> emacs-major-version 26))
+
+(defconst IS-MAC     (eq system-type 'darwin))
+(defconst IS-LINUX   (eq system-type 'gnu/linux))
+(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
+
+;;
 ;; Emacs core configuration
 
-;; UTF-8 as the default coding system
-(when (fboundp 'set-charset-priority)
-  (set-charset-priority 'unicode))     ; pretty
-(prefer-coding-system        'utf-8)   ; pretty
-(set-default-coding-systems  'utf-8)
-(set-terminal-coding-system  'utf-8)   ; pretty
-(set-keyboard-coding-system  'utf-8)   ; pretty
-(set-selection-coding-system 'utf-8)   ; perdy
-(setq locale-coding-system   'utf-8)   ; please
-(setq-default buffer-file-coding-system 'utf-8) ; with sugar on top
+;; explicitly set the preferred coding systems to avoid annoying prompt
+;; from emacs (especially on Microsoft Windows)
+(prefer-coding-system          'utf-8)
+(unless IS-WINDOWS
+  ;; UTF-8 as the default coding system
+  (when (fboundp 'set-charset-priority)
+    (set-charset-priority 'unicode))
+  (set-default-coding-systems  'utf-8)
+  (set-terminal-coding-system  'utf-8)
+  (set-keyboard-coding-system  'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (setq locale-coding-system   'utf-8)
+  (setq-default buffer-file-coding-system 'utf-8))
 
 (setq-default
  ad-redefinition-action 'accept   ; silence advised function warnings

@@ -601,8 +601,7 @@ segment.")
     +modeline-buffer-state
     +modeline-buffer-id
     +modeline-buffer-position)
-  '(+modeline-misc-info
-    +modeline-encoding
+  '(+modeline-encoding
     +modeline-major-mode " "
     (vc-mode ("" +modeline-vcs " "))
     mode-line-process

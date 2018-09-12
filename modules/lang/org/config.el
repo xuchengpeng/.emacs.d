@@ -12,7 +12,7 @@
         (sequence "LEARN" "TRY" "TEACH" "|" "COMPLETE")))
   (setq org-log-done 'time
         org-startup-indented t
-        org-startup-folded nil
+        org-startup-folded t
         org-clock-persist t
         org-clock-persist-file (concat dotemacs-cache-dir "org-clock-save.el")
         org-clock-in-resume t

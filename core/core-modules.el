@@ -44,7 +44,6 @@
 
 ;;
 ;; Functions
-;;
 
 (defun dotemacs-initialize-modules ()
   "Initialize modules."
@@ -146,7 +145,6 @@ This should be run whenever init.el or an autoload file is modified."
 
 ;;
 ;; Module API
-;;
 
 (defun dotemacs-module-p (category module)
   "Returns t if CATEGORY MODULE is enabled (ie. present in `dotemacs-modules')."
@@ -250,14 +248,13 @@ This doesn't require modules to be enabled. For enabled modules us
   (or (unless refresh-p dotemacs-modules)
       (let ((noninteractive t)
             (dotemacs-modules
-             (make-hash-table :test #'equal
+             (make-hash-table :test 'equal
                               :size 20
                               :rehash-threshold 1.0)))
         dotemacs-modules)))
 
 ;;
 ;; Macros
-;;
 
 (defmacro dotemacs! (&rest modules)
   "Adds MODULES to `dotemacs-modules'.
@@ -266,7 +263,7 @@ MODULES must be in mplist format.
 e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
   (unless dotemacs-modules
     (setq dotemacs-modules
-          (make-hash-table :test #'equal
+          (make-hash-table :test 'equal
                            :size (if modules (length modules) 100)
                            :rehash-threshold 1.0)))
   (let (category m)
@@ -382,7 +379,6 @@ omitted. eg. (featurep! +flag1)"
 
 ;;
 ;; benchmark
-;;
 
 (defun dotemacs|display-benchmark (&optional return-p)
   "Display a benchmark, showing number of packages and modules, and how quickly

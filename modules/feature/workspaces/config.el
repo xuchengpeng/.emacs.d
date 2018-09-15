@@ -5,7 +5,7 @@
 stored in `persp-save-dir'.")
 
 (use-package persp-mode
-  :hook (after-init . persp-mode)
+  :defer 1
   :init
   (setq persp-keymap-prefix (kbd "C-c C-p"))
   :config
@@ -15,6 +15,8 @@ stored in `persp-save-dir'.")
         persp-auto-save-opt (if noninteractive 0 1) ; auto-save on kill
         persp-auto-resume-time -1 ; Don't auto-load on startup
         persp-save-dir (concat dotemacs-local-dir "workspaces/"))
+  
+  (persp-mode +1)
   
   (advice-add #'persp-asave-on-exit :around #'+workspaces*autosave-real-buffers)
   

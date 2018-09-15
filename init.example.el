@@ -39,6 +39,7 @@
            :lang
            cc
            ; data
+           go
            ; javascript
            markdown
            (org         ; organize your plain life in plain text

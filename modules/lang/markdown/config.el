@@ -10,3 +10,8 @@
 ;; turn on visual-line-mode
 (dolist (hook '(text-mode-hook org-mode-hook markdown-mode-hook gfm-mode-hook))
   (add-hook hook 'visual-line-mode))
+
+(use-package markdown-toc
+  :commands(markdown-toc-generate-toc
+            markdown-toc-refresh-toc
+            markdown-toc-generate-or-refresh-toc))

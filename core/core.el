@@ -184,15 +184,14 @@ decrease this. If you experience stuttering, increase this.")
 easier to tell where the came from.
 
 Meant to be used with `run-hook-wrapped'."
-  (let ((gc-cons-threshold dotemacs-gc-cons-upper-limit))
-    (when dotemacs-debug-mode
-      (message "Running dotemacs hook: %s" hook))
-    (condition-case e
-        (funcall hook)
-      ((debug error)
-       (signal 'dotemacs-hook-error (list hook e))))
-    ;; return nil so `run-hook-wrapped' won't short circuit
-    nil))
+  (when dotemacs-debug-mode
+    (message "Running dotemacs hook: %s" hook))
+  (condition-case e
+      (funcall hook)
+    ((debug error)
+     (signal 'dotemacs-hook-error (list hook e))))
+  ;; return nil so `run-hook-wrapped' won't short circuit
+  nil)
 
 (defun dotemacs-initialize ()
   "dotemacs initialize function.

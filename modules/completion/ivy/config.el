@@ -34,7 +34,8 @@
                                'ivy-rich-switch-buffer-transformer)
   (setq ivy-virtual-abbreviate 'full
         ivy-rich-switch-buffer-align-virtual-buffer t
-        ivy-rich-path-style 'abbrev))
+        ivy-rich-path-style 'abbrev)
+  (ivy-rich-mode))
 
 (use-package ivy-hydra
   :after (ivy hydra))

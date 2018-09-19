@@ -2,7 +2,7 @@
 
 ;;;###autoload
 (defun +themes/set-color-theme (theme)
-  "Switch to specific package ARCHIVES repository."
+  "Switch to specific color THEME."
   (interactive
    (list
     (intern (completing-read "Switch to color theme: "

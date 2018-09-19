@@ -3,6 +3,17 @@
 [![Build Status](https://travis-ci.org/xuchengpeng/.emacs.d.svg?branch=master)](https://travis-ci.org/xuchengpeng/.emacs.d)
 [![License GPL 3](https://img.shields.io/badge/license-GPL_3-green.svg)](http://www.gnu.org/licenses/gpl-3.0.txt)
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Chuck's Emacs Configuration](#chucks-emacs-configuration)
+    - [Install](#install)
+    - [Customization](#customization)
+    - [Install fonts(Optional)](#install-fontsoptional)
+    - [Supported Emacs versions](#supported-emacs-versions)
+
+<!-- markdown-toc end -->
+
 ## Install
 
 ```sh

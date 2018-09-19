@@ -6,7 +6,6 @@
   (setq projectile-enable-caching t
         projectile-cache-file (concat dotemacs-cache-dir "projectile.cache")
         projectile-known-projects-file (concat dotemacs-cache-dir "projectile.projects")
-        projectile-require-project-root nil
         projectile-globally-ignored-files '(".DS_Store" "Icon" "TAGS")
         projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o")
         projectile-ignored-projects '("~/" "/tmp"))

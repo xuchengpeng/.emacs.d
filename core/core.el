@@ -146,7 +146,7 @@ decrease this. If you experience stuttering, increase this.")
  ;; History & backup settings
  auto-save-default nil
  create-lockfiles nil
- history-length 250
+ history-length 500
  make-backup-files nil
  ;; byte compilation
  byte-compile-verbose dotemacs-debug-mode

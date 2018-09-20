@@ -1,13 +1,5 @@
 ;;; feature/editor/config.el -*- lexical-binding: t; -*-
 
-;; Minor mode to aggressively keep your code always indented
-(use-package aggressive-indent
-  :diminish aggressive-indent-mode
-  :hook (prog-mode . aggressive-indent-mode)
-  ;; :config
-  ;; (global-aggressive-indent-mode)
-  )
-
 ;; Increase selected region by semantic units
 (use-package expand-region
   :bind ("C-=" . er/expand-region))

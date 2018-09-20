@@ -34,7 +34,8 @@
 (when (version< emacs-version "25.2")
   (error "Emacs version should be 25.2 or higher"))
 
-(defvar dotemacs-dir user-emacs-directory
+(defvar dotemacs-dir
+  (eval-when-compile (file-truename user-emacs-directory))
   "The path to this emacs.d directory.")
 
 (defvar dotemacs-core-dir (concat dotemacs-dir "core/")

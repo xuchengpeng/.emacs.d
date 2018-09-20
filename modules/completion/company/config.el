@@ -3,6 +3,7 @@
 (use-package company
   :diminish company-mode
   :commands (company-complete-common company-manual-begin company-grab-line)
+  :hook (prog-mode . global-company-mode)
   :bind (("M-/" . company-complete)
          ("C-c C-y" . company-yasnippet)
          :map company-active-map

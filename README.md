@@ -9,7 +9,7 @@
 - [Chuck's Emacs Configuration](#chucks-emacs-configuration)
     - [Install](#install)
     - [Customization](#customization)
-    - [Install fonts(Optional)](#install-fontsoptional)
+    - [Install fonts (Optional)](#install-fonts-optional)
     - [Supported Emacs versions](#supported-emacs-versions)
 
 <!-- markdown-toc end -->
@@ -47,7 +47,7 @@ Customize it with melpa, [emacs-china](https://elpa.emacs-china.org/), [netease]
 
 To add your own private module, customize `dotemacs-private-dir` first, then add your own `packages.el`, `init.el`, `config.el`, `autoload.el` or `autoload/*.el` under this directory, Emacs will load this module automatically on startup, you may need to execute `dotemacs/generate-autoload-file` to update autoloads.
 
-## Install fonts(Optional)
+## Install fonts (Optional)
 
 Install your favorite fonts, or you can find some popular fonts [here](https://github.com/xuchengpeng/fonts).
 

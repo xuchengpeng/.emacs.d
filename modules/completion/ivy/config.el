@@ -28,14 +28,10 @@
   (ivy-mode))
 
 (use-package ivy-rich
-  :after ivy
+  :hook (ivy-mode . ivy-rich-mode)
   :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer)
-  (setq ivy-virtual-abbreviate 'full
-        ivy-rich-switch-buffer-align-virtual-buffer t
-        ivy-rich-path-style 'abbrev)
-  (ivy-rich-mode))
+  (dolist (cmd '(ivy-switch-buffer counsel-projectile-switch-to-buffer))
+    (ivy-set-display-transformer cmd 'ivy-rich--ivy-switch-buffer-transformer)))
 
 (use-package ivy-hydra
   :after (ivy hydra))

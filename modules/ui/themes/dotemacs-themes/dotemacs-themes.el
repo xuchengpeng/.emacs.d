@@ -181,12 +181,12 @@ between 0 and 1)."
     (plist-get spec prop)))
 
 ;;;###autoload
-(defmacro dotemacs-themes-set-faces (theme &rest faces)
+(defun dotemacs-themes-set-faces (theme &rest faces)
   "Customize THEME (a symbol) with FACES."
   (declare (indent defun))
-  `(custom-theme-set-faces
-    ,theme
-    ,@(mapcar #'dotemacs-themes--build-face faces)))
+  (apply #'custom-theme-set-faces
+         (or theme 'user)
+         (mapcar #'dotemacs-themes--build-face faces)))
 
 (defmacro def-dotemacs-theme (name docstring defs &optional extra-faces extra-vars)
   "Define a dotemacs theme, named NAME (a symbol)."

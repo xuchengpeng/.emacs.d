@@ -1,9 +1,9 @@
 .cache/
-.local/
-org/*.*
+elpa/
+org/
 personal/*.el*
 personal/preload/*.el*
 server/
-/init.el
+custom.el
 *.elc
 *~

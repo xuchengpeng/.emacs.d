@@ -213,7 +213,8 @@ use `buffer-name'."
         (propertize "%s" 'face 'dotemacs-modeline-buffer-path)
       (cl-loop for spec in (funcall +modeline-buffer-path-function)
                if (stringp spec) concat spec
-               else concat (propertize (car spec) 'face (cdr spec))))))
+               else if (not (null spec))
+               concat (propertize (car spec) 'face (cdr spec))))))
 
 
 ;;
@@ -224,16 +225,18 @@ use `buffer-name'."
 parent.
 
 e.g. project/src/lib/file.c"
-  (let* ((project-root (dotemacs-project-root))
-         (true-filename (file-truename buffer-file-name))
-         (relative-dirs (file-relative-name (file-name-directory true-filename)
-                                            (file-truename project-root))))
-    (list (cons (concat (dotemacs-project-name) "/")
-                'dotemacs-modeline-buffer-project-root)
-          (cons (if (equal "./" relative-dirs) "" relative-dirs)
-                'dotemacs-modeline-buffer-path)
-          (cons (file-name-nondirectory true-filename)
-                'dotemacs-modeline-buffer-file))))
+  (let ((filename (or buffer-file-truename (file-truename buffer-file-name))))
+    (append (if (dotemacs-project-p)
+                (let* ((project-root (dotemacs-project-root))
+                       (relative-dirs (file-relative-name (file-name-directory filename)
+                                                          (file-truename project-root))))
+                  (list (cons (concat (dotemacs-project-name) "/")
+                              'dotemacs-modeline-buffer-project-root)
+                        (unless (equal "./" relative-dirs)
+                          (cons relative-dirs 'dotemacs-modeline-buffer-path))))
+              (list nil (cons (file-name-directory filename) 'dotemacs-modeline-buffer-path)))
+            (list (cons (file-name-nondirectory filename)
+                        'dotemacs-modeline-buffer-file)))))
 
 (defun +modeline-file-path-from-project ()
   "Returns file path relative to the project root.

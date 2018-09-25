@@ -1,9 +1,9 @@
-;;; config.el --- Initialize benchmark. -*- lexical-binding: t; -*-
+;;; feature/benchmark/init.el --- Initialize benchmark. -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2018 xuchengpeng
 ;;
 ;; Author: xuchengpeng <xucp@outlook.com>
-;; URL: https://github.com/xuchengpeng/emacs.d
+;; URL: https://github.com/xuchengpeng/.emacs.d
 
 ;; This file is not part of GNU Emacs.
 

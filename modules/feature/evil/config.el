@@ -1,9 +1,9 @@
 ;;; feature/evil/config.el -*- lexical-binding: t; -*-
 
 (use-package evil
-  :hook (after-init . evil-mode)
+  :defer 1
   :config
-  (load! "+bindings"))
+  (evil-mode +1))
 
 (use-package evil-surround
   :commands (global-evil-surround-mode
@@ -11,3 +11,8 @@
              evil-Surround-edit
              evil-surround-region)
   :config (global-evil-surround-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))

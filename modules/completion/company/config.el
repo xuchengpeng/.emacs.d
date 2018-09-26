@@ -24,7 +24,7 @@
         company-dabbrev-downcase nil
         company-dabbrev-ignore-case nil
         company-require-match nil
-        company-global-modes '(not comint-mode erc-mode message-mode help-mode gud-mode eshell-mode))
+        company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode))
   
   (setq company-backends (mapcar #'+company/backend-with-yas company-backends))
   

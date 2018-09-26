@@ -161,16 +161,19 @@ This should be run whenever init.el or an autoload file is modified."
         (plist-get plist property)
       plist)))
 
-(defun dotemacs-module-put (category module property value &rest rest)
+(defun dotemacs-module-put (category module &rest plist)
   "Set a PROPERTY for CATEGORY MODULE to VALUE. PLIST should be additional pairs
-of PROPERTY and VALUEs."
-  (when-let* ((plist (dotemacs-module-get category module)))
-    (plist-put plist property value)
-    (when rest
-      (when (cl-oddp (length rest))
-        (signal 'wrong-number-of-arguments (list (length rest))))
-      (while rest
-        (plist-put rest (pop rest) (pop rest))))
+of PROPERTY and VALUEs.
+
+\(fn CATEGORY MODULE PROPERTY VALUE &rest [PROPERTY VALUE [...]])"
+  (if-let* ((old-plist (dotemacs-module-get category module)))
+      (progn
+        (when plist
+          (when (cl-oddp (length plist))
+            (signal 'wrong-number-of-arguments (list (length plist))))
+          (while plist
+            (plist-put old-plist (pop plist) (pop plist))))
+        (puthash (cons category module) old-plist dotemacs-modules))
     (puthash (cons category module) plist dotemacs-modules)))
 
 (defun dotemacs-module-set (category module &rest plist)
@@ -184,13 +187,6 @@ following properties:
 
 Example:
   (dotemacs-module-set :lang 'haskell :flags '(+intero))"
-  (when plist
-    (let ((old-plist (dotemacs-module-get category module)))
-      (unless (plist-member plist :flags)
-        (plist-put plist :flags (plist-get old-plist :flags)))
-      (unless (plist-member plist :path)
-        (plist-put plist :path (or (plist-get old-plist :path)
-                                   (dotemacs-module-locate-path category module))))))
   (puthash (cons category module)
            plist
            dotemacs-modules))
@@ -216,7 +212,7 @@ returns nil, otherwise an absolute path.
 This doesn't require modules to be enabled. For enabled modules us
 `dotemacs-module-path'."
   (when (keywordp category)
-    (setq category (substring (symbol-name category) 1)))
+    (setq category (dotemacs-keyword-name category)))
   (when (and module (symbolp module))
     (setq module (symbol-name module)))
   (cl-loop with file-name-handler-alist = nil
@@ -227,7 +223,8 @@ This doesn't require modules to be enabled. For enabled modules us
 
 (defun dotemacs-module-from-path (&optional path)
   "Returns a cons cell (CATEGORY . MODULE) derived from PATH (a file path)."
-  (let ((path (or path (FILE!))))
+  (let* (file-name-handler-alist
+         (path (or path (FILE!))))
     (save-match-data
       (setq path (file-truename path))
       (when (string-match "/modules/\\([^/]+\\)/\\([^/]+\\)\\(?:/.*\\)?$" path)
@@ -247,11 +244,11 @@ This doesn't require modules to be enabled. For enabled modules us
   "Minimally initialize `dotemacs-modules' (a hash table) and return it."
   (or (unless refresh-p dotemacs-modules)
       (let ((noninteractive t)
-            (dotemacs-modules
-             (make-hash-table :test 'equal
-                              :size 20
-                              :rehash-threshold 1.0)))
-        dotemacs-modules)))
+            dotemacs-modules)
+        (or dotemacs-modules
+            (make-hash-table :test 'equal
+                             :size 20
+                             :rehash-threshold 1.0)))))
 
 ;;
 ;; Macros
@@ -264,7 +261,7 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
   (unless dotemacs-modules
     (setq dotemacs-modules
           (make-hash-table :test 'equal
-                           :size (if modules (length modules) 100)
+                           :size (if modules (length modules) 150)
                            :rehash-threshold 1.0)))
   (let (category m)
     (while modules
@@ -363,7 +360,16 @@ omitted. eg. (featurep! +flag1)"
 (defmacro require! (category module &rest plist)
   "Loads the module specified by CATEGORY (a keyword) and MODULE (a symbol)."
   `(let ((module-path (dotemacs-module-locate-path ,category ',module)))
-     (dotemacs-module-set ,category ',module ,@plist)
+     (dotemacs-module-set
+      ,category ',module
+      ,@(when plist
+          (let ((old-plist (dotemacs-module-get category module)))
+            (unless (plist-member plist :flags)
+              (plist-put plist :flags (plist-get old-plist :flags)))
+            (unless (plist-member plist :path)
+              (plist-put plist :path (or (plist-get old-plist :path)
+                                         (dotemacs-module-locate-path category module)))))
+          plist))
      (if (directory-name-p module-path)
          (condition-case-unless-debug ex
              (progn

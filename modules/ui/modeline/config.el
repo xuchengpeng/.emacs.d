@@ -596,7 +596,7 @@ segment.")
 
 (def-modeline-segment! +modeline-buffer-position
   "The buffer position information."
-  '(" " "%l:%c" " " (-3 "%p") " "))
+  '("  " "%2l:%c" " " (-3 "%p") "  "))
 
 ;; misc-info
 

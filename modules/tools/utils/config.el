@@ -1,4 +1,4 @@
-;;; feature/utils/config.el -*- lexical-binding: t; -*-
+;;; tools/utils/config.el -*- lexical-binding: t; -*-
 
 (if EMACS26+
     (add-hook 'after-init-hook #'global-display-line-numbers-mode)

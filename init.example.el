@@ -11,7 +11,6 @@
            project
            snippets
            syntax-checker
-           utils
            workspaces
            :completion
            company
@@ -36,6 +35,7 @@
            ;; impatient-mode
            ;; magit
            ;; package-manager
+           utils
            :lang
            cc
            ;; data

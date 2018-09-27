@@ -1,40 +1,7 @@
-;; config.el --- Initialize modeline. -*- lexical-binding: t; -*-
-;;
-;; Copyright (C) 2018 xuchengpeng
-;;
-;; Author: xuchengpeng <xucp@outlook.com>
-;; URL: https://github.com/xuchengpeng/emacs.d
-
-;; This file is not part of GNU Emacs.
-
-;;; License:
-
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License
-;; as published by the Free Software Foundation; either version 3
-;; of the License, or (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to the
-;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-;; Boston, MA 02110-1301, USA.
-
-;;; Commentary:
-;;
-;; Modeline configurations.
-;;
-
-;;; Code:
-
+;;; ui/modeline-old/config.el --- Initialize modeline. -*- lexical-binding: t; -*-
 
 ;;
 ;; Variables
-;;
 
 (defvar dotemacs-modeline-height 22
   "How tall the mode-line should be (only respected in GUI Emacs).")
@@ -45,7 +12,6 @@
 
 ;;
 ;; Custom faces
-;;
 
 (defgroup dotemacs-modeline nil
   ""
@@ -178,7 +144,6 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
 
 ;;
 ;; Modeline helpers
-;;
 
 (defsubst dotemacs-modeline--active ()
   "Check if modelne is active."
@@ -245,7 +210,6 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
 
 ;;
 ;; Segments
-;;
 
 (dotemacs-modeline-def-modeline-segment buffer-default-directory
   "Displays `default-directory'. This is for special buffers like the scratch
@@ -400,14 +364,13 @@ Returns \"\" to not break --no-window-system."
 
 ;;
 ;; misc-info
-;;
+
 (dotemacs-modeline-def-modeline-segment misc-info
   (propertize (format-time-string " %H:%M ")
               'help-echo (format-time-string "%c")))
 
 ;;
 ;; position
-;;
 
 ;; Be compatible with Emacs 25.
 (defvar-local dotemacs-modeline-column-zero-based
@@ -435,7 +398,6 @@ See `mode-line-percent-position'.")
 
 ;;
 ;; Mode lines
-;;
 
 (dotemacs-modeline-def-modeline main
   (bar buffer-info buffer-position selection-info)
@@ -459,7 +421,6 @@ See `mode-line-percent-position'.")
 
 ;;
 ;; Hooks
-;;
 
 (defun dotemacs-modeline-init ()
   "Initialize modeline."
@@ -484,7 +445,6 @@ See `mode-line-percent-position'.")
 
 ;;
 ;; Bootstrap
-;;
 
 (dotemacs-set-modeline 'main t)  ;; set default modeline
 (add-hook 'dotemacs-load-theme-hook #'dotemacs-modeline-init)

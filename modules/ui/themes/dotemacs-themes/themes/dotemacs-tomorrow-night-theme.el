@@ -45,7 +45,7 @@ determine the exact padding."
    ;; face categories
    (highlight      dark-blue)
    (vertical-bar   `("#161616" ,@base0))
-   (selection      (dotemacs-lighten bg 0.1))
+   (selection      `(,(car (dotemacs-lighten bg 0.1)) ,@(cdr base4)))
    (builtin        blue)
    (comments       grey)
    (doc-comments   (dotemacs-lighten grey 0.14))

@@ -225,7 +225,8 @@ use `buffer-name'."
 parent.
 
 e.g. project/src/lib/file.c"
-  (let ((filename (or buffer-file-truename (file-truename buffer-file-name))))
+  (let* ((base (buffer-base-buffer))
+         (filename (file-truename (buffer-file-name base))))
     (append (if (dotemacs-project-p)
                 (let* ((project-root (dotemacs-project-root))
                        (relative-dirs (file-relative-name (file-name-directory filename)
@@ -267,9 +268,10 @@ e.g. ~/w/project/src/lib/file.c
 Meant for `+modeline-buffer-path-function'."
   (pcase-let
       ((`(,root-parent ,root ,dir, file)
-        (shrink-path-file-mixed (or (dotemacs-project-root) default-directory)
-                                (file-name-directory buffer-file-name)
-                                buffer-file-name)))
+        (let ((buffer-file-name (or buffer-file-name (buffer-file-name (buffer-base-buffer)))))
+          (shrink-path-file-mixed (or (dotemacs-project-root) default-directory)
+                                  (file-name-directory buffer-file-name)
+                                  buffer-file-name))))
     (list (cons root-parent 'font-lock-comment-face)
           (cons root 'dotemacs-modeline-buffer-project-root)
           (cons (concat "/" dir) 'dotemacs-modeline-buffer-path)
@@ -297,7 +299,8 @@ Meant for `+modeline-buffer-path-function'."
 e.g. ~/w/p/s/l/file.c
 
 Meant for `+modeline-buffer-path-function'."
-  (pcase-let ((`(,dir . ,file) (shrink-path-prompt buffer-file-name)))
+  (pcase-let ((`(,dir . ,file)
+               (shrink-path-prompt (buffer-file-name (buffer-base-buffer)))))
     (list (cons dir 'dotemacs-modeline-buffer-path)
           (cons file 'dotemacs-modeline-buffer-file))))
 
@@ -366,15 +369,17 @@ Meant for `+modeline-buffer-path-function'."
              after-save-hook
              after-revert-hook)
   (let* ((active (active))
+         (base (buffer-base-buffer))
          (icon (cond (buffer-read-only
                       (propertize "<ReadOnly>"
                                   'face (if active 'dotemacs-modeline-warning)
                                   'help-echo "Buffer is read-only"))
-                     ((buffer-modified-p)
+                     ((buffer-modified-p base)
                       (propertize "<Modified>"
                                   'face (if active 'dotemacs-modeline-buffer-modified)
                                   'help-echo "Buffer has been modified"))
-                     ((and buffer-file-name (not (file-exists-p buffer-file-name)))
+                     ((and (buffer-file-name base)
+                           (not (file-exists-p (buffer-file-name base))))
                       (propertize "<Error>"
                                   'face (if active 'dotemacs-modeline-urgent)
                                   'help-echo "Buffer does not exists"))

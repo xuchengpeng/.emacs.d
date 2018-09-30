@@ -18,35 +18,23 @@ they are absolute."
   `(file-exists-p! ,files (dotemacs-project-root)))
 
 ;;;###autoload
-(defun dotemacs-project-p (&optional nocache)
-  "Return t if this buffer is currently in a project.
-If NOCACHE, don't fetch a cached answer."
-  (if nocache
-      (without-project-cache! (dotemacs-project-p nil))
-    (let ((projectile-require-project-root t))
-      (and (projectile-project-p) t))))
+(defalias 'dotemacs-project-p #'projectile-project-p)
 
 ;;;###autoload
-(defun dotemacs-project-name (&optional nocache)
-  "Return the name of the current project.
-If NOCACHE, don't fetch a cached answer."
-  (if nocache
-      (without-project-cache! (dotemacs-project-name nil))
-    (projectile-project-name)))
+(defalias 'dotemacs-project-root #'projectile-project-root)
 
 ;;;###autoload
-(defun dotemacs-project-root (&optional nocache)
-  "Returns the root of your project, or `default-directory' if none was found.
-If NOCACHE, don't fetch a cached answer."
-  (if nocache
-      (without-project-cache! (dotemacs-project-root nil))
-    (let (projectile-require-project-root)
-      ;; NOTE `projectile-project-root' should return default-directory if we're
-      ;; not in a project. Seems to be a bug upstream.
-      (projectile-project-root))))
+(defun dotemacs-project-name (&optional dir)
+  "Return the name of the current project."
+  (let ((project-root (projectile-project-root dir)))
+    (if project-root
+        (funcall projectile-project-name-function project-root)
+      "-")))
 
 ;;;###autoload
-(defalias 'dotemacs-project-expand #'projectile-expand-root)
+(defun dotemacs-project-expand (name &optional dir)
+  "Expand NAME to project root."
+  (expand-file-name name (projectile-project-root dir)))
 
 ;;;###autoload
 (defun dotemacs-project-find-file (dir)
@@ -72,7 +60,7 @@ If NOCACHE, don't fetch a cached answer."
 (defun dotemacs-project-buffer-list ()
   "Return a list of buffers belonging to the current project."
   (let ((buffers (dotemacs-buffer-list)))
-    (if-let* ((project-root (if (dotemacs-project-p) (dotemacs-project-root))))
+    (if-let* ((project-root (dotemacs-project-root)))
         (cl-loop for buf in buffers
                  if (projectile-project-buffer-p buf project-root)
                  collect buf)

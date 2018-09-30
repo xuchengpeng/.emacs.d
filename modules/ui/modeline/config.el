@@ -267,7 +267,7 @@ e.g. ~/w/project/src/lib/file.c
 Meant for `+modeline-buffer-path-function'."
   (pcase-let
       ((`(,root-parent ,root ,dir, file)
-        (shrink-path-file-mixed (dotemacs-project-root)
+        (shrink-path-file-mixed (or (dotemacs-project-root) default-directory)
                                 (file-name-directory buffer-file-name)
                                 buffer-file-name)))
     (list (cons root-parent 'font-lock-comment-face)

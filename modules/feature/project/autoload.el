@@ -43,8 +43,7 @@ If NOCACHE, don't fetch a cached answer."
     (let (projectile-require-project-root)
       ;; NOTE `projectile-project-root' should return default-directory if we're
       ;; not in a project. Seems to be a bug upstream.
-      (or (projectile-project-root)
-          default-directory))))
+      (projectile-project-root))))
 
 ;;;###autoload
 (defalias 'dotemacs-project-expand #'projectile-expand-root)

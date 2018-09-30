@@ -26,7 +26,8 @@ they are absolute."
 ;;;###autoload
 (defun dotemacs-project-name (&optional dir)
   "Return the name of the current project."
-  (let ((project-root (projectile-project-root dir)))
+  (let ((project-root (or (projectile-project-root dir)
+                          (if dir (expand-file-name dir)))))
     (if project-root
         (funcall projectile-project-name-function project-root)
       "-")))

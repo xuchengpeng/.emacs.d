@@ -17,6 +17,7 @@
 ;; Additional themes
 ;;   `dotemacs-city-lights'
 ;;   `dotemacs-darcula'
+;;   `dotemacs-Iosvkem'
 ;;   `dotemacs-molokai'
 ;;   `dotemacs-nord'
 ;;   `dotemacs-nord-light'

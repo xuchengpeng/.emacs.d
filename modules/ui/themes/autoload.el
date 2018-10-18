@@ -11,6 +11,7 @@
                                dotemacs-challenger-deep
                                dotemacs-city-lights
                                dotemacs-dracula
+                               dotemacs-Iosvkem
                                dotemacs-molokai
                                dotemacs-nord-light
                                dotemacs-nord

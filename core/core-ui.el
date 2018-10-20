@@ -141,10 +141,10 @@
   
   (let* ((en-font      (or dotemacs-font (car fonts)))
          (cn-font      (or dotemacs-cn-font (car (cdr fonts))))
-         (en-font-size (or dotemacs-font-size 11))
+         (en-font-size (or dotemacs-font-size 14))
          (cn-font-size (or dotemacs-cn-font-size 16)))
     (set-face-attribute 'default nil :font
-                        (format "%s %d" en-font en-font-size))
+                        (format "%s:pixelsize=%d" en-font en-font-size))
     (dolist (charset '(kana han symbol cjk-misc bopomofo))
       (set-fontset-font (frame-parameter nil 'font) charset
                         (font-spec :family cn-font :size cn-font-size)))

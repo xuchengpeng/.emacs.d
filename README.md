@@ -55,7 +55,7 @@ For example:
 ```el
 (setq dotemacs-font "Fira Mono")    ; default font
 (setq dotemacs-cn-font "STXihei")   ; chinese font
-(setq dotemacs-font-size 11)        ; default font size
+(setq dotemacs-font-size 14)        ; default font size
 (setq dotemacs-cn-font-size 16)     ; chinese font size
 ```
 

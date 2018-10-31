@@ -235,7 +235,8 @@ e.g. project/src/lib/file.c"
                               'dotemacs-modeline-buffer-project-root)
                         (unless (equal "./" relative-dirs)
                           (cons relative-dirs 'dotemacs-modeline-buffer-path))))
-              (list nil (cons (file-name-directory filename) 'dotemacs-modeline-buffer-path)))
+              (list nil (cons (abbreviate-file-name (file-name-directory filename))
+                              'dotemacs-modeline-buffer-path)))
             (list (cons (file-name-nondirectory filename)
                         'dotemacs-modeline-buffer-file)))))
 

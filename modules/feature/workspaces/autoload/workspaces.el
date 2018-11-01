@@ -167,6 +167,8 @@ success, nil otherwise."
   "Delete the workspace denoted by NAME, which can be the name of a perspective
 or its hash table. If INHIBIT-KILL-P is non-nil, don't kill this workspace's
 buffers."
+  (unless (stringp name)
+    (setq name (persp-name name)))
   (when (+workspace--protected-p name)
     (error "Can't delete '%s' workspace" name))
   (+workspace-get name) ; error checking

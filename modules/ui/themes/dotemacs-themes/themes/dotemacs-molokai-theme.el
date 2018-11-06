@@ -24,7 +24,7 @@ determine the exact padding."
   ;; name        gui       256       16
   ((bg         '("#1c1e1f" nil       nil))
    (bg-alt     '("#222323" nil       nil))
-   (base0      '("#000000"))
+   (base0      '("#1B2229" "black"   "black"      ))
    (base1      '("#151617" "#101010" "brightblack"))
    (base2      '("#1d1f20" "#191919" "brightblack"))
    (base3      '("#2d2e2e" "#252525" "brightblack"))
@@ -52,7 +52,7 @@ determine the exact padding."
    ;; face categories
    (highlight      orange)
    (vertical-bar   (dotemacs-lighten bg 0.1))
-   (selection      base0)
+   (selection      base5)
    (builtin        orange)
    (comments       (if dotemacs-molokai-brighter-comments violet base5))
    (doc-comments   (if dotemacs-molokai-brighter-comments (dotemacs-lighten violet 0.1) (dotemacs-lighten base5 0.25)))

@@ -29,7 +29,7 @@
 
 ;;; Code:
 
-(defvar dotemacs-core-packages '(use-package diminish bind-key quelpa)
+(defvar dotemacs-core-packages '(use-package diminish bind-key)
   "A list of packages that must be installed (and will be auto-installed if
 missing) and shouldn't be deleted.")
 
@@ -46,13 +46,7 @@ missing) and shouldn't be deleted.")
       use-package-verbose dotemacs-debug-mode
       use-package-compute-statistics dotemacs-debug-mode
       use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1)
-      use-package-expand-minimally (not dotemacs-debug-mode)
-      quelpa-checkout-melpa-p nil
-      quelpa-update-melpa-p nil
-      quelpa-melpa-recipe-stores nil
-      quelpa-self-upgrade-p nil
-      quelpa-verbose dotemacs-debug-mode
-      quelpa-dir (expand-file-name "quelpa" dotemacs-packages-dir))
+      use-package-expand-minimally (not dotemacs-debug-mode))
 
 (defun dotemacs/set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
@@ -98,43 +92,19 @@ missing) and shouldn't be deleted.")
   (unless package-archive-contents
     (package-refresh-contents))
   
-  (when-let* ((core-packages (cl-remove-if #'package-installed-p dotemacs-core-packages)))
-    (dolist (package core-packages)
+  (dotemacs-install-packages dotemacs-core-packages)
+  
+  (require 'use-package))
+
+(defun dotemacs-install-packages (packages-list)
+  "Install packages defined by PACKAGES-LIST."
+  (when-let* ((packages (cl-remove-if #'package-installed-p packages-list)))
+    (dolist (package packages)
       (let ((inhibit-message t))
         (package-install package))
       (if (package-installed-p package)
           (message "Emacs installed %s" package)
-        (error "Emacs couldn't install %s" package))))
-  
-  (require 'use-package)
-  (require 'quelpa))
-
-(defun dotemacs-install-package (name &optional plist)
-  "Installs package NAME with optional quelpa RECIPE (see `quelpa-recipe' for an
-example; the package name can be omitted)."
-  (cl-check-type name symbol)
-  (let* ((inhibit-message (not dotemacs-debug-mode))
-         (plist (or plist (cdr (assq name dotemacs-packages)))))
-    (if-let* ((recipe (plist-get plist :recipe)))
-        (condition-case e
-            (let (quelpa-upgrade-p)
-              (quelpa recipe))
-          ((debug error)
-           (signal (car e) (cdr e))))
-      (package-install name))
-    (when (package-installed-p name)
-      (setf (alist-get name dotemacs-packages) plist)
-      name)))
-
-(defun dotemacs-install-packages ()
-  "Install packages defined by dotemacs-packages."
-  (dolist (pkg (reverse dotemacs-packages))
-    (let* ((pkg-name (car pkg))
-           (pkg-plist (cdr pkg)))
-      (unless (package-installed-p pkg-name)
-        (if (dotemacs-install-package pkg-name pkg-plist)
-            (message "Emacs installed %s" pkg-name)
-          (error "Emacs couldn't install %s" pkg-name))))))
+        (error "Emacs couldn't install %s" package)))))
 
 (provide 'core-packages)
 ;;; core-packages.el ends here

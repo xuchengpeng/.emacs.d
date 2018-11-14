@@ -52,7 +52,7 @@
            dotemacs-modules)
   (when dotemacs-private-dir
     (load! "packages" dotemacs-private-dir t))
-  (dotemacs-install-packages)
+  (dotemacs-install-packages dotemacs-packages)
   
   (maphash (lambda (key plist)
              (load! "init" (plist-get plist :path) t))
@@ -275,51 +275,17 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
     `(setq dotemacs-modules ',dotemacs-modules))
   (dotemacs-initialize-modules))
 
-(cl-defmacro package! (name &rest plist &key recipe pin)
-  "Declares a package and how to install it (if applicable).
-
-This macro is declarative and does not load nor install packages. It is used to
-populate `dotemacs-packages' with metadata about the packages Emacs needs to keep
-track of.
-
-Only use this macro in a module's packages.el file.
-
-Accepts the following properties:
-
- :recipe RECIPE
-   Takes a MELPA-style recipe (see `quelpa-recipe' in `quelpa' for an example);
-   for packages to be installed from external sources.
- :pin ARCHIVE-NAME
-   Instructs ELPA to only look for this package in ARCHIVE-NAME. e.g. \"org\".
-   Ignored if RECIPE is present.
-
-Returns t if package is successfully registered, and nil if it was disabled
-elsewhere."
-  (declare (indent defun))
-  (let ((plist (append plist (cdr (assq name dotemacs-packages)))))
-    (when recipe
-      (when (cl-evenp (length recipe))
-        (setq plist (plist-put plist :recipe (cons name recipe))))
-      (setq pin nil
-            plist (plist-put plist :pin nil)))
-    (let (newplist)
-      (while plist
-        (unless (null (cadr plist))
-          (push (cadr plist) newplist)
-          (push (car plist) newplist))
-        (pop plist)
-        (pop plist))
-      (setq plist newplist))
-    (macroexp-progn
-     (append (if pin `((setf (alist-get ',name package-pinned-packages) ,pin)))
-             `((setf (alist-get ',name dotemacs-packages) ',plist))))))
+(defmacro package! (package)
+  "Add PACKAGE to ‘dotemacs-packages’."
+  `(add-to-list 'dotemacs-packages ',package t))
 
 (defmacro packages! (&rest packages)
   "Add packages in PACKAGES to ‘dotemacs-packages’.
 
 Can take multiple packages.
 e.g. (packages! evil evil-surround)"
-  `(progn ,@(cl-loop for desc in packages collect `(package! ,@(dotemacs-enlist desc)))))
+  `(dolist (package ',packages)
+     (add-to-list 'dotemacs-packages package t)))
 
 (defmacro depends-on! (module submodule &optional flags)
   "Declares that this module depends on another.

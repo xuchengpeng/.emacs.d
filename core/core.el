@@ -42,6 +42,9 @@
 (defvar dotemacs-modules-dir (concat dotemacs-dir "modules/")
   "Where modules files are stored.")
 
+(defvar dotemacs-vendor-dir (concat dotemacs-dir "vendor/")
+  "Where vendor files are stored.")
+
 (defvar dotemacs-local-dir (concat dotemacs-dir ".local/")
   "Root directory for local Emacs files.")
 

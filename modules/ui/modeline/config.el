@@ -357,20 +357,20 @@ Meant for `+modeline-buffer-path-function'."
   (let* ((active (active))
          (base (buffer-base-buffer))
          (icon (cond (buffer-read-only
-                      (propertize "<ReadOnly>"
+                      (propertize "<R>"
                                   'face (if active 'dotemacs-modeline-warning)
                                   'help-echo "Buffer is read-only"))
                      ((buffer-modified-p base)
-                      (propertize "<Modified>"
+                      (propertize "<M>"
                                   'face (if active 'dotemacs-modeline-buffer-modified)
                                   'help-echo "Buffer has been modified"))
                      ((and (buffer-file-name base)
                            (not (file-exists-p (buffer-file-name base))))
-                      (propertize "<Error>"
+                      (propertize "<E>"
                                   'face (if active 'dotemacs-modeline-urgent)
                                   'help-echo "Buffer does not exists"))
                      (t
-                      (propertize "<Normal>"
+                      (propertize "<N>"
                                   'face (if active 'dotemacs-modeline-info)
                                   'help-echo "Buffer is in normal state")))))
     (if icon (concat " " icon))))

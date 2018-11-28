@@ -36,9 +36,7 @@ missing) and shouldn't be deleted.")
 (defvar dotemacs-packages ()
   "A list of enabled packages.")
 
-(setq package-user-dir (expand-file-name (format "elpa-%s"
-                                                 emacs-version)
-                                         dotemacs-packages-dir)
+(setq package-user-dir (expand-file-name "elpa" dotemacs-packages-dir)
       package-gnupghome-dir (expand-file-name "gnupg" dotemacs-packages-dir)
       package-enable-at-startup nil
       load-prefer-newer t

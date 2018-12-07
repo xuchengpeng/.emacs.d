@@ -94,10 +94,11 @@ decrease this. If you experience stuttering, increase this.")
   "Resets garbage collection settings to reasonable defaults (a large
 `gc-cons-threshold' can cause random freezes otherwise) and resets
 `file-name-handler-alist'."
-  (setq file-name-handler-alist dotemacs--file-name-handler-alist
-        gc-cons-threshold dotemacs-gc-cons-threshold))
+  (setq file-name-handler-alist dotemacs--file-name-handler-alist)
+  (run-with-idle-timer
+   3 nil (lambda () (setq-default gc-cons-threshold dotemacs-gc-cons-threshold))))
 
-(add-hook 'emacs-startup-hook #'dotemacs|restore-startup-optimizations)
+(add-hook 'after-init-hook #'dotemacs|restore-startup-optimizations)
 
 ;;
 ;; Custom error types

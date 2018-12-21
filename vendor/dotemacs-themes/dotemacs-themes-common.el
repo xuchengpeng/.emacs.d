@@ -1103,7 +1103,7 @@
     (notmuch-wash-toggle-button :foreground fg)
 
     ;; outline
-    (outline-1 :foreground blue     :background base3  :weight 'bold :height 1.25)
+    (outline-1 :foreground blue     :background base3  :weight 'bold)
     (outline-2 :foreground magenta                     :weight 'bold)
     (outline-3 :foreground violet                      :weight 'bold)
     (outline-4 :foreground (dotemacs-lighten blue 0.25)    :weight 'bold)

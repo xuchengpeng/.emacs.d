@@ -11,8 +11,3 @@
              evil-Surround-edit
              evil-surround-region)
   :config (global-evil-surround-mode 1))
-
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))

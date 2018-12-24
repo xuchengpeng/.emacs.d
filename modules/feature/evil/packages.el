@@ -2,4 +2,3 @@
 
 (package! evil)
 (package! evil-surround)
-(package! evil-collection)

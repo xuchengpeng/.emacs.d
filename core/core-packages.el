@@ -29,7 +29,7 @@
 
 ;;; Code:
 
-(defvar dotemacs-core-packages '(use-package diminish bind-key)
+(defvar dotemacs-core-packages '(use-package diminish bind-key general)
   "A list of packages that must be installed (and will be auto-installed if
 missing) and shouldn't be deleted.")
 

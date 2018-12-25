@@ -146,10 +146,10 @@
 ;;
 ;; window-select
 
-(cond ((featurep! +switch-window)
+(cond ((featurep! :ui window-select +switch-window)
        (define-key!
          "M-o"      #'switch-window))
-      ((or (featurep! +ace-window) t)
+      ((or (featurep! :ui window-select +ace-window) t)
        (define-key!
          "M-o"      #'ace-window)))
 

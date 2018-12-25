@@ -3,6 +3,7 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (dotemacs! :feature
+           evil
            project
            workspaces
            :completion
@@ -12,5 +13,7 @@
            (window-select +ace-window)
            :emacs
            dired
+           :tools
+           utils
            :lang
            markdown)

@@ -1,9 +1,8 @@
 ;;; feature/evil/config.el -*- lexical-binding: t; -*-
 
 (use-package evil
-  :defer 1
   :config
-  (evil-mode +1))
+  (add-hook 'dotemacs-post-init-hook #'evil-mode))
 
 (use-package evil-surround
   :commands (global-evil-surround-mode

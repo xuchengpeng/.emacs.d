@@ -222,6 +222,7 @@ Module load order is determined by your `dotemacs!' block."
   (dotemacs-initialize-core)
   (require 'core-ui)
   (require 'core-editor)
+  (require 'core-keybinds)
   (require 'core-modules))
 
 (defun dotemacs-finalize ()

@@ -5,7 +5,7 @@
 (dotemacs! :feature
            ;; benchmark
            editor
-           ;; evil
+           evil
            highlight
            ;; lookup
            project

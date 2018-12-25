@@ -1,4 +1,4 @@
-;;; feature/keybinds/+bindings.el -*- lexical-binding: t; -*-
+;;; feature/keybinds/+emacs-bindings.el -*- lexical-binding: t; -*-
 
 (define-key!
   "C-s"             #'isearch-forward-regexp

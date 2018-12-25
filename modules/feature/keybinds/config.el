@@ -7,4 +7,7 @@
   :config (which-key-mode +1))
 
 (add-hook 'after-init-hook
-          (lambda () (load! "+bindings")))
+          (lambda ()
+            (if (featurep! :feature evil)
+                (load! "+evil-bindings")
+              (load! "+emacs-bindings"))))

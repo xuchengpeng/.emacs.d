@@ -112,6 +112,36 @@ Currently available functions:
   "The face used for the left-most bar on the mode-line of an active window."
   :group '+modeline)
 
+;;
+;; Evil state faces
+
+(defface dotemacs-modeline-evil-emacs-state '((t (:inherit dotemacs-modeline-warning)))
+  "Face for the Emacs state tag in evil state indicator."
+  :group '+modeline)
+
+(defface dotemacs-modeline-evil-insert-state '((t (:inherit dotemacs-modeline-urgent)))
+  "Face for the insert state tag in evil state indicator."
+  :group '+modeline)
+
+(defface dotemacs-modeline-evil-motion-state '((t :inherit dotemacs-modeline-buffer-path))
+  "Face for the motion state tag in evil state indicator."
+  :group '+modeline)
+
+(defface dotemacs-modeline-evil-normal-state '((t (:inherit dotemacs-modeline-info)))
+  "Face for the normal state tag in evil state indicator."
+  :group '+modeline)
+
+(defface dotemacs-modeline-evil-operator-state '((t (:inherit dotemacs-modeline-buffer-path)))
+  "Face for the operator state tag in evil state indicator."
+  :group '+modeline)
+
+(defface dotemacs-modeline-evil-visual-state '((t (:inherit dotemacs-modeline-buffer-file)))
+  "Face for the visual state tag in evil state indicator."
+  :group '+modeline)
+
+(defface dotemacs-modeline-evil-replace-state '((t (:inherit dotemacs-modeline-buffer-modified)))
+  "Face for the replace state tag in evil state indicator."
+  :group '+modeline)
 
 ;;
 ;; Hacks
@@ -375,6 +405,20 @@ Meant for `+modeline-buffer-path-function'."
                                   'help-echo "Buffer is in normal state")))))
     (if icon (concat " " icon))))
 
+(def-modeline-segment! +modeline-evil-state
+  "The current evil state. Requires `evil-mode' to be enabled."
+  (when (bound-and-true-p evil-local-mode)
+    (let ((tag (evil-state-property evil-state :tag t)))
+      (propertize tag 'face
+                  (if (active)
+                      (cond ((evil-normal-state-p) 'dotemacs-modeline-evil-normal-state)
+                            ((evil-emacs-state-p) 'dotemacs-modeline-evil-emacs-state)
+                            ((evil-insert-state-p) 'dotemacs-modeline-evil-insert-state)
+                            ((evil-motion-state-p) 'dotemacs-modeline-evil-motion-state)
+                            ((evil-visual-state-p) 'dotemacs-modeline-evil-visual-state)
+                            ((evil-operator-state-p) 'dotemacs-modeline-evil-operator-state)
+                            ((evil-replace-state-p) 'dotemacs-modeline-evil-replace-state)))))))
+
 (def-modeline-segment! +modeline-buffer-id
   :on-hooks (find-file-hook after-save-hook after-revert-hook)
   :init (propertize " %b" 'face 'dotemacs-modeline-buffer-file)
@@ -615,7 +659,7 @@ segment.")
 
 (def-modeline-format! :main
   '(+modeline-matches
-    +modeline-buffer-state
+    +modeline-evil-state
     +modeline-buffer-id
     +modeline-buffer-position)
   '(+modeline-encoding
@@ -625,12 +669,12 @@ segment.")
 
 (def-modeline-format! :minimal
   '(+modeline-matches
-    +modeline-buffer-state
+    +modeline-evil-state
     +modeline-buffer-id)
   '(+modeline-major-mode))
 
 (def-modeline-format! :special
-  '(+modeline-matches +modeline-buffer-state " %b " +modeline-buffer-position)
+  '(+modeline-matches +modeline-evil-state " %b " +modeline-buffer-position)
   '(+modeline-encoding +modeline-major-mode mode-line-process))
 
 (def-modeline-format! :project

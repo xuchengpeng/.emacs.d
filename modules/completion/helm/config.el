@@ -1,18 +1,9 @@
 ;;; completion/helm/config.el -*- lexical-binding: t; -*-
 
 (use-package helm
-  :bind (("M-x" . helm-M-x)
-         ("M-y" . helm-show-kill-ring)
-         ("C-x r b" . helm-filtered-bookmarks)
-         ("C-x C-f" . helm-find-files)
-         ("C-x b" . helm-mini)
-         ("C-x C-b" . helm-buffers-list))
+  :defer t
   :config
   (require 'helm-config)
-  
-  (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-z") 'helm-select-action)
   
   (setq helm-display-header-line nil
         helm-imenu-execute-action-at-once-if-one nil
@@ -71,27 +62,7 @@
 
 (use-package helm-swoop
   :after (helm)
-  :bind (("M-i" . helm-swoop)
-         ("M-I" . helm-swoop-back-to-last-point)
-         ("C-c M-i" . helm-multi-swoop)
-         ("C-x M-i" . helm-multi-swoop-all))
-  :config
-  ;; When doing isearch, hand the word over to helm-swoop
-  (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
-  ;; From helm-swoop to helm-multi-swoop-all
-  (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop)
-  ;; When doing evil-search, hand the word over to helm-swoop
-  ;; (define-key evil-motion-state-map (kbd "M-i") 'helm-swoop-from-evil-search)
-  
-  ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
-  (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
-  
-  ;; Move up and down like isearch
-  (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-  (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
-  
+  :config  
   ;; Save buffer when helm-multi-swoop-edit complete
   (setq helm-multi-swoop-edit-save t)
   

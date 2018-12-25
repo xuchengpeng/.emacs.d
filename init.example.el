@@ -7,6 +7,7 @@
            editor
            evil
            highlight
+           keybinds
            ;; lookup
            project
            snippets

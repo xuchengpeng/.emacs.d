@@ -8,7 +8,6 @@
              neotree-find
              neo-global--with-buffer
              neo-global--window-exists-p)
-  :bind ("<f8>" . neotree-toggle)
   :config
   (setq neo-create-file-auto-open nil
         neo-auto-indent-point nil

@@ -10,14 +10,11 @@
 
 ;; Increase selected region by semantic units
 (use-package expand-region
-  :bind ("C-=" . er/expand-region))
+  :defer t)
 
 ;; Multiple cursors
 (use-package multiple-cursors
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C->"         . mc/mark-next-like-this)
-         ("C-<"         . mc/mark-previous-like-this)
-         ("C-c C-<"     . mc/mark-all-like-this))
+  :defer t
   :init
   (setq mc/list-file (concat dotemacs-cache-dir ".mc-lists.el")))
 
@@ -44,8 +41,4 @@
 ;;   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode))
 
 (use-package avy
-  :bind (("C-:" . avy-goto-char)
-         ("C-'" . avy-goto-char-2)
-         ("M-g f" . avy-goto-line)
-         ("M-g w" . avy-goto-word-1)
-         ("M-g e" . avy-goto-word-0)))
+  :defer t)

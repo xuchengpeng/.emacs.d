@@ -4,6 +4,7 @@
 
 (dotemacs! :feature
            evil
+           keybinds
            project
            workspaces
            :completion

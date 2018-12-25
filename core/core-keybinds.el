@@ -3,14 +3,17 @@
 (require 'general)
 
 (defalias 'define-key! #'general-def)
+(defalias 'unmap! #'general-unbind)
 
 (general-create-definer map!
   :states '(normal visual insert emacs motion replace)
+  :keymaps 'override
   :prefix "SPC"
   :non-normal-prefix "M-SPC")
 
 (general-create-definer map-local!
   :states '(normal visual insert emacs motion replace)
+  :keymaps 'override
   :prefix "SPC m"
   :non-normal-prefix "M-SPC m")
 

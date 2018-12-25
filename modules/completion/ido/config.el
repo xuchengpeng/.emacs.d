@@ -19,11 +19,6 @@
     (push "\\`.DS_Store$" ido-ignore-files)
     (push "Icon\\?$" ido-ignore-files))
 
-  (define-key! (ido-common-completion-map ido-completion-map ido-file-completion-map)
-    "\C-n" #'ido-next-match
-    "\C-p" #'ido-prev-match
-    "\C-w" #'ido-delete-backward-word-updir)
-
   (defun +ido*sort-mtime ()
     "Sort ido filelist by mtime instead of alphabetically."
     (setq ido-temp-list

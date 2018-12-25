@@ -4,7 +4,6 @@
   (package! nlinum)
   (package! nlinum-relative))
 
-(package! which-key)
 (package! hydra)
 
 (when (memq window-system '(mac ns x))

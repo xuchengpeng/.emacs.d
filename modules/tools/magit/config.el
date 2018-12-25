@@ -1,8 +1,7 @@
 ;;; tools/magit/config.el -*- lexical-binding: t; -*-
 
 (use-package magit
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch-popup))
+  :defer t
   :config
   (setq magit-auto-revert-mode nil))
 

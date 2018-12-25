@@ -2,8 +2,6 @@
 
 (use-package org
   :mode ("\\.org$" . org-mode)
-  :bind (("C-c a" . org-agenda)
-         ("C-c c" . org-capture))
   :config
   (setq org-directory (concat dotemacs-dir "org/")
         org-agenda-files (list org-directory))

@@ -2,7 +2,7 @@
 
 (cond ((featurep! +switch-window)
        (use-package switch-window
-         :bind ("M-o" . switch-window)))
+         :defer t))
       ((or (featurep! +ace-window) t)
        (use-package ace-window
-         :bind ("M-o" . ace-window))))
+         :defer t)))

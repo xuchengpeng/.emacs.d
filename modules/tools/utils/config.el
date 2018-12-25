@@ -17,16 +17,8 @@
     (when (featurep! :feature evil)
       (nlinum-relative-setup-evil))))
 
-(use-package which-key
-  :defer 1
-  :diminish which-key-mode
-  :commands which-key-mode
-  :config (which-key-mode +1))
-
 (use-package hydra
-  :bind (("C-c f" . hydra-flycheck/body)
-         ("C-c t" . hydra-toggle/body)
-         ("C-c w" . hydra-window/body))
+  :defer t
   :init
   (defhydra hydra-flycheck (:color pink)
   "

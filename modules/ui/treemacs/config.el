@@ -2,7 +2,6 @@
 
 (use-package treemacs
   :commands (treemacs)
-  :bind ("<f8>" . treemacs)
   :config
   (setq treemacs-follow-after-init          t
         treemacs-width                      35

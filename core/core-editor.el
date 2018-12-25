@@ -65,11 +65,6 @@
   (diminish 'auto-fill-function)
   (diminish 'visual-line-mode))
 
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
-
 ;;
 ;; Built-in plugins
 
@@ -104,9 +99,7 @@
 (use-package hideshow
   :diminish hs-minor-mode
   :commands (hs-toggle-hiding)
-  :hook (prog-mode . hs-minor-mode)
-  :bind (:map prog-mode-map
-              ("C-c h" . hs-toggle-hiding)))
+  :hook (prog-mode . hs-minor-mode))
 
 ;; recent files
 (use-package recentf

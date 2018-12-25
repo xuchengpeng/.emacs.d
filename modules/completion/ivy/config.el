@@ -2,12 +2,7 @@
 
 (use-package ivy
   :diminish ivy-mode
-  :bind (("C-x b" . ivy-switch-buffer)
-         ("C-x B" . ivy-switch-buffer-other-window)
-         ("C-c C-r" . ivy-resume)
-         :map ivy-minibuffer-map
-         ("TAB" . ivy-partial-or-done)
-         ("RET" . ivy-alt-done))
+  :defer t
   :config
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
   (setq ivy-height 15
@@ -68,19 +63,11 @@
 
 (use-package swiper
   :diminish
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
+  :defer t)
 
 (use-package counsel
   :diminish counsel-mode
   :hook (ivy-mode . counsel-mode)
-  :bind (("M-x"     . counsel-M-x)
-         ("M-y"     . counsel-yank-pop)
-         ("M-i"     . counsel-grep-or-swiper)
-         ("C-x r b" . counsel-bookmark)
-         ("C-x C-f" . counsel-find-file)
-         ("C-h f"   . counsel-describe-function)
-         ("C-h v"   . counsel-describe-variable))
   :config
   (setq counsel-find-file-ignore-regexp
         (concat

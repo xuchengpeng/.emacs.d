@@ -659,7 +659,7 @@ segment.")
 
 (def-modeline-format! :main
   '(+modeline-matches
-    +modeline-evil-state
+    +modeline-buffer-state
     +modeline-buffer-id
     +modeline-buffer-position)
   '(+modeline-encoding
@@ -669,12 +669,12 @@ segment.")
 
 (def-modeline-format! :minimal
   '(+modeline-matches
-    +modeline-evil-state
+    +modeline-buffer-state
     +modeline-buffer-id)
   '(+modeline-major-mode))
 
 (def-modeline-format! :special
-  '(+modeline-matches +modeline-evil-state " %b " +modeline-buffer-position)
+  '(+modeline-matches +modeline-buffer-state " %b " +modeline-buffer-position)
   '(+modeline-encoding +modeline-major-mode mode-line-process))
 
 (def-modeline-format! :project

@@ -3,15 +3,14 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (dotemacs! :feature
-           evil
            keybinds
            project
            workspaces
            :completion
            company
-           (helm +fuzzy)
+           (ivy +fuzzy)
            :ui
-           (window-select +ace-window)
+           (window-select +switch-window)
            :emacs
            dired
            :tools

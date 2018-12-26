@@ -5,7 +5,7 @@
 (dotemacs! :feature
            ;; benchmark
            editor
-           evil
+           ;; evil
            highlight
            keybinds
            ;; lookup
@@ -15,9 +15,9 @@
            workspaces
            :completion
            company
-           (helm +fuzzy)
+           ;; (helm +fuzzy)
            ;; ido
-           ;; (ivy +fuzzy)
+           (ivy +fuzzy)
            :ui
            dashboard
            modeline

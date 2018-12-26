@@ -10,7 +10,5 @@
         projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o")
         projectile-ignored-projects '("~/" "/tmp"))
   (setq-default projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
-  
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
   (projectile-mode +1))

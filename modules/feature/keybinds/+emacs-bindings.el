@@ -1,5 +1,46 @@
 ;;; feature/keybinds/+emacs-bindings.el -*- lexical-binding: t; -*-
 
+(map!
+  "b"       '(:ignore t :which-key "buffer")
+  "f"       '(:ignore t :which-key "file")
+  "g"       '(:ignore t :which-key "git")
+  "i"       '(:ignore t :which-key "insert")
+  "p"       '(:ignore t :which-key "project")
+  "q"       '(:ignore t :which-key "quit")
+  
+  ;;buffer
+  "bb"      #'switch-to-buffer
+  "bk"      #'kill-this-buffer
+  "bn"      #'next-buffer
+  "bo"      #'dotemacs/kill-other-buffers
+  "bp"      #'previous-buffer
+  "bs"      #'save-buffer
+  
+  ;; file
+  "fa"      #'projectile-find-other-file
+  "fd"      #'dired
+  "ff"      #'find-file
+  "fr"      #'recentf-open-files
+  "fs"      #'save-buffer
+  "fp"      #'projectile-find-file
+  
+  ;;insert
+  "iy"      #'yank-pop
+  "is"      #'yas-insert-snippet
+  
+  ;;project
+  "pc"      #'projectile-compile-project
+  "pf"      #'projectile-find-file
+  "pi"      #'projectile-invalidate-cache
+  "po"      #'projectile-find-other-file
+  "pp"      #'projectile-switch-project
+  "pr"      #'projectile-recentf
+  
+  ;;quit
+  "qq"      #'evil-quit-all
+  "qQ"      #'evil-save-and-quit
+  "qR"      #'restart-emacs)
+
 (define-key!
   "M-x"             #'execute-extended-command
   "M-y"             #'yank-pop

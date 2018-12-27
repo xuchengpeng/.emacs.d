@@ -128,12 +128,7 @@
            ((featurep! :ui neotree)
                     #'neotree-toggle)
            ((or (featurep! :ui treemacs) t)
-                    #'treemacs))
-  
-  "C-s"             #'isearch-forward-regexp
-  "C-r"             #'isearch-backward-regexp
-  "C-M-s"           #'isearch-forward
-  "C-M-r"           #'isearch-backward)
+                    #'treemacs)))
 
 (define-key! projectile-mode-map
   "C-c p"           #'projectile-command-map)

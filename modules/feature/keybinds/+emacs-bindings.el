@@ -1,14 +1,23 @@
 ;;; feature/keybinds/+emacs-bindings.el -*- lexical-binding: t; -*-
 
 (map!
+  "/"       '(:ignore t :which-key "search")
   "b"       '(:ignore t :which-key "buffer")
   "f"       '(:ignore t :which-key "file")
   "g"       '(:ignore t :which-key "git")
+  "h"       '(:ignore t :which-key "help")
   "i"       '(:ignore t :which-key "insert")
   "p"       '(:ignore t :which-key "project")
   "q"       '(:ignore t :which-key "quit")
+  "s"       '(:ignore t :which-key "snippets")
+  "t"       '(:ignore t :which-key "toggle")
   
-  ;;buffer
+  ;; search
+  "/b"      #'swiper
+  "/i"      #'imenu
+  "/l"      #'ace-link
+  
+  ;; buffer
   "bb"      #'switch-to-buffer
   "bk"      #'kill-this-buffer
   "bn"      #'next-buffer
@@ -24,11 +33,36 @@
   "fs"      #'save-buffer
   "fp"      #'projectile-find-file
   
-  ;;insert
+  ;; git
+  "gb"      #'magit-blame-addition
+  "gc"      #'magit-commit
+  "gd"      #'magit-dispatch-popup
+  "gf"      #'magit-find-file
+  "gx"      #'magit-file-delete
+  "gh"      #'magithub-dispatch-popup
+  "gi"      #'magit-init
+  "gl"      #'magit-log-buffer-file
+  "gL"      #'magit-list-repositories
+  "gS"      #'magit-stage-file
+  "gU"      #'magit-unstage-file
+  "gp"      #'magit-push-file
+  "gP"      #'magit-pull-popup
+  
+  ;; help
+  "hF"      #'describe-face
+  "hM"      #'describe-mode
+  "hc"      #'describe-char
+  "hf"      #'describe-function
+  "hi"      #'info-lookup-symbol
+  "hk"      #'describe-key
+  "hl"      #'find-library
+  "hv"      #'describe-variable
+  
+  ;; insert
   "iy"      #'yank-pop
   "is"      #'yas-insert-snippet
   
-  ;;project
+  ;; project
   "pc"      #'projectile-compile-project
   "pf"      #'projectile-find-file
   "pi"      #'projectile-invalidate-cache
@@ -36,10 +70,26 @@
   "pp"      #'projectile-switch-project
   "pr"      #'projectile-recentf
   
-  ;;quit
+  ;; quit
   "qq"      #'evil-quit-all
   "qQ"      #'evil-save-and-quit
-  "qR"      #'restart-emacs)
+  "qR"      #'restart-emacs
+  
+  ;; snippets
+  "s/"      #'yas-visit-snippet-file
+  "sn"      #'yas-new-snippet
+  "si"      #'yas-insert-snippet
+  "sr"      #'yas-reload-all
+  
+  ;; toggle
+  "ta"      #'aggressive-indent-mode
+  "tf"      #'flycheck-mode
+  "tF"      #'toggle-frame-fullscreen
+  "ti"      #'highlight-indentation-mode
+  "tI"      #'highlight-indentation-current-column-mode
+  "tl"      #'display-line-numbers-mode
+  "to"      #'org-mode
+  "ts"      #'smartparens-mode)
 
 (define-key!
   "M-x"             #'execute-extended-command

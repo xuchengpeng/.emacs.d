@@ -3,10 +3,12 @@
 (map!
   "/"       '(:ignore t :which-key "search")
   "b"       '(:ignore t :which-key "buffer")
+  "c"       '(:ignore t :which-key "code")
   "f"       '(:ignore t :which-key "file")
   "g"       '(:ignore t :which-key "git")
   "h"       '(:ignore t :which-key "help")
   "i"       '(:ignore t :which-key "insert")
+  "o"       '(:ignore t :which-key "open")
   "p"       '(:ignore t :which-key "project")
   "q"       '(:ignore t :which-key "quit")
   "s"       '(:ignore t :which-key "snippets")
@@ -25,6 +27,14 @@
   "bo"      #'dotemacs/kill-other-buffers
   "bp"      #'previous-buffer
   "bs"      #'save-buffer
+  
+  ;; code
+  "cf"      #'clang-format
+  "cF"      #'hydra-flycheck/body
+  "cma"     #'mc/mark-all-like-this
+  "cme"     #'mc/edit-lines
+  "cmn"     #'mc/mark-next-like-this
+  "cmp"     #'mc/mark-previous-like-this
   
   ;; file
   "fa"      #'projectile-find-other-file
@@ -63,6 +73,11 @@
   ;; insert
   "iy"      #'yank-pop
   "is"      #'yas-insert-snippet
+  
+  ;; open
+  "oa"      #'org-agenda
+  "oc"      #'org-capture
+  "ow"      #'hydra-window/body
   
   ;; project
   "pc"      #'projectile-compile-project
@@ -118,14 +133,6 @@
   "C-r"             #'isearch-backward-regexp
   "C-M-s"           #'isearch-forward
   "C-M-r"           #'isearch-backward)
-
-(define-key!
-  :prefix "C-c"
-  "a"               #'org-agenda
-  "c"               #'org-capture
-  "f"               #'hydra-flycheck/body
-  "t"               #'hydra-toggle/body
-  "w"               #'hydra-window/body)
 
 (define-key! projectile-mode-map
   "C-c p"           #'projectile-command-map)
@@ -251,16 +258,7 @@
 ;;
 ;; expand-region, multiple-cursors, avy
 
-(when (featurep! :completion editor)
+(when (featurep! :feature editor)
   (define-key!
-    "C-="           #'er/expand-region
-    "C-S-c C-S-c"   #'mc/edit-lines
-    "C->"           #'mc/mark-next-like-this
-    "C-<"           #'mc/mark-previous-like-this
-    "C-c C-<"       #'mc/mark-all-like-this
-    "C-:"           #'avy-goto-char
-    "C-'"           #'avy-goto-char-2
-    "M-g f"         #'avy-goto-line
-    "M-g w"         #'avy-goto-word-1
-    "M-g e"         #'avy-goto-word-0))
+    "C-="           #'er/expand-region))
 

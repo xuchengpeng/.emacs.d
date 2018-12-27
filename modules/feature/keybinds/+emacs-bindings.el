@@ -16,6 +16,7 @@
   "/b"      #'swiper
   "/i"      #'imenu
   "/l"      #'ace-link
+  "/p"      #'projectile-ripgrep
   
   ;; buffer
   "bb"      #'switch-to-buffer
@@ -70,6 +71,9 @@
   "po"      #'projectile-find-other-file
   "pp"      #'projectile-switch-project
   "pr"      #'projectile-recentf
+  "psg"     #'projectile-grep
+  "psa"     #'projectile-ag
+  "psr"     #'projectile-ripgrep
   
   ;; quit
   "qq"      #'evil-quit-all

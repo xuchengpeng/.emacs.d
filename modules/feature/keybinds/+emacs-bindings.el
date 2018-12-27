@@ -43,6 +43,7 @@
   "gi"      #'magit-init
   "gl"      #'magit-log-buffer-file
   "gL"      #'magit-list-repositories
+  "gs"      #'magit-status
   "gS"      #'magit-stage-file
   "gU"      #'magit-unstage-file
   "gp"      #'magit-push-file
@@ -258,12 +259,4 @@
     "M-g f"         #'avy-goto-line
     "M-g w"         #'avy-goto-word-1
     "M-g e"         #'avy-goto-word-0))
-
-;;
-;; magit
-
-(when (featurep! :tools magit)
-  (define-key!
-    "C-x g"         #'magit-status
-    "C-x M-g"       #'magit-dispatch-popup))
 

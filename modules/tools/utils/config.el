@@ -95,7 +95,41 @@ _q_: Quit
     ("<S-up>" hydra-move-splitter-up nil)
     ("<S-right>" hydra-move-splitter-right nil)
     ("u" hydra--universal-argument nil)
-    ("q" nil)))
+    ("q" nil))
+  (defhydra hydra-multiple-cursors (:color pink
+                                    :hint nil)
+    "
+     ^Up^            ^Down^        ^Other^
+----------------------------------------------
+[_p_]   Prev    [_n_]   Next    [_l_] Edit lines
+[_P_]   Skip    [_N_]   Skip    [_a_] Mark all
+[_M-p_] Unmark  [_M-n_] Unmark  [_r_] Mark by regexp
+^ ^             ^ ^             [_q_] Quit
+"
+    ("l" mc/edit-lines :exit t)
+    ("a" mc/mark-all-like-this :exit t)
+    ("n" mc/mark-next-like-this)
+    ("N" mc/skip-to-next-like-this)
+    ("M-n" mc/unmark-next-like-this)
+    ("p" mc/mark-previous-like-this)
+    ("P" mc/skip-to-previous-like-this)
+    ("M-p" mc/unmark-previous-like-this)
+    ("r" mc/mark-all-in-region-regexp :exit t)
+    ("q" nil))
+  (defhydra hydra-avy (:hint nil)
+    "
+     ^Chars^            ^other^
+-------------------------------------
+[_c_]   char         [_w_]   word
+[_C_]   char-2       [_s_]   subword
+[_t_]   char-timer   [_l_]   line
+"
+    ("c" avy-goto-char :exit t)
+    ("C" avy-goto-char-2 :exit t)
+    ("t" avy-goto-char-timer :exit t)
+    ("w" avy-goto-word-1 :exit t)
+    ("s" avy-goto-subword-1 :exit t)
+    ("l" avy-goto-line :exit t)))
 
 (when (memq window-system '(mac ns x))
   (use-package exec-path-from-shell

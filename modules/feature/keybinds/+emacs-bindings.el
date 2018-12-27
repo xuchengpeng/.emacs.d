@@ -29,12 +29,10 @@
   "bs"      #'save-buffer
   
   ;; code
+  "ca"      #'hydra-avy/body
   "cf"      #'clang-format
   "cF"      #'hydra-flycheck/body
-  "cma"     #'mc/mark-all-like-this
-  "cme"     #'mc/edit-lines
-  "cmn"     #'mc/mark-next-like-this
-  "cmp"     #'mc/mark-previous-like-this
+  "cm"      #'hydra-multiple-cursors/body
   
   ;; file
   "fa"      #'projectile-find-other-file
@@ -116,6 +114,9 @@
   "M-y"             #'yank-pop
   "C-x C-f"         #'find-file
   "C-x r b"         #'bookmark-jump
+  
+  "C-=" (when (featurep! :feature editor)
+                    #'er/expand-region)
   
   "M-o" (cond
           ((featurep! :ui window-select +switch-window)
@@ -254,11 +255,4 @@
     "\C-n"          #'ido-next-match
     "\C-p"          #'ido-prev-match
     "\C-w"          #'ido-delete-backward-word-updir))
-
-;;
-;; expand-region, multiple-cursors, avy
-
-(when (featurep! :feature editor)
-  (define-key!
-    "C-="           #'er/expand-region))
 

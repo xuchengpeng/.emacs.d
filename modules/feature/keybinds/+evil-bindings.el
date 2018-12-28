@@ -15,100 +15,106 @@
   "t"       '(:ignore t :which-key "toggle")
   
   ;; search
-  "/b"      'swiper
-  "/i"      'imenu
-  "/l"      'ace-link
-  "/p"      'projectile-ripgrep
+  "/I"      '(imenu-anywhere :which-key "Jump to symbol across buffers")
+  "/b"      '(swiper :which-key "Search buffer")
+  "/i"      '(imenu :which-key "Jump to symbol")
+  "/l"      '(ace-link :which-key "Jump to link")
+  "/p"      '(projectile-ripgrep :which-key "Search project")
   
   ;; buffer
-  "bb"      'switch-to-buffer
-  "bk"      'kill-this-buffer
-  "bn"      'next-buffer
-  "bo"      'dotemacs/kill-other-buffers
-  "bp"      'previous-buffer
-  "bs"      'save-buffer
+  "bS"      '(dotemacs/sudo-this-file :which-key "Sudo edit this file")
+  "bb"      '(switch-to-buffer :which-key "Switch buffer")
+  "bk"      '(kill-this-buffer :which-key "Kill buffer")
+  "bn"      '(next-buffer :which-key "Next buffer")
+  "bo"      '(dotemacs/kill-other-buffers :which-key "Kill other buffers")
+  "bp"      '(previous-buffer :which-key "Previous buffer")
+  "bs"      '(save-buffer :which-key "Save buffer")
+  "bz"      '(bury-buffer :which-key "Bury buffer")
   
   ;; code
-  "ca"      'hydra-avy/body
-  "cf"      'clang-format
-  "cF"      'hydra-flycheck/body
-  "cm"      'hydra-multiple-cursors/body
+  "cF"      '(hydra-flycheck/body :which-key "Flycheck")
+  "cf"      '(clang-format :which-key "Format")
+  "cg"      '(hydra-avy/body :which-key "Goto")
+  "cm"      '(hydra-multiple-cursors/body :which-key "Multiple cursors")
   
   ;; file
-  "fa"      'projectile-find-other-file
-  "fd"      'dired
-  "ff"      'find-file
-  "fr"      'recentf-open-files
-  "fs"      'save-buffer
-  "fp"      'projectile-find-file
+  "fR"      '(projectile-recentf :which-key "Recent project files")
+  "fa"      '(projectile-find-other-file :which-key "Find other file")
+  "fd"      '(dired :which-key "Find directory")
+  "ff"      '(find-file :which-key "Find file")
+  "fr"      '(recentf-open-files :which-key "Recent files")
+  "fs"      '(save-buffer :which-key "Save file")
+  "fp"      '(projectile-find-file :which-key "Find file in project")
   
   ;; git
-  "gb"      'magit-blame-addition
-  "gc"      'magit-commit
-  "gd"      'magit-dispatch-popup
-  "gf"      'magit-find-file
-  "gx"      'magit-file-delete
-  "gh"      'magithub-dispatch-popup
-  "gi"      'magit-init
-  "gl"      'magit-log-buffer-file
-  "gL"      'magit-list-repositories
-  "gs"      'magit-status
-  "gS"      'magit-stage-file
-  "gU"      'magit-unstage-file
-  "gp"      'magit-push-file
-  "gP"      'magit-pull-popup
+  "gb"      '(magit-blame-addition :which-key "Magit blame")
+  "gc"      '(magit-commit :which-key "Magit commit")
+  "gd"      '(magit-dispatch-popup :which-key "Magit dispatch")
+  "gf"      '(magit-find-file :which-key "Magit find file")
+  "gx"      '(magit-file-delete :which-key "Magit file delete")
+  "gh"      '(magithub-dispatch-popup :which-key "Magithub dispatch")
+  "gi"      '(magit-init :which-key "Initialize repo")
+  "gl"      '(magit-log-buffer-file :which-key "Magit buffer log")
+  "gL"      '(magit-list-repositories :which-key "List repositories")
+  "gs"      '(magit-status :which-key "Magit status")
+  "gS"      '(magit-stage-file :which-key "Git stage file")
+  "gU"      '(magit-unstage-file :which-key "Git unstage file")
+  "gp"      '(magit-push-file :which-key "Magit push popup")
+  "gP"      '(magit-pull-popup :which-key "Magit pull popup")
   
   ;; help
-  "hF"      'describe-face
-  "hM"      'describe-mode
-  "hc"      'describe-char
-  "hf"      'describe-function
-  "hi"      'info-lookup-symbol
-  "hk"      'describe-key
-  "hl"      'find-library
-  "hv"      'describe-variable
+  "hF"      '(describe-face :which-key "Describe face")
+  "hM"      '(describe-mode :which-key "Describe mode")
+  "hc"      '(describe-char :which-key "Describe char")
+  "hf"      '(describe-function :which-key "Describe function")
+  "hi"      '(info-lookup-symbol :which-key "Info")
+  "hk"      '(describe-key :which-key "Describe key")
+  "hl"      '(find-library :which-key "Find library")
+  "hv"      '(describe-variable :which-key "Describe variable")
   
   ;; insert
-  "iy"      'yank-pop
-  "is"      'yas-insert-snippet
+  "iy"      '(yank-pop :which-key "Insert from clipboard")
+  "is"      '(yas-insert-snippet :which-key "Insert snippet")
   
   ;; open
-  "oa"      'org-agenda
-  "oc"      'org-capture
-  "ow"      'hydra-window/body
+  "oa"      '(org-agenda :which-key "Org agenda")
+  "ob"      '(browse-url-of-file :which-key "Default browser")
+  "oc"      '(org-capture :which-key "Org capture")
+  "od"      '(dired-jump :which-key "Dired")
+  "ow"      '(hydra-window/body :which-key "Window")
   
   ;; project
-  "pc"      'projectile-compile-project
-  "pf"      'projectile-find-file
-  "pi"      'projectile-invalidate-cache
-  "po"      'projectile-find-other-file
-  "pp"      'projectile-switch-project
-  "pr"      'projectile-recentf
-  "ps"      '(:ignore t :which-key "search")
-  "psg"     'projectile-grep
-  "psa"     'projectile-ag
-  "psr"     'projectile-ripgrep
+  "pc"      '(projectile-compile-project :which-key "Compile project")
+  "pf"      '(projectile-find-file :which-key "Find file in project")
+  "pi"      '(projectile-invalidate-cache :which-key "Invalidate cache")
+  "po"      '(projectile-find-other-file :which-key "Find other file")
+  "pp"      '(projectile-switch-project :which-key "Switch project")
+  "pr"      '(projectile-recentf :which-key "Recent project files")
+  "ps"      '(:ignore t :which-key "Project search")
+  "psg"     '(projectile-grep :which-key "grep")
+  "psa"     '(projectile-ag :which-key "ag")
+  "psr"     '(projectile-ripgrep :which-key "ripgrep")
   
   ;; quit
-  "qq"      'evil-quit-all
-  "qQ"      'evil-save-and-quit
-  "qR"      'restart-emacs
+  "qq"      '(evil-quit-all :which-key "Quit Emacs")
+  "qQ"      '(evil-save-and-quit :which-key "Save and quit Emacs")
+  "qR"      '(restart-emacs :which-key "Restart Emacs")
   
   ;; snippets
-  "s/"      'yas-visit-snippet-file
-  "sn"      'yas-new-snippet
-  "si"      'yas-insert-snippet
-  "sr"      'yas-reload-all
+  "s/"      '(yas-visit-snippet-file :which-key "Jump to mode snippet")
+  "sn"      '(yas-new-snippet :which-key "New snippet")
+  "si"      '(yas-insert-snippet :which-key "Insert snippet")
+  "sr"      '(yas-reload-all :which-key "Reload snippets")
   
   ;; toggle
-  "ta"      'aggressive-indent-mode
-  "tf"      'flycheck-mode
-  "tF"      'toggle-frame-fullscreen
-  "ti"      'highlight-indentation-mode
-  "tI"      'highlight-indentation-current-column-mode
-  "tl"      'display-line-numbers-mode
-  "to"      'org-mode
-  "ts"      'smartparens-mode)
+  "ta"      '(aggressive-indent-mode :which-key "Aggressive indent")
+  "tf"      '(flycheck-mode :which-key "Flycheck")
+  "tF"      '(toggle-frame-fullscreen :which-key "Frame fullscreen")
+  "ti"      '(highlight-indentation-mode :which-key "Indent guides")
+  "tI"      '(highlight-indentation-current-column-mode :which-key "Indent guides (column)")
+  "tl"      '(display-line-numbers-mode :which-key "Line numbers")
+  "to"      '(org-mode :which-key "Org")
+  "ts"      '(smartparens-mode :which-key "Smartparens"))
 
 (define-key!
   "M-x"             'execute-extended-command

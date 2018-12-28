@@ -134,13 +134,38 @@
     [remap projectile-switch-project]   'helm-projectile-switch-project
     [remap projectile-switch-to-buffer] 'helm-projectile-switch-to-buffer
     [remap recentf-open-files]          'helm-recentf
-    [remap yank-pop]                    'helm-show-kill-ring))
+    [remap yank-pop]                    'helm-show-kill-ring
+    [remap swiper]                      'swiper-helm)
+  
+  (map-local!
+    :keymaps        'helm-map
+    "s"             'swiper-helm)
+  
+  (define-key! helm-map
+    "TAB"           'helm-execute-persistent-action
+    "<tab>"         'helm-execute-persistent-action
+    "C-z"           'helm-select-action)
+  
+  (define-key! isearch-mode-map
+    "M-i"           'helm-swoop-from-isearch)
+  
+  (define-key! helm-swoop-map
+    "M-i"           'helm-multi-swoop-all-from-helm-swoop
+    "M-m"           'helm-multi-swoop-current-mode-from-helm-swoop
+    "C-r"           'helm-previous-line
+    "C-s"           'helm-next-line)
+  
+  (define-key! helm-multi-swoop-map
+    "C-r"           'helm-previous-line
+    "C-s"           'helm-next-line))
 
 ;;
 ;; ivy
 
 (when (featurep! :completion ivy)
   (define-key!
+    [remap switch-to-buffer]            'ivy-switch-buffer
+    [remap imenu-anywhere]              'ivy-imenu-anywhere
     [remap apropos]                     'counsel-apropos
     [remap bookmark-jump]               'counsel-bookmark
     [remap describe-face]               'counsel-faces
@@ -155,4 +180,19 @@
     [remap org-capture]                 'counsel-org-capture
     [remap swiper]                      'counsel-grep-or-swiper
     [remap evil-ex-registers]           'counsel-evil-registers
-    [remap yank-pop]                    'counsel-yank-pop))
+    [remap yank-pop]                    'counsel-yank-pop
+    [remap projectile-find-file]        'counsel-projectile-find-file
+    [remap projectile-find-dir]         'counsel-projectile-find-dir
+    [remap projectile-switch-to-buffer] 'counsel-projectile-switch-to-buffer
+    [remap projectile-grep]             'counsel-projectile-grep
+    [remap projectile-ag]               'counsel-projectile-ag
+    [remap projectile-switch-project]   'counsel-projectile-switch-project)
+  
+  (map-local!
+    :keymaps        'counsel-mode-map
+    "s"             'counsel-grep-or-swiper
+    "C-x C-r"       'ivy-resume)
+  
+  (define-key! ivy-minibuffer-map
+    "TAB"           'ivy-partial-or-done
+    "RET"           'ivy-alt-done))

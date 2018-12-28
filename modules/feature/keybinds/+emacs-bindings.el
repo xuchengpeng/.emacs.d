@@ -113,6 +113,8 @@
 (define-key!
   "M-x"             'execute-extended-command
   "M-y"             'yank-pop
+  "C-s"             'swiper
+  "C-r"             'swiper
   "C-x C-f"         'find-file
   "C-x r b"         'bookmark-jump
   
@@ -122,13 +124,13 @@
   "M-o" (cond
           ((featurep! :ui window-select +switch-window)
                     'switch-window)
-          ((or (featurep! :ui window-select +ace-window) t)
+          ((featurep! :ui window-select +ace-window)
                     'ace-window))
   
   "<f8>" (cond
            ((featurep! :ui neotree)
                     'neotree-toggle)
-           ((or (featurep! :ui treemacs) t)
+           ((featurep! :ui treemacs)
                     'treemacs)))
 
 (define-key! projectile-mode-map
@@ -144,9 +146,13 @@
 ;; company
 
 (when (featurep! :completion company)
-  (define-key!
-    "M-/"           'company-complete
-    "C-c C-y"       'company-yasnippet)
+  (map-local!
+    :keymaps        'company-mode-map
+    "C-@"           'company-complete
+    "C-x s"         'company-ispell
+    "C-x C-f"       'company-files
+    "C-x C-o"       'company-capf
+    "C-x C-s"       'company-yasnippet)
 
   (define-key! company-active-map
     "C-p"           'company-select-previous
@@ -179,15 +185,12 @@
     [remap projectile-switch-project]   'helm-projectile-switch-project
     [remap projectile-switch-to-buffer] 'helm-projectile-switch-to-buffer
     [remap recentf-open-files]          'helm-recentf
-    [remap yank-pop]                    'helm-show-kill-ring)
+    [remap yank-pop]                    'helm-show-kill-ring
+    [remap swiper]                      'swiper-helm)
   
-  (define-key!
-    "C-x b"         'helm-mini
-    "C-x C-b"       'helm-buffers-list
-    "M-i"           'helm-swoop
-    "M-I"           'helm-swoop-back-to-last-point
-    "C-c M-i"       'helm-multi-swoop
-    "C-x M-i"       'helm-multi-swoop-all)
+  (map-local!
+    :keymaps        'helm-map
+    "s"             'swiper-helm)
   
   (define-key! helm-map
     "TAB"           'helm-execute-persistent-action
@@ -212,6 +215,8 @@
 
 (when (featurep! :completion ivy)
   (define-key!
+    [remap switch-to-buffer]            'ivy-switch-buffer
+    [remap imenu-anywhere]              'ivy-imenu-anywhere
     [remap apropos]                     'counsel-apropos
     [remap bookmark-jump]               'counsel-bookmark
     [remap describe-face]               'counsel-faces
@@ -226,17 +231,18 @@
     [remap org-capture]                 'counsel-org-capture
     [remap swiper]                      'counsel-grep-or-swiper
     [remap evil-ex-registers]           'counsel-evil-registers
-    [remap yank-pop]                    'counsel-yank-pop)
+    [remap yank-pop]                    'counsel-yank-pop
+    [remap projectile-find-file]        'counsel-projectile-find-file
+    [remap projectile-find-dir]         'counsel-projectile-find-dir
+    [remap projectile-switch-to-buffer] 'counsel-projectile-switch-to-buffer
+    [remap projectile-grep]             'counsel-projectile-grep
+    [remap projectile-ag]               'counsel-projectile-ag
+    [remap projectile-switch-project]   'counsel-projectile-switch-project)
   
-  (define-key!
-    "C-x b"         'ivy-switch-buffer
-    "C-x B"         'ivy-switch-buffer-other-window
-    "C-c C-r"       'ivy-resume
-    "C-s"           'swiper
-    "C-r"           'swiper
-    "M-i"           'counsel-grep-or-swiper
-    "C-h f"         'counsel-describe-function
-    "C-h v"         'counsel-describe-variable)
+  (map-local!
+    :keymaps        'counsel-mode-map
+    "s"             'counsel-grep-or-swiper
+    "C-x C-r"       'ivy-resume)
   
   (define-key! ivy-minibuffer-map
     "TAB"           'ivy-partial-or-done

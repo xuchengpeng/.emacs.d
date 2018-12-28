@@ -147,6 +147,7 @@
     [remap apropos]                     'helm-apropos
     [remap find-library]                'helm-locate-library
     [remap bookmark-jump]               'helm-bookmarks
+    [remap describe-key]                'helm-descbinds
     [remap execute-extended-command]    'helm-M-x
     [remap find-file]                   'helm-find-files
     [remap imenu-anywhere]              'helm-imenu-anywhere
@@ -194,6 +195,7 @@
     [remap bookmark-jump]               'counsel-bookmark
     [remap describe-face]               'counsel-faces
     [remap describe-function]           'counsel-describe-function
+    [remap describe-key]                'counsel-descbinds
     [remap describe-variable]           'counsel-describe-variable
     [remap execute-extended-command]    'counsel-M-x
     [remap find-file]                   'counsel-find-file

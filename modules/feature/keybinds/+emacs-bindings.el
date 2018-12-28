@@ -121,12 +121,6 @@
   "C-=" (when (featurep! :feature editor)
                     'er/expand-region)
   
-  "M-o" (cond
-          ((featurep! :ui window-select +switch-window)
-                    'switch-window)
-          ((featurep! :ui window-select +ace-window)
-                    'ace-window))
-  
   "<f8>" (cond
            ((featurep! :ui neotree)
                     'neotree-toggle)
@@ -257,3 +251,13 @@
     "\C-p"          'ido-prev-match
     "\C-w"          'ido-delete-backward-word-updir))
 
+;;
+;; window-select
+
+(when (featurep! :ui window-select)
+  (define-key!
+    [remap other-window] (cond
+                           ((featurep! :ui window-select +switch-window)
+                                       'switch-window)
+                           ((featurep! :ui window-select +ace-window)
+                                       'ace-window))))

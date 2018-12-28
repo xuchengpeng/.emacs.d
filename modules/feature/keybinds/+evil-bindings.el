@@ -116,6 +116,30 @@
   "C-x C-f"         'find-file)
 
 ;;
+;; company
+
+(when (featurep! :completion company)
+  (map-local!
+    :keymaps        'company-mode-map
+    "C-@"           'company-complete
+    "C-x s"         'company-ispell
+    "C-x C-f"       'company-files
+    "C-x C-o"       'company-capf
+    "C-x C-s"       'company-yasnippet)
+
+  (define-key! company-active-map
+    "C-p"           'company-select-previous
+    "C-n"           'company-select-next
+    "TAB"           'company-complete-common-or-cycle
+    "<tab>"         'company-complete-common-or-cycle
+    "S-TAB"         'company-select-previous
+    "<backtab>"     'company-select-previous)
+  
+  (define-key! company-search-map
+    "C-p"           'company-select-previous
+    "C-n"           'company-select-next))
+
+;;
 ;; helm
 
 (when (featurep! :completion helm)
@@ -196,3 +220,14 @@
   (define-key! ivy-minibuffer-map
     "TAB"           'ivy-partial-or-done
     "RET"           'ivy-alt-done))
+
+;;
+;; window-select
+
+(when (featurep! :ui window-select)
+  (define-key!
+    [remap other-window] (cond
+                           ((featurep! :ui window-select +switch-window)
+                                       'switch-window)
+                           ((featurep! :ui window-select +ace-window)
+                                       'ace-window))))

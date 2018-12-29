@@ -35,7 +35,8 @@
   "cF"      '(hydra-flycheck/body :which-key "Flycheck")
   "cf"      '(clang-format :which-key "Format")
   "cg"      '(hydra-avy/body :which-key "Goto")
-  "cm"      '(hydra-multiple-cursors/body :which-key "Multiple cursors")
+  "cm"      '(hydra-mark/body :which-key "Mark")
+  "cM"      '(hydra-multiple-cursors/body :which-key "Multiple cursors")
   
   ;; file
   "fR"      '(projectile-recentf :which-key "Recent project files")
@@ -114,7 +115,8 @@
   "tI"      '(highlight-indentation-current-column-mode :which-key "Indent guides (column)")
   "tl"      '(display-line-numbers-mode :which-key "Line numbers")
   "to"      '(org-mode :which-key "Org")
-  "ts"      '(smartparens-mode :which-key "Smartparens"))
+  "ts"      '(smartparens-mode :which-key "Smartparens")
+  "tu"      '(undo-tree-mode :which-key "Undo-Tree"))
 
 (define-key!
   "M-x"             'execute-extended-command

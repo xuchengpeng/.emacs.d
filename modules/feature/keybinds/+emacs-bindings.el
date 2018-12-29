@@ -97,8 +97,8 @@
   "psr"     '(projectile-ripgrep :which-key "ripgrep")
   
   ;; quit
-  "qq"      '(evil-quit-all :which-key "Quit Emacs")
-  "qQ"      '(evil-save-and-quit :which-key "Save and quit Emacs")
+  "qq"      '(kill-emacs :which-key "Quit Emacs")
+  "qQ"      '(save-buffers-kill-emacs :which-key "Save and quit Emacs")
   "qR"      '(restart-emacs :which-key "Restart Emacs")
   
   ;; snippets

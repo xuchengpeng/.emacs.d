@@ -22,6 +22,7 @@
   "/p"      '(projectile-ripgrep :which-key "Search project")
   
   ;; buffer
+  "bR"      '(revert-buffer-with-coding-system :which-key "Reload encoding")
   "bS"      '(dotemacs/sudo-this-file :which-key "Sudo edit this file")
   "bb"      '(switch-to-buffer :which-key "Switch buffer")
   "bk"      '(kill-this-buffer :which-key "Kill buffer")

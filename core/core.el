@@ -126,16 +126,14 @@ decrease this. If you experience stuttering, increase this.")
 ;; explicitly set the preferred coding systems to avoid annoying prompt
 ;; from emacs (especially on Microsoft Windows)
 (prefer-coding-system          'utf-8)
-(unless IS-WINDOWS
-  ;; UTF-8 as the default coding system
-  (when (fboundp 'set-charset-priority)
-    (set-charset-priority 'unicode))
-  (set-default-coding-systems  'utf-8)
-  (set-terminal-coding-system  'utf-8)
-  (set-keyboard-coding-system  'utf-8)
-  (set-selection-coding-system 'utf-8)
-  (setq locale-coding-system   'utf-8)
-  (setq-default buffer-file-coding-system 'utf-8))
+;; UTF-8 as the default coding system
+(when (fboundp 'set-charset-priority)
+  (set-charset-priority 'unicode))
+(set-terminal-coding-system  'utf-8)
+(set-keyboard-coding-system  'utf-8)
+(set-selection-coding-system 'utf-8)
+(setq locale-coding-system   'utf-8)
+(setq-default buffer-file-coding-system 'utf-8)
 
 (setq-default
  ad-redefinition-action 'accept   ; silence advised function warnings

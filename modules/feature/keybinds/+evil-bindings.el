@@ -116,6 +116,8 @@
   "tl"      '(display-line-numbers-mode :which-key "Line numbers")
   "to"      '(org-mode :which-key "Org")
   "ts"      '(smartparens-mode :which-key "Smartparens")
+  "tt"      (cond ((featurep! :ui neotree) '(neotree-toggle :which-key "NeoTree"))
+                  ((featurep! :ui treemacs) '(treemacs :which-key "Treemacs")))
   "tu"      '(undo-tree-mode :which-key "Undo-Tree"))
 
 (define-key!

@@ -116,6 +116,8 @@
   "tl"      '(display-line-numbers-mode :which-key "Line numbers")
   "to"      '(org-mode :which-key "Org")
   "ts"      '(smartparens-mode :which-key "Smartparens")
+  "tt"      (cond ((featurep! :ui neotree) '(neotree-toggle :which-key "NeoTree"))
+                  ((featurep! :ui treemacs) '(treemacs :which-key "Treemacs")))
   "tu"      '(undo-tree-mode :which-key "Undo-Tree"))
 
 (define-key!
@@ -124,13 +126,7 @@
   "C-s"             'swiper
   "C-r"             'swiper
   "C-x C-f"         'find-file
-  "C-x r b"         'bookmark-jump
-  
-  "<f8>" (cond
-           ((featurep! :ui neotree)
-                    'neotree-toggle)
-           ((featurep! :ui treemacs)
-                    'treemacs)))
+  "C-x r b"         'bookmark-jump)
 
 (define-key! projectile-mode-map
   "C-c p"           'projectile-command-map)

@@ -1,6 +1,7 @@
 ;;; lang/cc/config.el -*- lexical-binding: t; -*-
 
 ;; c
+(set-electric! '(c-mode c++-mode objc-mode java-mode) :chars '(?\n ?\}))
 (add-hook 'c-mode-common-hook
           (lambda ()
             (c-set-style "linux")

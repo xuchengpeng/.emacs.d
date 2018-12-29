@@ -83,6 +83,7 @@
   "oc"      '(org-capture :which-key "Org capture")
   "od"      '(dired-jump :which-key "Dired")
   "ow"      '(hydra-window/body :which-key "Window")
+  "oW"      '(hydra-workspaces/body :which-key "Workspaces")
   
   ;; project
   "pc"      '(projectile-compile-project :which-key "Compile project")

@@ -159,7 +159,24 @@ _q_: Quit
     ("a" er/mark-html-attribute "HTML attribute")
     ("." er/expand-region "Expand region" :exit nil :column "3-Region")
     ("," er/contract-region "Contract region" :exit nil)
-    ("b" mark-whole-buffer "Buffer")))
+    ("b" mark-whole-buffer "Buffer"))
+  (defhydra hydra-workspaces (:color pink
+                              :hint nil
+                              :exit t)
+    "               -- Workspaces --
+"
+    ("n" +workspace/new "New workspace" :column "1")
+    ("l" +workspace/load "Load workspace from file")
+    ("L" +workspace/load-session "Load a past session")
+    ("s" +workspace/save "Save workspace to file")
+    ("S" +workspace/save-session "Autosave current session")
+    ("," +workspace/display "Display tab bar" :column "2")
+    ("." +workspace/switch-to "Switch workspace")
+    ("x" +workspace/kill-session "Delete session")
+    ("d" +workspace/delete "Delete this workspace")
+    ("r" +workspace/rename "Rename workspace")
+    ("R" +workspace/load-last-session "Restore last session")
+    ("q" nil "Quit" :column nil)))
 
 (add-hook 'after-init-hook
           (lambda ()

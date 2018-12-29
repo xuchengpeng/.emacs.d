@@ -29,6 +29,7 @@
            :emacs
            dired
            ediff
+           electric
            eshell
            :tools
            ;; deft

@@ -13,6 +13,7 @@
            (window-select +switch-window)
            :emacs
            dired
+		   electric
            :tools
            utils
            :lang

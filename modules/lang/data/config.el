@@ -1,7 +1,9 @@
 ;;; lang/data/config.el -*- lexical-binding: t; -*-
 
 (use-package json-mode
-  :mode ("\\.json$" . json-mode))
+  :mode ("\\.json$" . json-mode)
+  :config
+  (set-electric! 'json-mode :chars '(?\n ?: ?{ ?})))
 
 ;; toml
 (use-package toml-mode

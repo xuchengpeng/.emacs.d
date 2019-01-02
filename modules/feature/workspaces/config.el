@@ -6,8 +6,6 @@ stored in `persp-save-dir'.")
 
 (use-package persp-mode
   :defer 1
-  :init
-  (setq persp-keymap-prefix (kbd "C-c C-p"))
   :config
   (setq persp-autokill-buffer-on-remove 'kill-weak
         persp-nil-hidden t

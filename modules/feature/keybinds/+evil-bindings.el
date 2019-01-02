@@ -110,7 +110,6 @@
   "sr"      '(yas-reload-all :which-key "Reload snippets")
   
   ;; toggle
-  "ta"      '(aggressive-indent-mode :which-key "Aggressive indent")
   "tf"      '(flycheck-mode :which-key "Flycheck")
   "tF"      '(toggle-frame-fullscreen :which-key "Frame fullscreen")
   "ti"      '(highlight-indentation-mode :which-key "Indent guides")

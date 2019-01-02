@@ -1,6 +1,6 @@
 ;;; dotemacs-themes.el --- an opinionated pack of modern color-themes -*- lexical-binding: t; -*-
 ;;
-;; Copyright (C) 2018 xuchengpeng
+;; Copyright (C) 2019 xuchengpeng
 ;;
 ;; Author: xuchengpeng
 ;; Package-Requires: ((emacs "24.4")(cl-lib "0.5"))

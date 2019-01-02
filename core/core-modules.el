@@ -1,6 +1,6 @@
 ;;; core-modules.el --- Core modules. -*- lexical-binding: t; -*-
 ;;
-;; Copyright (C) 2018 xuchengpeng
+;; Copyright (C) 2019 xuchengpeng
 ;;
 ;; Author: xuchengpeng <xucp@outlook.com>
 ;; URL: https://github.com/xuchengpeng/.emacs.d

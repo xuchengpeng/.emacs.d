@@ -101,6 +101,7 @@
   ;; quit
   "qq"      '(evil-quit-all :which-key "Quit Emacs")
   "qQ"      '(evil-save-and-quit :which-key "Save and quit Emacs")
+  "qr"      '(+workspace/restart-emacs-then-restore :which-key "Restart & restore Emacs")
   "qR"      '(restart-emacs :which-key "Restart Emacs")
   
   ;; snippets

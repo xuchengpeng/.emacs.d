@@ -11,7 +11,7 @@
            ;; lookup
            project
            snippets
-           syntax-checker
+           (syntax-checker +flymake) ; +flycheck or +flymake
            workspaces
            :completion
            company

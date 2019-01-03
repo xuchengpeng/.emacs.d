@@ -633,15 +633,11 @@ segment.")
     ))
 
 (defun dotemacs-modeline|update-flycheck-segment (&optional status)
-  (setq +modeline-flycheck
+  (setq +modeline-syntax-checker
         (when-let* ((status-str (+modeline-flycheck-status status)))
           (concat +modeline--vspc status-str " "))))
 (add-hook 'flycheck-mode-hook #'dotemacs-modeline|update-flycheck-segment)
 (add-hook 'flycheck-status-changed-functions #'dotemacs-modeline|update-flycheck-segment)
-
-(def-modeline-segment! +modeline-flycheck
-  "Displays color-coded flycheck error status in the current buffer."
-  :init nil)
 
 ;; flymake
 
@@ -675,14 +671,16 @@ segment.")
             "-"))))))
 
 (defun dotemacs-modeline|update-flymake-segment (&rest _)
-  (setq +modeline-flymake
+  (setq +modeline-syntax-checker
         (when-let* ((status-str (+modeline-flymake-status)))
           (concat +modeline--vspc status-str " "))))
 (add-hook 'flymake-mode-hook #'dotemacs-modeline|update-flymake-segment)
 (advice-add #'flymake--handle-report :after #'dotemacs-modeline|update-flymake-segment)
 
-(def-modeline-segment! +modeline-flymake
-  "Displays color-coded flymake error status in the current buffer."
+;; syntax checker
+
+(def-modeline-segment! +modeline-syntax-checker
+  "Displays color-coded syntax checker error status in the current buffer."
   :init nil)
 
 ;; position
@@ -708,7 +706,7 @@ segment.")
   '(+modeline-encoding
     +modeline-major-mode " "
     (vc-mode ("" +modeline-vcs " "))
-    +modeline-flymake))
+    +modeline-syntax-checker))
 
 (def-modeline-format! :minimal
   '(+modeline-matches

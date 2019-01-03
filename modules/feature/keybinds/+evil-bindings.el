@@ -38,6 +38,8 @@
   "cg"      '(hydra-avy/body :which-key "Goto")
   "cm"      '(hydra-mark/body :which-key "Mark")
   "cM"      '(hydra-multiple-cursors/body :which-key "Multiple cursors")
+  "cw"      '(delete-trailing-whitespace :which-key "Delete trailing whitespace")
+  "cx"      '(flycheck-list-errors :which-key "List errors")
   
   ;; file
   "fR"      '(projectile-recentf :which-key "Recent project files")

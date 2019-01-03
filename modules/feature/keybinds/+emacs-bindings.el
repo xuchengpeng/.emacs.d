@@ -113,6 +113,7 @@
   "sr"      '(yas-reload-all :which-key "Reload snippets")
   
   ;; toggle
+  "ta"      '(auto-fill-mode :which-key "Auto-Fill")
   "tf"      '(+syntax-checker/toggle :which-key "Syntax checker")
   "tF"      '(toggle-frame-fullscreen :which-key "Frame fullscreen")
   "ti"      '(highlight-indentation-mode :which-key "Indent guides")

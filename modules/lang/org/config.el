@@ -16,7 +16,8 @@
         org-clock-in-resume t
         org-clock-into-drawer t
         org-log-into-drawer t)
-  (org-clock-persistence-insinuate))
+  (org-clock-persistence-insinuate)
+  (add-hook 'org-mode-hook #'auto-fill-mode))
 
 (when (featurep! +capture)
   (load! "+capture"))

@@ -15,7 +15,7 @@
   :diminish undo-tree-mode
   :hook (find-file . global-undo-tree-mode)
   :config
-  (setq undo-tree-history-directory-alist `(("." . ,(concat dotemacs-cache-dir "undo")))
+  (setq undo-tree-history-directory-alist `(("." . ,(concat dotemacs-cache-dir "undo-tree-hist/")))
         undo-tree-auto-save-history t))
 
 (use-package smartparens

@@ -85,6 +85,8 @@
   "ob"      '(browse-url-of-file :which-key "Default browser")
   "oc"      '(org-capture :which-key "Org capture")
   "od"      '(dired-jump :which-key "Dired")
+  "oe"      '(eshell :which-key "Eshell")
+  "oE"      '(shell-pop :which-key "Eshell pop")
   "ow"      '(hydra-window/body :which-key "Window")
   "oW"      '(hydra-workspaces/body :which-key "Workspaces")
   
@@ -138,9 +140,6 @@
 
 (define-key! prog-mode-map
   "C-c h"           'hs-toggle-hiding)
-
-(define-key! eshell-mode-map
-  "C-c s"           '+eshell/search-history)
 
 ;;
 ;; company

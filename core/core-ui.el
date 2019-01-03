@@ -116,7 +116,6 @@
 
 ;; Highlight the current line
 (use-package hl-line
-  :when (display-graphic-p)
   :hook ((prog-mode text-mode conf-mode) . hl-line-mode))
 
 ;; highlight matching delimiters

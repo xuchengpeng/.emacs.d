@@ -623,7 +623,7 @@ segment.")
                                (propertize (number-to-string error) 'face (if (active) 'dotemacs-modeline-urgent))
                                (propertize (number-to-string warning) 'face (if (active) 'dotemacs-modeline-warning))
                                (propertize (number-to-string info) 'face (if (active) 'dotemacs-modeline-info)))))
-                 (propertize "-" 'face (if (active) 'dotemacs-modeline-warning))))
+                 "-"))
     (`interrupted (propertize "-" 'face (if (active) 'dotemacs-modeline-warning)))
     (`suspicious (propertize "?" 'face (if (active) 'dotemacs-modeline-warning)))
     (`running (propertize "?" 'face (if (active) 'dotemacs-modeline-info)))
@@ -641,6 +641,48 @@ segment.")
 
 (def-modeline-segment! +modeline-flycheck
   "Displays color-coded flycheck error status in the current buffer."
+  :init nil)
+
+;; flymake
+
+(defun +modeline-flymake-status ()
+  (let* ((known (hash-table-keys flymake--backend-state))
+         (running (flymake-running-backends))
+         (disabled (flymake-disabled-backends))
+         (reported (flymake-reporting-backends))
+         (diags-by-type (make-hash-table))
+         (all-disabled (and disabled (null running)))
+         (some-waiting (cl-set-difference running reported)))
+    (maphash (lambda (_b state)
+               (mapc (lambda (diag)
+                       (push diag
+                             (gethash (flymake--diag-type diag)
+                                      diags-by-type)))
+                     (flymake--backend-state-diags state)))
+             flymake--backend-state)
+    (let ((.error (length (gethash :error diags-by-type)))
+          (.warning (length (gethash :warning diags-by-type)))
+          (.note (length (gethash :note diags-by-type))))
+      (cond
+       (some-waiting (propertize "?" 'face (if (active) 'dotemacs-modeline-info)))
+       ((null known) (propertize "-" 'face (if (active) 'dotemacs-modeline-warning)))
+       (all-disabled (propertize "-" 'face (if (active) 'dotemacs-modeline-urgent)))
+       (t (if (> (+ .error .warning .note) 0)
+              (format "[%s/%s/%s]"
+                      (propertize (number-to-string .error) 'face (if (active) 'dotemacs-modeline-urgent))
+                      (propertize (number-to-string .warning) 'face (if (active) 'dotemacs-modeline-warning))
+                      (propertize (number-to-string .note) 'face (if (active) 'dotemacs-modeline-info)))
+            "-"))))))
+
+(defun dotemacs-modeline|update-flymake-segment (&rest _)
+  (setq +modeline-flymake
+        (when-let* ((status-str (+modeline-flymake-status)))
+          (concat +modeline--vspc status-str " "))))
+(add-hook 'flymake-mode-hook #'dotemacs-modeline|update-flymake-segment)
+(advice-add #'flymake--handle-report :after #'dotemacs-modeline|update-flymake-segment)
+
+(def-modeline-segment! +modeline-flymake
+  "Displays color-coded flymake error status in the current buffer."
   :init nil)
 
 ;; position
@@ -666,7 +708,7 @@ segment.")
   '(+modeline-encoding
     +modeline-major-mode " "
     (vc-mode ("" +modeline-vcs " "))
-    +modeline-flycheck))
+    +modeline-flymake))
 
 (def-modeline-format! :minimal
   '(+modeline-matches

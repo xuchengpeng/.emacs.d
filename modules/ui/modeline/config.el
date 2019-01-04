@@ -481,7 +481,7 @@ Meant for `+modeline-buffer-path-function'."
              (cond ((eq category 'coding-category-undecided)
                     "")
                    ((or (eq category 'coding-category-utf-8)
-                        (eq (plist-get sys :name) 'prefer-utf-8))
+                        (string-match-p "utf-8" (symbol-name (plist-get sys :name))))
                     "UTF-8  ")
                    ((concat (upcase (symbol-name (plist-get sys :name)))
                             "  ")))

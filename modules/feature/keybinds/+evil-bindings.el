@@ -81,12 +81,14 @@
   "is"      '(yas-insert-snippet :which-key "Insert snippet")
   
   ;; open
-  "oa"      '(org-agenda :which-key "Org agenda")
   "ob"      '(browse-url-of-file :which-key "Default browser")
-  "oc"      '(org-capture :which-key "Org capture")
   "od"      '(dired-jump :which-key "Dired")
   "oe"      '(eshell :which-key "Eshell")
   "oE"      '(shell-pop :which-key "Eshell pop")
+  "oo"      '(:ignore t :which-key "Org")
+  "ooa"     '(org-agenda :which-key "Org agenda")
+  "ooc"     '(org-capture :which-key "Org capture")
+  "oop"     '(org-publish-project :which-key "Publish project")
   "ow"      '(hydra-window/body :which-key "Window")
   "oW"      '(hydra-workspaces/body :which-key "Workspaces")
   

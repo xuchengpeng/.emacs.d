@@ -5,3 +5,6 @@
 (when (featurep! +export)
   (package! ox-pandoc)
   (package! ox-hugo))
+
+(when (featurep! +publish)
+  (package! htmlize))

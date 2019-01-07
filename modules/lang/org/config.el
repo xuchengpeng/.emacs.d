@@ -23,3 +23,5 @@
   (load! "+capture"))
 (when (featurep! +export)
   (load! "+export"))
+(when (featurep! +publish)
+  (load! "+publish"))

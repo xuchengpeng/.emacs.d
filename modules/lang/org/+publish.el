@@ -22,8 +22,8 @@
            :with-timestamps nil
            :auto-preamble t
            ; :auto-postamble nil
-           :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/>"
-           :html-head-include-default-style nil
+           :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/stylesheet.css\"/>"
+           ; :html-head-include-default-style nil
            ; :html-head-include-scripts nil
            ; :html-preamble nil
            ; :html-postamble nil
@@ -34,8 +34,6 @@
            :auto-sitemap t
            :sitemap-filename "sitemap.org"
            :sitemap-title "Sitemap"
-           :author "xuchengpeng"
-           :email "xucp@outlook.com"
            )
 
           ;; For static files that should remain untouched

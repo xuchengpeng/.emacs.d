@@ -27,7 +27,6 @@
            ; :html-postamble nil
            :html-link-home "index.html"
            :html-link-up "sitemap.html"
-           :html-metadata-timestamp-format "%Y-%m-%d %H:%M"
            :htmlized-source t
            :auto-sitemap t
            :sitemap-filename "sitemap.org"

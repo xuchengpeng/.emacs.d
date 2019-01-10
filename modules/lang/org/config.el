@@ -6,6 +6,9 @@
   (setq org-directory "~/org/"
         org-agenda-files (list org-directory))
   :config
+  ;; System locale to use for formatting time values.
+  ;; Make sure that the weekdays in the time stamps of your Org mode files and in the agenda appear in English.
+  (setq system-time-locale "C")
   (setq org-todo-keywords
       '((sequence "TODO(t)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELLED(c@)")
         (sequence "LEARN" "TRY" "TEACH" "|" "COMPLETE")))

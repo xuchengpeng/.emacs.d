@@ -2,9 +2,10 @@
 
 (use-package org
   :mode ("\\.org$" . org-mode)
-  :config
-  (setq org-directory (concat dotemacs-dir "org/")
+  :init
+  (setq org-directory "~/org/"
         org-agenda-files (list org-directory))
+  :config
   (setq org-todo-keywords
       '((sequence "TODO(t)" "WAITING(w@/!)" "|" "DONE(d!)" "CANCELLED(c@)")
         (sequence "LEARN" "TRY" "TEACH" "|" "COMPLETE")))

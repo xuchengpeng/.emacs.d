@@ -9,9 +9,9 @@
   (setq org-publish-project-alist
         '(;; Publish the posts
           ("blog-notes"
-           :base-directory "~/blog/org"
+           :base-directory "~/org/blog"
            :base-extension "org"
-           :publishing-directory "~/blog/public"
+           :publishing-directory "~/org/public"
            :recursive t
            :publishing-function org-html-publish-to-html
            :headline-levels 4
@@ -20,8 +20,6 @@
            :with-creator nil
            :with-email nil
            :with-timestamps nil
-           :auto-preamble t
-           ; :auto-postamble nil
            :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/stylesheet.css\"/>"
            :html-head-include-default-style nil
            :html-head-include-scripts nil
@@ -38,9 +36,9 @@
 
           ;; For static files that should remain untouched
           ("blog-static"
-           :base-directory "~/blog/org"
+           :base-directory "~/org/blog"
            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|eot\\|svg\\|woff\\|woff2\\|ttf"
-           :publishing-directory "~/blog/public"
+           :publishing-directory "~/org/public"
            :recursive t
            :publishing-function org-publish-attachment
            )

@@ -178,12 +178,7 @@
     [remap projectile-switch-project]   'helm-projectile-switch-project
     [remap projectile-switch-to-buffer] 'helm-projectile-switch-to-buffer
     [remap recentf-open-files]          'helm-recentf
-    [remap yank-pop]                    'helm-show-kill-ring
-    [remap swiper]                      'swiper-helm)
-  
-  (map-local!
-    :keymaps        'helm-map
-    "s"             'swiper-helm)
+    [remap yank-pop]                    'helm-show-kill-ring)
   
   (define-key! helm-map
     "TAB"           'helm-execute-persistent-action

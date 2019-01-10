@@ -90,9 +90,13 @@
   )
 
 (use-package helm-projectile
-  :after (helm)
-  :config
+  :commands (helm-projectile-find-file
+             helm-projectile-recentf
+             helm-projectile-switch-project
+             helm-projectile-switch-to-buffer)
+  :init
   (setq projectile-completion-system 'helm)
+  :config
   (helm-projectile-on))
 
 (use-package helm-flx

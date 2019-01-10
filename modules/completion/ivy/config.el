@@ -15,12 +15,11 @@
         ivy-magic-tilde nil
         ;;ivy-dynamic-exhibit-delay-ms 150
         ivy-count-format "(%d/%d) "
-        ivy-format-function #'ivy-format-function-line
-        projectile-completion-system 'ivy)
+        ivy-format-function #'ivy-format-function-line)
   ;; Integration with `magit'
   (after-load! 'magit
     (setq magit-completing-read-function 'ivy-completing-read))
-  (ivy-mode))
+  (ivy-mode +1))
 
 (use-package ivy-rich
   :hook (ivy-mode . ivy-rich-mode)
@@ -89,7 +88,10 @@
     (setq counsel-git-cmd "rg --files")))
 
 (use-package counsel-projectile
-  :after (:any counsel projectile)
+  :commands (counsel-projectile-find-file counsel-projectile-find-dir counsel-projectile-switch-to-buffer
+             counsel-projectile-grep counsel-projectile-ag counsel-projectile-switch-project)
+  :init
+  (setq projectile-completion-system 'ivy)
   :config
   (counsel-projectile-mode))
 

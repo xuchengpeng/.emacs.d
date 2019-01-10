@@ -82,7 +82,8 @@
   (setq savehist-file (concat dotemacs-cache-dir "savehist")
         savehist-save-minibuffer-history t
         savehist-autosave-interval nil ; save on kill only
-        savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
+        savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+  (savehist-mode +1))
 
 ;; persistent point location in buffers
 (use-package saveplace
@@ -93,7 +94,8 @@
     "Recenter on cursor when loading a saved place."
     (if buffer-file-name (ignore-errors (recenter))))
   (advice-add #'save-place-find-file-hook
-              :after-while #'dotemacs|recenter-on-load-saveplace))
+              :after-while #'dotemacs|recenter-on-load-saveplace)
+  (save-place-mode +1))
 
 ;; Hideshow
 (use-package hideshow
@@ -110,7 +112,8 @@
         recentf-max-menu-items 0
         recentf-max-saved-items 300
         recentf-auto-cleanup 'never
-        recentf-exclude (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
+        recentf-exclude (list "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$"
+                              "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
                               "^/var/folders/.+$"
                               (recentf-expand-file-name dotemacs-cache-dir)
                               (recentf-expand-file-name dotemacs-local-dir)))

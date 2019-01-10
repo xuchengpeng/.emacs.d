@@ -16,10 +16,14 @@
   
   ;; search
   "/I"      '(imenu-anywhere :which-key "Jump to symbol across buffers")
-  "/b"      '(swiper :which-key "Search buffer")
+  "/b"      (cond ((featurep! :completion helm) '(helm-do-ag-this-file :which-key "Search buffer"))
+                  ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
+  "/d"      (cond ((featurep! :completion helm) '(helm-do-ag :which-key "Search directory"))
+                  ((featurep! :completion ivy) '(counsel-rg :which-key "Search directory")))
   "/i"      '(imenu :which-key "Jump to symbol")
   "/l"      '(ace-link :which-key "Jump to link")
-  "/p"      '(projectile-ripgrep :which-key "Search project")
+  "/p"      (cond ((featurep! :completion helm) '(helm-do-ag-project-root :which-key "Search project"))
+                  ((featurep! :completion ivy) '(counsel-projectile-rg :which-key "Search project")))
   
   ;; buffer
   "bR"      '(revert-buffer-with-coding-system :which-key "Reload encoding")
@@ -99,10 +103,8 @@
   "po"      '(projectile-find-other-file :which-key "Find other file")
   "pp"      '(projectile-switch-project :which-key "Switch project")
   "pr"      '(projectile-recentf :which-key "Recent project files")
-  "ps"      '(:ignore t :which-key "Project search")
-  "psg"     '(projectile-grep :which-key "grep")
-  "psa"     '(projectile-ag :which-key "ag")
-  "psr"     '(projectile-ripgrep :which-key "ripgrep")
+  "ps"      (cond ((featurep! :completion helm) '(helm-do-ag-project-root :which-key "Search project"))
+                  ((featurep! :completion ivy) '(counsel-projectile-rg :which-key "Search project")))
   
   ;; quit
   "qq"      '(kill-emacs :which-key "Quit Emacs")

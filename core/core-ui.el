@@ -39,16 +39,16 @@
   "List of hooks to run when the UI has been initialized.")
 
 (defvar dotemacs-font nil
-  "The default font to use.")
+  "The default font to use.
 
-(defvar dotemacs-font-size nil
-  "The default font size to use.")
+Expects either a `font-spec', or a font string.
+
+Examples:
+  (setq dotemacs-font (font-spec :family \"Fira Mono\" :size 12))
+  (setq dotemacs-font \"Terminus (TTF):pixelsize=12:antialias=off\")")
 
 (defvar dotemacs-cn-font nil
-  "The default chinese font to use.")
-
-(defvar dotemacs-cn-font-size nil
-  "The default chinese font size to use.")
+  "The chinese font to use.")
 
 (setq-default
  blink-matching-paren nil         ; don't blink--too distracting
@@ -131,35 +131,20 @@
 
 (defun dotemacs|set-font()
   "Set english and chinese fonts."
-  (setq fonts
-        (cond (IS-MAC
-               '("Monaco" "STHeiti"))
-              (IS-LINUX
-               '("DejaVu Sans Mono" "STHeiti"))
-              (IS-WINDOWS
-               '("Consolas" "Microsoft Yahei"))))
-  
-  (let* ((en-font      (or dotemacs-font (car fonts)))
-         (cn-font      (or dotemacs-cn-font (car (cdr fonts))))
-         (en-font-size (or dotemacs-font-size 14))
-         (cn-font-size (or dotemacs-cn-font-size 16)))
-    (set-face-attribute 'default nil :font
-                        (format "%s:pixelsize=%d" en-font en-font-size))
+  (when dotemacs-font
+    (set-face-attribute 'default nil :font dotemacs-font))
+  (when dotemacs-cn-font
     (dolist (charset '(kana han symbol cjk-misc bopomofo))
-      (set-fontset-font (frame-parameter nil 'font) charset
-                        (font-spec :family cn-font :size cn-font-size)))
-    ;; Fix chinese font width and rescale
-    (setq face-font-rescale-alist '((cn-font . 1.2)))))
+      (set-fontset-font (frame-parameter nil 'font) charset dotemacs-cn-font))))
 
 (defun dotemacs|init-fonts ()
   "Set the font."
   (add-to-list 'after-make-frame-functions
                (lambda (new-frame)
                  (select-frame new-frame)
-                 (if (display-graphic-p)
+                 (when (display-graphic-p)
                    (dotemacs|set-font))))
-  
-  (if (display-graphic-p)
+  (when (display-graphic-p)
     (dotemacs|set-font)))
 
 (defun dotemacs*load-theme-hooks (theme &rest _)

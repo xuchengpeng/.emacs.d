@@ -53,10 +53,8 @@ Install your favorite fonts, or you can find some popular fonts [here](https://g
 
 For example:
 ```el
-(setq dotemacs-font "Fira Mono")    ; default font
-(setq dotemacs-cn-font "STXihei")   ; chinese font
-(setq dotemacs-font-size 14)        ; default font size
-(setq dotemacs-cn-font-size 16)     ; chinese font size
+(setq dotemacs-font (font-spec :family "Fira Mono" :size 14))
+(setq dotemacs-cn-font (font-spec :family "STXihei" :size 16))
 ```
 
 ## Supported Emacs versions

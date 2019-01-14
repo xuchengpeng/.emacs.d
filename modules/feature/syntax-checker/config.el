@@ -6,5 +6,5 @@
          :commands (flycheck-list-errors flycheck-buffer)
          :config
          (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled))))
-      ((or (featurep! +flymake) t)
+      ((featurep! +flymake)
        (add-hook 'prog-mode-hook 'flymake-mode)))

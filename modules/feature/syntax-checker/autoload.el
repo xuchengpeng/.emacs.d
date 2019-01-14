@@ -8,7 +8,7 @@
          (if flycheck-mode
              (flycheck-mode -1)
            (flycheck-mode +1)))
-        ((or (featurep! +flymake) t)
+        ((featurep! +flymake)
          (if flymake-mode
              (flymake-mode -1)
            (flymake-mode +1)))))

@@ -134,7 +134,9 @@
   "M-x"             'execute-extended-command
   "M-y"             'yank-pop
   "C-x C-f"         'find-file
-  "C-x r b"         'bookmark-jump)
+  "C-x r b"         'bookmark-jump
+  "C-s"             'swiper
+  "C-r"             'swiper)
 
 (define-key! projectile-mode-map
   "C-c p"           'projectile-command-map)

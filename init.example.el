@@ -11,13 +11,13 @@
            ;; lookup
            project
            snippets
-           (syntax-checker +flycheck) ; +flycheck or +flymake
+           (syntax-checker +flymake) ; +flycheck or +flymake
            workspaces
            :completion
            company
-           (helm +fuzzy)
+           ;; (helm +fuzzy)
            ;; ido
-           ;; (ivy +fuzzy)
+           (ivy +fuzzy)
            :ui
            dashboard
            modeline

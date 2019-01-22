@@ -8,6 +8,3 @@
 (package! counsel-projectile)
 ; (package! smex)
 (package! amx)
-
-(when (featurep! +fuzzy)
-  (package! flx))

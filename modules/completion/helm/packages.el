@@ -5,6 +5,3 @@
 (package! helm-descbinds)
 (package! helm-projectile)
 (package! helm-swoop)
-
-(when (featurep! +fuzzy)
-  (package! helm-flx))

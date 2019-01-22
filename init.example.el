@@ -15,9 +15,9 @@
            workspaces
            :completion
            company
-           ;; (helm +fuzzy)
+           helm
            ;; ido
-           (ivy +fuzzy)
+           ;; ivy
            :ui
            dashboard
            modeline

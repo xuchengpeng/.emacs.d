@@ -10,24 +10,6 @@
         helm-echo-input-in-header-line t
         helm-bookmark-show-location t)
   
-  (when (featurep! +fuzzy)
-    (setq helm-M-x-fuzzy-match t
-          helm-ag-fuzzy-match t
-          helm-apropos-fuzzy-match t
-          helm-bookmark-show-location t
-          helm-buffers-fuzzy-matching t
-          helm-completion-in-region-fuzzy-match t
-          helm-ff-fuzzy-matching t
-          helm-file-cache-fuzzy-match t
-          helm-flx-for-helm-locate t
-          helm-imenu-fuzzy-match t
-          helm-lisp-fuzzy-completion t
-          helm-locate-fuzzy-match t
-          helm-mode-fuzzy-match t
-          helm-projectile-fuzzy-match t
-          helm-recentf-fuzzy-match t
-          helm-semantic-fuzzy-match t))
-  
   (let ((command
          (cond
           ((executable-find "rg")
@@ -98,11 +80,6 @@
   (setq projectile-completion-system 'helm)
   :config
   (helm-projectile-on))
-
-(use-package helm-flx
-  :when (featurep! +fuzzy)
-  :hook (helm-mode . helm-flx-mode)
-  :config (helm-flx-mode +1))
 
 (use-package helm-descbinds
   :hook (helm-mode . helm-descbinds-mode))

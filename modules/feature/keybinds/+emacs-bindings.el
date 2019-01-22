@@ -135,8 +135,8 @@
   "M-y"             'yank-pop
   "C-x C-f"         'find-file
   "C-x r b"         'bookmark-jump
-  "C-s"             'swiper
-  "C-r"             'swiper)
+  "C-s"             'isearch-forward-regexp
+  "C-r"             'isearch-backward-regexp)
 
 (define-key! projectile-mode-map
   "C-c p"           'projectile-command-map)

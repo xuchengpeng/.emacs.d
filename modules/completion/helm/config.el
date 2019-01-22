@@ -3,9 +3,10 @@
 (use-package helm
   :defer t
   :config
-  (require 'helm-config)
-  
   (setq helm-display-header-line nil
+        helm-mode-line-string nil
+        helm-display-buffer-default-width nil
+        helm-display-buffer-default-height 0.25
         helm-imenu-execute-action-at-once-if-one nil
         helm-echo-input-in-header-line t
         helm-bookmark-show-location t)
@@ -22,10 +23,7 @@
            "ag --color --smart-case --nogroup %s %s %s"))))
     (setq helm-grep-ag-command command))
   
-  (helm-mode +1)
-  
-  (setq helm-autoresize-min-height 20)
-  (helm-autoresize-mode +1))
+  (helm-mode +1))
 
 (use-package helm-ag
   :after (helm)

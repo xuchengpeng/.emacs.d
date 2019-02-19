@@ -6,8 +6,6 @@
   "The list of electric words. Typing these will trigger reindentation of the
 current line.")
 
-(electric-indent-mode -1) ; enabled by default in Emacs 25+.
-
 ;;
 (after! electric
   (setq-default electric-indent-chars '(?\n ?\^?))

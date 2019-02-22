@@ -53,7 +53,8 @@
           (t counsel-grep-base-command))))
     (setq counsel-grep-base-command command))
   (setq counsel-rg-base-command "rg --smart-case --no-heading --line-number --color never %s ."
-        counsel-ag-base-command "ag --smart-case --nocolor --nogroup --numbers %s")
+        counsel-ag-base-command "ag --smart-case --nocolor --nogroup --numbers %s"
+        counsel-pt-base-command "pt -S --nocolor --nogroup -e %s")
   (when (executable-find "rg")
     (setq counsel-git-cmd "rg --files")))
 

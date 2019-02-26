@@ -119,7 +119,7 @@
   
   ;; toggle
   "ta"      '(auto-fill-mode :which-key "Auto-Fill")
-  "tf"      '(+syntax-checker/toggle :which-key "Syntax checker")
+  "tf"      '(flycheck-mode :which-key "Flycheck")
   "tF"      '(toggle-frame-fullscreen :which-key "Frame fullscreen")
   "ti"      '(highlight-indentation-mode :which-key "Indent guides")
   "tI"      '(highlight-indentation-current-column-mode :which-key "Indent guides (column)")

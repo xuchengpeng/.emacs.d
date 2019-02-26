@@ -11,7 +11,6 @@
            ;; lookup
            project
            snippets
-           (syntax-checker +flymake) ; +flycheck or +flymake
            workspaces
            :completion
            company
@@ -34,6 +33,7 @@
            :tools
            ;; deft
            ;; editorconfig
+           flycheck
            ;; impatient-mode
            ;; magit
            ;; package-manager

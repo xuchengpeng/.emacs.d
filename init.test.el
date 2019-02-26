@@ -8,7 +8,7 @@
            workspaces
            :completion
            company
-           helm
+           ivy
            :ui
            (window-select +switch-window)
            :emacs

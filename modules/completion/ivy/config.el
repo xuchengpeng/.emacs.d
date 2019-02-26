@@ -24,7 +24,8 @@
 (use-package ivy-rich
   :hook (ivy-mode . ivy-rich-mode)
   :config
-  (dolist (cmd '(counsel-projectile-switch-to-buffer))
+  (dolist (cmd '(ivy-switch-buffer-other-window
+                 counsel-projectile-switch-to-buffer))
     (ivy-set-display-transformer cmd 'ivy-rich--ivy-switch-buffer-transformer)))
 
 (use-package ivy-hydra

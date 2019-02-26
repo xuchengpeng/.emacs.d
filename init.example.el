@@ -14,9 +14,9 @@
            workspaces
            :completion
            company
-           helm
+           ;; helm
            ;; ido
-           ;; ivy
+           ivy
            :ui
            dashboard
            modeline

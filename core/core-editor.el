@@ -30,7 +30,7 @@
 ;;; Code:
 
 (setq-default
- large-file-warning-threshold 30000000
+ large-file-warning-threshold 15000000
  ;; Bookmarks
  bookmark-default-file (concat dotemacs-cache-dir "bookmarks")
  bookmark-save-flag t

@@ -172,5 +172,12 @@ Examples:
 
 (add-hook 'emacs-startup-hook #'dotemacs|init-ui)
 
+;;
+;;; Fixes/hacks
+
+;; Don't allow cursor to enter the prompt
+(setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
 (provide 'core-ui)
 ;;; core-ui.el ends here

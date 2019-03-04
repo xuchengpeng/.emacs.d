@@ -142,8 +142,6 @@ decrease this. If you experience stuttering, increase this.")
  debug-on-error dotemacs-debug-mode
  ffap-machine-p-known 'reject     ; don't ping things that look like domain names
  idle-update-delay 2              ;; update ui less often
- ;; keep the point out of the minibuffer
- minibuffer-prompt-properties '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
  ;; History & backup settings
  auto-save-default nil
  create-lockfiles nil

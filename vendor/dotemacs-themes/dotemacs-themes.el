@@ -204,6 +204,8 @@ between 0 and 1)."
         ',name ,@(dotemacs-themes-prepare-facelist extra-faces))
        (custom-theme-set-variables
         ',name ,@(dotemacs-themes-prepare-varlist extra-vars))
+       (unless bold (set-face-bold 'bold nil))
+       (unless italic (set-face-italic 'italic nil))
        (provide-theme ',name))))
 
 ;;;###autoload

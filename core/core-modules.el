@@ -59,14 +59,14 @@
            dotemacs-modules)
   (when dotemacs-private-dir
     (load! "init" dotemacs-private-dir t))
-  (run-hook-wrapped 'dotemacs-init-hook #'dotemacs-try-run-hook)
+  (run-hook-wrapped 'dotemacs-before-init-modules-hook #'dotemacs-try-run-hook)
   
   (maphash (lambda (key plist)
              (load! "config" (plist-get plist :path) t))
            dotemacs-modules)
   (when dotemacs-private-dir
     (load! "config" dotemacs-private-dir t))
-  (run-hook-wrapped 'dotemacs-post-init-hook #'dotemacs-try-run-hook))
+  (run-hook-wrapped 'dotemacs-init-modules-hook #'dotemacs-try-run-hook))
 
 (defun dotemacs-initialize-autoload ()
   "Initialize autoloads."
@@ -361,7 +361,7 @@ If RETURN-P, return the message as a string instead of displaying it."
            (if dotemacs-modules (hash-table-count dotemacs-modules) 0)
            (or dotemacs-init-time
                (setq dotemacs-init-time (float-time (time-subtract (current-time) before-init-time))))))
-(add-hook 'emacs-startup-hook #'dotemacs|display-benchmark)
+(add-hook 'window-setup-hook #'dotemacs|display-benchmark)
 
 (provide 'core-modules)
 ;;; core-modules.el ends here

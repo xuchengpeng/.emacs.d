@@ -60,11 +60,11 @@
 (defvar dotemacs-autoload-file (concat dotemacs-local-dir "autoloads.el")
   "The path of autoload file which has all the autoload functions.")
 
-(defvar dotemacs-init-hook nil
-  "A list of hooks run when Emacs is initialized, before `dotemacs-post-init-hook'.")
+(defvar dotemacs-before-init-modules-hook nil
+  "A list of hooks run before modules' config.el files are loaded, but after their init.el files are loaded.")
 
-(defvar dotemacs-post-init-hook nil
-  "A list of hooks that run after Emacs initialization is complete, and after `dotemacs-init-hook'.")
+(defvar dotemacs-init-modules-hook nil
+  "A list of hooks that run after modules' config.el files have loaded.")
 
 (defvar dotemacs-debug-mode (or (getenv "DEBUG") init-file-debug)
   "If non-nil, all dotemacs functions will be verbose. Set DEBUG=1 in the command
@@ -197,11 +197,12 @@ The load order is as follows:
   ~/.emacs.d/core/core.el
   Module packages.el files
   Module init.el files
-  `dotemacs-init-hook'
+  `dotemacs-before-init-modules-hook'
   Module config.el files
-  `dotemacs-post-init-hook'
+  `dotemacs-init-modules-hook'
   `after-init-hook'
   `emacs-startup-hook'
+  `window-setup-hook'
 
 Module load order is determined by your `dotemacs!' block."
   ;; Make sure all essential local directories exist

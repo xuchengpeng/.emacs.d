@@ -170,7 +170,7 @@ Examples:
   "Initialize ui."
   (run-hook-wrapped 'dotemacs-init-ui-hook #'dotemacs-try-run-hook))
 
-(add-hook 'emacs-startup-hook #'dotemacs|init-ui)
+(add-hook 'window-setup-hook #'dotemacs|init-ui)
 
 ;;
 ;;; Fixes/hacks

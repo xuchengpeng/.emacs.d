@@ -41,6 +41,15 @@
   "The time it took, in seconds, for Emacs to initialize.")
 
 ;;
+;; Custom hooks
+
+(defvar dotemacs-before-init-modules-hook nil
+  "A list of hooks run before modules' config.el files are loaded, but after their init.el files are loaded.")
+
+(defvar dotemacs-init-modules-hook nil
+  "A list of hooks that run after modules' config.el files have loaded.")
+
+;;
 ;; Functions
 
 (defun dotemacs-initialize-modules ()

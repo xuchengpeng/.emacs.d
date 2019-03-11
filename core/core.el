@@ -60,12 +60,6 @@
 (defvar dotemacs-autoload-file (concat dotemacs-local-dir "autoloads.el")
   "The path of autoload file which has all the autoload functions.")
 
-(defvar dotemacs-before-init-modules-hook nil
-  "A list of hooks run before modules' config.el files are loaded, but after their init.el files are loaded.")
-
-(defvar dotemacs-init-modules-hook nil
-  "A list of hooks that run after modules' config.el files have loaded.")
-
 (defvar dotemacs-debug-mode (or (getenv "DEBUG") init-file-debug)
   "If non-nil, all dotemacs functions will be verbose. Set DEBUG=1 in the command
 line or use --debug-init to enable this.")

@@ -29,10 +29,9 @@
 
 ;;; Code:
 
-(require 'subr-x)
-(require 'cl-lib)
-
 (eval-and-compile
+  (require 'subr-x)
+  (require 'cl-lib)
   (unless EMACS26+
     (with-no-warnings
       (defalias 'if-let* #'if-let)
@@ -288,6 +287,33 @@ Body forms can access the hook's arguments through the let-bound variable
                  (val (pop rest)))
              (push `(setq-local ,var ,val) forms)))
          (nreverse forms))))
+
+(defun advice-add! (symbols where functions)                            
+  "Variadic version of `advice-add'.
+
+SYMBOLS and FUNCTIONS can be lists of functions."
+  (let ((functions (if (functionp functions)
+                       (list functions)
+                     functions)))
+    (dolist (s (dotemacs-enlist symbols))
+      (dolist (f (dotemacs-enlist functions))
+        (advice-add s where f)))))
+
+(defun advice-remove! (symbols where-or-fns &optional functions)
+  "Variadic version of `advice-remove'.
+
+WHERE-OR-FNS is ignored if FUNCTIONS is provided. This lets you substitute
+advice-add with advice-remove and evaluate them without having to modify every
+statement."
+  (unless functions
+    (setq functions where-or-fns
+          where-or-fns nil))
+  (let ((functions (if (functionp functions)
+                       (list functions)
+                     functions)))
+    (dolist (s (dotemacs-enlist symbols))
+      (dolist (f (dotemacs-enlist functions))
+        (advice-remove s f)))))
 
 (defmacro file-exists-p! (spec &optional directory)
   "Returns non-nil if the files in SPEC all exist.

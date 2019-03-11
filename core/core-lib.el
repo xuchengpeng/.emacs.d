@@ -79,23 +79,27 @@
 For example
 
   (dotemacs--resolve-path-forms
-    '(or \"some-file\" (and path-var \"/an/absolute/path\"))
+    '(or A (and B C))
     \"~\")
 
-Returns
+Returns (approximately):
 
-  '(let ((_directory \"~\"))
-     (or (file-exists-p (expand-file-name \"some-file\" _directory))
-         (and (file-exists-p (expand-file-name path-var _directory))
-              (file-exists-p \"/an/absolute/path\"))))
+  '(let* ((_directory \"~\")
+          (A (expand-file-name A _directory))
+          (B (expand-file-name B _directory))
+          (C (expand-file-name C _directory)))
+     (or (and (file-exists-p A) A)
+         (and (if (file-exists-p B) B)
+              (if (file-exists-p C) C))))
 
 This is used by `associate!', `file-exists-p!' and `project-file-exists-p!'."
   (declare (pure t) (side-effect-free t))
   (cond ((stringp spec)
-         `(file-exists-p
-           ,(if (file-name-absolute-p spec)
-                spec
-              `(expand-file-name ,spec ,directory))))
+         `(let ((--file-- ,(if (file-name-absolute-p spec)
+                             spec
+                           `(expand-file-name ,spec ,directory))))
+            (and (file-exists-p --file--)
+                 --file--)))
         ((and (listp spec)
               (memq (car spec) '(or and)))
          `(,(car spec)
@@ -103,12 +107,14 @@ This is used by `associate!', `file-exists-p!' and `project-file-exists-p!'."
                       collect (dotemacs--resolve-path-forms i directory))))
         ((or (symbolp spec)
              (listp spec))
-         `(file-exists-p ,(if (and directory
-                                   (or (not (stringp directory))
-                                       (file-name-absolute-p directory)))
-                              `(expand-file-name ,spec ,directory)
-                            spec)))
-        (t spec)))
+         `(let ((--file-- ,(if (and directory
+                                    (or (not (stringp directory))
+                                        (file-name-absolute-p directory)))
+                               `(expand-file-name ,spec ,directory)
+                             spec)))
+            (and (file-exists-p --file--)
+                 --file--)))
+        (spec)))
 
 (defun dotemacs--resolve-hook-forms (hooks)
   (cl-loop with quoted-p = (eq (car-safe hooks) 'quote)
@@ -284,16 +290,15 @@ Body forms can access the hook's arguments through the let-bound variable
          (nreverse forms))))
 
 (defmacro file-exists-p! (spec &optional directory)
-  "Returns t if the files in SPEC all exist.
+  "Returns non-nil if the files in SPEC all exist.
 
-SPEC can be a single file or a list of forms/files. It understands nested (and
-...) and (or ...), as well.
+Returns the last file found to meet the rules set by SPEC. SPEC can be a single
+file or a list of forms/files. It understands nested (and ...) and (or ...), as
+well.
 
-DIRECTORY is where to look for the files in SPEC if they aren't absolute. This
-doesn't apply to variables, however.
+DIRECTORY is where to look for the files in SPEC if they aren't absolute.
 
 For example:
-
   (file-exists-p! (or dotemacs-core-dir \"~/.config\" \"some-file\") \"~\")"
   (if directory
       `(let ((--directory-- ,directory))

@@ -1232,7 +1232,7 @@
 
 (defvar dotemacs-themes-common-vars
   '((ansi-color-names-vector
-     (vconcat (mapcar #'dotemacs-color '(base0 red green yellow blue magenta cyan base8))))
+     (vconcat (mapcar #'dotemacs-color '(bg red green yellow blue magenta cyan fg))))
 
     (fci-rule-color (dotemacs-color 'base5))
 

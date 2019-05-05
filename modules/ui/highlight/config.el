@@ -1,4 +1,4 @@
-;;; feature/highlight/config.el -*- lexical-binding: t; -*-
+;;; ui/highlight/config.el -*- lexical-binding: t; -*-
 
 ;; Highlight symbols
 ;; (use-package highlight-symbol

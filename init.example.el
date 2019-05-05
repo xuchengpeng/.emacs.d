@@ -5,7 +5,6 @@
 (dotemacs! :feature
            ;; benchmark
            editor
-           highlight
            keybinds
            ;; lookup
            project
@@ -22,6 +21,7 @@
            
            :ui
            dashboard
+           highlight
            modeline
            ;; modeline-old
            ;; neotree

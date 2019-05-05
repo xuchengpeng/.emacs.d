@@ -1,4 +1,4 @@
-;;; feature/evil/config.el -*- lexical-binding: t; -*-
+;;; editor/evil/config.el -*- lexical-binding: t; -*-
 
 (use-package evil
   :hook (after-init . evil-mode))

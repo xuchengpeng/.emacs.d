@@ -5,7 +5,6 @@
 (dotemacs! :feature
            ;; benchmark
            editor
-           ;; evil
            highlight
            keybinds
            ;; lookup
@@ -18,6 +17,7 @@
            ivy
            
            :editor
+           ;; evil
            snippets
            
            :ui

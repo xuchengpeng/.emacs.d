@@ -1,4 +1,4 @@
-;;; feature/lookup/packages.el -*- lexical-binding: t; -*-
+;;; tools/lookup/packages.el -*- lexical-binding: t; -*-
 
 (when (featurep! :completion ivy)
   (package! ivy-xref))

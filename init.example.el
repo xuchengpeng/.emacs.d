@@ -6,7 +6,6 @@
            ;; benchmark
            editor
            keybinds
-           ;; lookup
            project
            
            :completion
@@ -41,6 +40,7 @@
            ;; editorconfig
            flycheck
            ;; impatient-mode
+           ;; lookup
            ;; magit
            ;; package-manager
            utils

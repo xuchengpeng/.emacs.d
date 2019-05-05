@@ -1,4 +1,4 @@
-;;; feature/lookup/config.el -*- lexical-binding: t -*-
+;;; tools/lookup/config.el -*- lexical-binding: t -*-
 
 (use-package ivy-xref
   :when (featurep! :completion ivy)

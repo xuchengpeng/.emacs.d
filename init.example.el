@@ -3,7 +3,6 @@
 (require 'core (concat user-emacs-directory "core/core"))
 
 (dotemacs! :feature
-           ;; benchmark
            editor
            keybinds
            
@@ -35,6 +34,7 @@
            eshell
            
            :tools
+           ;; benchmark
            ;; deft
            ;; editorconfig
            flycheck

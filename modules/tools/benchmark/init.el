@@ -1,4 +1,4 @@
-;;; feature/benchmark/init.el --- Initialize benchmark. -*- lexical-binding: t; -*-
+;;; tools/benchmark/init.el --- Initialize benchmark. -*- lexical-binding: t; -*-
 
 (defun dotemacs/time-subtract-millis (b a)
   (* 1000.0 (float-time (time-subtract b a))))

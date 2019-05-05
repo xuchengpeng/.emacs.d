@@ -14,7 +14,7 @@
     :config
     (setq nlinum-relative-current-symbol ""
           nlinum-relative-redisplay-delay 0)
-    (when (featurep! :feature evil)
+    (when (featurep! :editor evil)
       (nlinum-relative-setup-evil))))
 
 (when (memq window-system '(mac ns x))

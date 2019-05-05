@@ -2,10 +2,7 @@
 
 (require 'core (concat user-emacs-directory "core/core"))
 
-(dotemacs! :feature
-           editor
-           
-           :completion
+(dotemacs! :completion
            company
            ;; helm
            ;; ido
@@ -14,6 +11,7 @@
            :editor
            ;; evil
            snippets
+           utils
            
            :ui
            dashboard

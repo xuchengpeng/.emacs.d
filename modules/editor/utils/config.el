@@ -1,4 +1,4 @@
-;;; feature/editor/config.el -*- lexical-binding: t; -*-
+;;; editor/utils/config.el -*- lexical-binding: t; -*-
 
 ;; Increase selected region by semantic units
 (use-package expand-region

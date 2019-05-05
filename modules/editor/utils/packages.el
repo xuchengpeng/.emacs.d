@@ -1,4 +1,4 @@
-;;; feature/editor/packages.el -*- lexical-binding: t; -*-
+;;; editor/utils/packages.el -*- lexical-binding: t; -*-
 
 (package! expand-region)
 (package! multiple-cursors)

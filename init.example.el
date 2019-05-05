@@ -4,7 +4,6 @@
 
 (dotemacs! :feature
            editor
-           keybinds
            
            :completion
            company
@@ -32,6 +31,7 @@
            ediff
            electric
            eshell
+           keybinds
            
            :tools
            ;; benchmark

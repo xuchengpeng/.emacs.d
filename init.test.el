@@ -2,10 +2,7 @@
 
 (require 'core (concat user-emacs-directory "core/core"))
 
-(dotemacs! :feature
-           keybinds
-           project
-           :completion
+(dotemacs! :completion
            company
            ivy
            :ui
@@ -14,7 +11,9 @@
            :emacs
            dired
            electric
+           keybinds
            :tools
+           project
            utils
            :lang
            markdown)

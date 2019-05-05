@@ -1,4 +1,4 @@
-;;; feature/keybinds/config.el -*- lexical-binding: t; -*-
+;;; emacs/keybinds/config.el -*- lexical-binding: t; -*-
 
 (use-package which-key
   :defer 1

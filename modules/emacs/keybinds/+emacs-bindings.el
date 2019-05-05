@@ -1,4 +1,4 @@
-;;; feature/keybinds/+emacs-bindings.el -*- lexical-binding: t; -*-
+;;; emacs/keybinds/+emacs-bindings.el -*- lexical-binding: t; -*-
 
 (map!
   "/"       '(:ignore t :which-key "search")

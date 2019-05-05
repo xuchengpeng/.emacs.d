@@ -10,7 +10,6 @@
            keybinds
            ;; lookup
            project
-           workspaces
            
            :completion
            company
@@ -29,6 +28,7 @@
            themes
            treemacs
            (window-select +ace-window)
+           workspaces
            
            :emacs
            dired

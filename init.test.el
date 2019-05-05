@@ -5,12 +5,12 @@
 (dotemacs! :feature
            keybinds
            project
-           workspaces
            :completion
            company
            ivy
            :ui
            (window-select +switch-window)
+           workspaces
            :emacs
            dired
            electric

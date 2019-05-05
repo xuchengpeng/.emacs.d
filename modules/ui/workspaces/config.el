@@ -1,4 +1,4 @@
-;;; feature/workspaces/config.el -*- lexical-binding: t; -*-
+;;; ui/workspaces/config.el -*- lexical-binding: t; -*-
 
 (defvar +workspaces-data-file "_workspaces"
   "The basename of the file to store single workspace perspectives. Will be

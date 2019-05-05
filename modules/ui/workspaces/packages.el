@@ -1,5 +1,5 @@
 ;; -*- no-byte-compile: t; -*-
-;;; feature/workspaces/packages.el
+;;; ui/workspaces/packages.el
 
 (package! persp-mode)
 

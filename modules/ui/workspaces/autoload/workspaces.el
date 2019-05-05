@@ -1,4 +1,4 @@
-;;; feature/workspaces/autoload/workspaces.el -*- lexical-binding: t; -*-
+;;; ui/workspaces/autoload/workspaces.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defface +workspace-tab-selected-face '((t (:inherit highlight)))

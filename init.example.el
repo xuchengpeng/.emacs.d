@@ -10,13 +10,17 @@
            keybinds
            ;; lookup
            project
-           snippets
            workspaces
+           
            :completion
            company
            ;; helm
            ;; ido
            ivy
+           
+           :editor
+           snippets
+           
            :ui
            dashboard
            modeline
@@ -25,11 +29,13 @@
            themes
            treemacs
            (window-select +ace-window)
+           
            :emacs
            dired
            ediff
            electric
            eshell
+           
            :tools
            ;; deft
            ;; editorconfig
@@ -38,6 +44,7 @@
            ;; magit
            ;; package-manager
            utils
+           
            :lang
            cc
            ;; data

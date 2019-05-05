@@ -26,9 +26,5 @@
   :config
   (require 'smartparens-config))
 
-;; (use-package paredit
-;;   :diminish paredit-mode
-;;   :hook ((lisp-mode emacs-lisp-mode) . paredit-mode))
-
 (use-package avy
   :defer t)

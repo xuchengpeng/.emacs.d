@@ -4,5 +4,4 @@
 (package! multiple-cursors)
 (package! undo-tree)
 (package! smartparens)
-; (package! paredit)
 (package! avy)

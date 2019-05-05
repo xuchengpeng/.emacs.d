@@ -6,7 +6,6 @@
            ;; benchmark
            editor
            keybinds
-           project
            
            :completion
            company
@@ -43,6 +42,7 @@
            ;; lookup
            ;; magit
            ;; package-manager
+           project
            utils
            
            :lang

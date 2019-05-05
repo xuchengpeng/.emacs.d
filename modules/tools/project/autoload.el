@@ -1,4 +1,4 @@
-;;; feature/project/autoload.el -*- lexical-binding: t; -*-
+;;; tools/project/autoload.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defmacro without-project-cache! (&rest body)

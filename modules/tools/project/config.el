@@ -1,4 +1,4 @@
-;;; feature/project/config.el -*- lexical-binding: t -*-
+;;; tools/project/config.el -*- lexical-binding: t -*-
 
 (use-package projectile
   :commands (projectile-project-root projectile-project-name projectile-project-p)

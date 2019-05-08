@@ -17,7 +17,6 @@
            dashboard
            highlight
            modeline
-           ;; modeline-old
            ;; neotree
            themes
            treemacs

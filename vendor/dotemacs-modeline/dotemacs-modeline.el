@@ -83,7 +83,7 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
               (dotemacs-modeline-set-main-modeline))))
         ;; Add hooks
         (add-hook 'magit-mode-hook #'dotemacs-modeline-set-project-modeline)
-        (add-hook 'dashboard-mode-hook #'dotemacs-modeline-set-project-modeline)
+        (add-hook '+dashboard-mode-hook #'dotemacs-modeline-set-project-modeline)
         (add-hook 'image-mode-hook #'dotemacs-modeline-set-media-modeline)
         (add-hook 'circe-mode-hook #'dotemacs-modeline-set-special-modeline))
     (progn
@@ -91,7 +91,7 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
       (setq-default mode-line-format dotemacs-modeline--default-mode-line)
       ;; Remove hooks
       (remove-hook 'magit-mode-hook #'dotemacs-modeline-set-project-modeline)
-      (remove-hook 'dashboard-mode-hook #'dotemacs-modeline-set-project-modeline)
+      (remove-hook '+dashboard-mode-hook #'dotemacs-modeline-set-project-modeline)
       (remove-hook 'image-mode-hook #'dotemacs-modeline-set-media-modeline)
       (remove-hook 'circe-mode-hook #'dotemacs-modeline-set-special-modeline))))
 

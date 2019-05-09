@@ -27,7 +27,6 @@
 (defvar flymake-menu)
 (defvar iedit-occurrences-overlays)
 (defvar mc/mode-line)
-(defvar minions-mode-line-lighter)
 (defvar symbol-overlay-keywords-alist)
 (defvar symbol-overlay-temp-symbol)
 (defvar text-scale-mode-amount)
@@ -65,7 +64,6 @@
 (declare-function image-get-display-property 'image-mode)
 (declare-function magit-toplevel 'magit-git)
 (declare-function mc/num-cursors 'multiple-cursors-core)
-(declare-function minions-minor-modes-menu 'minions)
 (declare-function symbol-overlay-assoc 'symbol-overlay)
 (declare-function symbol-overlay-get-list 'symbol-overlay)
 (declare-function symbol-overlay-get-symbol 'symbol-overlay)
@@ -160,29 +158,16 @@ mouse-3: Toggle minor modes"
 (dotemacs-modeline-def-segment minor-modes
   (when dotemacs-modeline-minor-modes
     (let ((active (dotemacs-modeline--active)))
-      (if (bound-and-true-p minions-mode)
-          (concat
-           " "
-           (propertize minions-mode-line-lighter
-                       'face (if active
-                                 'dotemacs-modeline-buffer-minor-mode
-                               'mode-line-inactive)
-                       'help-echo "Minions
-mouse-1: Display minor modes menu"
-                       'mouse-face 'mode-line-highlight
-                       'local-map (make-mode-line-mouse-map
-                                   'mouse-1 #'minions-minor-modes-menu))
-           " ")
-        (propertize
-         (concat
-          (replace-regexp-in-string (regexp-quote "%")
-                                    "%%%%"
-                                    (format-mode-line '("" minor-mode-alist))
-                                    t t)
-          " ")
-         'face (if active
-                   'dotemacs-modeline-buffer-minor-mode
-                 'mode-line-inactive))))))
+      (propertize
+       (concat
+        (replace-regexp-in-string (regexp-quote "%")
+                                  "%%%%"
+                                  (format-mode-line '("" minor-mode-alist))
+                                  t t)
+        " ")
+       'face (if active
+                 'dotemacs-modeline-buffer-minor-mode
+               'mode-line-inactive)))))
 
 ;;
 ;; process

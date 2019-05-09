@@ -1,5 +1,7 @@
 ;;; dotemacs-modeline.el --- A minimal and modern mode-line -*- lexical-binding: t; -*-
 
+;;; Code:
+
 (require 'dotemacs-modeline-core)
 (require 'dotemacs-modeline-segments)
 

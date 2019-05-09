@@ -1,5 +1,7 @@
 ;;; dotemacs-modeline-core.el --- The core libraries for dotemacs-modeline -*- lexical-binding: t; -*-
 
+;;; Code:
+
 ;;
 ;; Variables
 ;;

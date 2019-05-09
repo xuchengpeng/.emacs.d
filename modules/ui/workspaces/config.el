@@ -6,6 +6,7 @@ stored in `persp-save-dir'.")
 
 (use-package persp-mode
   :defer 1
+  :diminish persp-mode
   :config
   (setq persp-autokill-buffer-on-remove 'kill-weak
         persp-nil-hidden t

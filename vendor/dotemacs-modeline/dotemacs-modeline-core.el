@@ -12,10 +12,10 @@
 (defvar dotemacs-modeline-bar-width 3
   "How wide the mode-line bar should be (only respected in GUI Emacs).")
 
-(defvar dotemacs-modeline-minor-modes nil
+(defvar dotemacs-modeline-minor-modes t
   "Whether display minor modes in mode-line or not.")
 
-(defvar dotemacs-modeline-enable-word-count nil
+(defvar dotemacs-modeline-enable-word-count t
   "If non-nil, a word count will be added to the selection-info modeline segment.")
 
 ;;

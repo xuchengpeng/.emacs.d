@@ -75,7 +75,7 @@ line or use --debug-init to enable this.")
   "The default value to use for `gc-cons-threshold'. If you experience freezing,
 decrease this. If you experience stuttering, increase this.")
 
-(defvar dotemacs-gc-cons-upper-limit 268435456 ; 256mb
+(defvar dotemacs-gc-cons-upper-limit 536870912 ; 512mb
   "The temporary value for `gc-cons-threshold' to defer it.")
   
 (defvar dotemacs--file-name-handler-alist file-name-handler-alist)

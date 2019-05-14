@@ -112,11 +112,10 @@
         recentf-max-menu-items 0
         recentf-max-saved-items 300
         recentf-auto-cleanup 'never
-        recentf-exclude (list "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$"
-                              "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
-                              "^/var/folders/.+$"
-                              (recentf-expand-file-name dotemacs-cache-dir)
-                              (recentf-expand-file-name dotemacs-local-dir)))
+        recentf-exclude (list "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$" "^/tmp/" "^/ssh:"
+                              "\\.?ido\\.last$" "\\.revive$" "/TAGS$" "^/var/folders/.+$"
+                              (recentf-apply-filename-handlers dotemacs-cache-dir)
+                              (recentf-apply-filename-handlers dotemacs-local-dir)))
   (quiet! (recentf-mode +1)))
 
 (use-package server

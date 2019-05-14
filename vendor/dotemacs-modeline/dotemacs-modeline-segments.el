@@ -95,6 +95,10 @@ buffer where knowing the current project directory is important."
                ((dotemacs-modeline--active) 'dotemacs-modeline-buffer-file)
                (t 'mode-line-inactive))))
 
+;;
+;; encoding
+;;
+
 (dotemacs-modeline-def-segment buffer-encoding
   "Displays the encoding and eol style of the buffer the same way Atom does."
   (propertize
@@ -112,6 +116,16 @@ buffer where knowing the current project directory is important."
    'help-echo 'mode-line-mule-info-help-echo
    'mouse-face '(:box 0)
    'local-map mode-line-coding-system-map))
+
+;;
+;; indentation
+;;
+
+(dotemacs-modeline-def-segment indent-info
+  "Displays the indentation information."
+  (propertize (format " %s %d "
+                      (if indent-tabs-mode "TAB" "SPC") tab-width)
+              'face (if (dotemacs-modeline--active) 'mode-line 'mode-line-inactive)))
 
 ;;
 ;; remote host

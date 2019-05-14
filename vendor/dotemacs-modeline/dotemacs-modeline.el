@@ -11,7 +11,7 @@
 
 (dotemacs-modeline-def-modeline 'main
   '(bar matches buffer-info-simple remote-host buffer-position selection-info)
-  '(misc-info minor-modes buffer-encoding major-mode process vcs checker))
+  '(misc-info minor-modes indent-info buffer-encoding major-mode process vcs checker))
 
 (dotemacs-modeline-def-modeline 'minimal
   '(bar matches " " buffer-info-simple)

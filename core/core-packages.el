@@ -36,14 +36,15 @@ missing) and shouldn't be deleted.")
 (defvar dotemacs-packages ()
   "A list of enabled packages.")
 
-(setq package-user-dir (expand-file-name "elpa" dotemacs-packages-dir)
-      package-gnupghome-dir (expand-file-name "gnupg" dotemacs-packages-dir)
-      package-enable-at-startup nil
-      load-prefer-newer t
-      use-package-verbose dotemacs-debug-mode
-      use-package-compute-statistics dotemacs-debug-mode
-      use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1)
-      use-package-expand-minimally (not dotemacs-debug-mode))
+(eval-and-compile
+  (setq package-user-dir (expand-file-name "elpa" dotemacs-packages-dir)
+        package-gnupghome-dir (expand-file-name "gnupg" dotemacs-packages-dir)
+        package-enable-at-startup nil
+        load-prefer-newer t
+        use-package-verbose dotemacs-debug-mode
+        use-package-compute-statistics dotemacs-debug-mode
+        use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1)
+        use-package-expand-minimally (not dotemacs-debug-mode)))
 
 (defun dotemacs/set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."

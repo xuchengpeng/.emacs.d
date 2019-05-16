@@ -132,7 +132,7 @@ decrease this. If you experience stuttering, increase this.")
  autoload-compute-prefixes nil
  debug-on-error dotemacs-debug-mode
  ffap-machine-p-known 'reject     ; don't ping things that look like domain names
- idle-update-delay 2              ;; update ui less often
+ idle-update-delay 1              ; update ui slightly less often
  ;; History & backup settings
  auto-save-default nil
  create-lockfiles nil

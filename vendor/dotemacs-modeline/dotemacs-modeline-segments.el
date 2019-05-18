@@ -543,11 +543,8 @@ Requires `anzu', also `evil-anzu' if using `evil-mode' for compatibility with
                          ('dotemacs-modeline-panel))))
             ((cons nil nil)))
     (when count
-      (concat (propertize " " 'face face)
-              (propertize "I" 'face `(:inherit ,face :height 1.4) 'display '(raise -0.085))
-              (propertize dotemacs-modeline-vspc 'face `(:inherit (variable-pitch ,face)))
-              (propertize (format "%d " count)
-                          'face face)))))
+      (propertize (format " %d " count)
+                  'face face))))
 
 (defsubst dotemacs-modeline--buffer-size ()
   "Show buffer size."

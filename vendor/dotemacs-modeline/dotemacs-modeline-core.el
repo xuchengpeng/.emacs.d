@@ -286,17 +286,15 @@
 ;; Modeline helpers
 ;;
 
-(defvar dotemacs-modeline-vspc
-  (propertize " " 'face 'variable-pitch)
-  "Text style with icons in mode-line.")
-
-(defvar dotemacs-modeline-inactive-vspc
-  (propertize " " 'face '(:inherit (variable-pitch mode-line-inactive)))
-  "Text style with icons in inactive mode-line.")
-
 (defun dotemacs-modeline--active ()
   "Whether is an active window."
   (eq (selected-window) dotemacs-modeline-current-window))
+
+(defsubst dotemacs-modeline-whitespace ()
+  "Text style with whitespace."
+  (propertize " " 'face (if (dotemacs-modeline--active)
+                            'mode-line
+                          'mode-line-inactive)))
 
 (defvar-local dotemacs-modeline-project-root nil)
 (defun dotemacs-modeline-project-root ()

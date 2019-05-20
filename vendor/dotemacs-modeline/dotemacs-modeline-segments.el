@@ -80,11 +80,12 @@
 (dotemacs-modeline-def-segment buffer-default-directory
   "Displays `default-directory'. This is for special buffers like the scratch
 buffer where knowing the current project directory is important."
-  (let ((face (if (dotemacs-modeline--active)
-                  'dotemacs-modeline-buffer-path
-                'mode-line-inactive)))
-    (concat " "
-            (propertize (abbreviate-file-name default-directory) 'face face))))
+  (let ((active (dotemacs-modeline--active)))
+    (concat (dotemacs-modeline-whitespace)
+            (propertize (abbreviate-file-name default-directory)
+                        'face (if active
+                                  'dotemacs-modeline-buffer-path
+                                'mode-line-inactive)))))
 
 (dotemacs-modeline-def-segment buffer-info-simple
   "Display only the current buffer's name, but with fontification."
@@ -104,14 +105,13 @@ buffer where knowing the current project directory is important."
   (propertize
    (concat (pcase (coding-system-eol-type buffer-file-coding-system)
              (0 " LF")
-             (1 " RLF")
+             (1 " CRLF")
              (2 " CR"))
            (let ((sys (coding-system-plist buffer-file-coding-system)))
              (cond ((memq (plist-get sys :category)
                           '(coding-category-undecided coding-category-utf-8))
                     " UTF-8 ")
-                   (t (upcase (symbol-name (plist-get sys :name))))))
-           " ")
+                   (t (upcase (symbol-name (plist-get sys :name)))))))
    'face (if (dotemacs-modeline--active) 'mode-line 'mode-line-inactive)
    'help-echo 'mode-line-mule-info-help-echo
    'mouse-face '(:box 0)
@@ -146,21 +146,23 @@ buffer where knowing the current project directory is important."
 (dotemacs-modeline-def-segment major-mode
   "The major mode, including environment and text-scale info."
   (propertize
-   (concat (format-mode-line
-            `(:propertize ("" mode-name)
-                          help-echo "Major mode\n\
+   (concat
+    (dotemacs-modeline-whitespace)
+    (propertize mode-name
+                'help-echo "Major mode\n\
 mouse-1: Display major mode menu\n\
 mouse-2: Show help for major mode\n\
 mouse-3: Toggle minor modes"
-                          mouse-face mode-line-highlight
-                          local-map ,mode-line-major-mode-keymap))
-           (and (boundp 'text-scale-mode-amount)
-                (/= text-scale-mode-amount 0)
-                (format
-                 (if (> text-scale-mode-amount 0)
-                     " (%+d)"
-                   " (%-d)")
-                 text-scale-mode-amount)))
+                'mouse-face 'mode-line-highlight
+                'local-map mode-line-major-mode-keymap)
+    (and (boundp 'text-scale-mode-amount)
+         (/= text-scale-mode-amount 0)
+         (format
+          (if (> text-scale-mode-amount 0)
+              " (%+d)"
+            " (%-d)")
+          text-scale-mode-amount))
+    (dotemacs-modeline-whitespace))
    'face (if (dotemacs-modeline--active)
              'dotemacs-modeline-buffer-major-mode
            'mode-line-inactive)))
@@ -224,12 +226,11 @@ mouse-3: Toggle minor modes"
   (let ((active (dotemacs-modeline--active)))
     (when-let ((text (or dotemacs-modeline--vcs-text (dotemacs-modeline-update-vcs-text))))
       (concat
-       (propertize "  " 'face (if active 'mode-line 'mode-line-inactive))
-       (propertize text 'face `(:inherit
-                                ,(get-text-property 0 'face text)
-                                :inherit
-                                ,(if active 'mode-line 'mode-line-inactive)))
-       (propertize " " 'face (if active 'mode-line 'mode-line-inactive))))))
+       (dotemacs-modeline-whitespace)
+       (if active
+           text
+         (propertize text 'face 'mode-line-inactive))
+       (dotemacs-modeline-whitespace)))))
 
 (defun dotemacs-modeline-checker-text (text &optional face)
   "Displays TEXT with FACE."
@@ -383,17 +384,13 @@ icons."
                     ((and (bound-and-true-p flymake-mode)
                          (bound-and-true-p flymake--backend-state)) ; only support 26+
                      dotemacs-modeline--flymake-text))))
-    (if text
-        (concat
-         (propertize (if vc-mode " " "  ")
-                     'face (if active 'mode-line 'mode-line-inactive))
-         (when text
-           (propertize text 'face `(:inherit
-                                    ,(if active
-                                         (get-text-property 0 'face text)
-                                       'mode-line-inactive))))
-         " ")
-      "")))
+    (when text
+      (concat
+       (dotemacs-modeline-whitespace)
+       (when text
+         (if active
+             text
+           (propertize text 'face 'mode-line-inactive)))))))
 
 ;;
 ;; selection-info

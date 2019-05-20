@@ -192,9 +192,9 @@
                " "
                'face (if (dotemacs-modeline--active) 'mode-line 'mode-line-inactive)
                'display `((space :align-to (- (+ right right-fringe right-margin)
-                                              ,(+ 1 (string-width
-                                                     (format-mode-line
-                                                      (cons "" rhs-forms))))))))
+                                              ,(string-width
+                                                (format-mode-line
+                                                 (cons "" rhs-forms)))))))
               rhs-forms))
       (concat "Modeline:\n"
               (format "  %s\n  %s"

@@ -14,7 +14,7 @@
   '(misc-info minor-modes indent-info buffer-encoding major-mode process vcs checker))
 
 (dotemacs-modeline-def-modeline 'minimal
-  '(bar matches " " buffer-info-simple)
+  '(bar matches buffer-info-simple)
   '(media-info major-mode))
 
 (dotemacs-modeline-def-modeline 'special
@@ -22,8 +22,8 @@
   '(misc-info minor-modes buffer-encoding major-mode process checker))
 
 (dotemacs-modeline-def-modeline 'project
-  '(bar " " buffer-default-directory)
-  '(misc-info " " major-mode process))
+  '(bar buffer-default-directory)
+  '(misc-info major-mode process))
 
 (dotemacs-modeline-def-modeline 'media
   '(bar buffer-size buffer-info-simple)
@@ -82,6 +82,7 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
             (with-current-buffer bname
               (dotemacs-modeline-set-main-modeline))))
         ;; Add hooks
+        (add-hook 'dired-mode-hook #'dotemacs-modeline-set-project-modeline)
         (add-hook 'magit-mode-hook #'dotemacs-modeline-set-project-modeline)
         (add-hook '+dashboard-mode-hook #'dotemacs-modeline-set-project-modeline)
         (add-hook 'image-mode-hook #'dotemacs-modeline-set-media-modeline)
@@ -90,6 +91,7 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
       ;; Restore mode-line
       (setq-default mode-line-format dotemacs-modeline--default-mode-line)
       ;; Remove hooks
+      (remove-hook 'dired-mode-hook #'dotemacs-modeline-set-project-modeline)
       (remove-hook 'magit-mode-hook #'dotemacs-modeline-set-project-modeline)
       (remove-hook '+dashboard-mode-hook #'dotemacs-modeline-set-project-modeline)
       (remove-hook 'image-mode-hook #'dotemacs-modeline-set-media-modeline)

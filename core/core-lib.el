@@ -285,13 +285,24 @@ Body forms can access the hook's arguments through the let-bound variable
   (declare (indent 1))
   (unless (= 0 (% (length rest) 2))
     (signal 'wrong-number-of-arguments (list #'evenp (length rest))))
-  `(add-hook! :append ,hooks
-     ,@(let (forms)
-         (while rest
-           (let ((var (pop rest))
-                 (val (pop rest)))
-             (push `(setq-local ,var ,val) forms)))
-         (nreverse forms))))
+  (let* ((vars (let ((args rest)
+                     vars)
+                 (while args
+                   (push (symbol-name (car args)) vars)
+                   (setq args (cddr args)))
+                 vars))
+         (fnsym (intern (format "dotemacs|setq-%s" (string-join (sort vars #'string-lessp) "-")))))
+    (macroexp-progn
+     (append `((fset ',fnsym
+                     (lambda (&rest _)
+                       ,@(let (forms)
+                           (while rest
+                             (let ((var (pop rest))
+                                   (val (pop rest)))
+                               (push `(set (make-local-variable ',var) ,val) forms)))
+                           (nreverse forms)))))
+             (cl-loop for hook in (dotemacs--resolve-hook-forms hooks)
+                      collect `(add-hook ',hook #',fnsym 'append))))))
 
 (defun advice-add! (symbols where functions)                            
   "Variadic version of `advice-add'.

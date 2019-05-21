@@ -387,10 +387,10 @@ icons."
     (when text
       (concat
        (dotemacs-modeline-whitespace)
-       (when text
-         (if active
-             text
-           (propertize text 'face 'mode-line-inactive)))))))
+       (if active
+           text
+         (propertize text 'face 'mode-line-inactive))
+       (dotemacs-modeline-whitespace)))))
 
 ;;
 ;; selection-info
@@ -608,12 +608,12 @@ Returns \"\" to not break --no-window-system."
         (dotemacs-modeline--make-xpm 'dotemacs-modeline-bar
                                  (or width dotemacs-modeline-bar-width)
                                  (max (or height dotemacs-modeline-height)
-                                      (frame-char-height)))
+                                      (ceiling (* 1.3 (frame-char-height)))))
         dotemacs-modeline--bar-inactive
         (dotemacs-modeline--make-xpm 'dotemacs-modeline-inactive-bar
                                  (or width dotemacs-modeline-bar-width)
                                  (max (or height dotemacs-modeline-height)
-                                      (frame-char-height)))))
+                                      (ceiling (* 1.3 (frame-char-height)))))))
 (add-hook 'dotemacs-init-ui-hook #'dotemacs-modeline-refresh-bars)
 
 ;;

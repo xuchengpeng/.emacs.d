@@ -6,8 +6,19 @@
   "Options for dotemacs-molokai."
   :group 'dotemacs-themes)
 
+(defcustom dotemacs-molokai-brighter-modeline nil
+  "If non-nil, more vivid colors will be used to style the mode-line."
+  :group 'dotemacs-molokai-theme
+  :type 'boolean)
+
 (defcustom dotemacs-molokai-brighter-comments nil
   "If non-nil, comments will be highlighted in more vivid colors."
+  :group 'dotemacs-molokai-theme
+  :type 'boolean)
+
+(defcustom dotemacs-molokai-comment-bg dotemacs-molokai-brighter-comments
+  "If non-nil, comments will have a subtle, darker background. Enhancing their
+legibility."
   :group 'dotemacs-molokai-theme
   :type 'boolean)
 
@@ -74,11 +85,19 @@ determine the exact padding."
    (vc-deleted     red)
 
    ;; custom categories
+   (hidden     `(,(car bg) "black" "black"))
+   (-modeline-bright dotemacs-molokai-brighter-modeline) ;; no effect for the moment
    (-modeline-pad
     (when dotemacs-molokai-padded-modeline
-      (if (integerp dotemacs-molokai-padded-modeline)
-          dotemacs-molokai-padded-modeline
-        4)))
+      (if (integerp dotemacs-molokai-padded-modeline) dotemacs-molokai-padded-modeline 4)))
+
+   (modeline-fg nil)
+   (modeline-fg-alt base4)
+
+   (modeline-bg
+    (if -modeline-bright base3 base3))
+   (modeline-bg-inactive
+    (if -modeline-bright (dotemacs-darken base2 0.2) (dotemacs-darken base2 0.2)))
 
    (org-quote `(,(dotemacs-lighten (car bg) 0.05) "#1f1f1f")))
 
@@ -88,15 +107,17 @@ determine the exact padding."
    (cursor :background magenta)
 
    (mode-line
-    :background base3 :foreground base8
+    :background modeline-bg :foreground modeline-fg
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color base3)))
    (mode-line-inactive
-    :background (dotemacs-darken base2 0.2) :foreground base4
+    :background modeline-bg-inactive :foreground modeline-fg-alt
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color base2)))
+   
    (dotemacs-modeline-bar :background green)
-
-   (dotemacs-modeline-buffer-modified :inherit 'bold :foreground orange)
+   (dotemacs-modeline-buffer-file :inherit 'mode-line-buffer-id :weight 'bold)
    (dotemacs-modeline-buffer-path :inherit 'bold :foreground green)
+   (dotemacs-modeline-buffer-project-root :foreground green :weight 'bold)
+   (dotemacs-modeline-buffer-modified :inherit 'bold :foreground orange)
 
    ((line-number &override) :foreground base5 :distant-foreground nil)
    ((line-number-current-line &override) :foreground base7 :distant-foreground nil)

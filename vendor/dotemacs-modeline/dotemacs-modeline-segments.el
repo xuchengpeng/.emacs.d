@@ -257,7 +257,7 @@ mouse-3: Toggle minor modes"
                                           (dotemacs-modeline-checker-text (number-to-string info)
                                                                         'dotemacs-modeline-info))))))
                 (`running     nil)
-                (`no-checker  (dotemacs-modeline-checker-text "-" 'dotemacs-modeline-debug))
+                (`no-checker  nil)
                 (`errored     (dotemacs-modeline-checker-text "Error" 'dotemacs-modeline-urgent))
                 (`interrupted (dotemacs-modeline-checker-text "Interrupted" 'dotemacs-modeline-debug))
                 (`suspicious  (dotemacs-modeline-checker-text "Suspicious" 'dotemacs-modeline-urgent))
@@ -347,9 +347,9 @@ mouse-3: Next error"
             (propertize
              text
              'help-echo (cond
-                         (some-waiting "Running...")
-                         ((null known) "No Checker")
-                         (all-disabled "All Checkers Disabled")
+                         (some-waiting dotemacs-modeline--flymake-text)
+                         ((null known) nil)
+                         (all-disabled nil)
                          (t (format "error: %d, warning: %d, note: %d
 mouse-1: List all problems%s"
                                     .error .warning .note
@@ -384,13 +384,14 @@ icons."
                     ((and (bound-and-true-p flymake-mode)
                          (bound-and-true-p flymake--backend-state)) ; only support 26+
                      dotemacs-modeline--flymake-text))))
-    (when text
-      (concat
-       (dotemacs-modeline-whitespace)
-       (if active
-           text
-         (propertize text 'face 'mode-line-inactive))
-       (dotemacs-modeline-whitespace)))))
+    (if text
+        (concat
+         (dotemacs-modeline-whitespace)
+         (if active
+             text
+           (propertize text 'face 'mode-line-inactive))
+         (dotemacs-modeline-whitespace))
+      "")))
 
 ;;
 ;; selection-info

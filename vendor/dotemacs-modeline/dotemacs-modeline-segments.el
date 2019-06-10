@@ -148,7 +148,7 @@ buffer where knowing the current project directory is important."
   (propertize
    (concat
     (dotemacs-modeline-spc)
-    (propertize mode-name
+    (propertize (format-mode-line mode-name)
                 'help-echo "Major mode\n\
 mouse-1: Display major mode menu\n\
 mouse-2: Show help for major mode\n\
@@ -178,7 +178,7 @@ mouse-3: Toggle minor modes"
        (concat
         (replace-regexp-in-string (regexp-quote "%")
                                   "%%%%"
-                                  (format-mode-line '("" minor-mode-alist))
+                                  (format-mode-line minor-mode-alist)
                                   t t)
         " ")
        'face (if active
@@ -194,7 +194,7 @@ mouse-3: Toggle minor modes"
   (if (dotemacs-modeline--active)
       mode-line-process
     (propertize
-     (format-mode-line '("" mode-line-process))
+     (format-mode-line mode-line-process)
      'face 'mode-line-inactive)))
 
 (defvar dotemacs-modeline-vcs-max-length 12

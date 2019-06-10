@@ -187,7 +187,12 @@ between 0 and 1)."
   (declare (indent defun))
   (apply #'custom-theme-set-faces
          (or theme 'user)
-         (mapcar #'dotemacs-themes--build-face faces)))
+         (eval
+          `(let* ((bold   ,dotemacs-themes-enable-bold)
+                  (italic ,dotemacs-themes-enable-italic)
+                  ,@(cl-loop for (var . val) in dotemacs-themes--colors
+                             collect `(,var ',val)))
+             (list ,@(mapcar #'dotemacs-themes--build-face faces))))))
 
 (defmacro def-dotemacs-theme (name docstring defs &optional extra-faces extra-vars)
   "Define a dotemacs theme, named NAME (a symbol)."

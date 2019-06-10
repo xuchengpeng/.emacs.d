@@ -290,7 +290,7 @@
   "Whether is an active window."
   (eq (selected-window) dotemacs-modeline-current-window))
 
-(defsubst dotemacs-modeline-whitespace ()
+(defsubst dotemacs-modeline-spc ()
   "Text style with whitespace."
   (propertize " " 'face (if (dotemacs-modeline--active)
                             'mode-line

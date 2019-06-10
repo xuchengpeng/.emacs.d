@@ -81,7 +81,7 @@
   "Displays `default-directory'. This is for special buffers like the scratch
 buffer where knowing the current project directory is important."
   (let ((active (dotemacs-modeline--active)))
-    (concat (dotemacs-modeline-whitespace)
+    (concat (dotemacs-modeline-spc)
             (propertize (abbreviate-file-name default-directory)
                         'face (if active
                                   'dotemacs-modeline-buffer-path
@@ -147,7 +147,7 @@ buffer where knowing the current project directory is important."
   "The major mode, including environment and text-scale info."
   (propertize
    (concat
-    (dotemacs-modeline-whitespace)
+    (dotemacs-modeline-spc)
     (propertize mode-name
                 'help-echo "Major mode\n\
 mouse-1: Display major mode menu\n\
@@ -162,7 +162,7 @@ mouse-3: Toggle minor modes"
               " (%+d)"
             " (%-d)")
           text-scale-mode-amount))
-    (dotemacs-modeline-whitespace))
+    (dotemacs-modeline-spc))
    'face (if (dotemacs-modeline--active)
              'dotemacs-modeline-buffer-major-mode
            'mode-line-inactive)))
@@ -226,11 +226,11 @@ mouse-3: Toggle minor modes"
   (let ((active (dotemacs-modeline--active)))
     (when-let ((text (or dotemacs-modeline--vcs-text (dotemacs-modeline-update-vcs-text))))
       (concat
-       (dotemacs-modeline-whitespace)
+       (dotemacs-modeline-spc)
        (if active
            text
          (propertize text 'face 'mode-line-inactive))
-       (dotemacs-modeline-whitespace)))))
+       (dotemacs-modeline-spc)))))
 
 (defun dotemacs-modeline-checker-text (text &optional face)
   "Displays TEXT with FACE."
@@ -386,11 +386,11 @@ icons."
                      dotemacs-modeline--flymake-text))))
     (if text
         (concat
-         (dotemacs-modeline-whitespace)
+         (dotemacs-modeline-spc)
          (if active
              text
            (propertize text 'face 'mode-line-inactive))
-         (dotemacs-modeline-whitespace))
+         (dotemacs-modeline-spc))
       "")))
 
 ;;
@@ -616,6 +616,7 @@ Returns \"\" to not break --no-window-system."
                                  (max (or height dotemacs-modeline-height)
                                       (ceiling (* 1.3 (frame-char-height)))))))
 (add-hook 'dotemacs-init-ui-hook #'dotemacs-modeline-refresh-bars)
+(add-hook 'window-configuration-change-hook #'dotemacs-modeline-refresh-bars)
 
 ;;
 ;; misc info

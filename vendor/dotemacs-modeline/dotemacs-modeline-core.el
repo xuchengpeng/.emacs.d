@@ -296,22 +296,6 @@
                             'mode-line
                           'mode-line-inactive)))
 
-(defvar-local dotemacs-modeline-project-root nil)
-(defun dotemacs-modeline-project-root ()
-  "Get the path to the root of your project.
-  Return `default-directory' if no project was found."
-  (or dotemacs-modeline-project-root
-      (setq dotemacs-modeline-project-root
-            (file-local-name
-             (or
-              (when (bound-and-true-p projectile-mode)
-                (ignore-errors (projectile-project-root)))
-              (when (fboundp 'project-current)
-                (ignore-errors
-                  (when-let ((project (project-current)))
-                    (expand-file-name (car (project-roots project))))))
-              default-directory)))))
-
 (defun dotemacs-modeline--make-xpm (face width height)
   "Create an XPM bitmap via FACE, WIDTH and HEIGHT. Inspired by `powerline''s `pl/make-xpm'."
   (when (and (display-graphic-p)

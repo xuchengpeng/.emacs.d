@@ -53,4 +53,5 @@
             +export     ; Exporting org to whatever you want
             +publish    ; Publish org to html blog
             )
+           ;; plantuml
            )

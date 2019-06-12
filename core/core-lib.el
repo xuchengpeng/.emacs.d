@@ -144,12 +144,12 @@ list is returned as-is."
   (let ((file (FILE!)))
     (and file (file-name-directory file))))
 
-(defmacro λ! (&rest body)
+(defmacro lambda! (&rest body)
   "A shortcut for inline interactive lambdas."
   (declare (doc-string 1))
   `(lambda () (interactive) ,@body))
 
-(defalias 'lambda! 'λ!)
+(defalias 'λ! 'lambda!)
 
 (defmacro after! (targets &rest body)
   "A smart wrapper around `with-eval-after-load' that:

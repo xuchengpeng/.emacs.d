@@ -49,6 +49,8 @@
 (defvar dotemacs-init-modules-hook nil
   "A list of hooks that run after modules' config.el files have loaded.")
 
+(defvaralias 'dotemacs-after-init-modules-hook 'after-init-hook)
+
 ;;
 ;; Functions
 

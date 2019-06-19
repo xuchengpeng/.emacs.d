@@ -114,8 +114,8 @@
         recentf-auto-cleanup 'never
         recentf-exclude (list "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$" "^/tmp/" "^/ssh:"
                               "\\.?ido\\.last$" "\\.revive$" "/TAGS$" "^/var/folders/.+$"
-                              (recentf-apply-filename-handlers dotemacs-cache-dir)
-                              (recentf-apply-filename-handlers dotemacs-local-dir)))
+                              (regexp-quote (recentf-apply-filename-handlers dotemacs-cache-dir))
+                              (regexp-quote (recentf-apply-filename-handlers dotemacs-local-dir))))
   (quiet! (recentf-mode +1)))
 
 (use-package server

@@ -44,22 +44,20 @@ while they run.")
     'face 'font-lock-comment-face)
    "\n"))
 
-(defun +dashboard|init (&optional force)
+(defun +dashboard|init ()
   "Initialize dashboard."
   (let ((buffer-exists (buffer-live-p (get-buffer +dashboard-buffer-name)))
         (save-line nil))
     (when (or (not (eq +dashboard-buffer-window-width (window-width)))
-              (not buffer-exists)
-              force)
+              (not buffer-exists))
       (setq +dashboard-buffer-window-width (window-width))
       (with-current-buffer (get-buffer-create +dashboard-buffer-name)
         (let ((buffer-read-only nil)
               (list-separator "\n\n"))
           (erase-buffer)
-          (run-hooks '+dashboard-widget-functions)))
-      (switch-to-buffer +dashboard-buffer-name)
-      (+dashboard-mode)
-      (goto-char (point-min)))))
+          (run-hooks '+dashboard-widget-functions))
+        (+dashboard-mode))
+        (goto-char (point-min)))))
 
 (defun +dashboard|resize-on-hook (&optional _)
   "Hook run on window resize events to redisplay the home buffer."
@@ -70,15 +68,25 @@ while they run.")
       (with-selected-window space-win
         (+dashboard|init)))))
 
-(defun +dashboard|make-frame (frame)
-  "Reload the dashboard after a brief pause. This is necessary for new frames,
-whose dimensions may not be fully initialized by the time this is run."
-  (run-with-timer 0.1 nil #'+dashboard|reload frame))
-
 (setq dotemacs-fallback-buffer-name +dashboard-buffer-name)
 
 (add-hook 'window-setup-hook
           (lambda ()
             (add-hook 'window-size-change-functions '+dashboard|resize-on-hook)
-            (add-hook 'after-make-frame-functions #'+dashboard|make-frame)
-            (+dashboard|init t)))
+            (+dashboard|resize-on-hook)))
+
+(defun +dashboard|startup-hook ()
+  "Setup post initialization hooks.
+If a command line argument is provided,
+assume a filename and skip displaying Dashboard."
+  (if (< (length command-line-args) 2 )
+      (progn
+        (add-hook 'after-init-hook (lambda ()
+                                     ;; Display useful lists of items
+                                     (+dashboard|init)))
+        (add-hook 'emacs-startup-hook '(lambda ()
+                                         (switch-to-buffer +dashboard-buffer-name)
+                                         (goto-char (point-min))
+                                         (redisplay))))))
+
+(+dashboard|startup-hook)

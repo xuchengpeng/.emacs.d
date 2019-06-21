@@ -6,4 +6,7 @@
 of the current FRAME."
   (interactive (list (selected-frame)))
   (with-selected-frame frame
-    (+dashboard|init t)))
+    (+dashboard|init)
+    (switch-to-buffer +dashboard-buffer-name)
+    (goto-char (point-min))
+    (redisplay)))

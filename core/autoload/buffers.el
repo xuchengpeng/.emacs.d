@@ -106,7 +106,7 @@ If BUFFER-OR-NAME is omitted or nil, the current buffer is tested."
   (or (bufferp buffer-or-name)
       (stringp buffer-or-name)
       (signal 'wrong-type-argument (list '(bufferp stringp) buffer-or-name)))
-  (when-let* ((buf (get-buffer buffer-or-name)))
+  (when-let (buf (get-buffer buffer-or-name))
     (and (not (dotemacs-temp-buffer-p buf))
          (or (buffer-local-value 'dotemacs-real-buffer-p buf)
              (run-hook-with-args-until-success 'dotemacs-real-buffer-functions buf)

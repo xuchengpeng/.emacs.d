@@ -165,7 +165,7 @@ This should be run whenever init.el or an autoload file is modified."
 (defun dotemacs-module-get (category module &optional property)
   "Returns the plist for CATEGORY MODULE. Gets PROPERTY, specifically, if set."
   (declare (pure t) (side-effect-free t))
-  (when-let* ((plist (gethash (cons category module) dotemacs-modules)))
+  (when-let (plist (gethash (cons category module) dotemacs-modules))
     (if property
         (plist-get plist property)
       plist)))

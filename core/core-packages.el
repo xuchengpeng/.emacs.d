@@ -96,7 +96,7 @@ missing) and shouldn't be deleted.")
 
 (defun dotemacs-install-packages (packages-list)
   "Install packages defined by PACKAGES-LIST."
-  (when-let* ((packages (cl-remove-if #'package-installed-p packages-list)))
+  (when-let (packages (cl-remove-if #'package-installed-p packages-list))
     (dolist (package packages)
       (let ((inhibit-message t))
         (package-install package))

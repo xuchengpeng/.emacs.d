@@ -4,7 +4,7 @@
 
 (dotemacs! :completion
            company
-           ivy
+           helm
            :ui
            (window-select +switch-window)
            workspaces

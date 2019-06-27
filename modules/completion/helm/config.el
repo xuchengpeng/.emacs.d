@@ -3,13 +3,22 @@
 (use-package helm
   :defer t
   :config
-  (setq helm-display-header-line nil
+  (setq helm-candidate-number-limit 50
+        ;; Remove extraineous helm UI elements
+        helm-display-header-line nil
         helm-mode-line-string nil
+        helm-ff-auto-update-initial-value nil
+        helm-find-files-doc-header nil
+        ;; Don't override evil-ex's completion
+        helm-mode-handle-completion-in-region nil
+        ;; Default helm window sizes
         helm-display-buffer-default-width nil
         helm-display-buffer-default-height 0.25
+        ;; When calling `helm-semantic-or-imenu', don't immediately jump to
+        ;; symbol at point
         helm-imenu-execute-action-at-once-if-one nil
-        helm-echo-input-in-header-line t
-        helm-bookmark-show-location t)
+        ;; disable special behavior for left/right, M-left/right keys.
+        helm-ff-lynx-style-map nil)
   
   (let ((command
          (cond

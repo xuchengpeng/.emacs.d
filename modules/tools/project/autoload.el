@@ -1,11 +1,14 @@
 ;;; tools/project/autoload.el -*- lexical-binding: t; -*-
 
+(defvar projectile-project-root nil)
+
 ;;;###autoload
 (defmacro without-project-cache! (&rest body)
   "Run BODY with projectile's project-root cache disabled. This is necessary if
 you want to interactive with a project other than the one you're in."
   `(let ((projectile-project-root-cache (make-hash-table :test 'equal))
          projectile-project-name
+         projectile-project-root
          projectile-require-project-root)
      ,@body))
 
@@ -18,19 +21,28 @@ they are absolute."
   `(file-exists-p! ,files (dotemacs-project-root)))
 
 ;;;###autoload
-(defalias 'dotemacs-project-p #'projectile-project-p)
+(defun dotemacs-project-p (&optional dir)
+  "Return t if DIR (defaults to `default-directory') is a valid project."
+  (and (dotemacs-project-root dir)
+       t))
 
 ;;;###autoload
-(defalias 'dotemacs-project-root #'projectile-project-root)
+(defun dotemacs-project-root (&optional dir)
+  "Return the project root of DIR (defaults to `default-directory').
+Returns nil if not in a project."
+  (let ((projectile-project-root (unless dir projectile-project-root))
+        projectile-require-project-root)
+    (projectile-project-root dir)))
 
 ;;;###autoload
 (defun dotemacs-project-name (&optional dir)
-  "Return the name of the current project."
-  (let ((project-root (or (projectile-project-root dir)
-                          (if dir (expand-file-name dir)))))
-    (if project-root
-        (funcall projectile-project-name-function project-root)
-      "-")))
+  "Return the name of the current project.
+
+Returns '-' if not in a valid project."
+  (if-let* ((project-root (or (dotemacs-project-root dir)
+                              (if dir (expand-file-name dir)))))
+      (funcall projectile-project-name-function project-root)
+    "-"))
 
 ;;;###autoload
 (defun dotemacs-project-expand (name &optional dir)
@@ -39,23 +51,47 @@ they are absolute."
 
 ;;;###autoload
 (defun dotemacs-project-find-file (dir)
-  "Fuzzy-find a file under DIR."
-  (without-project-cache!
-   (let* ((default-directory (file-truename dir))
-          projectile-project-root)
-     (call-interactively
-      ;; completion modules may remap this command
-      (or (command-remapping #'projectile-find-file)
-          #'projectile-find-file)))))
+ "Jump to a file in DIR (searched recursively).
+
+If DIR is not a project, it will be indexed (but not cached)."
+  (unless (file-directory-p dir)
+    (error "Directory %S does not exist" dir))
+  (unless (file-readable-p dir)
+    (error "Directory %S isn't readable" dir))
+  (let* ((default-directory (file-truename (expand-file-name dir)))
+         (project-root (dotemacs-project-root default-directory))
+         (projectile-project-root default-directory)
+         (projectile-enable-caching projectile-enable-caching))
+    (cond ((and project-root (file-equal-p project-root projectile-project-root))
+           (unless (dotemacs-project-p projectile-project-root)
+             ;; Disable caching if this is not a real project; caching
+             ;; non-projects easily has the potential to inflate the projectile
+             ;; cache beyond reason.
+             (setq projectile-enable-caching nil))
+           (call-interactively
+            ;; Intentionally avoid `helm-projectile-find-file', because it runs
+            ;; asynchronously, and thus doesn't see the lexical `default-directory'
+            (if (featurep! :completion ivy)
+                #'counsel-projectile-find-file
+              #'projectile-find-file)))
+          ((fboundp 'project-find-file-in) ; emacs 26.1+ only
+           (project-find-file-in nil (list default-directory) nil))
+          ((fboundp 'counsel-file-jump) ; ivy only
+           (call-interactively #'counsel-file-jump))
+          ((fboundp 'helm-find-files)
+           (call-interactively #'helm-find-files))
+          ((call-interactively #'find-file)))))
 
 ;;;###autoload
 (defun dotemacs-project-browse (dir)
   "Traverse a file structure starting linearly from DIR."
-  (let ((default-directory (file-truename dir)))
+  (let ((default-directory (file-truename (expand-file-name dir))))
     (call-interactively
-     ;; completion modules may remap this command
-     (or (command-remapping #'find-file)
-         #'find-file))))
+     (cond ((featurep! :completion ivy)
+            #'counsel-find-file)
+           ((featurep! :completion helm)
+            #'helm-find-files)
+           (#'find-file)))))
 
 ;;;###autoload
 (defun dotemacs-project-buffer-list ()

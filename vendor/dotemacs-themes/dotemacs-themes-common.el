@@ -658,6 +658,7 @@
 
     ;; ivy-posframe
     (ivy-posframe :background (dotemacs-darken bg-alt 0.2))
+    (ivy-posframe-border :inherit 'internal-border)
 
     ;; jabber
     (jabber-activity-face          :foreground red   :weight 'bold)

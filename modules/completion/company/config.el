@@ -11,9 +11,13 @@
         company-minimum-prefix-length 2
         company-dabbrev-downcase nil
         company-dabbrev-ignore-case nil
-        company-require-match nil
-        company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode))
+        company-require-match 'never
+        company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode)
+        company-backends '(company-capf)
+        company-frontends
+        '(company-pseudo-tooltip-frontend
+          company-echo-metadata-frontend))
   
-  (setq company-backends (mapcar #'+company/backend-with-yas company-backends))
+  (add-hook 'company-mode-hook #'+company|init-backends)
   
   (global-company-mode +1))

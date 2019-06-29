@@ -4,4 +4,3 @@
 (package! helm-ag)
 (package! helm-descbinds)
 (package! helm-projectile)
-(package! helm-swoop)

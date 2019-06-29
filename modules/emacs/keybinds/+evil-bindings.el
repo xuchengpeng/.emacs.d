@@ -16,7 +16,7 @@
   
   ;; search
   "/I"      '(imenu-anywhere :which-key "Jump to symbol across buffers")
-  "/b"      (cond ((featurep! :completion helm) '(helm-swoop :which-key "Search buffer"))
+  "/b"      (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
                   ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
   "/d"      '(+default/search-from-cwd :which-key "Search current directory")
   "/i"      '(imenu :which-key "Jump to symbol")
@@ -184,17 +184,7 @@
     "C-z"           'helm-select-action)
   
   (define-key! isearch-mode-map
-    "M-i"           'helm-swoop-from-isearch)
-  
-  (define-key! helm-swoop-map
-    "M-i"           'helm-multi-swoop-all-from-helm-swoop
-    "M-m"           'helm-multi-swoop-current-mode-from-helm-swoop
-    "C-r"           'helm-previous-line
-    "C-s"           'helm-next-line)
-  
-  (define-key! helm-multi-swoop-map
-    "C-r"           'helm-previous-line
-    "C-s"           'helm-next-line))
+    "M-i"           'helm-occur-from-isearch))
 
 ;;
 ;; ivy

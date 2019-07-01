@@ -1,27 +1,27 @@
-;;; dotemacs-themes-org.el --- improve org-mode support for dotemacs-themes -*- lexical-binding: t; -*-
+;;; dotemacs-themes-ext-org.el --- improve org-mode support for dotemacs-themes -*- lexical-binding: t; -*-
 
-(defgroup dotemacs-org nil
+(defgroup dotemacs-themes-org nil
   "Options for dotemacs's org customizations."
   :group 'dotemacs-themes)
 
 (defcustom dotemacs-org-special-tags t
   "If non-nil, highlight #hashtags and @attags especially."
   :type 'boolean
-  :group 'dotemacs-org)
+  :group 'dotemacs-themes-org)
 
 ;; TODO Remove this once released with org-mode
 (defface org-upcoming-distant-deadline '((t :inherit font-lock-comment-face))
   "Face for items scheduled previously, not done, and have a distant deadline.
 See also `org-agenda-deadline-faces'."
-  :group 'dotemacs-org)
+  :group 'dotemacs-themes-org)
 
 ;;
-(defsubst dotemacs-org--tag-face (n)
+(defsubst dotemacs-themes--org-tag-face (n)
   (let ((kwd (match-string n)))
     (or (and (equal kwd "#") 'org-tag)
         (and (equal kwd "@") 'org-formula))))
 
-(defun dotemacs-org-custom-fontification ()
+(defun dotemacs-themes-enable-org-fontification ()
   "Correct (and improve) org-mode's font-lock keywords.
 
   1. Re-set `org-todo' & `org-headline-done' faces, to make them respect
@@ -65,7 +65,7 @@ See also `org-agenda-deadline-faces'."
                ("^ *\\(-----+\\)$" 1 'org-meta-line))
              ;; custom #hashtags & @at-tags for another level of organization
              (when dotemacs-org-special-tags
-               '(("\\s-\\(\\([#@]\\)[^+ \n.,]+\\)" 1 (dotemacs-org--tag-face 2) prepend)))))))
+               '(("\\s-\\(\\([#@]\\)[^+ \n.,]+\\)" 1 (dotemacs-themes--org-tag-face 2) prepend)))))))
 
 
 ;; Bootstrap
@@ -80,7 +80,11 @@ See also `org-agenda-deadline-faces'."
         (0.5 . org-upcoming-deadline)
         (0.0 . org-upcoming-distant-deadline)))
 
-(add-hook 'org-font-lock-set-keywords-hook #'dotemacs-org-custom-fontification)
+(add-hook 'org-font-lock-set-keywords-hook #'dotemacs-themes-enable-org-fontification)
 
-(provide 'dotemacs-themes-org)
-;;; dotemacs-themes-org.el ends here
+;;;###autoload
+(defun dotemacs-themes-org-config ()
+  "Enable custom fontification & improves theme integration with org-mode.")
+
+(provide 'dotemacs-themes-ext-org)
+;;; dotemacs-themes-ext-org.el ends here

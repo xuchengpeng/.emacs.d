@@ -1,55 +1,57 @@
-;;; dotemacs-themes-neotree.el -*- lexical-binding: t; -*-
+;;; dotemacs-themes-ext-neotree.el -*- lexical-binding: t; -*-
 
-(defgroup dotemacs-neotree nil
+(defgroup dotemacs-themes-neotree nil
   "Options for dotemacs's neotree theme"
   :group 'dotemacs-themes)
 
-;;
-(defcustom dotemacs-neotree-line-spacing 2
+(defcustom dotemacs-themes-neotree-line-spacing 2
   "Line-spacing for neotree buffer."
   :type 'symbol
-  :group 'dotemacs-neotree)
+  :group 'dotemacs-themes-neotree)
 
-(defcustom dotemacs-neotree-enable-variable-pitch nil
-  "If non-nil, labels will use the `variable-pitch' face."
+(defcustom dotemacs-themes-neotree-enable-variable-pitch nil
+  "If non-nil, labels will use the `dotemacs-themes-neotree-dir-face' and
+`dotemacs-themes-neotree-dir-face' faces, which inherit from the `variable-pitch' face."
   :type 'boolean
-  :group 'dotemacs-neotree)
+  :group 'dotemacs-themes-neotree)
 
-
-;;
-(defun dotemacs--neotree-no-fringes ()
-  "Remove fringes in neotree. They get reset each time you select the neotree
-pane and are highlighted incorrectly."
+(defun dotemacs-themes--neotree-no-fringes ()
+  "Remove fringes in neotree.
+They are reset each time you select the neotree pane and highlighted
+incorrectly, so remove them."
   (set-window-fringes neo-global--window 0 0))
 
-(defun dotemacs--neotree-setup (&rest _)
-  (setq line-spacing dotemacs-neotree-line-spacing
+(defun dotemacs-themes--neotree-setup (&rest _)
+  (setq line-spacing dotemacs-themes-neotree-line-spacing
         tab-width 1)
   (when (featurep 'hl-line)
     (set (make-local-variable 'hl-line-sticky-flag) t)
     (hl-line-mode +1)))
 
-;;
-(defun dotemacs-neotree-insert-root (node)
+(defun dotemacs-themes-neotree-insert-root (node)
   ;; insert project name
   (insert
    (propertize
     (concat (or (neo-path--file-short-name node) "-")
             "\n")
-    'face `(:inherit ,(append (if dotemacs-neotree-enable-variable-pitch '(variable-pitch))
+    'face `(:inherit ,(append (if dotemacs-themes-neotree-enable-variable-pitch '(variable-pitch))
                               '(neo-root-dir-face))))))
 
-;;
-(eval-after-load 'neotree
-  (lambda ()
-    ;; Enable buffer-local hl-line and adjust line-spacing
-    (add-hook 'neo-after-create-hook #'dotemacs--neotree-setup)
-    ;; Incompatible
-    (setq neo-vc-integration nil)
-    ;; Remove fringes in Neotree pane
-    (advice-add #'neo-global--select-window :after #'dotemacs--neotree-no-fringes)
-    ;; Shorter pwd in neotree
-    (advice-add #'neo-buffer--insert-root-entry :override #'dotemacs-neotree-insert-root)))
+(with-eval-after-load 'neotree
+  ;; Incompatible with this theme
+  (setq neo-vc-integration nil)
+  ;; Enable buffer-local hl-line and adjust line-spacing
+  (add-hook 'neo-after-create-hook #'dotemacs-themes--neotree-setup)
+  ;; Remove fringes in Neotree pane
+  (advice-add #'neo-global--select-window :after #'dotemacs-themes--neotree-no-fringes)
+  ;; Shorter pwd in neotree
+  (advice-add #'neo-buffer--insert-root-entry :override #'dotemacs-themes-neotree-insert-root))
 
-(provide 'dotemacs-themes-neotree)
-;;; dotemacs-themes-neotree.el ends here
+;;;###autoload
+(defun dotemacs-themes-neotree-config ()
+  "Install dotemacs-themes' neotree configuration.
+
+Includes an Atom-esque icon theme and highlighting based on filetype.")
+
+(provide 'dotemacs-themes-ext-neotree)
+;;; dotemacs-themes-ext-neotree.el ends here

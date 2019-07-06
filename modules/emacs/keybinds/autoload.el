@@ -1,7 +1,7 @@
 ;;; emacs/keybinds/autoload.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
-(defun +default/search-from-cwd (&optional arg)
+(defun +default/search-cwd (&optional arg)
   "Conduct a text search in files under the current folder.
 If prefix ARG is set, prompt for a directory to search from."
   (interactive "P")
@@ -12,7 +12,13 @@ If prefix ARG is set, prompt for a directory to search from."
     (call-interactively
      (cond ((featurep! :completion ivy)  #'+ivy/project-search-from-cwd)
            ((featurep! :completion helm) #'+helm/project-search-from-cwd)
-           (#'projectile-grep)))))
+           (#'rgrep)))))
+
+;;;###autoload
+(defun +default/search-other-cwd ()
+  "Conduct a text search in another directory."
+  (interactive)
+  (+default/search-cwd 'other))
 
 ;;;###autoload
 (defun +default/search-project (&optional arg)
@@ -29,7 +35,13 @@ If prefix ARG is set, prompt for a known project to search from."
     (call-interactively
      (cond ((featurep! :completion ivy)  #'+ivy/project-search)
            ((featurep! :completion helm) #'+helm/project-search)
-           (#'rgrep)))))
+           (#'projectile-grep)))))
+
+;;;###autoload
+(defun +default/search-other-project ()
+  "Conduct a text search in a known project."
+  (interactive)
+  (+default/search-project 'other))
 
 ;;;###autoload
 (defun +default/search-project-for-symbol-at-point (&optional arg symbol)

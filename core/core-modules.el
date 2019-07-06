@@ -56,6 +56,9 @@
 
 (defun dotemacs-initialize-modules ()
   "Initialize modules."
+  (unless (hash-table-p dotemacs-modules)
+      (setq dotemacs-modules (make-hash-table :test 'equal)))
+  
   (dotemacs-initialize-autoload)
   
   (maphash (lambda (key plist)

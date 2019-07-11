@@ -149,7 +149,15 @@ list is returned as-is."
   (declare (doc-string 1))
   `(lambda () (interactive) ,@body))
 
+(defmacro lambda!! (command &optional arg)
+  "Expands to a command that interactively calls COMMAND with prefix ARG."
+  (declare (doc-string 1))
+  `(lambda () (interactive)
+     (let ((current-prefix-arg ,arg))
+       (call-interactively ,command))))
+
 (defalias 'λ! 'lambda!)
+(defalias 'λ!! 'lambda!!)
 
 (defmacro after! (targets &rest body)
   "A smart wrapper around `with-eval-after-load' that:

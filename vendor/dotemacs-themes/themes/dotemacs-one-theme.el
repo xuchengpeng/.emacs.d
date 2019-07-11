@@ -76,7 +76,7 @@ determine the exact padding."
    (strings        green)
    (variables      (dotemacs-lighten magenta 0.4))
    (numbers        orange)
-   (region         `(,(dotemacs-lighten (car bg-alt) 0.15) ,@(dotemacs-lighten (cdr base0) 0.35)))
+   (region         `(,(dotemacs-lighten (car bg-alt) 0.15) ,@(dotemacs-lighten (cdr base1) 0.35)))
    (error          red)
    (warning        yellow)
    (success        green)

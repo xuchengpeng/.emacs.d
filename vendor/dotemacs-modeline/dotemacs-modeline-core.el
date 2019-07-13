@@ -68,56 +68,67 @@
   and`iedit', etc.")
 
 (defface dotemacs-modeline-debug
-  `((t (:inherit font-lock-doc-face)))
+  '((t (:inherit font-lock-doc-face)))
   "Face for debug-level messages in the modeline. Used by `*flycheck'.")
 
 (defface dotemacs-modeline-info
-  `((t (:inherit (success bold))))
+  '((t (:inherit (success bold))))
   "Face for info-level messages in the modeline. Used by `*vc'.")
 
 (defface dotemacs-modeline-warning
-  `((t (:inherit (warning bold))))
+  '((t (:inherit (warning bold))))
   "Face for warnings in the modeline. Used by `*flycheck'")
 
 (defface dotemacs-modeline-urgent
-  `((t (:inherit (error bold))))
+  '((t (:inherit (error bold))))
   "Face for errors in the modeline. Used by `*flycheck'")
 
 (defface dotemacs-modeline-unread-number
-  `((t (:inherit italic)))
+  '((t (:inherit italic)))
   "Face for unread number in the modeline. Used by `github', `mu4e', etc.")
 
-(defface dotemacs-modeline-bar '((t (:inherit highlight)))
+(defface dotemacs-modeline-bar
+  '((t (:inherit highlight)))
   "The face used for the left-most bar on the mode-line of an active window.")
 
-(defface dotemacs-modeline-inactive-bar `((t (:background ,(face-foreground 'mode-line-inactive))))
+(defface dotemacs-modeline-inactive-bar
+  `((t (:background ,(face-foreground 'mode-line-inactive))))
   "The face used for the left-most bar on the mode-line of an inactive window.")
 
-(defface dotemacs-modeline-evil-emacs-state '((t (:inherit dotemacs-modeline-warning)))
+(defface dotemacs-modeline-evil-emacs-state
+  '((t (:inherit dotemacs-modeline-warning)))
   "Face for the Emacs state tag in evil state indicator.")
 
-(defface dotemacs-modeline-evil-insert-state '((t (:inherit dotemacs-modeline-urgent)))
+(defface dotemacs-modeline-evil-insert-state
+  '((t (:inherit dotemacs-modeline-urgent)))
   "Face for the insert state tag in evil state indicator.")
 
-(defface dotemacs-modeline-evil-motion-state '((t :inherit dotemacs-modeline-buffer-path))
+(defface dotemacs-modeline-evil-motion-state
+  '((t :inherit dotemacs-modeline-buffer-path))
   "Face for the motion state tag in evil state indicator.")
 
-(defface dotemacs-modeline-evil-normal-state '((t (:inherit dotemacs-modeline-info)))
+(defface dotemacs-modeline-evil-normal-state
+  '((t (:inherit dotemacs-modeline-info)))
   "Face for the normal state tag in evil state indicator.")
 
-(defface dotemacs-modeline-evil-operator-state '((t (:inherit dotemacs-modeline-buffer-path)))
+(defface dotemacs-modeline-evil-operator-state
+  '((t (:inherit dotemacs-modeline-buffer-path)))
   "Face for the operator state tag in evil state indicator.")
 
-(defface dotemacs-modeline-evil-visual-state '((t (:inherit dotemacs-modeline-buffer-file)))
+(defface dotemacs-modeline-evil-visual-state
+  '((t (:inherit dotemacs-modeline-buffer-file)))
   "Face for the visual state tag in evil state indicator.")
 
-(defface dotemacs-modeline-evil-replace-state '((t (:inherit dotemacs-modeline-buffer-modified)))
+(defface dotemacs-modeline-evil-replace-state
+  '((t (:inherit dotemacs-modeline-buffer-modified)))
   "Face for the replace state tag in evil state indicator.")
 
-(defface dotemacs-modeline-persp-name '((t (:inherit (font-lock-comment-face italic))))
+(defface dotemacs-modeline-persp-name
+  '((t (:inherit (font-lock-comment-face italic))))
   "Face for the replace state tag in evil state indicator.")
 
-(defface dotemacs-modeline-persp-buffer-not-in-persp '((t (:inherit (font-lock-doc-face bold italic))))
+(defface dotemacs-modeline-persp-buffer-not-in-persp
+  '((t (:inherit (font-lock-doc-face bold italic))))
   "Face for the replace state tag in evil state indicator.")
 
 ;;

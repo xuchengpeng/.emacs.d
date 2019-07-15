@@ -3,28 +3,12 @@
 ;;; Code:
 
 ;;
-;; Variables
-;;
-
-(defvar dotemacs-modeline-height 25
-  "How tall the mode-line should be (only respected in GUI Emacs).")
-
-(defvar dotemacs-modeline-bar-width 3
-  "How wide the mode-line bar should be (only respected in GUI Emacs).")
-
-(defvar dotemacs-modeline-minor-modes t
-  "Whether display minor modes in mode-line or not.")
-
-(defvar dotemacs-modeline-enable-word-count t
-  "If non-nil, a word count will be added to the selection-info modeline segment.")
-
-;;
-;; Custom faces
+;; Customizations
 ;;
 
 (defgroup dotemacs-modeline nil
-  "dotemacs mode-line faces."
-  :group 'faces)
+  "dotemacs mode-line."
+  :group 'mode-line)
 
 (defface dotemacs-modeline-buffer-path
   '((t (:inherit (mode-line-emphasis bold))))
@@ -130,6 +114,18 @@
 (defface dotemacs-modeline-persp-buffer-not-in-persp
   '((t (:inherit (font-lock-doc-face bold italic))))
   "Face for the replace state tag in evil state indicator.")
+
+(defcustom dotemacs-modeline-height 25
+  "How tall the mode-line should be (only respected in GUI Emacs).")
+
+(defcustom dotemacs-modeline-bar-width 3
+  "How wide the mode-line bar should be (only respected in GUI Emacs).")
+
+(defcustom dotemacs-modeline-minor-modes t
+  "Whether display minor modes in mode-line or not.")
+
+(defcustom dotemacs-modeline-enable-word-count t
+  "If non-nil, a word count will be added to the selection-info modeline segment.")
 
 ;;
 ;; Externals

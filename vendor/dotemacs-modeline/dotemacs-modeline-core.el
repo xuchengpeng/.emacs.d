@@ -10,111 +10,6 @@
   "dotemacs mode-line."
   :group 'mode-line)
 
-(defface dotemacs-modeline-buffer-path
-  '((t (:inherit (mode-line-emphasis bold))))
-  "Face used for the dirname part of the buffer path.")
-
-(defface dotemacs-modeline-buffer-file
-  '((t (:inherit (mode-line-buffer-id bold))))
-  "Face used for the filename part of the mode-line buffer path.")
-
-(defface dotemacs-modeline-buffer-modified
-  '((t (:inherit (error bold) :background nil)))
-  "Face used for the 'unsaved' symbol in the mode-line.")
-
-(defface dotemacs-modeline-buffer-major-mode
-  '((t (:inherit (mode-line-emphasis bold))))
-  "Face used for the major-mode segment in the mode-line.")
-
-(defface dotemacs-modeline-buffer-minor-mode
-  '((t (:inherit (mode-line-buffer-id bold))))
-  "Face used for the minor-modes segment in the mode-line.")
-
-(defface dotemacs-modeline-project-parent-dir
-  '((t (:inherit (font-lock-comment-face bold))))
-  "Face used for the project parent directory of the mode-line buffer path.")
-
-(defface dotemacs-modeline-project-dir
-  '((t (:inherit (font-lock-string-face bold))))
-  "Face used for the project directory of the mode-line buffer path.")
-
-(defface dotemacs-modeline-project-root-dir
-  '((t (:inherit (mode-line-emphasis bold))))
-  "Face used for the project part of the mode-line buffer path.")
-
-(defface dotemacs-modeline-highlight
-  '((t (:inherit mode-line-emphasis)))
-  "Face for bright segments of the mode-line.")
-
-(defface dotemacs-modeline-panel
-  '((t (:inherit mode-line-highlight)))
-  "Face for 'X out of Y' segments, such as `anzu', `evil-substitute'
-  and`iedit', etc.")
-
-(defface dotemacs-modeline-debug
-  '((t (:inherit font-lock-doc-face)))
-  "Face for debug-level messages in the modeline. Used by `*flycheck'.")
-
-(defface dotemacs-modeline-info
-  '((t (:inherit (success bold))))
-  "Face for info-level messages in the modeline. Used by `*vc'.")
-
-(defface dotemacs-modeline-warning
-  '((t (:inherit (warning bold))))
-  "Face for warnings in the modeline. Used by `*flycheck'")
-
-(defface dotemacs-modeline-urgent
-  '((t (:inherit (error bold))))
-  "Face for errors in the modeline. Used by `*flycheck'")
-
-(defface dotemacs-modeline-unread-number
-  '((t (:inherit italic)))
-  "Face for unread number in the modeline. Used by `github', `mu4e', etc.")
-
-(defface dotemacs-modeline-bar
-  '((t (:inherit highlight)))
-  "The face used for the left-most bar on the mode-line of an active window.")
-
-(defface dotemacs-modeline-inactive-bar
-  `((t (:background ,(face-foreground 'mode-line-inactive))))
-  "The face used for the left-most bar on the mode-line of an inactive window.")
-
-(defface dotemacs-modeline-evil-emacs-state
-  '((t (:inherit dotemacs-modeline-warning)))
-  "Face for the Emacs state tag in evil state indicator.")
-
-(defface dotemacs-modeline-evil-insert-state
-  '((t (:inherit dotemacs-modeline-urgent)))
-  "Face for the insert state tag in evil state indicator.")
-
-(defface dotemacs-modeline-evil-motion-state
-  '((t :inherit dotemacs-modeline-buffer-path))
-  "Face for the motion state tag in evil state indicator.")
-
-(defface dotemacs-modeline-evil-normal-state
-  '((t (:inherit dotemacs-modeline-info)))
-  "Face for the normal state tag in evil state indicator.")
-
-(defface dotemacs-modeline-evil-operator-state
-  '((t (:inherit dotemacs-modeline-buffer-path)))
-  "Face for the operator state tag in evil state indicator.")
-
-(defface dotemacs-modeline-evil-visual-state
-  '((t (:inherit dotemacs-modeline-buffer-file)))
-  "Face for the visual state tag in evil state indicator.")
-
-(defface dotemacs-modeline-evil-replace-state
-  '((t (:inherit dotemacs-modeline-buffer-modified)))
-  "Face for the replace state tag in evil state indicator.")
-
-(defface dotemacs-modeline-persp-name
-  '((t (:inherit (font-lock-comment-face italic))))
-  "Face for the replace state tag in evil state indicator.")
-
-(defface dotemacs-modeline-persp-buffer-not-in-persp
-  '((t (:inherit (font-lock-doc-face bold italic))))
-  "Face for the replace state tag in evil state indicator.")
-
 (defcustom dotemacs-modeline-height 25
   "How tall the mode-line should be (only respected in GUI Emacs).")
 
@@ -126,6 +21,146 @@
 
 (defcustom dotemacs-modeline-enable-word-count t
   "If non-nil, a word count will be added to the selection-info modeline segment.")
+
+;;
+;; Faces
+;;
+
+(defgroup dotemacs-modeline-faces nil
+  "The faces of `dotemacs-modeline'."
+  :group 'dotemacs-modeline
+  :group 'faces)
+
+(defface dotemacs-modeline-buffer-path
+  '((t (:inherit (mode-line-emphasis bold))))
+  "Face used for the dirname part of the buffer path."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-buffer-file
+  '((t (:inherit (mode-line-buffer-id bold))))
+  "Face used for the filename part of the mode-line buffer path."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-buffer-modified
+  '((t (:inherit (error bold) :background nil)))
+  "Face used for the 'unsaved' symbol in the mode-line."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-buffer-major-mode
+  '((t (:inherit (mode-line-emphasis bold))))
+  "Face used for the major-mode segment in the mode-line."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-buffer-minor-mode
+  '((t (:inherit (mode-line-buffer-id bold))))
+  "Face used for the minor-modes segment in the mode-line."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-project-parent-dir
+  '((t (:inherit (font-lock-comment-face bold))))
+  "Face used for the project parent directory of the mode-line buffer path."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-project-dir
+  '((t (:inherit (font-lock-string-face bold))))
+  "Face used for the project directory of the mode-line buffer path."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-project-root-dir
+  '((t (:inherit (mode-line-emphasis bold))))
+  "Face used for the project part of the mode-line buffer path."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-highlight
+  '((t (:inherit mode-line-emphasis)))
+  "Face for bright segments of the mode-line."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-panel
+  '((t (:inherit mode-line-highlight)))
+  "Face for 'X out of Y' segments, such as `anzu', `evil-substitute'
+  and`iedit', etc."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-debug
+  '((t (:inherit font-lock-doc-face)))
+  "Face for debug-level messages in the modeline. Used by `*flycheck'."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-info
+  '((t (:inherit (success bold))))
+  "Face for info-level messages in the modeline. Used by `*vc'."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-warning
+  '((t (:inherit (warning bold))))
+  "Face for warnings in the modeline. Used by `*flycheck'"
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-urgent
+  '((t (:inherit (error bold))))
+  "Face for errors in the modeline. Used by `*flycheck'"
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-unread-number
+  '((t (:inherit italic)))
+  "Face for unread number in the modeline. Used by `github', `mu4e', etc."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-bar
+  '((t (:inherit highlight)))
+  "The face used for the left-most bar on the mode-line of an active window."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-inactive-bar
+  `((t (:background ,(face-foreground 'mode-line-inactive))))
+  "The face used for the left-most bar on the mode-line of an inactive window."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-evil-emacs-state
+  '((t (:inherit dotemacs-modeline-warning)))
+  "Face for the Emacs state tag in evil state indicator."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-evil-insert-state
+  '((t (:inherit dotemacs-modeline-urgent)))
+  "Face for the insert state tag in evil state indicator."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-evil-motion-state
+  '((t :inherit dotemacs-modeline-buffer-path))
+  "Face for the motion state tag in evil state indicator."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-evil-normal-state
+  '((t (:inherit dotemacs-modeline-info)))
+  "Face for the normal state tag in evil state indicator."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-evil-operator-state
+  '((t (:inherit dotemacs-modeline-buffer-path)))
+  "Face for the operator state tag in evil state indicator."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-evil-visual-state
+  '((t (:inherit dotemacs-modeline-buffer-file)))
+  "Face for the visual state tag in evil state indicator."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-evil-replace-state
+  '((t (:inherit dotemacs-modeline-buffer-modified)))
+  "Face for the replace state tag in evil state indicator."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-persp-name
+  '((t (:inherit (font-lock-comment-face italic))))
+  "Face for the replace state tag in evil state indicator."
+  :group 'dotemacs-modeline-faces)
+
+(defface dotemacs-modeline-persp-buffer-not-in-persp
+  '((t (:inherit (font-lock-doc-face bold italic))))
+  "Face for the replace state tag in evil state indicator."
+  :group 'dotemacs-modeline-faces)
 
 ;;
 ;; Externals

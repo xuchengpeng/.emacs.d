@@ -226,6 +226,10 @@
     (vterm-color-magenta :background magenta :foreground magenta)
     (vterm-color-cyan    :background cyan    :foreground cyan)
     (vterm-color-white   :background base8   :foreground base8)
+    
+    ;; widget
+    (widget-button-pressed :foreground red)
+    (widget-documentation  :foreground green)
 
     ;; window-divider
     (window-divider :inherit 'vertical-border)

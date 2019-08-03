@@ -1,4 +1,4 @@
-;;; dotemacs-peacock-theme.el
+;;; dotemacs-peacock-theme.el --- inspired by daylerees Peacock
 (require 'dotemacs-themes)
 
 (defgroup dotemacs-peacock-theme nil
@@ -29,7 +29,7 @@ determine the exact padding."
 
 ;;
 (def-dotemacs-theme dotemacs-peacock
-  "peacock theme!"
+  "Peacock theme from daylerees themes"
 
   ;; name        default   256       16
   ((bg         '("#2b2a27" nil       nil            ))

@@ -1,4 +1,4 @@
-;;; dotemacs-Iosvkem-theme.el --- inspired by Atom One Dark
+;;; dotemacs-Iosvkem-theme.el --- Inspired by VIM Iosvkem
 (require 'dotemacs-themes)
 
 ;;
@@ -30,7 +30,7 @@ determine the exact padding."
 
 ;;
 (def-dotemacs-theme dotemacs-Iosvkem
-  "A dark theme inspired by Atom One Dark"
+  "A dark theme inspired by VIM Iosvkem"
 
   ;; name        default   256       16
   ((bg         '("#1b1d1e" "#1b1d1e" nil))

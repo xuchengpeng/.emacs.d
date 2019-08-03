@@ -35,7 +35,7 @@ determine the exact padding."
   :type 'symbol)
 
 (def-dotemacs-theme dotemacs-opera-light
-  "A dark opera-light theme."
+  "A A light Opera theme."
 
   ;; name        default   256       16
   ((bg         '("#fafafa" nil       nil ))

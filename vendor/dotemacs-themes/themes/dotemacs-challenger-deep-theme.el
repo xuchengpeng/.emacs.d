@@ -1,4 +1,4 @@
-;;; dotemacs-challenger-deep-theme.el --- inspired by Atom City Lights
+;;; dotemacs-challenger-deep-theme.el --- inspired by VIM Challenger Deep
 (require 'dotemacs-themes)
 
 ;;
@@ -30,7 +30,7 @@ determine the exact padding."
 
 ;;
 (def-dotemacs-theme dotemacs-challenger-deep
-  "A dark theme inspired by Atom One Dark"
+  "A dark theme inspired by VIM Challenger Deep"
 
   ;; name        default   256       16
   ((bg         '("#1b182c" "#1c1c1c" nil            ))

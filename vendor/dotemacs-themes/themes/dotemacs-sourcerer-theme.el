@@ -1,4 +1,4 @@
-;; dotemacs-sourcerer-theme.el --- a more sourcerer version of dotemacs-one
+;; dotemacs-sourcerer-theme.el --- a more Sourcerer version of dotemacs-one
 ;;; Commentary:
 (require 'dotemacs-themes)
 ;;; Code:
@@ -32,7 +32,7 @@ Can be an integer to determine the exact padding."
 
 ;;
 (def-dotemacs-theme dotemacs-sourcerer
-  "A dark theme based off of xero's sourcerer vim colorscheme"
+  "A dark theme based off of xero's Sourcerer VIM colorscheme"
 
   ((bg         '("#202020"))
    (bg-alt     '("#222222"))

@@ -25,6 +25,7 @@
 ;;   `dotemacs-opera-light'
 ;;   `dotemacs-nova'
 ;;   `dotemacs-peacock'
+;;   `dotemacs-solarized-dark'
 ;;   `dotemacs-solarized-light'
 ;;   `dotemacs-sourcerer'
 ;;   `dotemacs-spacegrey'

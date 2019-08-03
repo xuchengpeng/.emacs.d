@@ -11,6 +11,7 @@
                                dotemacs-challenger-deep
                                dotemacs-city-lights
                                dotemacs-dracula
+                               dotemacs-gruvbox
                                dotemacs-Iosvkem
                                dotemacs-molokai
                                dotemacs-nord-light
@@ -19,6 +20,7 @@
                                dotemacs-opera-light
                                dotemacs-opera
                                dotemacs-peacock
+                               dotemacs-solarized-dark
                                dotemacs-solarized-light
                                dotemacs-sourcerer
                                dotemacs-spacegrey

@@ -20,6 +20,7 @@
                                dotemacs-nova
                                dotemacs-opera-light
                                dotemacs-opera
+                               dotemacs-outrun-electric
                                dotemacs-peacock
                                dotemacs-solarized-dark
                                dotemacs-solarized-light

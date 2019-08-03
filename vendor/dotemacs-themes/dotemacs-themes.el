@@ -16,7 +16,8 @@
 ;;
 ;; Additional themes
 ;;   `dotemacs-city-lights'
-;;   `dotemacs-darcula'
+;;   `dotemacs-dracula'
+;;   `dotemacs-fairy-floss'
 ;;   `dotemacs-gruvbox'
 ;;   `dotemacs-Iosvkem'
 ;;   `dotemacs-molokai'

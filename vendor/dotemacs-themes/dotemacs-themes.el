@@ -28,6 +28,7 @@
 ;;   `dotemacs-outrun-electric'
 ;;   `dotemacs-nova'
 ;;   `dotemacs-peacock'
+;;   `dotemacs-snazzy'
 ;;   `dotemacs-solarized-dark'
 ;;   `dotemacs-solarized-light'
 ;;   `dotemacs-sourcerer'

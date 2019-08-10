@@ -4,6 +4,9 @@
 ;;; Code:
 (require 'dotemacs-themes)
 
+;; Compiler pacifier
+(defvar modeline-bg)
+
 ;;
 (defgroup dotemacs-snazzy-theme nil
   "Options for dotemacs-themes"
@@ -89,6 +92,8 @@
    (line-number-current-line :foreground fg)
    ;; rjsx stuff
    (rjsx-text :foreground fg)
+   ;; tooltip
+   (tooltip              :background (dotemacs-darken bg-alt 0.2) :foreground fg)
 
    (ivy-posframe-border :background ui3)
 

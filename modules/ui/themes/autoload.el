@@ -21,6 +21,7 @@
                                dotemacs-opera-light
                                dotemacs-opera
                                dotemacs-outrun-electric
+                               dotemacs-palenight
                                dotemacs-peacock
                                dotemacs-snazzy
                                dotemacs-solarized-dark

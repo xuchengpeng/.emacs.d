@@ -27,6 +27,7 @@
 ;;   `dotemacs-opera-light'
 ;;   `dotemacs-outrun-electric'
 ;;   `dotemacs-nova'
+;;   `dotemacs-palenight'
 ;;   `dotemacs-peacock'
 ;;   `dotemacs-snazzy'
 ;;   `dotemacs-solarized-dark'

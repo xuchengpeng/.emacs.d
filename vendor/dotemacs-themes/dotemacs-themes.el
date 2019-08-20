@@ -37,6 +37,7 @@
 ;;   `dotemacs-spacegrey'
 ;;   `dotemacs-tomorrow-night'
 ;;   `dotemacs-tomorrow-day'
+;;   `dotemacs-wilmersdorf'
 ;;
 ;;
 ;; A comprehensive configuration example:

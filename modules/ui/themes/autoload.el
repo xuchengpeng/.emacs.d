@@ -31,6 +31,7 @@
                                dotemacs-spacegrey
                                dotemacs-tomorrow-day
                                dotemacs-tomorrow-night
-                               dotemacs-vibrant)))))
+                               dotemacs-vibrant
+                               dotemacs-wilmersdorf)))))
   (setq +themes|color-theme theme)
   (load-theme +themes|color-theme t))

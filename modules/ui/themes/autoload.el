@@ -15,6 +15,7 @@
                                dotemacs-gruvbox
                                dotemacs-Iosvkem
                                dotemacs-molokai
+                               dotemacs-moonlight
                                dotemacs-nord-light
                                dotemacs-nord
                                dotemacs-nova

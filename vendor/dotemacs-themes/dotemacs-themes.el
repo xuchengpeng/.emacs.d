@@ -21,6 +21,7 @@
 ;;   `dotemacs-gruvbox'
 ;;   `dotemacs-Iosvkem'
 ;;   `dotemacs-molokai'
+;;   `dotemacs-moonlight'
 ;;   `dotemacs-nord'
 ;;   `dotemacs-nord-light'
 ;;   `dotemacs-opera'

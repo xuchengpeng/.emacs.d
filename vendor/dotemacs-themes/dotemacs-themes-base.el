@@ -872,6 +872,8 @@
     (smerge-upper :background (dotemacs-blend red base3 0.2))
     (smerge-base  :background (dotemacs-blend blue bg 0.2))
     (smerge-markers :background comments :foreground bg :distant-foreground fg :weight 'bold)
+    (smerge-refined-added   :inherit 'diff-added :inverse-video t)
+    (smerge-refined-removed :inherit 'diff-removed :inverse-video t)
     ;; Emacs <25 compatibility
     ((smerge-mine  &inherit smerge-upper))
     ((smerge-other &inherit smerge-lower))

@@ -1086,6 +1086,10 @@
 
     ;; makefile-*-mode
     (makefile-targets :foreground blue)
+    
+    ;; man-mode
+    (Man-overstrike :inherit 'bold :foreground operators)
+    (Man-underline :inherit 'underline :foreground keywords)
 
     ;; markdown-mode
     (markdown-header-face           :inherit 'bold :foreground highlight)
@@ -1261,7 +1265,11 @@
     (web-mode-html-attr-name-face    :foreground type)
     (web-mode-html-entity-face       :foreground cyan :inherit 'italic)
     (web-mode-block-control-face     :foreground orange)
-    (web-mode-html-tag-bracket-face  :foreground operators))
+    (web-mode-html-tag-bracket-face  :foreground operators)
+    
+    ;; woman
+    (woman-bold :inherit 'Man-overstrike)
+    (woman-italic :inherit 'Man-underline))
   "TODO")
 
 (defvar dotemacs-themes-base-vars

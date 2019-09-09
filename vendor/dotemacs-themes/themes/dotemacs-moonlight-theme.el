@@ -10,7 +10,7 @@
   "If non-nil, adds a 4px padding to the mode-line.
 Can be an integer to determine the exact padding."
   :group 'dotemacs-moonlight-theme
-  :type '(or integer boolean))
+  :type '(choice integer boolean))
 
 ;;
 (def-dotemacs-theme dotemacs-moonlight

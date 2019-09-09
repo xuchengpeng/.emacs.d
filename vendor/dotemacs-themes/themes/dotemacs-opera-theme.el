@@ -26,7 +26,7 @@ legibility."
   "If non-nil, adds a 4px padding to the mode-line. Can be an integer to
 determine the exact padding."
   :group 'dotemacs-opera-theme
-  :type '(or integer boolean))
+  :type '(choice integer boolean))
 
 (defcustom dotemacs-opera-region-highlight t
   "Determines the selection highlight style. Can be 'frost, 'snowstorm or t

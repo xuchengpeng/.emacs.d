@@ -76,7 +76,7 @@
 (defcustom dotemacs-themes-padded-modeline nil
   "Default value for padded-modeline setting for themes that support it."
   :group 'dotemacs-themes
-  :type '(or integer boolean))
+  :type '(choice integer boolean))
 
 ;;
 (defcustom dotemacs-themes-enable-bold t

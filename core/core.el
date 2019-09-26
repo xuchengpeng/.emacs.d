@@ -210,7 +210,7 @@ Module load order is determined by your `dotemacs!' block."
   (require 'core-custom)
   (require 'core-lib)
   (require 'core-packages)
-  (dotemacs-initialize-core)
+  (dotemacs-initialize-packages)
   (require 'core-ui)
   (require 'core-editor)
   (require 'core-keybinds)

@@ -29,9 +29,25 @@
 
 ;;; Code:
 
-(defvar dotemacs-core-packages '(use-package diminish bind-key general)
+(defvar dotemacs-core-packages '(straight use-package async diminish bind-key general)
   "A list of packages that must be installed (and will be auto-installed if
 missing) and shouldn't be deleted.")
+
+(defvar dotemacs-core-package-sources
+  '((org-elpa :local-repo nil)
+    (melpa
+     :type git :host github
+     :repo "melpa/melpa"
+     :no-build t)
+    (gnu-elpa-mirror
+     :type git :host github
+     :repo "emacs-straight/gnu-elpa-mirror"
+     :no-build t)
+    (emacsmirror-mirror
+     :type git :host github
+     :repo "emacs-straight/emacsmirror-mirror"
+     :no-build t))
+  "A list of recipes for straight's recipe repos.")
 
 (defvar dotemacs-packages ()
   "A list of enabled packages.")
@@ -78,31 +94,61 @@ missing) and shouldn't be deleted.")
 (unless (eq dotemacs-package-archives 'custom)
   (dotemacs/set-package-archives dotemacs-package-archives))
 
+;;; straight
+(setq straight-base-dir dotemacs-local-dir
+      straight-repository-branch "develop"
+      straight-vc-git-default-clone-depth 1
+      straight-recipes-emacsmirror-use-mirror t)
+
+(defun dotemacs--finalize-straight ()
+  (mapc #'funcall (delq nil (mapcar #'cdr straight--transaction-alist)))
+  (setq straight--transaction-alist nil))
+
+
+(defun dotemacs-ensure-straight ()
+  "Ensure `straight' is installed and was compiled with this version of Emacs."
+  (defvar bootstrap-version)
+  (let* ((user-emacs-directory straight-base-dir)
+         (bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+         (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage)))
+
 ;;
 ;; Functions
 ;;
 
-(defun dotemacs-initialize-core ()
+(defun dotemacs-initialize-packages (&optional force-p)
   "Initial core packages."
-  (require 'package)
-  (package-initialize)
+  (when (or force-p (not (bound-and-true-p package--initialized)))
+    (require 'package)
+    (package-initialize))
   
-  (unless package-archive-contents
-    (package-refresh-contents))
+  (dotemacs-ensure-straight)
+  (require 'straight)
   
-  (dotemacs-install-packages dotemacs-core-packages)
+  (straight--reset-caches)
+  (mapc #'straight-use-recipes dotemacs-core-package-sources)
+  (straight-register-package
+   `(straight :type git :host github
+              :repo ,(format "%s/straight.el" straight-repository-user)
+              :files ("straight*.el")
+              :branch ,straight-repository-branch
+              :no-byte-compile t))
+  (mapc #'straight-use-package dotemacs-core-packages)
   
-  (require 'use-package))
+  (unless dotemacs-interactive-mode
+    (add-hook 'kill-emacs-hook #'dotemacs--finalize-straight)))
 
 (defun dotemacs-install-packages (packages-list)
   "Install packages defined by PACKAGES-LIST."
-  (when-let (packages (cl-remove-if #'package-installed-p packages-list))
-    (dolist (package packages)
-      (let ((inhibit-message t))
-        (package-install package))
-      (if (package-installed-p package)
-          (message "Emacs installed %s" package)
-        (error "Emacs couldn't install %s" package)))))
+  (mapc #'straight-use-package packages-list))
 
 (provide 'core-packages)
 ;;; core-packages.el ends here

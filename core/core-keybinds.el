@@ -28,7 +28,7 @@ non-evil users.")
   :keymaps 'override
   :prefix dotemacs-localleader-alt-key)
 
-(after! evil
+(after-load! 'evil
   (general-create-definer map!
     :states '(normal visual insert emacs motion replace)
     :keymaps 'override

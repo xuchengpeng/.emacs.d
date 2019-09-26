@@ -239,7 +239,7 @@ This doesn't require modules to be enabled. For enabled modules us
 (defun dotemacs-module-from-path (&optional path)
   "Returns a cons cell (CATEGORY . MODULE) derived from PATH (a file path)."
   (let* (file-name-handler-alist
-         (path (or path (FILE!))))
+         (path (or path (file!))))
     (save-match-data
       (setq path (file-truename path))
       (when (string-match "/modules/\\([^/]+\\)/\\([^/]+\\)\\(?:/.*\\)?$" path)
@@ -332,9 +332,9 @@ When this macro is used from inside a module, CATEGORY and MODULE can be
 omitted. eg. (featurep! +flag1)"
   (and (cond (flag (memq flag (dotemacs-module-get category module :flags)))
              (module (dotemacs-module-p category module))
-             ((let ((module-pair (dotemacs-module-from-path (FILE!))))
+             ((let ((module-pair (dotemacs-module-from-path (file!))))
                 (unless module-pair
-                  (error "featurep! couldn't detect what module its in! (in %s)" (FILE!)))
+                  (error "featurep! couldn't detect what module its in! (in %s)" (file!)))
                 (memq category (dotemacs-module-get (car module-pair) (cdr module-pair) :flags)))))
        t))
 

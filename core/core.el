@@ -64,6 +64,9 @@
   "If non-nil, all dotemacs functions will be verbose. Set DEBUG=1 in the command
 line or use --debug-init to enable this.")
 
+(defvar dotemacs-interactive-mode (not noninteractive)
+  "If non-nil, Emacs is in interactive mode.")
+
 (defgroup dotemacs nil
   "dotemacs, an Emacs configuration."
   :group 'emacs)

@@ -1,7 +1,7 @@
 ;;; ui/dashboard/+banner.el -*- lexical-binding: t; -*-
 
 
-(defconst +dashboard-banner-directory (concat (DIR!) "banners/"))
+(defconst +dashboard-banner-directory (concat (dir!) "banners/"))
 
 (defconst +dashboard-banner-official-png (concat +dashboard-banner-directory "emacs.png")
   "Emacs banner image.")

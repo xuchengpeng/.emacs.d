@@ -25,7 +25,6 @@
            
            :emacs
            dired
-           ediff
            electric
            eshell
            keybinds

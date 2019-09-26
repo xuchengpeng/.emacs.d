@@ -7,7 +7,7 @@
 current line.")
 
 ;;
-(after! electric
+(after-load! 'electric
   (setq-default electric-indent-chars '(?\n ?\^?))
 
   (defun +electric-indent|char (_c)

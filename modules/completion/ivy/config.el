@@ -4,7 +4,14 @@
   :diminish ivy-mode
   :defer t
   :init
-  (setf (alist-get 't ivy-re-builders-alist) #'ivy--regex-fuzzy)
+  (setq ivy-re-builders-alist
+        '((counsel-ag . ivy--regex-plus)
+          (counsel-rg . ivy--regex-plus)
+          (counsel-grep . ivy--regex-plus)
+          (swiper . ivy--regex-plus)
+          (swiper-isearch . ivy--regex-plus)
+          ;; Ignore order for non-fuzzy searches by default
+          (t . ivy--regex-ignore-order)))
   :config
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
   (setq ivy-height 15

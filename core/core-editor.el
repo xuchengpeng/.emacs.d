@@ -29,33 +29,60 @@
 
 ;;; Code:
 
-(setq-default
- large-file-warning-threshold 15000000
- ;; Bookmarks
- bookmark-default-file (concat dotemacs-cache-dir "bookmarks")
- bookmark-save-flag t
- ;; Formatting
- delete-trailing-lines nil
- fill-column 80
- sentence-end-double-space nil
- word-wrap t
- ;; Scrolling
- hscroll-margin 2
- hscroll-step 1
- scroll-conservatively 1001
- scroll-margin 1
- scroll-preserve-screen-position t
- ;; Whitespace
- indent-tabs-mode nil
- require-final-newline t
- tab-always-indent t
- tab-width 4
- ;; Wrapping
- truncate-lines t
- truncate-partial-width-windows 50)
+;;
+;;; File handling
 
-;; Remove hscroll-margin in shells, otherwise it causes jumpiness
-(setq-hook! '(eshell-mode-hook term-mode-hook) hscroll-margin 0)
+;; Resolve symlinks when opening files, so that any operations are conducted
+;; from the file's true directory (like `find-file').
+(setq find-file-visit-truename t)
+
+;; Disable the warning "X and Y are the same file". It's fine to ignore this
+;; warning as it will redirect you to the existing buffer anyway.
+(setq find-file-suppress-same-file-warnings t)
+
+;; Create missing directories when we open a file that doesn't exist under a
+;; directory tree that may not exist.
+(add-hook! 'find-file-not-found-functions
+  (defun dotemacs-create-missing-directories-h ()
+    "Automatically create missing directories when creating new files."
+    (let ((parent-directory (file-name-directory buffer-file-name)))
+      (when (and (not (file-exists-p parent-directory))
+                 (y-or-n-p (format "Directory `%s' does not exist! Create it?" parent-directory)))
+        (make-directory parent-directory t)))))
+
+;; Don't autosave files or create lock/history/backup files. The
+;; editor doesn't need to hold our hands so much. We'll rely on git
+;; and our own good fortune instead. Fingers crossed!
+(setq auto-save-default nil
+      create-lockfiles nil
+      make-backup-files nil
+      ;; But have a place to store them in case we do use them...
+      auto-save-list-file-name (concat dotemacs-cache-dir "autosave")
+      backup-directory-alist `(("." . ,(concat dotemacs-cache-dir "backup/"))))
+
+;;
+;;; Formatting
+
+;; Indentation
+(setq-default tab-width 4
+              tab-always-indent t
+              indent-tabs-mode nil
+              fill-column 120)
+
+;; Word wrapping
+(setq-default word-wrap t
+              truncate-lines t
+              truncate-partial-width-windows nil)
+
+(setq sentence-end-double-space nil
+      delete-trailing-lines nil
+      require-final-newline t
+      tabify-regexp "^\t* [ \t]+")  ; for :retab
+
+;;
+;;; Extra file extensions to support
+
+(push '("/LICENSE\\'" . text-mode) auto-mode-alist)
 
 (after-load! 'abbrev
   (diminish 'abbrev-mode))

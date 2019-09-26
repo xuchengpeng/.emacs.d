@@ -50,62 +50,103 @@ Examples:
 (defvar dotemacs-cn-font nil
   "The chinese font to use.")
 
-(setq-default
- blink-matching-paren nil         ; don't blink--too distracting
- compilation-always-kill t        ; kill compilation process before starting another
- compilation-ask-about-save nil   ; save all buffers on `compile'
- compilation-scroll-output 'first-error
- confirm-nonexistent-file-or-buffer t
- cursor-in-non-selected-windows nil ; hide cursors in other windows
- display-line-numbers-width 3
- enable-recursive-minibuffers nil
- frame-inhibit-implied-resize t
- frame-title-format '((:eval (if (buffer-file-name)
-                                 (abbreviate-file-name (buffer-file-name))
-                               "%b")))
- highlight-nonselected-windows nil
- indicate-buffer-boundaries nil
- indicate-empty-lines nil
- inhibit-compacting-font-caches t
- mode-line-default-help-echo nil ; disable mode-line mouseovers
- mouse-yank-at-point t           ; middle-click paste at point, not at click
- show-help-function nil          ; hide :help-echo text
- uniquify-buffer-name-style 'forward
- uniquify-separator "/"
- uniquify-after-kill-buffer-p t
- uniquify-ignore-buffers-re "^\\*"
- use-dialog-box nil              ; always avoid GUI
- user-full-name    dotemacs-full-name
- user-mail-address dotemacs-mail-address
- ;; no beeping or blinking please
- ring-bell-function #'ignore
- visible-bell nil
- ;; don't resize emacs in steps, it looks weird
- window-resize-pixelwise t
- frame-resize-pixelwise t)
+;;
+;;; General UX
+
+(setq uniquify-buffer-name-style 'forward
+      ;; no beeping or blinking please
+      ring-bell-function #'ignore
+      visible-bell nil)
+
+;; middle-click paste at point, not at click
+(setq mouse-yank-at-point t)
+
+;; Enable mouse in terminal Emacs
+(add-hook 'tty-setup-hook #'xterm-mouse-mode)
+
+
+;;
+;;; Scrolling
+
+(setq hscroll-margin 2
+      hscroll-step 1
+      scroll-conservatively 10
+      scroll-margin 0
+      scroll-preserve-screen-position t
+      ;; mouse
+      mouse-wheel-scroll-amount '(5 ((shift) . 2))
+      mouse-wheel-progressive-speed nil)  ; don't accelerate scrolling
+
+;; Remove hscroll-margin in shells, otherwise it causes jumpiness
+(setq-hook! '(eshell-mode-hook term-mode-hook) hscroll-margin 0)
+
+;;
+;;; Cursor
+
+;; Don't blink the cursor, it's too distracting.
+(blink-cursor-mode -1)
+
+;; Don't blink the paren matching the one at point, it's too distracting.
+(setq blink-matching-paren nil)
+
+(setq visible-cursor nil)
+
+;; Don't stretch the cursor to fit wide characters, it is disorienting,
+;; especially for tabs.
+(setq x-stretch-cursor nil)
+
+;;
+;;; Windows/frames
+
+;; A simple frame title
+(setq frame-title-format '("%b – Doom Emacs")
+      icon-title-format frame-title-format)
+
+;; Don't resize emacs in steps, it looks weird.
+(setq window-resize-pixelwise t
+      frame-resize-pixelwise t)
+
+(unless EMACS27+  ; We already do this in early-init.el
+  ;; Disable tool and scrollbars; Doom encourages keyboard-centric workflows, so
+  ;; these are just clutter (the scrollbar also impacts Emacs' performance).
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist))
 
 ;; maximized startup
 (unless (frame-parameter nil 'fullscreen)
   (toggle-frame-maximized))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; removes the GUI elements
-(when (and (fboundp 'scroll-bar-mode) (not (eq scroll-bar-mode -1)))
-  (scroll-bar-mode -1))
-(when (and (fboundp 'tool-bar-mode) (not (eq tool-bar-mode -1)))
-  (tool-bar-mode -1))
-(unless IS-MAC
-  (when (and (fboundp 'menu-bar-mode) (not (eq menu-bar-mode -1)))
-    (menu-bar-mode -1)))
-;; tooltips in echo-aera
-(when (and (fboundp 'tooltip-mode) (not (eq tooltip-mode -1)))
-  (tooltip-mode -1))
+;;
+;;; Minibuffer
 
-(fset #'yes-or-no-p #'y-or-n-p) ; y/n instead of yes/no
+;; Allow for minibuffer-ception. Sometimes we need another minibuffer command
+;; _while_ we're in the minibuffer.
+(setq enable-recursive-minibuffers t)
 
-;; (line-number-mode t)
-;; (column-number-mode t)
-;; (size-indication-mode t)
+;; Show current key-sequence in minibuffer, like vim does. Any feedback after
+;; typing is better UX than no feedback at all.
+(setq echo-keystrokes 0.02)
+
+;; Expand the minibuffer to fit multi-line text displayed in the echo-area. This
+;; doesn't look too great with direnv, however...
+(setq resize-mini-windows 'grow-only
+      ;; But don't let the minibuffer grow beyond this size
+      max-mini-window-height 0.15)
+
+;; Disable help mouse-overs for mode-line segments (i.e. :help-echo text).
+;; They're generally unhelpful and only add confusing visual clutter.
+(setq mode-line-default-help-echo nil
+      show-help-function nil)
+
+;; Typing yes/no is obnoxious when y/n will do
+(fset #'yes-or-no-p #'y-or-n-p)
+
+;; Try really hard to keep the cursor from getting stuck in the read-only prompt
+;; portion of the minibuffer.
+(setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 ;;
 ;; Built-in packages

@@ -13,7 +13,6 @@
           ;; Ignore order for non-fuzzy searches by default
           (t . ivy--regex-ignore-order)))
   :config
-  (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
   (setq ivy-height 15
         ivy-wrap t
         ivy-fixed-height-minibuffer t
@@ -82,8 +81,5 @@
 ;;   (setq smex-history-length 10
 ;;         smex-save-file (concat dotemacs-cache-dir "smex-items")))
 
-(use-package amx
-  :defer t
-  :config
-  (setq amx-history-length 10
-        amx-save-file (concat dotemacs-cache-dir "amx-items")))
+;;;###package amx
+(setq amx-save-file (concat dotemacs-cache-dir "amx-items"))  ; used by `counsel-M-x'

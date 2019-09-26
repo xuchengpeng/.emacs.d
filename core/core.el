@@ -32,6 +32,13 @@
 (when (version< emacs-version "25.2")
   (error "Emacs version should be 25.2 or higher"))
 
+(defconst EMACS26+ (> emacs-major-version 25))
+(defconst EMACS27+ (> emacs-major-version 26))
+(defconst IS-MAC     (eq system-type 'darwin))
+(defconst IS-LINUX   (eq system-type 'gnu/linux))
+(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
+(defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
+
 (defvar dotemacs-dir
   (eval-when-compile (file-truename user-emacs-directory))
   "The path to this emacs.d directory.")
@@ -124,18 +131,14 @@ decrease this. If you experience stuttering, increase this.")
 (define-error 'dotemacs-package-error "Error with packages" 'dotemacs-error)
 
 ;;
-;; Constants
-
-(defconst EMACS26+ (> emacs-major-version 25))
-(defconst EMACS27+ (> emacs-major-version 26))
-
-(defconst IS-MAC     (eq system-type 'darwin))
-(defconst IS-LINUX   (eq system-type 'gnu/linux))
-(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
-(defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
-
-;;
 ;; Emacs core configuration
+
+;; Ensure `dotemacs-core-dir' is in `load-path'
+(push dotemacs-core-dir load-path)
+
+;; Reduce debug output, well, unless we've asked for it.
+(setq debug-on-error dotemacs-debug-mode
+      jka-compr-verbose dotemacs-debug-mode)
 
 ;; UTF-8 as the default coding system
 (when (fboundp 'set-charset-priority)
@@ -145,41 +148,41 @@ decrease this. If you experience stuttering, increase this.")
 (setq locale-coding-system 'utf-8)     ; please
 (if IS-WINDOWS (set-w32-system-coding-system 'utf-8)) ; with sugar on top
 
-(setq-default
- ad-redefinition-action 'accept   ; silence advised function warnings
- auto-mode-case-fold nil
- autoload-compute-prefixes nil
- debug-on-error dotemacs-debug-mode
- ffap-machine-p-known 'reject     ; don't ping things that look like domain names
- idle-update-delay 1              ; update ui slightly less often
- ;; History & backup settings
- auto-save-default nil
- create-lockfiles nil
- history-length 500
- make-backup-files nil
- ;; byte compilation
- byte-compile-verbose dotemacs-debug-mode
- byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local)
- ;; be quiet at startup; don't load or display anything unnecessary
- inhibit-startup-message t
- inhibit-startup-echo-area-message user-login-name
- inhibit-default-init t
- initial-scratch-message nil
- initial-major-mode 'fundamental-mode
- ;; files
- abbrev-file-name             (concat dotemacs-local-dir "abbrev.el")
- auto-save-list-file-name     (concat dotemacs-cache-dir "autosave")
- backup-directory-alist       (list (cons "." (concat dotemacs-cache-dir "backup/")))
- pcache-directory             (concat dotemacs-cache-dir "pcache/")
- request-storage-directory    (concat dotemacs-cache-dir "request")
- shared-game-score-directory  (concat dotemacs-cache-dir "shared-game-score/")
- tramp-auto-save-directory    (concat dotemacs-cache-dir "tramp-auto-save/")
- tramp-backup-directory-alist backup-directory-alist
- tramp-persistency-file-name  (concat dotemacs-cache-dir "tramp-persistency.el")
- url-cache-directory          (concat dotemacs-cache-dir "url/")
- url-configuration-directory  (concat dotemacs-cache-dir "url/"))
+;; Disable warnings from legacy advice system. They aren't useful, and we can't
+;; often do anything about them besides changing packages upstream
+(setq ad-redefinition-action 'accept)
 
-(add-to-list 'load-path dotemacs-core-dir)
+;; Make apropos omnipotent. It's more useful this way.
+(setq apropos-do-all t)
+
+;; Don't make a second case-insensitive pass over `auto-mode-alist'. If it has
+;; to, it's our (the user's) failure. One case for all!
+(setq auto-mode-case-fold nil)
+
+;; Display the bare minimum at startup. We don't need all that noise. The
+;; dashboard/empty scratch buffer is good enough.
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area-message user-login-name
+      inhibit-default-init t
+      initial-major-mode 'fundamental-mode
+      initial-scratch-message nil)
+(fset #'display-startup-echo-area-message #'ignore)
+
+;; Emacs "updates" its ui more often than it needs to, so we slow it down
+;; slightly, from 0.5s:
+(setq idle-update-delay 1)
+
+(setq abbrev-file-name             (concat dotemacs-local-dir "abbrev.el")
+      async-byte-compile-log-file  (concat dotemacs-cache-dir "async-bytecomp.log")
+      bookmark-default-file        (concat dotemacs-cache-dir "bookmarks")
+      pcache-directory             (concat dotemacs-cache-dir "pcache/")
+      request-storage-directory    (concat dotemacs-cache-dir "request")
+      shared-game-score-directory  (concat dotemacs-cache-dir "shared-game-score/")
+      tramp-auto-save-directory    (concat dotemacs-cache-dir "tramp-auto-save/")
+      tramp-backup-directory-alist backup-directory-alist
+      tramp-persistency-file-name  (concat dotemacs-cache-dir "tramp-persistency.el")
+      url-cache-directory          (concat dotemacs-cache-dir "url/")
+      url-configuration-directory  (concat dotemacs-cache-dir "url/"))
 
 (unless custom-file
   (setq custom-file (concat dotemacs-local-dir "custom.el")))

@@ -156,17 +156,16 @@ This should be run whenever init.el or an autoload file is modified."
           (kill-buffer buf)))))
 
 ;;
-;; Module API
+;;; Module API
 
 (defun dotemacs-module-p (category module &optional flag)
   "Returns t if CATEGORY MODULE is enabled (ie. present in `dotemacs-modules')."
   (declare (pure t) (side-effect-free t))
-  (when (hash-table-p dotemacs-modules)
-    (let ((plist (gethash (cons category module) dotemacs-modules)))
-      (and plist
-           (or (null flag)
-               (memq flag (plist-get plist :flags)))
-           t))))
+  (let ((plist (gethash (cons category module) dotemacs-modules)))
+    (and plist
+         (or (null flag)
+             (memq flag (plist-get plist :flags)))
+         t)))
 
 (defun dotemacs-module-get (category module &optional property)
   "Returns the plist for CATEGORY MODULE. Gets PROPERTY, specifically, if set."
@@ -181,7 +180,7 @@ This should be run whenever init.el or an autoload file is modified."
 of PROPERTY and VALUEs.
 
 \(fn CATEGORY MODULE PROPERTY VALUE &rest [PROPERTY VALUE [...]])"
-  (if-let* ((old-plist (dotemacs-module-get category module)))
+  (if-let ((old-plist (dotemacs-module-get category module)))
       (progn
         (when plist
           (when (cl-oddp (length plist))
@@ -212,9 +211,10 @@ MODULE (symbol).
 
 If the category isn't enabled this will always return nil. For finding disabled
 modules use `dotemacs-module-locate-path'."
-  (let ((path (dotemacs-module-get category module :path))
-        file-name-handler-alist)
-    (if file (expand-file-name file path)
+  (let ((path (dotemacs-module-get category module :path)))
+    (if file
+        (let (file-name-handler-alist)
+          (expand-file-name file path))
       path)))
 
 (defun dotemacs-module-locate-path (category &optional module file)
@@ -236,43 +236,60 @@ This doesn't require modules to be enabled. For enabled modules us
            if (file-exists-p path)
            return (expand-file-name path)))
 
-(defun dotemacs-module-from-path (&optional path)
+(defun dotemacs-module-from-path (&optional path enabled-only)
   "Returns a cons cell (CATEGORY . MODULE) derived from PATH (a file path)."
   (let* (file-name-handler-alist
-         (path (or path (file!))))
+         (path (file-truename (or path (file!)))))
     (save-match-data
-      (setq path (file-truename path))
-      (when (string-match "/modules/\\([^/]+\\)/\\([^/]+\\)\\(?:/.*\\)?$" path)
-        (when-let* ((category (match-string 1 path))
-                    (module   (match-string 2 path)))
-          (cons (dotemacs-keyword-intern category)
-                (intern module)))))))
+      ;; (when (string-match "/modules/\\([^/]+\\)/\\([^/]+\\)\\(?:/.*\\)?$" path)
+      ;;   (when-let* ((category (match-string 1 path))
+      ;;               (module   (match-string 2 path)))
+      ;;     (cons (dotemacs-keyword-intern category)
+      ;;           (intern module))))
+      (cond ((string-match "/modules/\\([^/]+\\)/\\([^/]+\\)\\(?:/.*\\)?$" path)
+             (when-let* ((category (dotemacs-keyword-intern (match-string 1 path)))
+                         (module   (intern (match-string 2 path))))
+               (and (or (null enabled-only)
+                        (dotemacs-module-p category module))
+                    (cons category module))))
+            ((file-in-directory-p path dotemacs-core-dir)
+             (cons :core (intern (file-name-base path))))
+            ((file-in-directory-p path dotemacs-private-dir)
+             (cons :private (intern (file-name-base path))))))))
 
 (defun dotemacs-module-load-path ()
   "Return a list of absolute file paths to activated modules."
   (declare (pure t) (side-effect-free t))
-  (append (cl-loop for plist being the hash-values of (dotemacs-modules)
+  (append (list dotemacs-private-dir)
+          (cl-loop for plist being the hash-values of (dotemacs-modules)
                    collect (plist-get plist :path))
-          (list dotemacs-private-dir)))
+          nil))
 
 (defun dotemacs-modules (&optional refresh-p)
   "Minimally initialize `dotemacs-modules' (a hash table) and return it."
   (or (unless refresh-p dotemacs-modules)
-      (let ((noninteractive t)
+      (let (dotemacs-interactive-mode
             dotemacs-modules)
+        (load! "init" dotemacs-private-dir t)
         (or dotemacs-modules
             (make-hash-table :test 'equal
                              :size 20
                              :rehash-threshold 1.0)))))
 
 ;;
-;; Macros
+;;; Module config macros
+
+(put :if     'lisp-indent-function 2)
+(put :when   'lisp-indent-function 'defun)
+(put :unless 'lisp-indent-function 'defun)
 
 (defmacro dotemacs! (&rest modules)
   "Adds MODULES to `dotemacs-modules'.
 
 MODULES must be in mplist format.
 e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
+  (unless (keywordp (car modules))
+    (setq modules (eval modules t)))
   (unless dotemacs-modules
     (setq dotemacs-modules
           (make-hash-table :test 'equal
@@ -283,6 +300,19 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
       (setq m (pop modules))
       (cond ((keywordp m) (setq category m))
             ((not category) (error "No module category specified for %s" m))
+            ((and (listp m)
+                  (keywordp (car m)))
+             (pcase (car m)
+               (:cond
+                (cl-loop for (cond . mods) in (cdr m)
+                         if (eval cond t)
+                         return (prependq! modules mods)))
+               (:if (if (eval (cadr m) t)
+                        (push (caddr m) modules)
+                      (prependq! modules (cdddr m))))
+               (fn (if (or (eval (cadr m) t)
+                           (eq fn :unless))
+                       (prependq! modules (cddr m))))))
             ((catch 'dotemacs-modules
                (let* ((module (if (listp m) (car m) m))
                       (flags  (if (listp m) (cdr m))))
@@ -292,30 +322,30 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
     `(setq dotemacs-modules ',dotemacs-modules))
   (dotemacs-initialize-modules))
 
-(defmacro package! (package)
-  "Add PACKAGE to ‘dotemacs-packages’."
-  `(add-to-list 'dotemacs-packages ',package t))
-
-(defmacro packages! (&rest packages)
-  "Add packages in PACKAGES to ‘dotemacs-packages’.
-
-Can take multiple packages.
-e.g. (packages! evil evil-surround)"
-  `(dolist (package ',packages)
-     (add-to-list 'dotemacs-packages package t)))
-
-(defmacro depends-on! (module submodule &optional flags)
-  "Declares that this module depends on another.
-
-Only use this macro in a module's packages.el file.
-
-MODULE is a keyword, and SUBMODULE is a symbol. Under the hood, this simply
-loads MODULE SUBMODULE's packages.el file."
-  `(let ((dotemacs-modules ,dotemacs-modules)
-         (flags ,flags))
-     (when flags
-       (dotemacs-module-put ,module ',submodule :flags flags))
-     (load! "packages" ,(dotemacs-module-locate-path module submodule) t)))
+(defmacro require! (category module &rest plist)
+  "Loads the module specified by CATEGORY (a keyword) and MODULE (a symbol)."
+  `(let ((dotemacs-modules (or ,dotemacs-modules (dotemacs-modules)))
+         (module-path (dotemacs-module-locate-path ,category ',module)))
+     (dotemacs-module-set
+      ,category ',module
+      (let ((plist (dotemacs-module-get ,category ',module)))
+        ,(when flags
+           `(plist-put plist :flags `,flags))
+        (unless (plist-member plist :path)
+          (plist-put plist :path ,(dotemacs-module-locate-path category module)))
+        plist))
+     (if (directory-name-p module-path)
+         (condition-case-unless-debug ex
+             (progn
+               (load! "init" module-path :noerror)
+               (load! "config" module-path :noerror))
+           ('error
+            (lwarn 'dotemacs-modules :error
+                   "%s in '%s %s' -> %s"
+                   (car ex) ,category ',module
+                   (error-message-string ex))))
+       (warn 'dotemacs-modules :warning "Couldn't find module '%s %s'"
+             ,category ',module))))
 
 (defmacro featurep! (category &optional module flag)
   "Returns t if CATEGORY MODULE is enabled. If FLAG is provided, returns t if
@@ -332,37 +362,74 @@ When this macro is used from inside a module, CATEGORY and MODULE can be
 omitted. eg. (featurep! +flag1)"
   (and (cond (flag (memq flag (dotemacs-module-get category module :flags)))
              (module (dotemacs-module-p category module))
-             ((let ((module-pair (dotemacs-module-from-path (file!))))
-                (unless module-pair
-                  (error "featurep! couldn't detect what module its in! (in %s)" (file!)))
-                (memq category (dotemacs-module-get (car module-pair) (cdr module-pair) :flags)))))
+             ((let ((module (dotemacs-module-from-path)))
+                (unless module
+                  (error "featurep! couldn't figure out what module it was called from (in %s)"
+                         (file!)))
+                (memq category (dotemacs-module-get (car module) (cdr module) :flags)))))
        t))
 
-(defmacro require! (category module &rest plist)
-  "Loads the module specified by CATEGORY (a keyword) and MODULE (a symbol)."
-  `(let ((module-path (dotemacs-module-locate-path ,category ',module)))
-     (dotemacs-module-set
-      ,category ',module
-      ,@(when plist
-          (let ((old-plist (dotemacs-module-get category module)))
-            (unless (plist-member plist :flags)
-              (plist-put plist :flags (plist-get old-plist :flags)))
-            (unless (plist-member plist :path)
-              (plist-put plist :path (or (plist-get old-plist :path)
-                                         (dotemacs-module-locate-path category module)))))
-          plist))
-     (if (directory-name-p module-path)
-         (condition-case-unless-debug ex
-             (progn
-               (load! "init" module-path :noerror)
-               (load! "config" module-path :noerror))
-           ('error
-            (lwarn 'dotemacs-modules :error
-                   "%s in '%s %s' -> %s"
-                   (car ex) ,category ',module
-                   (error-message-string ex))))
-       (warn 'dotemacs-modules :warning "Couldn't find module '%s %s'"
-             ,category ',module))))
+(defmacro after! (package &rest body)
+  "Evaluate BODY after PACKAGE have loaded.
+
+PACKAGE is a symbol or list of them. These are package names, not modes,
+functions or variables. It can be:
+
+- An unquoted package symbol (the name of a package)
+    (after! helm BODY...)
+- An unquoted list of package symbols (i.e. BODY is evaluated once both magit
+  and git-gutter have loaded)
+    (after! (magit git-gutter) BODY...)
+- An unquoted, nested list of compound package lists, using any combination of
+  :or/:any and :and/:all
+    (after! (:or package-a package-b ...)  BODY...)
+    (after! (:and package-a package-b ...) BODY...)
+    (after! (:and package-a (:or package-b package-c) ...) BODY...)
+  Without :or/:any/:and/:all, :and/:all are implied.
+
+This is a wrapper around `eval-after-load' that:
+
+1. Suppresses warnings for disabled packages at compile-time
+2. No-ops for package that are disabled by the user (via `package!')
+3. Supports compound package statements (see below)
+4. Prevents eager expansion pulling in autoloaded macros all at once"
+  (declare (indent defun) (debug t))
+  (if (symbolp package)
+      (unless (memq package (bound-and-true-p dotemacs-disabled-packages))
+        (list (if (or (not (bound-and-true-p byte-compile-current-file))
+                      (require package nil 'noerror))
+                  #'progn
+                #'with-no-warnings)
+              (let ((body (macroexp-progn body)))
+                `(if (featurep ',package)
+                     ,body
+                   ;; We intentionally avoid `with-eval-after-load' to prevent
+                   ;; eager macro expansion from pulling (or failing to pull) in
+                   ;; autoloaded macros/packages.
+                   (eval-after-load ',package ',body)))))
+    (let ((p (car package)))
+      (cond ((not (keywordp p))
+             `(after! (:and ,@package) ,@body))
+            ((memq p '(:or :any))
+             (macroexp-progn
+              (cl-loop for next in (cdr package)
+                       collect `(after! ,next ,@body))))
+            ((memq p '(:and :all))
+             (dolist (next (cdr package))
+               (setq body `((after! ,next ,@body))))
+             (car body))))))
+
+(defmacro package! (package)
+  "Add PACKAGE to ‘dotemacs-packages’."
+  `(add-to-list 'dotemacs-packages ',package t))
+
+(defmacro packages! (&rest packages)
+  "Add packages in PACKAGES to ‘dotemacs-packages’.
+
+Can take multiple packages.
+e.g. (packages! evil evil-surround)"
+  `(dolist (package ',packages)
+     (add-to-list 'dotemacs-packages package t)))
 
 ;;
 ;; benchmark

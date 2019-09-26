@@ -74,28 +74,44 @@ line or use --debug-init to enable this.")
 ;;
 ;; Startup optimizations
 
+(setq gc-cons-threshold most-positive-fixnum)
+
 (defvar dotemacs-gc-cons-threshold 16777216 ; 16mb
   "The default value to use for `gc-cons-threshold'. If you experience freezing,
 decrease this. If you experience stuttering, increase this.")
+(defvar dotemacs--initial-file-name-handler-alist file-name-handler-alist)
 
-(defvar dotemacs-gc-cons-upper-limit 536870912 ; 512mb
-  "The temporary value for `gc-cons-threshold' to defer it.")
-  
-(defvar dotemacs--file-name-handler-alist file-name-handler-alist)
+;; This is consulted on every `require', `load' and various path/io functions.
+;; You get a minor speed up by nooping this.
+(setq file-name-handler-alist nil)
 
-(unless after-init-time
-  (setq gc-cons-threshold dotemacs-gc-cons-upper-limit
-        file-name-handler-alist nil))
+(defun dotemacs-restore-file-name-handler-alist-h ()
+  (setq file-name-handler-alist dotemacs--initial-file-name-handler-alist))
 
-(defun dotemacs|restore-startup-optimizations ()
-  "Resets garbage collection settings to reasonable defaults (a large
-`gc-cons-threshold' can cause random freezes otherwise) and resets
-`file-name-handler-alist'."
-  (setq file-name-handler-alist dotemacs--file-name-handler-alist)
-  (run-with-idle-timer
-   3 nil (lambda () (setq-default gc-cons-threshold dotemacs-gc-cons-threshold))))
+(add-hook 'emacs-startup-hook #'dotemacs-restore-file-name-handler-alist-h)
 
-(add-hook 'after-init-hook #'dotemacs|restore-startup-optimizations)
+;; To speed up minibuffer commands (like helm and ivy), we defer garbage
+;; collection while the minibuffer is active.
+(defun dotemacs-defer-garbage-collection-h ()
+  "TODO"
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun dotemacs-restore-garbage-collection-h ()
+  "TODO"
+  ;; Defer it so that commands launched immediately after will enjoy the
+  ;; benefits.
+  (run-at-time
+   1 nil (lambda () (setq gc-cons-threshold dotemacs-gc-cons-threshold))))
+
+(add-hook 'minibuffer-setup-hook #'dotemacs-defer-garbage-collection-h)
+(add-hook 'minibuffer-exit-hook #'dotemacs-restore-garbage-collection-h)
+
+;; Not restoring these to their defaults will cause stuttering/freezes.
+(add-hook 'emacs-startup-hook #'dotemacs-restore-garbage-collection-h)
+
+;; When Emacs loses focus seems like a great time to do some garbage collection
+;; all sneaky breeky like, so we can return a fresh(er) Emacs.
+(add-hook 'focus-out-hook #'garbage-collect)
 
 ;;
 ;; Custom error types
@@ -203,7 +219,7 @@ The load order is as follows:
 
 Module load order is determined by your `dotemacs!' block."
   ;; Make sure all essential local directories exist
-  (dolist (dir (list dotemacs-local-dir dotemacs-cache-dir dotemacs-packages-dir))
+  (dolist (dir (list dotemacs-local-dir dotemacs-cache-dir))
     (unless (file-directory-p dir)
       (make-directory dir t)))
 

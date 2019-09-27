@@ -18,6 +18,6 @@
         '(company-pseudo-tooltip-frontend
           company-echo-metadata-frontend))
   
-  (add-hook 'company-mode-hook #'+company|init-backends)
+  (add-hook 'company-mode-hook #'+company-init-backends-h)
   
   (global-company-mode +1))

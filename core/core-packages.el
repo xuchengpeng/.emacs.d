@@ -127,9 +127,11 @@ missing) and shouldn't be deleted.")
 (defun dotemacs-initialize-packages (&optional force-p)
   "Initial core packages."
   (when (or force-p (not (bound-and-true-p package--initialized)))
+    (dotemacs-log "Initializing package.el")
     (require 'package)
     (package-initialize))
   
+  (dotemacs-log "Initializing straight")
   (dotemacs-ensure-straight)
   (require 'straight)
   
@@ -141,6 +143,7 @@ missing) and shouldn't be deleted.")
               :files ("straight*.el")
               :branch ,straight-repository-branch
               :no-byte-compile t))
+  (dotemacs-log "Initializing dotemacs-packages")
   (mapc #'straight-use-package dotemacs-core-packages)
   
   (unless dotemacs-interactive-mode

@@ -102,6 +102,17 @@ means to remove KEY from ALIST if the new value is `eql' to DEFAULT."
   (cl-check-type keyword keyword)
   (substring (symbol-name keyword) 1))
 
+(defmacro dotemacs-log (format-string &rest args)
+  "Log to *Messages* if `dotemacs-debug-mode' is on.
+Does not interrupt the minibuffer if it is in use, but still logs to *Messages*.
+Accepts the same arguments as `message'."
+  `(when dotemacs-debug-mode
+     (let ((inhibit-message (active-minibuffer-window)))
+       (message
+        ,(concat (propertize "dotemacs " 'face 'font-lock-comment-face)
+                 format-string)
+        ,@args))))
+
 (defalias 'dotemacs-partial #'apply-partially)
 
 (defun dotemacs-rpartial (fn &rest args)

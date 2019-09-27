@@ -34,16 +34,6 @@ For example:
 (setq dotemacs-theme 'dotemacs-one)             ; Color theme: dotemacs-one, dotemacs-one-light...
 ```
 
-If `dotemacs-package-archives` is set to `custom`, you need to set `package-archives`.
-```el
-(setq dotemacs-package-archives 'custom)
-(setq package-archives '(("gnu"   . "/home/user/elpa-mirror/gnu/")
-                         ("melpa" . "/home/user/elpa-mirror/melpa/")
-                         ("org"   . "/home/user/elpa-mirror/org/")))
-```
-
-Customize it with melpa, [emacs-china](https://elpa.emacs-china.org/), [netease](http://mirrors.163.com/elpa/) or [tuna](https://mirror.tuna.tsinghua.edu.cn/help/elpa/), or clone it from [elpa-mirror](https://github.com/xuchengpeng/elpa-mirror) to local disk.
-
 To add your own private module, customize `dotemacs-private-dir` first, then add your own `packages.el`, `init.el`, `config.el`, `autoload.el` or `autoload/*.el` under this directory, Emacs will load this module automatically on startup, you may need to execute `dotemacs/generate-autoload-file` to update autoloads.
 
 ## Install fonts (Optional)

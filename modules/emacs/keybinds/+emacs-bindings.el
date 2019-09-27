@@ -133,8 +133,10 @@
   "M-y"             'yank-pop
   "C-x C-f"         'find-file
   "C-x r b"         'bookmark-jump
-  "C-s"             'isearch-forward-regexp
-  "C-r"             'isearch-backward-regexp)
+  "C-s"             (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
+                          ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
+  "C-r"             (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
+                          ((featurep! :completion ivy) '(swiper :which-key "Search buffer"))))
 
 (define-key! projectile-mode-map
   "C-c p"           'projectile-command-map)

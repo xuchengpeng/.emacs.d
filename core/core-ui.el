@@ -99,7 +99,7 @@ Examples:
 ;;; Windows/frames
 
 ;; A simple frame title
-(setq frame-title-format '("%b – Doom Emacs")
+(setq frame-title-format '("%b – Emacs")
       icon-title-format frame-title-format)
 
 ;; Don't resize emacs in steps, it looks weird.
@@ -107,7 +107,7 @@ Examples:
       frame-resize-pixelwise t)
 
 (unless EMACS27+  ; We already do this in early-init.el
-  ;; Disable tool and scrollbars; Doom encourages keyboard-centric workflows, so
+  ;; Disable tool and scrollbars; dotemacs encourages keyboard-centric workflows, so
   ;; these are just clutter (the scrollbar also impacts Emacs' performance).
   (push '(menu-bar-lines . 0) default-frame-alist)
   (push '(tool-bar-lines . 0) default-frame-alist)

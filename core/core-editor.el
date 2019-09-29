@@ -95,12 +95,17 @@
 ;;
 ;; Built-in plugins
 
+(after-load! 'bookmark
+  (setq bookmark-save-flag t))
+
 ;; revert buffers for changed files
 (use-package autorevert
   :hook (find-file . global-auto-revert-mode)
   :diminish auto-revert-mode
   :config
-  (setq auto-revert-verbose nil))
+  (setq auto-revert-verbose t ; let us know when it happens
+        auto-revert-use-notify nil
+        auto-revert-stop-on-user-input nil))
 
 ;; persist variables across sessions
 (use-package savehist
@@ -116,12 +121,22 @@
 (use-package saveplace
   :hook ((find-file dired-initial-position) . save-place-mode)
   :config
-  (setq save-place-file (concat dotemacs-cache-dir "saveplace"))
-  (defun dotemacs|recenter-on-load-saveplace (&rest _)
+  (setq save-place-file (concat dotemacs-cache-dir "saveplace")
+        save-place-limit 100)
+  (defadvice! dotemacs--recenter-on-load-saveplace-a (&rest _)
     "Recenter on cursor when loading a saved place."
+    :after-while #'save-place-find-file-hook
     (if buffer-file-name (ignore-errors (recenter))))
-  (advice-add #'save-place-find-file-hook
-              :after-while #'dotemacs|recenter-on-load-saveplace)
+
+  (defadvice! dotemacs--dont-prettify-saveplace-cache-a (orig-fn)
+    "`save-place-alist-to-file' uses `pp' to prettify the contents of its cache.
+`pp' can be expensive for longer lists, and there's no reason to prettify cache
+files, so we replace calls to `pp' with the much faster `prin1'."
+    :around #'save-place-alist-to-file
+    (cl-letf (((symbol-function #'pp)
+               (symbol-function #'prin1)))
+      (funcall orig-fn)))
+  
   (save-place-mode +1))
 
 ;; Hideshow
@@ -132,17 +147,19 @@
 
 ;; recent files
 (use-package recentf
-  :defer 1
   :commands recentf-open-files
   :config
   (setq recentf-save-file (concat dotemacs-cache-dir "recentf")
         recentf-max-menu-items 0
-        recentf-max-saved-items 300
+        recentf-max-saved-items 200
         recentf-auto-cleanup 'never
         recentf-exclude (list "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$" "^/tmp/" "^/ssh:"
                               "\\.?ido\\.last$" "\\.revive$" "/TAGS$" "^/var/folders/.+$"
-                              (regexp-quote (recentf-apply-filename-handlers dotemacs-cache-dir))
-                              (regexp-quote (recentf-apply-filename-handlers dotemacs-local-dir))))
+                              (lambda (path)
+                                (ignore-errors (file-in-directory-p path dotemacs-local-dir)))
+                              (lambda (path)
+                                (ignore-errors (file-in-directory-p path dotemacs-cache-dir)))))
+  (add-hook 'kill-emacs-hook #'recentf-cleanup)
   (quiet! (recentf-mode +1)))
 
 (use-package server

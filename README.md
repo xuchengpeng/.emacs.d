@@ -2,8 +2,8 @@
 
 [![Made with dotemacs](https://img.shields.io/github/tag/xuchengpeng/.emacs.d.svg?label=release&style=for-the-badge&color=orange)](https://github.com/xuchengpeng/.emacs.d/releases)
 [![Made for Emacs 25.2+](https://img.shields.io/badge/Made_for-Emacs_25.2+-blueviolet.svg?style=for-the-badge)](https://www.gnu.org/software/emacs/)
+[![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/xuchengpeng/.emacs.d.svg?branch=master)](https://travis-ci.org/xuchengpeng/.emacs.d)
-[![License GPL 3](https://img.shields.io/badge/license-GPL_3-green.svg)](http://www.gnu.org/licenses/gpl-3.0.txt)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**

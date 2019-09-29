@@ -23,15 +23,15 @@ missing) and shouldn't be deleted.")
 (defvar dotemacs-packages ()
   "A list of enabled packages.")
 
-(eval-and-compile
-  (setq package-user-dir (expand-file-name "elpa" dotemacs-packages-dir)
-        package-gnupghome-dir (expand-file-name "gnupg" dotemacs-packages-dir)
-        package-enable-at-startup nil
-        load-prefer-newer t
-        use-package-verbose dotemacs-debug-mode
-        use-package-compute-statistics dotemacs-debug-mode
-        use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1)
-        use-package-expand-minimally (not dotemacs-debug-mode)))
+(setq package--init-file-ensured t
+      package-enable-at-startup nil
+      package-user-dir (expand-file-name "elpa" dotemacs-packages-dir)
+      package-gnupghome-dir (expand-file-name "gnupg" dotemacs-packages-dir)
+      load-prefer-newer noninteractive
+      use-package-verbose dotemacs-debug-mode
+      use-package-compute-statistics dotemacs-debug-mode
+      use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1)
+      use-package-expand-minimally (not dotemacs-debug-mode))
 
 (defun dotemacs/set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
@@ -65,6 +65,11 @@ missing) and shouldn't be deleted.")
 (unless (eq dotemacs-package-archives 'custom)
   (dotemacs/set-package-archives dotemacs-package-archives))
 
+;; Don't save `package-selected-packages' to `custom-file'
+(defadvice! dotemacs--package-inhibit-custom-file-a (&optional value)
+  :override #'package--save-selected-packages
+  (if value (setq package-selected-packages value)))
+
 ;;; straight
 (setq straight-base-dir dotemacs-local-dir
       straight-repository-branch "develop"
@@ -92,8 +97,7 @@ missing) and shouldn't be deleted.")
     (load bootstrap-file nil 'nomessage)))
 
 ;;
-;; Functions
-;;
+;;; Functions
 
 (defun dotemacs-initialize-packages (&optional force-p)
   "Initial core packages."
@@ -123,6 +127,21 @@ missing) and shouldn't be deleted.")
 (defun dotemacs-install-packages (packages-list)
   "Install packages defined by PACKAGES-LIST."
   (mapc #'straight-use-package packages-list))
+
+;;
+;;; Module package macros
+
+(defmacro package! (package)
+  "Add PACKAGE to ‘dotemacs-packages’."
+  `(add-to-list 'dotemacs-packages ',package t))
+
+(defmacro packages! (&rest packages)
+  "Add packages in PACKAGES to ‘dotemacs-packages’.
+
+Can take multiple packages.
+e.g. (packages! evil evil-surround)"
+  `(dolist (package ',packages)
+     (add-to-list 'dotemacs-packages package t)))
 
 (provide 'core-packages)
 ;;; core-packages.el ends here

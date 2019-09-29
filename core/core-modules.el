@@ -390,18 +390,6 @@ This is a wrapper around `eval-after-load' that:
                (setq body `((after! ,next ,@body))))
              (car body))))))
 
-(defmacro package! (package)
-  "Add PACKAGE to ‘dotemacs-packages’."
-  `(add-to-list 'dotemacs-packages ',package t))
-
-(defmacro packages! (&rest packages)
-  "Add packages in PACKAGES to ‘dotemacs-packages’.
-
-Can take multiple packages.
-e.g. (packages! evil evil-surround)"
-  `(dolist (package ',packages)
-     (add-to-list 'dotemacs-packages package t)))
-
 ;;
 ;; benchmark
 

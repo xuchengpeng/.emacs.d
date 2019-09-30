@@ -23,10 +23,8 @@ stored in `persp-save-dir'.")
   
   (persp-mode +1)
   
-  (advice-add #'persp-asave-on-exit :around #'+workspaces*autosave-real-buffers)
-  
-  (add-hook 'dotemacs-cleanup-hook #'+workspaces|cleanup-unassociated-buffers)
-  
+  (advice-add #'persp-asave-on-exit :around #'+workspaces-autosave-real-buffers-a)
+
   ;; Ensure buffers we've opened/switched to are auto-added to the current
   ;; perspective
   (setq persp-add-buffer-on-find-file t

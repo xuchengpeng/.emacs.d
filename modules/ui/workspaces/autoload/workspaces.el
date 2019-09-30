@@ -14,8 +14,7 @@
 
 
 ;;
-;; Library
-;;
+;;; Library
 
 (defun +workspace--protected-p (name)
   (equal name persp-nil-name))
@@ -66,6 +65,8 @@ error if NAME doesn't exist."
 ;;;###autoload
 (defun +workspace-list ()
   "Return a list of workspace structs (satisifes `+workspace-p')."
+  ;; We don't use `hash-table-values' because it doesn't ensure order in older
+  ;; versions of Emacs
   (cdr (cl-loop for persp being the hash-values of *persp-hash*
                 collect persp)))
 
@@ -234,7 +235,7 @@ workspace to delete."
       (if current-prefix-arg
           (completing-read (format "Delete workspace (default: %s): " current-name)
                            (+workspace-list-names)
-                           nil nil current-name)
+                           nil nil nil nil current-name)
         current-name))))
   (condition-case-unless-debug ex
       (let ((workspaces (+workspace-list-names)))
@@ -322,8 +323,8 @@ end of the workspace list."
 
 ;;;###autoload
 (dotimes (i 9)
-  (fset (intern (format "+workspace/switch-to-%d" i))
-        (lambda () (interactive) (+workspace/switch-to i))))
+  (defalias (intern (format "+workspace/switch-to-%d" i))
+    (lambda () (interactive) (+workspace/switch-to i))))
 
 ;;;###autoload
 (defun +workspace/switch-to-final ()
@@ -434,7 +435,7 @@ the next."
 ;;; Hooks
 
 ;;;###autoload
-(defun +workspaces|delete-associated-workspace (&optional frame)
+(defun +workspaces-delete-associated-workspace-h (&optional frame)
   "Delete workspace associated with current frame.
 A workspace gets associated with a frame when a new frame is interactively
 created."
@@ -446,17 +447,7 @@ created."
         (+workspace/delete frame-persp)))))
 
 ;;;###autoload
-(defun +workspaces|cleanup-unassociated-buffers ()
-  "Kill leftover buffers that are unassociated with any perspective."
-  (when persp-mode
-    (cl-loop for buf in (buffer-list)
-             unless (or (persp--buffer-in-persps buf)
-                        (get-buffer-window buf))
-             if (kill-buffer buf)
-             sum 1)))
-
-;;;###autoload
-(defun +workspaces|associate-frame (frame &optional _new-frame-p)
+(defun +workspaces-associate-frame-fn (frame &optional _new-frame-p)
   "Create a blank, new perspective and associate it with FRAME."
   (when persp-mode
     (if (not (persp-frame-list-without-daemon))
@@ -471,11 +462,10 @@ created."
       (run-at-time 0.1 nil #'+workspace/display))))
 
 ;;
-;; Advice
-;;
+;;; Advice
 
 ;;;###autoload
-(defun +workspaces*autosave-real-buffers (orig-fn &rest args)
+(defun +workspaces-autosave-real-buffers-a (orig-fn &rest args)
   "Don't autosave if no real buffers are open."
   (when (dotemacs-real-buffer-list)
     (apply orig-fn args))

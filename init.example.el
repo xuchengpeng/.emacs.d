@@ -4,9 +4,9 @@
 
 (dotemacs! :completion
            company
-           ;; helm
+           helm
            ;; ido
-           ivy
+           ;; ivy
            
            :editor
            ;; evil

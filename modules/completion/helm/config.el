@@ -20,6 +20,26 @@
         ;; disable special behavior for left/right, M-left/right keys.
         helm-ff-lynx-style-map nil)
   
+  (let ((fuzzy (featurep! +fuzzy)))
+    (setq helm-M-x-fuzzy-match fuzzy
+          helm-ag-fuzzy-match fuzzy
+          helm-apropos-fuzzy-match fuzzy
+          helm-apropos-fuzzy-match fuzzy
+          helm-bookmark-show-location fuzzy
+          helm-buffers-fuzzy-matching fuzzy
+          helm-completion-in-region-fuzzy-match fuzzy
+          helm-completion-in-region-fuzzy-match fuzzy
+          helm-ff-fuzzy-matching fuzzy
+          helm-file-cache-fuzzy-match fuzzy
+          helm-flx-for-helm-locate fuzzy
+          helm-imenu-fuzzy-match fuzzy
+          helm-lisp-fuzzy-completion fuzzy
+          helm-locate-fuzzy-match fuzzy
+          helm-mode-fuzzy-match fuzzy
+          helm-projectile-fuzzy-match fuzzy
+          helm-recentf-fuzzy-match fuzzy
+          helm-semantic-fuzzy-match fuzzy))
+  
   (let ((command
          (cond
           ((executable-find "rg")
@@ -33,6 +53,11 @@
     (setq helm-grep-ag-command command))
   
   (helm-mode +1))
+
+(when (featurep! +fuzzy)
+  (use-package helm-flx
+    :hook (helm-mode . helm-flx-mode)
+    :config (helm-flx-mode +1)))
 
 (use-package helm-ag
   :after (helm)

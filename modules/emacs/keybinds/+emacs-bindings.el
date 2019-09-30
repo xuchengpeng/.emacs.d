@@ -193,10 +193,7 @@
   (define-key! helm-map
     "TAB"           'helm-execute-persistent-action
     "<tab>"         'helm-execute-persistent-action
-    "C-z"           'helm-select-action)
-  
-  (define-key! isearch-mode-map
-    "M-i"           'helm-occur-from-isearch))
+    "C-z"           'helm-select-action))
 
 ;;
 ;; ivy

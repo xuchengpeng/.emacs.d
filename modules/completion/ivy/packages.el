@@ -8,3 +8,8 @@
 (package! counsel-projectile)
 ; (package! smex)
 (package! amx)
+
+(if (featurep! +prescient)
+    (package! ivy-prescient)
+  (when (featurep! +fuzzy)
+    (package! flx)))

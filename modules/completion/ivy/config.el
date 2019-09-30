@@ -29,6 +29,42 @@
     (setq magit-completing-read-function 'ivy-completing-read))
   (ivy-mode +1))
 
+(when (and (featurep! +fuzzy)
+           (not (featurep! +prescient)))
+  (use-package flx
+    :defer t  ; is loaded by ivy
+    :init
+    (setf (alist-get 't ivy-re-builders-alist) #'ivy--regex-fuzzy)
+    (setq ivy-initial-inputs-alist nil
+          ivy-flx-limit 10000)))
+
+(when (featurep! +prescient)
+  (use-package ivy-prescient
+    :hook (ivy-mode . ivy-prescient-mode)
+    :init
+    (setq prescient-filter-method
+          (if (featurep! +fuzzy)
+              '(literal regexp initialism fuzzy)
+            '(literal regexp initialism))
+          ivy-prescient-enable-filtering nil  ; we do this ourselves
+          ivy-prescient-retain-classic-highlighting t
+          ivy-initial-inputs-alist nil
+          ivy-re-builders-alist
+          '((counsel-ag . +ivy-prescient-non-fuzzy)
+            (counsel-rg . +ivy-prescient-non-fuzzy)
+            (counsel-grep . +ivy-prescient-non-fuzzy)
+            (swiper . +ivy-prescient-non-fuzzy)
+            (swiper-isearch . +ivy-prescient-non-fuzzy)
+            (t . ivy-prescient-re-builder)))
+    :config
+    (defun +ivy-prescient-non-fuzzy (str)
+      (let ((prescient-filter-method '(literal regexp)))
+        (ivy-prescient-re-builder str)))
+    
+    ;; NOTE prescient config duplicated with `company'
+    (setq prescient-save-file (concat dotemacs-cache-dir "prescient-save.el"))
+    (prescient-persist-mode +1)))
+
 (use-package ivy-rich
   :hook (ivy-mode . ivy-rich-mode)
   :config

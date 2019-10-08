@@ -12,7 +12,7 @@
   "The time it took, in seconds, for Emacs to initialize.")
 
 ;;
-;; Custom hooks
+;;; Custom hooks
 
 (defvar dotemacs-before-init-modules-hook nil
   "A list of hooks run before modules' config.el files are loaded, but after their init.el files are loaded.")
@@ -23,7 +23,7 @@
 (defvaralias 'dotemacs-after-init-modules-hook 'after-init-hook)
 
 ;;
-;; Functions
+;;; Functions
 
 (defun dotemacs-initialize-modules ()
   "Initialize modules."
@@ -390,22 +390,6 @@ This is a wrapper around `eval-after-load' that:
              (dolist (next (cdr package))
                (setq body `((after! ,next ,@body))))
              (car body))))))
-
-;;
-;; benchmark
-
-(defun dotemacs|display-benchmark (&optional return-p)
-  "Display a benchmark, showing number of packages and modules, and how quickly
-they were loaded at startup.
-
-If RETURN-P, return the message as a string instead of displaying it."
-  (funcall (if return-p #'format #'message)
-           "Emacs loaded %s packages across %d modules in %.03fs"
-           (length package-activated-list)
-           (if dotemacs-modules (hash-table-count dotemacs-modules) 0)
-           (or dotemacs-init-time
-               (setq dotemacs-init-time (float-time (time-subtract (current-time) before-init-time))))))
-(add-hook 'window-setup-hook #'dotemacs|display-benchmark)
 
 (provide 'core-modules)
 ;;; core-modules.el ends here

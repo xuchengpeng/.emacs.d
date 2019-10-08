@@ -163,7 +163,7 @@ decrease this. If you experience stuttering, increase this.")
 (load custom-file t (not dotemacs-debug-mode))
 
 ;;
-;;; Bootstrap functions
+;;; Bootstrap helpers
 
 (defun dotemacs-try-run-hook (hook)
   "Run HOOK (a hook function), but marks thrown errors to make it a little
@@ -178,6 +178,21 @@ Meant to be used with `run-hook-wrapped'."
      (signal 'dotemacs-hook-error (list hook e))))
   ;; return nil so `run-hook-wrapped' won't short circuit
   nil)
+
+;; benchmark
+(defun dotemacs-display-benchmark-h (&optional return-p)
+  "Display a benchmark, showing number of packages and modules, and how quickly
+they were loaded at startup.
+
+If RETURN-P, return the message as a string instead of displaying it."
+  (funcall (if return-p #'format #'message)
+           "Emacs loaded %s packages across %d modules in %.03fs"
+           (+ (length dotemacs-core-packages) (length dotemacs-packages))
+           (if dotemacs-modules (hash-table-count dotemacs-modules) 0)
+           (or dotemacs-init-time
+               (setq dotemacs-init-time
+                     (float-time (time-subtract (current-time) before-init-time))))))
+(add-hook 'window-setup-hook #'dotemacs-display-benchmark-h)
 
 (defun dotemacs-initialize ()
   "dotemacs initialize function.

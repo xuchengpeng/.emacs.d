@@ -40,7 +40,7 @@ while they run.")
    (propertize
     (+dashboard--center
      +dashboard-buffer-window-width
-     (dotemacs|display-benchmark 'return))
+     (dotemacs-display-benchmark-h 'return))
     'face 'font-lock-comment-face)
    "\n"))
 
@@ -74,6 +74,7 @@ while they run.")
           (lambda ()
             (add-hook 'window-size-change-functions '+dashboard|resize-on-hook)
             (+dashboard|resize-on-hook)))
+(remove-hook 'window-setup-hook #'dotemacs-display-benchmark-h)
 
 (defun +dashboard|startup-hook ()
   "Setup post initialization hooks.

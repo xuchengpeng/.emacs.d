@@ -243,10 +243,6 @@ If FETCHER is a function, ELT is used as the key in LIST (an alist)."
                   elt)
                ,list)))
 
-(defmacro delete! (elt list)
-  "Delete ELT from LIST in-place."
-  `(setq ,list (delete ,elt ,list)))
-
 (defmacro add-transient-hook! (hook-or-function &rest forms)
   "Attaches a self-removing function to HOOK-OR-FUNCTION.
 
@@ -345,10 +341,6 @@ If N and M = 1, there's no benefit to using this macro over `remove-hook'.
 (defmacro setq-hook! (hooks &rest var-vals)
   "Sets buffer-local variables on HOOKS.
 
-  (setq-hook! 'markdown-mode-hook
-    line-spacing 2
-    fill-column 80)
-
 \(fn HOOKS &rest [SYM VAL]...)"
   (declare (indent 1))
   (macroexp-progn
@@ -365,7 +357,8 @@ If N and M = 1, there's no benefit to using this macro over `remove-hook'.
 \(fn HOOKS &rest [SYM VAL]...)"
   (declare (indent 1))
   (macroexp-progn
-   (cl-loop for (_var _val hook fn) in (dotemacs--setq-hook-fns hooks vars 'singles)
+   (cl-loop for (_var _val hook fn)
+            in (dotemacs--setq-hook-fns hooks vars 'singles)
             collect `(remove-hook ',hook #',fn))))
 
 (defmacro load! (filename &optional path noerror)
@@ -377,20 +370,22 @@ directory path). If omitted, the lookup is relative to either `load-file-name',
 `byte-compile-current-file' or `buffer-file-name' (checked in that order).
 
 If NOERROR is non-nil, don't throw an error if the file doesn't exist."
-  (unless path
-    (setq path (or (dir!)
+  (let* ((path (or path
+                   (dir!)
                    (error "Could not detect path to look for '%s' in"
-                          filename))))
-  (let ((file (if path
-                  `(let (file-name-handler-alist)
-                     (expand-file-name ,filename ,path))
+                          filename)))
+         (file (if path
+                  `(expand-file-name ,filename ,path)
                 filename)))
-    `(condition-case e
-         (load ,file ,noerror ,(not dotemacs-debug-mode))
-       ((debug dotemacs-error) (signal (car e) (cdr e)))
-       ((debug error)
+    `(condition-case-unless-debug e
+         (let (file-name-handler-alist)
+           (load ,file ,noerror 'nomessage))
+       (dotemacs-error (signal (car e) (cdr e)))
+       (error
         (let* ((source (file-name-sans-extension ,file))
-               (err (cond ((file-in-directory-p source dotemacs-core-dir)
+               (err (cond ((not (featurep 'core))
+                           (cons 'error (file-name-directory path)))
+                          ((file-in-directory-p source dotemacs-core-dir)
                            (cons 'dotemacs-error dotemacs-core-dir))
                           ((file-in-directory-p source dotemacs-private-dir)
                            (cons 'dotemacs-private-error dotemacs-private-dir))

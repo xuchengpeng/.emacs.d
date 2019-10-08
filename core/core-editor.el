@@ -66,9 +66,6 @@
 ;;
 ;; Built-in plugins
 
-(after-load! 'bookmark
-  (setq bookmark-save-flag t))
-
 ;; revert buffers for changed files
 (use-package autorevert
   :hook (find-file . global-auto-revert-mode)

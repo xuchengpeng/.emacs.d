@@ -259,39 +259,40 @@ This doesn't require modules to be enabled. For enabled modules us
 
 MODULES must be in mplist format.
 e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
-  (unless (keywordp (car modules))
-    (setq modules (eval modules t)))
-  (unless dotemacs-modules
-    (setq dotemacs-modules
-          (make-hash-table :test 'equal
-                           :size (if modules (length modules) 150)
-                           :rehash-threshold 1.0)))
-  (let (category m)
-    (while modules
-      (setq m (pop modules))
-      (cond ((keywordp m) (setq category m))
-            ((not category) (error "No module category specified for %s" m))
-            ((and (listp m)
-                  (keywordp (car m)))
-             (pcase (car m)
-               (:cond
-                (cl-loop for (cond . mods) in (cdr m)
-                         if (eval cond t)
-                         return (prependq! modules mods)))
-               (:if (if (eval (cadr m) t)
-                        (push (caddr m) modules)
-                      (prependq! modules (cdddr m))))
-               (fn (if (or (eval (cadr m) t)
-                           (eq fn :unless))
-                       (prependq! modules (cddr m))))))
-            ((catch 'dotemacs-modules
-               (let* ((module (if (listp m) (car m) m))
-                      (flags  (if (listp m) (cdr m))))
-                 (if-let* ((path (dotemacs-module-locate-path category module)))
-                     (dotemacs-module-set category module :flags flags :path path)
-                   (message "Warning: couldn't find the %s %s module" category module)))))))
-    `(setq dotemacs-modules ',dotemacs-modules))
-  (dotemacs-initialize-modules))
+  `(let ((modules ',modules))
+    (unless (keywordp (car modules))
+      (setq modules (eval modules t)))
+    (unless dotemacs-modules
+      (setq dotemacs-modules
+            (make-hash-table :test 'equal
+                             :size (if modules (length modules) 150)
+                             :rehash-threshold 1.0)))
+    (let (category m)
+      (while modules
+        (setq m (pop modules))
+        (cond ((keywordp m) (setq category m))
+              ((not category) (error "No module category specified for %s" m))
+              ((and (listp m)
+                    (keywordp (car m)))
+               (pcase (car m)
+                 (:cond
+                  (cl-loop for (cond . mods) in (cdr m)
+                           if (eval cond t)
+                           return (prependq! modules mods)))
+                 (:if (if (eval (cadr m) t)
+                          (push (caddr m) modules)
+                        (prependq! modules (cdddr m))))
+                 (fn (if (or (eval (cadr m) t)
+                             (eq fn :unless))
+                         (prependq! modules (cddr m))))))
+              ((catch 'dotemacs-modules
+                 (let* ((module (if (listp m) (car m) m))
+                        (flags  (if (listp m) (cdr m))))
+                   (if-let ((path (dotemacs-module-locate-path category module)))
+                       (dotemacs-module-set category module :flags flags :path path)
+                     (message "Warning: couldn't find the %s %s module" category module)))))))
+      dotemacs-modules)
+    (dotemacs-initialize-modules)))
 
 (defmacro require! (category module &rest plist)
   "Loads the module specified by CATEGORY (a keyword) and MODULE (a symbol)."

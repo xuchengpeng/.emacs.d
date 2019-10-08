@@ -3,6 +3,12 @@
 (when (version< emacs-version "25.2")
   (error "Emacs version should be 25.2 or higher"))
 
+;; Ensure `dotemacs-core-dir' is in `load-path'
+(add-to-list 'load-path (file-name-directory load-file-name))
+
+;;
+;;; Global variables
+
 (defconst EMACS26+ (> emacs-major-version 25))
 (defconst EMACS27+ (> emacs-major-version 26))
 (defconst IS-MAC     (eq system-type 'darwin))
@@ -50,7 +56,7 @@ line or use --debug-init to enable this.")
   :group 'emacs)
 
 ;;
-;; Startup optimizations
+;;; Startup optimizations
 
 (setq gc-cons-threshold most-positive-fixnum)
 
@@ -92,7 +98,7 @@ decrease this. If you experience stuttering, increase this.")
 (add-hook 'focus-out-hook #'garbage-collect)
 
 ;;
-;; Custom error types
+;;; Custom error types
 
 (define-error 'dotemacs-error "Error in dotemacs Emacs core")
 (define-error 'dotemacs-hook-error "Error in a dotemacs startup hook" 'dotemacs-error)
@@ -102,10 +108,7 @@ decrease this. If you experience stuttering, increase this.")
 (define-error 'dotemacs-package-error "Error with packages" 'dotemacs-error)
 
 ;;
-;; Emacs core configuration
-
-;; Ensure `dotemacs-core-dir' is in `load-path'
-(push dotemacs-core-dir load-path)
+;;; Emacs core configuration
 
 ;; Reduce debug output, well, unless we've asked for it.
 (setq debug-on-error dotemacs-debug-mode
@@ -160,7 +163,7 @@ decrease this. If you experience stuttering, increase this.")
 (load custom-file t (not dotemacs-debug-mode))
 
 ;;
-;; Bootstrap functions
+;;; Bootstrap functions
 
 (defun dotemacs-try-run-hook (hook)
   "Run HOOK (a hook function), but marks thrown errors to make it a little
@@ -212,7 +215,7 @@ Module load order is determined by your `dotemacs!' block."
 (add-hook 'emacs-startup-hook #'dotemacs-finalize)
 
 ;;
-;; Bootstrap dotemacs
+;;; Bootstrap dotemacs
 
 (dotemacs-initialize)
 

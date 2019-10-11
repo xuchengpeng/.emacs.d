@@ -34,12 +34,6 @@ See `dotemacs-real-buffer-p' for more information.")
   "The name of the buffer to fall back to if no other buffers exist (will create
 it if it doesn't exist).")
 
-;;;###autoload
-(defvar dotemacs-cleanup-hook ()
-  "A list of hooks run when `dotemacs/cleanup-session' is run, meant to clean up
-leftover buffers and processes.")
-
-
 ;;
 ;; Functions
 ;;
@@ -59,6 +53,33 @@ scratch buffer. See `dotemacs-fallback-buffer-name' to change this."
 
 ;;;###autoload
 (defalias 'dotemacs-buffer-list #'buffer-list)
+
+;;;###autoload
+(defun dotemacs-project-buffer-list (&optional project)
+  "Return a list of buffers belonging to the specified PROJECT.
+
+If PROJECT is nil, default to the current project.
+
+If no project is active, return all buffers."
+  (let ((buffers (dotemacs-buffer-list)))
+    (if-let* ((project-root
+               (if project (expand-file-name project)
+                 (dotemacs-project-root))))
+        (cl-loop for buf in buffers
+                 if (projectile-project-buffer-p buf project-root)
+                 collect buf)
+      buffers)))
+
+;;;###autoload
+(defun dotemacs-open-projects ()
+  "Return a list of projects with open buffers."
+  (cl-loop with projects = (make-hash-table :test 'equal :size 8)
+           for buffer in (dotemacs-buffer-list)
+           if (buffer-live-p buffer)
+           if (dotemacs-real-buffer-p buffer)
+           if (with-current-buffer buffer (dotemacs-project-root))
+           do (puthash (abbreviate-file-name it) t projects)
+           finally return (hash-table-keys projects)))
 
 ;;;###autoload
 (defun dotemacs-dired-buffer-p (buf)
@@ -175,6 +196,36 @@ If DERIVED-P, test with `derived-mode-p', otherwise use `eq'."
   (kill-buffer buffer))
 
 ;;;###autoload
+(defun dotemacs-fixup-windows (windows)
+  "Ensure that each of WINDOWS is showing a real buffer or the fallback buffer."
+  (dolist (window windows)
+    (with-selected-window window
+      (when (dotemacs-unreal-buffer-p (window-buffer))
+        (previous-buffer)
+        (when (dotemacs-unreal-buffer-p (window-buffer))
+          (switch-to-buffer (dotemacs-fallback-buffer)))))))
+
+;;;###autoload
+(defun dotemacs-kill-buffer-fixup-windows (buffer)
+  "Kill the BUFFER and ensure all the windows it was displayed in have switched
+to a real buffer or the fallback buffer."
+  (let ((windows (get-buffer-window-list buffer)))
+    (kill-buffer buffer)
+    (dotemacs-fixup-windows (cl-remove-if-not #'window-live-p windows))))
+
+;;;###autoload
+(defun dotemacs-kill-buffers-fixup-windows (buffers)
+  "Kill the BUFFERS and ensure all the windows they were displayed in have
+switched to a real buffer or the fallback buffer."
+  (let ((seen-windows (make-hash-table :test 'eq :size 8)))
+    (dolist (buffer buffers)
+      (let ((windows (get-buffer-window-list buffer)))
+        (kill-buffer buffer)
+        (dolist (window (cl-remove-if-not #'window-live-p windows))
+          (puthash window t seen-windows))))
+    (dotemacs-fixup-windows (hash-table-keys seen-windows))))
+
+;;;###autoload
 (defun dotemacs-kill-matching-buffers (pattern &optional buffer-list)
   "Kill all buffers (in current workspace OR in BUFFER-LIST) that match the
 regex PATTERN. Returns the number of killed buffers."
@@ -252,78 +303,98 @@ If DONT-SAVE, don't prompt to save modified buffers (discarding their changes)."
   (interactive
    (list (current-buffer) current-prefix-arg))
   (cl-assert (bufferp buffer) t)
-  (let ((windows (get-buffer-window-list buffer nil t)))
-    (when (and (buffer-modified-p buffer) dont-save)
-      (with-current-buffer buffer
-        (set-buffer-modified-p nil)))
-    (kill-buffer buffer)
-    (cl-loop for win in windows
-             if (dotemacs-real-buffer-p (window-buffer win))
-             do (with-selected-window win (previous-buffer)))))
+  (when (and (buffer-modified-p buffer) dont-save)
+    (with-current-buffer buffer
+      (set-buffer-modified-p nil)))
+  (dotemacs-kill-buffer-fixup-windows buffer))
 
 ;;;###autoload
-(defun dotemacs/kill-all-buffers ()
-  "Kill all buffers and closes their windows."
-  (interactive "P")
+(defun dotemacs/kill-all-buffers (&optional buffer-list interactive)
+  "Kill all buffers and closes their windows.
+
+If the prefix arg is passed, doesn't close windows and only kill buffers that
+belong to the current project."
+  (interactive
+   (list (if current-prefix-arg
+             (dotemacs-project-buffer-list)
+           (dotemacs-buffer-list))
+         t))
+  (save-some-buffers)
   (delete-other-windows)
-  (switch-to-buffer (dotemacs-fallback-buffer))
-  (dotemacs/cleanup-session (dotemacs-buffer-list)))
+  (when (memq (current-buffer) buffer-list)
+    (switch-to-buffer (dotemacs-fallback-buffer)))
+  (mapc #'kill-buffer buffer-list)
+  (when interactive
+    (message "Killed %s buffers"
+             (- (length buffer-list)
+                (length (cl-remove-if-not #'buffer-live-p buffer-list))))))
 
 ;;;###autoload
-(defun dotemacs/kill-other-buffers ()
-  "Kill all other buffers (besides the current one)."
-  (interactive "P")
-  (let ((buffers (dotemacs-buffer-list))
-        (current-buffer (current-buffer)))
-    (dolist (buf buffers)
-      (unless (eq buf current-buffer)
-        (dotemacs-kill-buffer-and-windows buf)))
-    (when (called-interactively-p 'interactive)
-      (message "Killed %s buffers" (length buffers)))))
+(defun dotemacs/kill-other-buffers (&optional buffer-list interactive)
+  "Kill all other buffers (besides the current one).
+
+If the prefix arg is passed, kill only buffers that belong to the current
+project."
+  (interactive
+   (list (delq (current-buffer)
+               (if current-prefix-arg
+                   (dotemacs-project-buffer-list)
+                 (dotemacs-buffer-list)))
+         t))
+  (mapc #'dotemacs-kill-buffer-and-windows buffer-list)
+  (when interactive
+    (message "Killed %s buffers"
+             (- (length buffer-list)
+                (length (cl-remove-if-not #'buffer-live-p buffer-list))))))
 
 ;;;###autoload
-(defun dotemacs/kill-matching-buffers (pattern)
-  "Kill buffers that match PATTERN in BUFFER-LIST."
+(defun dotemacs/kill-matching-buffers (pattern &optional buffer-list interactive)
+  "Kill buffers that match PATTERN in BUFFER-LIST.
+
+If the prefix arg is passed, only kill matching buffers in the current project."
   (interactive
    (list (read-regexp "Buffer pattern: ")
-         current-prefix-arg))
-  (let* ((buffers (dotemacs-buffer-list))
-         (n (dotemacs-kill-matching-buffers pattern buffers)))
-    (when (called-interactively-p 'interactive)
-      (message "Killed %s buffers" n))))
+         (if current-prefix-arg
+             (dotemacs-project-buffer-list)
+           (dotemacs-buffer-list))
+         t))
+  (dotemacs-kill-matching-buffers pattern buffer-list)
+  (when interactive
+    (message "Killed %d buffer(s)"
+             (- (length buffer-list)
+                (length (cl-remove-if-not #'buffer-live-p buffer-list))))))
 
 ;;;###autoload
-(defun dotemacs/cleanup-session (&optional buffer-list)
-  "Clean up buried buries and orphaned processes in the current workspace. If
-ALL-P (universal argument), clean them up globally."
-  (interactive)
-  (let ((buffers (dotemacs-buried-buffers buffer-list))
-        (n 0))
-    (dolist (buf buffers)
-      (unless (buffer-modified-p buf)
-        (kill-buffer buf)
-        (cl-incf n)))
-    (setq n (+ n (dotemacs/cleanup-buffer-processes)))
-    (dolist (hook dotemacs-cleanup-hook)
-      (let ((m (funcall hook)))
-        (when (integerp m)
-          (setq n (+ n m)))))
-    (message "Cleaned up %s buffers" n)
-    n))
+(defun dotemacs/kill-buried-buffers (&optional buffer-list interactive)
+  "Kill buffers that are buried.
+
+If PROJECT-P (universal argument), only kill buried buffers belonging to the
+current project."
+  (interactive
+   (list (dotemacs-buried-buffers
+          (if current-prefix-arg (dotemacs-project-buffer-list)))
+         t))
+  (dotemacs/kill-all-buffers buffer-list interactive))
 
 ;;;###autoload
-(defun dotemacs/cleanup-buffer-processes ()
-  "Kill all processes that have no visible associated buffers. Return number of
-processes killed."
-  (interactive)
-  (let ((n 0))
-    (dolist (p (process-list))
-      (let ((process-buffer (process-buffer p)))
-        (when (and (process-live-p p)
-                   (not (string= (process-name p) "server"))
-                   (or (not process-buffer)
-                       (and (bufferp process-buffer)
-                            (not (buffer-live-p process-buffer)))))
-          (delete-process p)
-          (cl-incf n))))
-    n))
+(defun dotemacs/kill-project-buffers (project &optional interactive)
+  "Kill buffers for the specified PROJECT."
+  (interactive
+   (list (if-let (open-projects (dotemacs-open-projects))
+             (completing-read
+              "Kill buffers for project: " open-projects
+              nil t nil nil
+              (if-let* ((project-root (dotemacs-project-root))
+                        (project-root (abbreviate-file-name project-root))
+                        ((member project-root open-projects)))
+                  project-root))
+           (message "No projects are open!")
+           nil)
+         t))
+  (when project
+    (let ((buffers (dotemacs-project-buffer-list project)))
+      (dotemacs-kill-buffers-fixup-windows buffers)
+      (when interactive
+        (message "Killed %d buffer(s)"
+                 (- (length buffers)
+                    (length (cl-remove-if-not #'buffer-live-p buffers))))))))

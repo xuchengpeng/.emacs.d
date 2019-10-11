@@ -1,6 +1,10 @@
 ;;; emacs/keybinds/autoload.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
+(defun +default/browse-project ()
+  (interactive) (dotemacs-project-browse (dotemacs-project-root)))
+
+;;;###autoload
 (defun +default/search-cwd (&optional arg)
   "Conduct a text search in files under the current folder.
 If prefix ARG is set, prompt for a directory to search from."

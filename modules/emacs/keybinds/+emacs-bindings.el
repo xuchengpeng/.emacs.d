@@ -95,6 +95,10 @@
   "oW"      '(hydra-workspaces/body :which-key "Workspaces")
   
   ;; project
+  "p."      '(+default/browse-project :which-key "Browse project")
+  "p>"      '(dotemacs/browse-in-other-project :which-key "Browse other project")
+  "p/"      '(projectile-find-file :which-key "Find file in project")
+  "p?"      '(dotemacs/find-file-in-other-project :which-key "Find file in project")
   "pc"      '(projectile-compile-project :which-key "Compile project")
   "pf"      '(projectile-find-file :which-key "Find file in project")
   "pi"      '(projectile-invalidate-cache :which-key "Invalidate cache")

@@ -243,7 +243,9 @@ workspace to delete."
             (+workspace-message (format "'%s' workspace doesn't exist" name) 'warn)
           (cond ((delq (selected-frame) (persp-frames-with-persp (get-frame-persp)))
                  (user-error "Can't close workspace, it's visible in another frame"))
-                ((> (length workspaces) 1)
+                ((not (equal (+workspace-current-name) name))
+                 (+workspace-delete name))
+                ((cdr workspaces)
                  (+workspace-delete name)
                  (+workspace-switch
                   (if (+workspace-exists-p +workspace--last)

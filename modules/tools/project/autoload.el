@@ -2,15 +2,10 @@
 
 (defvar projectile-project-root nil)
 
-;;;###autoload
-(defmacro without-project-cache! (&rest body)
-  "Run BODY with projectile's project-root cache disabled. This is necessary if
-you want to interactive with a project other than the one you're in."
-  `(let ((projectile-project-root-cache (make-hash-table :test 'equal))
-         projectile-project-name
-         projectile-project-root
-         projectile-require-project-root)
-     ,@body))
+;;;###autoload (autoload 'projectile-relevant-known-projects "projectile")
+
+;;
+;;; Macros
 
 ;;;###autoload
 (defmacro project-file-exists-p! (files)
@@ -19,6 +14,34 @@ Paths are relative to the project root, unless they start with ./ or ../ (in
 which case they're relative to `default-directory'). If they start with a slash,
 they are absolute."
   `(file-exists-p! ,files (dotemacs-project-root)))
+
+;;
+;;; Commands
+
+;;;###autoload
+(defun dotemacs/find-file-in-other-project (project-root)
+  "Preforms `projectile-find-file' in a known project of your choosing."
+  (interactive
+   (list
+    (completing-read "Find file in project: " (projectile-relevant-known-projects)
+                     nil nil nil nil (dotemacs-project-root))))
+  (unless (file-directory-p project-root)
+    (error "Project directory '%s' doesn't exist" project-root))
+  (dotemacs-project-find-file project-root))
+
+;;;###autoload
+(defun dotemacs/browse-in-other-project (project-root)
+  "Preforms `find-file' in a known project of your choosing."
+  (interactive
+   (list
+    (completing-read "Browse in project: " (projectile-relevant-known-projects)
+                     nil nil nil nil (dotemacs-project-root))))
+  (unless (file-directory-p project-root)
+    (error "Project directory '%s' doesn't exist" project-root))
+  (dotemacs-project-browse project-root))
+
+;;
+;;; Library
 
 ;;;###autoload
 (defun dotemacs-project-p (&optional dir)
@@ -70,14 +93,16 @@ If DIR is not a project, it will be indexed (but not cached)."
              (setq projectile-enable-caching nil))
            (call-interactively
             ;; Intentionally avoid `helm-projectile-find-file', because it runs
-            ;; asynchronously, and thus doesn't see the lexical `default-directory'
+            ;; asynchronously, and thus doesn't see the lexical
+            ;;  `default-directory'
             (if (featurep! :completion ivy)
                 #'counsel-projectile-find-file
               #'projectile-find-file)))
-          ((fboundp 'project-find-file-in) ; emacs 26.1+ only
-           (project-find-file-in nil (list default-directory) nil))
           ((fboundp 'counsel-file-jump) ; ivy only
            (call-interactively #'counsel-file-jump))
+          ((and (fboundp 'project-find-file-in) ; emacs 26.1+ only
+                (project-current))
+           (project-find-file-in nil (list default-directory) nil))
           ((fboundp 'helm-find-files)
            (call-interactively #'helm-find-files))
           ((call-interactively #'find-file)))))
@@ -92,44 +117,3 @@ If DIR is not a project, it will be indexed (but not cached)."
            ((featurep! :completion helm)
             #'helm-find-files)
            (#'find-file)))))
-
-;;;###autoload
-(defun dotemacs-project-buffer-list ()
-  "Return a list of buffers belonging to the current project."
-  (let ((buffers (dotemacs-buffer-list)))
-    (if-let* ((project-root (dotemacs-project-root)))
-        (cl-loop for buf in buffers
-                 if (projectile-project-buffer-p buf project-root)
-                 collect buf)
-      buffers)))
-
-;;;###autoload
-(defun +project/kill-all-project-buffers ()
-  "Kill all project buffers."
-  (interactive "P")
-  (switch-to-buffer (dotemacs-fallback-buffer))
-  (dotemacs/cleanup-session (dotemacs-project-buffer-list)))
-
-;;;###autoload
-(defun +project/kill-other-project-buffers ()
-  "Kill all other buffers (besides the current one).."
-  (interactive "P")
-  (let ((buffers (dotemacs-project-buffer-list))
-        (current-buffer (current-buffer)))
-    (dolist (buf buffers)
-      (unless (eq buf current-buffer)
-        (dotemacs-kill-buffer-and-windows buf)))
-    (when (called-interactively-p 'interactive)
-      (message "Killed %s project buffers" (length buffers)))))
-
-;;;###autoload
-(defun +project/kill-matching-project-buffers (pattern)
-  "Kill buffers that match PATTERN in current project."
-  (interactive
-   (list (read-regexp "Buffer pattern: ")
-         current-prefix-arg))
-  (let* ((buffers (dotemacs-project-buffer-list))
-         (n (dotemacs-kill-matching-buffers pattern buffers)))
-    (when (called-interactively-p 'interactive)
-      (message "Killed %s project buffers" n))))
-

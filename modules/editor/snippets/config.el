@@ -1,6 +1,6 @@
 ;;; editor/snippets/config.el -*- lexical-binding: t; -*-
 
-(defvar +snippets-dir (concat dotemacs-vendor-dir "snippets/")
+(defvar +snippets-dir (concat (dir!) "/lang")
   "Directory where `yasnippet' will search for your private snippets.")
 
 (use-package yasnippet

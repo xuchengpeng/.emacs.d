@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Read More
+# key: more
+# --
+$0
+<!--more-->

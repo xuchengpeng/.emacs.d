@@ -1,6 +1,6 @@
 ;;; completion/helm/autoload/helm.el -*- lexical-binding: t; -*-
 
-(defvar +helm-project-search-engines '(rg ag pt)
+(defvar +helm-project-search-engines '(rg ag)
   "What search tools for `+helm/project-search' (and `+helm-file-search' when no
 ENGINE is specified) to try, and in what order.
 
@@ -57,12 +57,6 @@ workspace."
         "-S"
         (when all-files-p "-z -uu")
         (unless recursive-p "--maxdepth 1")))
-
-(defun +helm-pt-search-args (all-files-p recursive-p)
-  (list "pt --nocolor --nogroup -e"
-        "-S"
-        (if all-files-p "-z -a")
-        (unless recursive-p "--depth 1")))
 
 (defun +helm--grep-source ()
   (require 'helm-projectile)
@@ -135,7 +129,7 @@ order.
                      (and (or (executable-find "grep")
                               (executable-find "git"))
                           'grep)
-                     (user-error "No search engine specified (is ag, rg, pt or git installed?)")))
+                     (user-error "No search engine specified (is ag, rg or git installed?)")))
          (query (or query
                     (when (use-region-p)
                       (let ((beg (or (bound-and-true-p evil-visual-beginning) (region-beginning)))
@@ -154,7 +148,6 @@ order.
           (pcase engine
             (`ag   (+helm-ag-search-args all-files recursive))
             (`rg   (+helm-rg-search-args all-files recursive))
-            (`pt   (+helm-pt-search-args all-files recursive))
             ('grep (+helm--grep-search directory query prompt all-files recursive)
                    (cl-return t))))
          (helm-ag-base-command (string-join command " ")))
@@ -209,8 +202,6 @@ ARG (universal argument), include all files, even hidden or compressed ones."
 ;;;###autoload (autoload '+helm/rg-from-cwd "completion/helm/autoload/helm" nil t)
 ;;;###autoload (autoload '+helm/ag "completion/helm/autoload/helm" nil t)
 ;;;###autoload (autoload '+helm/ag-from-cwd "completion/helm/autoload/helm" nil t)
-;;;###autoload (autoload '+helm/pt "completion/helm/autoload/helm" nil t)
-;;;###autoload (autoload '+helm/pt-from-cwd "completion/helm/autoload/helm" nil t)
 ;;;###autoload (autoload '+helm/grep "completion/helm/autoload/helm" nil t)
 ;;;###autoload (autoload '+helm/grep-from-cwd "completion/helm/autoload/helm" nil t)
 

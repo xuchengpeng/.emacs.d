@@ -88,20 +88,7 @@
          ;; file names beginning with # or .
          "\\(?:\\`[#.]\\)"
          ;; file names ending with # or ~
-         "\\|\\(?:[#~]\\'\\)"))
-  (let ((command
-         (cond
-          ((executable-find "rg")
-           "rg --smart-case --no-heading --line-number --color never %s %s")
-          ((executable-find "ag")
-           "ag --smart-case --noheading --nocolor --numbers %s %s")
-          (t counsel-grep-base-command))))
-    (setq counsel-grep-base-command command))
-  (setq counsel-rg-base-command "rg --smart-case --no-heading --line-number --color never %s ."
-        counsel-ag-base-command "ag --smart-case --nocolor --nogroup --numbers %s"
-        counsel-pt-base-command "pt -S --nocolor --nogroup -e %s")
-  (when (executable-find "rg")
-    (setq counsel-git-cmd "rg --files")))
+         "\\|\\(?:[#~]\\'\\)")))
 
 (use-package counsel-projectile
   :commands (counsel-projectile-find-file counsel-projectile-find-dir counsel-projectile-switch-to-buffer

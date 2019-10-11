@@ -40,39 +40,12 @@
           helm-recentf-fuzzy-match fuzzy
           helm-semantic-fuzzy-match fuzzy))
   
-  (let ((command
-         (cond
-          ((executable-find "rg")
-           "rg --color=always --smart-case --no-heading --line-number %s %s %s")
-          ((executable-find "ag")
-           "ag --color --smart-case --nogroup %s %s %s")
-          ((executable-find "pt")
-           "pt --color --smart-case --nogroup --numbers %s %s %s")
-          (t
-           "ag --color --smart-case --nogroup %s %s %s"))))
-    (setq helm-grep-ag-command command))
-  
   (helm-mode +1))
 
 (when (featurep! +fuzzy)
   (use-package helm-flx
     :hook (helm-mode . helm-flx-mode)
     :config (helm-flx-mode +1)))
-
-(use-package helm-ag
-  :after (helm)
-  :config
-  (let ((command
-         (cond
-          ((executable-find "rg")
-           "rg --color never --smart-case --no-heading --line-number")
-          ((executable-find "ag")
-           "ag --nocolor --smart-case --nogroup")
-          ((executable-find "pt")
-           "pt --nocolor --smart-case --nogroup --numbers")
-          (t
-           "ag --nocolor --smart-case --nogroup"))))
-    (setq helm-ag-base-command command)))
 
 (use-package helm-projectile
   :commands (helm-projectile-find-file

@@ -32,7 +32,6 @@ For example:
 ```el
 (setq dotemacs-full-name "user name")           ; User full name
 (setq dotemacs-mail-address "user@email.com")   ; Email address
-(setq dotemacs-package-archives 'emacs-china)   ; Package repo: melpa, emacs-china, netease, tuna or custom
 (setq dotemacs-theme 'dotemacs-one)             ; Color theme: dotemacs-one, dotemacs-one-light...
 ```
 

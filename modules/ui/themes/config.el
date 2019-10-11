@@ -3,7 +3,7 @@
 (defvar +themes|color-theme nil
   "The color theme to load.")
 
-(defvar +themes-dir (concat dotemacs-vendor-dir "dotemacs-themes")
+(defvar +themes-dir (concat (dir!) "/dotemacs-themes")
   "Directoriy for your private themes.")
 
 (defun +themes|init-theme ()

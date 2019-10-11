@@ -37,7 +37,7 @@
   
   ;; code
   "cf"      '(hydra-flycheck/body :which-key "Flycheck")
-  "cF"      '(clang-format :which-key "Format")
+  "cF"      '(format-all-buffer :which-key "Format")
   "cg"      '(hydra-avy/body :which-key "Goto")
   "cm"      '(hydra-mark/body :which-key "Mark")
   "cM"      '(hydra-multiple-cursors/body :which-key "Multiple cursors")

@@ -1,11 +1,12 @@
 ;;; lang/cc/config.el -*- lexical-binding: t; -*-
 
 ;; c
-(set-electric! '(c-mode c++-mode objc-mode java-mode) :chars '(?\n ?\}))
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (c-set-style "linux")
-            (setq c-basic-offset 4
-                  default-tab-width 4
-                  tab-width 4
-                  indent-tabs-mode nil)))
+(use-package cc-mode
+  :commands (c-mode c++-mode objc-mode java-mode)
+  :init
+  (setq-default c-basic-offset tab-width
+                c-default-style "linux")
+  (add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode))
+  :config
+  (set-electric! '(c-mode c++-mode objc-mode java-mode) :chars '(?\n ?\} ?\{))
+  (add-hook 'c-mode-common-hook #'rainbow-delimiters-mode))

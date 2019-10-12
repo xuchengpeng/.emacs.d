@@ -173,17 +173,16 @@ mouse-3: Toggle minor modes"
 
 (dotemacs-modeline-def-segment minor-modes
   (when dotemacs-modeline-minor-modes
-    (let ((active (dotemacs-modeline--active)))
-      (propertize
-       (concat
-        (replace-regexp-in-string (regexp-quote "%")
-                                  "%%%%"
-                                  (format-mode-line minor-mode-alist)
-                                  t t)
-        " ")
-       'face (if active
-                 'dotemacs-modeline-buffer-minor-mode
-               'mode-line-inactive)))))
+    (let ((face (if (dotemacs-modeline--active)
+                    'dotemacs-modeline-buffer-minor-mode
+                  'mode-line-inactive)))
+      (concat
+        (propertize (replace-regexp-in-string
+                     "%" "%%%%"
+                     (format-mode-line minor-mode-alist)
+                     t t)
+                    'face face)
+        (dotemacs-modeline-spc)))))
 
 ;;
 ;; process

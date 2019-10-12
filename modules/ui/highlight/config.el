@@ -2,7 +2,6 @@
 
 ;; Highlight symbols
 ;; (use-package highlight-symbol
-;;   :diminish highlight-symbol-mode
 ;;   :commands (highlight-symbol-mode)
 ;;   :hook (prog-mode . highlight-symbol-mode)
 ;;   :config

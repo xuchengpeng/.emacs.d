@@ -1,7 +1,6 @@
 ;;; completion/ivy/config.el -*- lexical-binding: t -*-
 
 (use-package ivy
-  :diminish ivy-mode
   :defer t
   :init
   (setq ivy-re-builders-alist
@@ -76,11 +75,9 @@
   :after (ivy hydra))
 
 (use-package swiper
-  :diminish
   :defer t)
 
 (use-package counsel
-  :diminish counsel-mode
   :hook (ivy-mode . counsel-mode)
   :config
   (setq counsel-find-file-ignore-regexp

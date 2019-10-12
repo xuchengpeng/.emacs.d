@@ -2,7 +2,6 @@
 
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)
-  :diminish (js2-mode)
   :config
   (setq js2-basic-offset 2
         js2-basic-indent 2

@@ -1,7 +1,6 @@
 ;;; completion/company/config.el -*- lexical-binding: t; -*-
 
 (use-package company
-  :diminish company-mode
   :commands (company-complete-common company-manual-begin company-grab-line)
   :hook (prog-mode . global-company-mode)
   :config  

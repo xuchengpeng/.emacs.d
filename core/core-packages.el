@@ -1,6 +1,6 @@
 ;;; core-packages.el --- Initialize core packages configurations. -*- lexical-binding: t; -*-
 
-(defvar dotemacs-core-packages '(straight use-package async diminish bind-key general)
+(defvar dotemacs-core-packages '(straight use-package async bind-key general)
   "A list of packages that must be installed (and will be auto-installed if
 missing) and shouldn't be deleted.")
 

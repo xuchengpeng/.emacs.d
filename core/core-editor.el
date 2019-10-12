@@ -55,21 +55,12 @@
 
 (push '("/LICENSE\\'" . text-mode) auto-mode-alist)
 
-(after-load! 'abbrev
-  (diminish 'abbrev-mode))
-(after-load! 'eldoc
-  (diminish 'eldoc-mode))
-(after-load! 'simple
-  (diminish 'auto-fill-function)
-  (diminish 'visual-line-mode))
-
 ;;
 ;; Built-in plugins
 
 ;; revert buffers for changed files
 (use-package autorevert
   :hook (find-file . global-auto-revert-mode)
-  :diminish auto-revert-mode
   :config
   (setq auto-revert-verbose t ; let us know when it happens
         auto-revert-use-notify nil
@@ -109,7 +100,6 @@ files, so we replace calls to `pp' with the much faster `prin1'."
 
 ;; Hideshow
 (use-package hideshow
-  :diminish hs-minor-mode
   :commands (hs-toggle-hiding)
   :hook (prog-mode . hs-minor-mode))
 

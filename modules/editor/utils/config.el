@@ -12,14 +12,12 @@
 
 ;; Treat undo history as a tree
 (use-package undo-tree
-  :diminish undo-tree-mode
   :hook (find-file . global-undo-tree-mode)
   :config
   (setq undo-tree-history-directory-alist `(("." . ,(concat dotemacs-cache-dir "undo-tree-hist/")))
         undo-tree-auto-save-history t))
 
 (use-package smartparens
-  :diminish smartparens-mode
   :hook ((find-file . smartparens-global-mode)
          ;; (prog-mode . smartparens-strict-mode)
          )

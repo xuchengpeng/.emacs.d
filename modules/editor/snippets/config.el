@@ -4,7 +4,6 @@
   "Directory where `yasnippet' will search for your private snippets.")
 
 (use-package yasnippet
-  :diminish yas-minor-mode
   ;; :hook (after-init . yas-global-mode)
   :hook ((prog-mode snippet-mode markdown-mode org-mode) . yas-minor-mode)
   :config

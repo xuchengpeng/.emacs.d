@@ -2,7 +2,6 @@
 
 (use-package which-key
   :defer 1
-  :diminish which-key-mode
   :commands which-key-mode
   :init
   (setq which-key-sort-order #'which-key-prefix-then-key-order

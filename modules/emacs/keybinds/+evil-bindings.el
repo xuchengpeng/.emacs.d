@@ -25,14 +25,15 @@
   "/P"      '(+default/search-other-project :which-key "Search other project")
   
   ;; buffer
-  "bR"      '(revert-buffer-with-coding-system :which-key "Reload encoding")
-  "bS"      '(dotemacs/sudo-this-file :which-key "Sudo edit this file")
   "bb"      '(switch-to-buffer :which-key "Switch buffer")
   "bk"      '(kill-this-buffer :which-key "Kill buffer")
   "bn"      '(next-buffer :which-key "Next buffer")
   "bo"      '(dotemacs/kill-other-buffers :which-key "Kill other buffers")
   "bp"      '(previous-buffer :which-key "Previous buffer")
+  "br"      '(revert-buffer :which-key "Revert buffer")
+  "bR"      '(revert-buffer-with-coding-system :which-key "Reload encoding")
   "bs"      '(save-buffer :which-key "Save buffer")
+  "bS"      '(save-some-buffers :which-key "Save all buffers")
   "bz"      '(bury-buffer :which-key "Bury buffer")
   
   ;; code

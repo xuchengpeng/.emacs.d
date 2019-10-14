@@ -5,32 +5,17 @@
 ;; Flagship themes
 ;;   `dotemacs-one'
 ;;   `dotemacs-one-light'
-;;   `dotemacs-vibrant'
 ;;
 ;; Additional themes
-;;   `dotemacs-city-lights'
 ;;   `dotemacs-dracula'
-;;   `dotemacs-fairy-floss'
 ;;   `dotemacs-gruvbox'
-;;   `dotemacs-Iosvkem'
 ;;   `dotemacs-molokai'
-;;   `dotemacs-moonlight'
 ;;   `dotemacs-nord'
 ;;   `dotemacs-nord-light'
-;;   `dotemacs-opera'
-;;   `dotemacs-opera-light'
-;;   `dotemacs-outrun-electric'
-;;   `dotemacs-nova'
-;;   `dotemacs-palenight'
-;;   `dotemacs-peacock'
-;;   `dotemacs-snazzy'
 ;;   `dotemacs-solarized-dark'
 ;;   `dotemacs-solarized-light'
-;;   `dotemacs-sourcerer'
-;;   `dotemacs-spacegrey'
 ;;   `dotemacs-tomorrow-night'
 ;;   `dotemacs-tomorrow-day'
-;;   `dotemacs-wilmersdorf'
 ;;
 ;;
 ;; A comprehensive configuration example:

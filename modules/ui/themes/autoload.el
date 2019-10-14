@@ -8,30 +8,14 @@
     (intern (completing-read "Switch to color theme: "
                              '(dotemacs-one
                                dotemacs-one-light
-                               dotemacs-challenger-deep
-                               dotemacs-city-lights
                                dotemacs-dracula
-                               dotemacs-fairy-floss
                                dotemacs-gruvbox
-                               dotemacs-Iosvkem
                                dotemacs-molokai
-                               dotemacs-moonlight
                                dotemacs-nord-light
                                dotemacs-nord
-                               dotemacs-nova
-                               dotemacs-opera-light
-                               dotemacs-opera
-                               dotemacs-outrun-electric
-                               dotemacs-palenight
-                               dotemacs-peacock
-                               dotemacs-snazzy
                                dotemacs-solarized-dark
                                dotemacs-solarized-light
-                               dotemacs-sourcerer
-                               dotemacs-spacegrey
                                dotemacs-tomorrow-day
-                               dotemacs-tomorrow-night
-                               dotemacs-vibrant
-                               dotemacs-wilmersdorf)))))
-  (setq +themes|color-theme theme)
-  (load-theme +themes|color-theme t))
+                               dotemacs-tomorrow-night)))))
+  (setq +themes-color-theme theme)
+  (load-theme +themes-color-theme t))

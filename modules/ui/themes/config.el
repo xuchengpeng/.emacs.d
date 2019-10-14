@@ -1,12 +1,12 @@
 ;;; ui/themes/config.el -*- lexical-binding: t; -*-
 
-(defvar +themes|color-theme nil
+(defvar +themes-color-theme nil
   "The color theme to load.")
 
 (defvar +themes-dir (concat (dir!) "/dotemacs-themes")
   "Directoriy for your private themes.")
 
-(defun +themes|init-theme ()
+(defun +themes-init-theme-h ()
   "Set the theme."
   (add-to-list 'load-path +themes-dir)
   
@@ -26,10 +26,10 @@
   (when (featurep! :ui neotree)
     (add-hook 'dotemacs-load-theme-hook (lambda! (require 'dotemacs-themes-ext-neotree))))
   
-  (unless +themes|color-theme
-    (setq +themes|color-theme 'dotemacs-one))
+  (unless +themes-color-theme
+    (setq +themes-color-theme 'dotemacs-one))
   
-  (when (and +themes|color-theme (not (memq +themes|color-theme custom-enabled-themes)))
-    (load-theme +themes|color-theme t)))
+  (when (and +themes-color-theme (not (memq +themes-color-theme custom-enabled-themes)))
+    (load-theme +themes-color-theme t)))
 
-(add-hook 'dotemacs-init-ui-hook #'+themes|init-theme)
+(add-hook 'dotemacs-init-ui-hook #'+themes-init-theme-h)

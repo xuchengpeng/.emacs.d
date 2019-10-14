@@ -75,12 +75,11 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
       (progn
         (dotemacs-modeline-refresh-bars)    ; create bars
         (dotemacs-modeline-set-main-modeline t) ; set default mode-line
-        (unless after-init-time
-          ;; These buffers are already created and don't get modelines. For the love
-          ;; of Emacs, someone give the man a modeline!
-          (dolist (bname '("*scratch*" "*Messages*"))
-            (with-current-buffer bname
-              (dotemacs-modeline-set-main-modeline))))
+        ;; These buffers are already created and don't get modelines. For the love
+        ;; of Emacs, someone give the man a modeline!
+        (dolist (bname '("*scratch*" "*Messages*"))
+          (with-current-buffer bname
+            (dotemacs-modeline-set-main-modeline)))
         ;; Add hooks
         (add-hook 'dired-mode-hook #'dotemacs-modeline-set-project-modeline)
         (add-hook 'magit-mode-hook #'dotemacs-modeline-set-project-modeline)

@@ -20,3 +20,9 @@
   (add-hook 'company-mode-hook #'+company-init-backends-h)
   
   (global-company-mode +1))
+
+(use-package company-prescient
+  :hook (company-mode . company-prescient-mode)
+  :config
+  (setq prescient-save-file (concat dotemacs-cache-dir "prescient-save.el"))
+  (prescient-persist-mode +1))

@@ -140,5 +140,4 @@
         org-clock-in-resume t
         org-clock-into-drawer t
         org-log-into-drawer t)
-  (org-clock-persistence-insinuate)
-  (add-hook 'org-mode-hook #'auto-fill-mode))
+  (org-clock-persistence-insinuate))

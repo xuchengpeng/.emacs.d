@@ -50,6 +50,9 @@
       require-final-newline t
       tabify-regexp "^\t* [ \t]+")  ; for :retab
 
+;; Favor hard-wrapping in text modes
+(add-hook 'text-mode-hook #'auto-fill-mode)
+
 ;;
 ;;; Extra file extensions to support
 

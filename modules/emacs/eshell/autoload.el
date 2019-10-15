@@ -1,18 +1,34 @@
 ;;; emacs/eshell/autoload.el -*- lexical-binding: t; -*-
 
-(defun +eshell--current-git-branch ()
-    (let ((branch (car (loop for match in (split-string (shell-command-to-string "git branch") "\n")
-                             when (string-match "^\*" match)
-                             collect match))))
-      (if (not (eq branch nil))
-          (concat " [" (substring branch 2) "]")
-        "")))
+;;;###autoload
+(defface +eshell-prompt-pwd '((t :inherit font-lock-constant-face))
+  "TODO"
+  :group 'eshell)
 
 ;;;###autoload
-(defun +eshell-prompt ()
-  (concat (propertize (abbreviate-file-name (eshell/pwd)) 'face 'eshell-prompt)
-          (propertize (+eshell--current-git-branch) 'face 'font-lock-function-name-face)
-          (propertize " λ " 'face 'font-lock-constant-face)))
+(defface +eshell-prompt-git-branch '((t :inherit font-lock-builtin-face))
+  "TODO"
+  :group 'eshell)
+
+
+(defun +eshell--current-git-branch ()
+  (let ((branch (car (cl-loop for match in (split-string (shell-command-to-string "git branch") "\n")
+                              if (string-match-p "^\*" match)
+                              collect match))))
+    (if (not (eq branch nil))
+        (format " [%s]" (substring branch 2))
+      "")))
+
+;;;###autoload
+(defun +eshell-default-prompt-fn ()
+  "Generate the prompt string for eshell. Use for `eshell-prompt-function'."
+  (concat (if (bobp) "" "\n")
+          (propertize (abbreviate-file-name (eshell/pwd))
+                      'face '+eshell-prompt-pwd)
+          (propertize (+eshell--current-git-branch)
+                      'face '+eshell-prompt-git-branch)
+          (propertize " λ" 'face (if (zerop eshell-last-command-status) 'success 'error))
+          " "))
 
 
 ;;;###autoload
@@ -37,3 +53,29 @@
         ((featurep! :completion helm)
          (helm-eshell-history))
         ((eshell-list-history))))
+
+;;;###autodef
+(defun set-eshell-alias! (&rest aliases)
+  "Define aliases for eshell.
+
+ALIASES is a flat list of alias -> command pairs. e.g.
+
+  (set-eshell-alias!
+    \"hi\"  \"echo hello world\"
+    \"bye\" \"echo goodbye world\")"
+  (or (cl-evenp (length aliases))
+      (signal 'wrong-number-of-arguments (list 'even (length aliases))))
+  (after! eshell
+    (while aliases
+      (let ((alias (pop aliases))
+            (command (pop aliases)))
+        (if-let* ((oldval (assoc alias +eshell-aliases)))
+            (setcdr oldval (list command))
+          (push (list alias command) +eshell-aliases))))
+    (when (boundp 'eshell-command-aliases-list)
+      (if +eshell--default-aliases
+          (setq eshell-command-aliases-list
+                (append +eshell--default-aliases
+                        +eshell-aliases))
+        (setq eshell-command-aliases-list +eshell-aliases)))))
+

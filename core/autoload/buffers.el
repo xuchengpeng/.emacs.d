@@ -36,7 +36,6 @@ it if it doesn't exist).")
 
 ;;
 ;; Functions
-;;
 
 ;;;###autoload
 (defun dotemacs-buffer-frame-predicate (buf)
@@ -236,63 +235,14 @@ regex PATTERN. Returns the number of killed buffers."
 
 ;;
 ;; Hooks
-;;
 
 ;;;###autoload
-(defun dotemacs|protect-visible-buffer ()
-  "Don't kill the current buffer if it is visible in another window (bury it
-instead). Meant for `kill-buffer-query-functions'."
-  (not (and (delq (selected-window) (get-buffer-window-list nil nil t))
-            (not (member (substring (buffer-name) 0 1) '(" " "*"))))))
-
-;;;###autoload
-(defun dotemacs|protect-fallback-buffer ()
-  "Don't kill the scratch buffer. Meant for `kill-buffer-query-functions'."
-  (not (eq (current-buffer) (dotemacs-fallback-buffer))))
-
-;;;###autoload
-(defun dotemacs|mark-buffer-as-real ()
+(defun dotemacs-mark-buffer-as-real-h ()
   "Hook function that marks the current buffer as real."
   (dotemacs-set-buffer-real (current-buffer) t))
 
-
-;;
-;; Advice
-;;
-
-;;;###autoload
-(defun dotemacs*switch-to-fallback-buffer-maybe (orig-fn)
-  "Advice for `kill-this-buffer'. If in a dedicated window, delete it. If there
-are no real buffers left OR if all remaining buffers are visible in other
-windows, switch to `dotemacs-fallback-buffer'. Otherwise, delegate to original
-`kill-this-buffer'."
-  (let ((buf (current-buffer)))
-    (cond ((window-dedicated-p)
-           (delete-window))
-          ((eq buf (dotemacs-fallback-buffer))
-           (message "Can't kill the fallback buffer."))
-          ((dotemacs-real-buffer-p buf)
-           (if (and buffer-file-name
-                    (buffer-modified-p buf)
-                    (not (y-or-n-p
-                          (format "Buffer %s is modified; kill anyway?" buf))))
-               (message "Aborted")
-             (set-buffer-modified-p nil)
-             (when (or ;; if there aren't more real buffers than visible buffers,
-                    ;; then there are no real, non-visible buffers left.
-                    (not (cl-set-difference (dotemacs-real-buffer-list)
-                                            (dotemacs-visible-buffers)))
-                    ;; if we end up back where we start (or previous-buffer
-                    ;; returns nil), we have nowhere left to go
-                    (memq (previous-buffer) (list buf 'nil)))
-               (switch-to-buffer (dotemacs-fallback-buffer)))
-             (kill-buffer buf)))
-          ((funcall orig-fn)))))
-
-
 ;;
 ;; Interactive commands
-;;
 
 ;;;###autoload
 (defun dotemacs/kill-this-buffer-in-all-windows (buffer &optional dont-save)

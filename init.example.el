@@ -53,5 +53,6 @@
             )
            ;; plantuml
            ;; python
+           sh
            ;; web
            )

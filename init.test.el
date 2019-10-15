@@ -16,4 +16,5 @@
            project
            utils
            :lang
-           markdown)
+           markdown
+           sh)

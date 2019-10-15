@@ -52,4 +52,6 @@
             +publish    ; Publish org to html blog
             )
            ;; plantuml
+           ;; python
+           ;; web
            )

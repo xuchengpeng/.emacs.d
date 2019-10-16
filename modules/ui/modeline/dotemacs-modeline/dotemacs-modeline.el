@@ -6,32 +6,30 @@
 (require 'dotemacs-modeline-segments)
 
 ;;
-;; Mode lines
-;;
+;;; Mode lines
 
 (dotemacs-modeline-def-modeline 'main
-  '(bar matches buffer-info-simple remote-host buffer-position selection-info)
+  '(bar window-number matches buffer-info-simple remote-host buffer-position selection-info)
   '(misc-info minor-modes indent-info buffer-encoding major-mode process vcs checker))
 
 (dotemacs-modeline-def-modeline 'minimal
-  '(bar matches buffer-info-simple)
+  '(bar window-number matches buffer-info-simple)
   '(media-info major-mode))
 
 (dotemacs-modeline-def-modeline 'special
-  '(bar matches buffer-info-simple buffer-position selection-info)
+  '(bar window-number matches buffer-info-simple buffer-position selection-info)
   '(misc-info minor-modes buffer-encoding major-mode process checker))
 
 (dotemacs-modeline-def-modeline 'project
-  '(bar buffer-default-directory)
+  '(bar window-number buffer-default-directory)
   '(misc-info major-mode process))
 
 (dotemacs-modeline-def-modeline 'media
-  '(bar buffer-size buffer-info-simple)
+  '(bar window-number buffer-size buffer-info-simple)
   '(misc-info media-info major-mode process vcs))
 
 ;;
-;; Interfaces
-;;
+;;; Interfaces
 
 ;;;###autoload
 (defun dotemacs-modeline-set-main-modeline (&optional default)
@@ -60,8 +58,7 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
   (dotemacs-modeline-set-modeline 'project))
 
 ;;
-;; Mode
-;;
+;;; Mode
 
 (defvar dotemacs-modeline--default-mode-line mode-line-format)
 

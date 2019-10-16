@@ -3,8 +3,7 @@
 ;;; Code:
 
 ;;
-;; Externals
-;;
+;;; Externals
 
 (defvar anzu--cached-count)
 (defvar anzu--current-position)
@@ -74,8 +73,24 @@
 (declare-function warning-numeric-level 'warnings)
 
 ;;
-;; buffer information
+;;; window-number
+
+(dotemacs-modeline-def-segment window-number
+  (let ((num (cond
+              ((bound-and-true-p winum-mode)
+               (setq winum-auto-setup-mode-line nil)
+               (winum-get-number-string))
+              ((bound-and-true-p window-numbering-mode)
+               (window-numbering-get-number-string))
+              (t ""))))
+    (if (< 0 (length num))
+        (propertize (format " [%s]" num)
+                    'face (if (dotemacs-modeline--active)
+                              'dotemacs-modeline-buffer-major-mode
+                            'mode-line-inactive)))))
+
 ;;
+;;; buffer information
 
 (dotemacs-modeline-def-segment buffer-default-directory
   "Displays `default-directory'. This is for special buffers like the scratch
@@ -97,8 +112,7 @@ buffer where knowing the current project directory is important."
                (t 'mode-line-inactive))))
 
 ;;
-;; encoding
-;;
+;;; encoding
 
 (dotemacs-modeline-def-segment buffer-encoding
   "Displays the encoding and eol style of the buffer the same way Atom does."
@@ -118,8 +132,7 @@ buffer where knowing the current project directory is important."
    'local-map mode-line-coding-system-map))
 
 ;;
-;; indentation
-;;
+;;; indentation
 
 (dotemacs-modeline-def-segment indent-info
   "Displays the indentation information."
@@ -128,8 +141,7 @@ buffer where knowing the current project directory is important."
               'face (if (dotemacs-modeline--active) 'mode-line 'mode-line-inactive)))
 
 ;;
-;; remote host
-;;
+;;; remote host
 
 (dotemacs-modeline-def-segment remote-host
   "Hostname for remote buffers."
@@ -140,8 +152,7 @@ buffer where knowing the current project directory is important."
        'face (if (dotemacs-modeline--active) 'mode-line 'mode-line-inactive)))))
 
 ;;
-;; major-mode
-;;
+;;; major-mode
 
 (dotemacs-modeline-def-segment major-mode
   "The major mode, including environment and text-scale info."
@@ -168,8 +179,7 @@ mouse-3: Toggle minor modes"
            'mode-line-inactive)))
 
 ;;
-;; minor modes
-;;
+;;; minor modes
 
 (dotemacs-modeline-def-segment minor-modes
   (when dotemacs-modeline-minor-modes
@@ -185,8 +195,7 @@ mouse-3: Toggle minor modes"
         (dotemacs-modeline-spc)))))
 
 ;;
-;; process
-;;
+;;; process
 
 (dotemacs-modeline-def-segment process
   "The process info."
@@ -393,8 +402,7 @@ icons."
       "")))
 
 ;;
-;; selection-info
-;;
+;;; selection-info
 
 (defsubst dotemacs-modeline-column (pos)
   "Get the column of the position `POS'."
@@ -432,8 +440,7 @@ lines are selected, or the NxM dimensions of a block selection."
        'face 'dotemacs-modeline-highlight))))
 
 ;;
-;; matches (macro, anzu, evil-substitute, iedit, symbol-overlay and multi-cursors)
-;;
+;;; matches (macro, anzu, evil-substitute, iedit, symbol-overlay and multi-cursors)
 
 (defsubst dotemacs-modeline--macro-recording ()
   "Display current Emacs or evil macro being recorded."
@@ -573,8 +580,7 @@ of active `multiple-cursors'."
   (dotemacs-modeline--buffer-size))
 
 ;;
-;; media-info
-;;
+;;; media-info
 
 (dotemacs-modeline-def-segment media-info
   "Metadata regarding the current file, such as dimensions for images."
@@ -588,8 +594,7 @@ of active `multiple-cursors'."
             'face (if (dotemacs-modeline--active) 'mode-line 'mode-line-inactive))))))
 
 ;;
-;; bar
-;;
+;;; bar
 
 (defvar dotemacs-modeline--bar-active nil)
 (defvar dotemacs-modeline--bar-inactive nil)
@@ -618,8 +623,7 @@ Returns \"\" to not break --no-window-system."
 (add-hook 'window-configuration-change-hook #'dotemacs-modeline-refresh-bars)
 
 ;;
-;; misc info
-;;
+;;; misc info
 
 (dotemacs-modeline-def-segment misc-info
   "Mode line construct for miscellaneous information.

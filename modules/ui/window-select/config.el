@@ -6,3 +6,9 @@
       ((or (featurep! +ace-window) t)
        (use-package ace-window
          :defer t)))
+
+(use-package winum
+  :hook (buffer-list-update . winum-mode)
+  :config
+  (when (featurep! :ui modeline)
+    (setq winum-auto-setup-mode-line nil)))

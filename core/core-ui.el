@@ -141,7 +141,7 @@ Examples:
 ;;
 ;; Theme & font
 
-(defun dotemacs|set-font()
+(defun dotemacs-set-font-fn()
   "Set english and chinese fonts."
   (when dotemacs-font
     (set-face-attribute 'default nil :font dotemacs-font))
@@ -149,47 +149,39 @@ Examples:
     (dolist (charset '(kana han symbol cjk-misc bopomofo))
       (set-fontset-font (frame-parameter nil 'font) charset dotemacs-cn-font))))
 
-(defun dotemacs|init-fonts ()
+(defun dotemacs-init-fonts-h ()
   "Set the font."
   (add-to-list 'after-make-frame-functions
                (lambda (new-frame)
                  (select-frame new-frame)
                  (when (display-graphic-p)
-                   (dotemacs|set-font))))
+                   (dotemacs-set-font-fn))))
   (when (display-graphic-p)
-    (dotemacs|set-font)))
+    (dotemacs-set-font-fn)))
 
-(defun dotemacs*load-theme-hooks (theme &rest _)
+(defun dotemacs--run-load-theme-hooks-a (theme &rest _)
   "Set up `dotemacs-load-theme-hook' to run after `load-theme' is called."
   (setq dotemacs-theme theme)
   (run-hooks 'dotemacs-load-theme-hook))
-(advice-add #'load-theme :after #'dotemacs*load-theme-hooks)
+(advice-add #'load-theme :after #'dotemacs--run-load-theme-hooks-a)
 
-(defun dotemacs|init-theme ()
+(defun dotemacs-init-theme-h ()
   "Set the theme."
   (when (and dotemacs-theme (not (memq dotemacs-theme custom-enabled-themes)))
     (load-theme dotemacs-theme t)))
 
 ;; fonts
-(add-hook 'dotemacs-init-ui-hook #'dotemacs|init-fonts)
+(add-hook 'dotemacs-init-ui-hook #'dotemacs-init-fonts-h)
 ;; themes
-(add-hook 'dotemacs-init-ui-hook #'dotemacs|init-theme)
+(add-hook 'dotemacs-init-ui-hook #'dotemacs-init-theme-h)
 
 ;;
 ;; Bootstrap
 
-(defun dotemacs|init-ui ()
+(defun dotemacs-init-ui-h ()
   "Initialize ui."
   (run-hook-wrapped 'dotemacs-init-ui-hook #'dotemacs-try-run-hook))
-
-(add-hook 'window-setup-hook #'dotemacs|init-ui)
-
-;;
-;;; Fixes/hacks
-
-;; Don't allow cursor to enter the prompt
-(setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
-(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+(add-hook 'window-setup-hook #'dotemacs-init-ui-h)
 
 (provide 'core-ui)
 ;;; core-ui.el ends here

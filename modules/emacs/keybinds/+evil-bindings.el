@@ -212,12 +212,14 @@
     [remap swiper]                      'counsel-grep-or-swiper
     [remap evil-ex-registers]           'counsel-evil-registers
     [remap yank-pop]                    'counsel-yank-pop
+    [remap compile]                     '+ivy/compile
     [remap projectile-find-file]        'counsel-projectile-find-file
     [remap projectile-find-dir]         'counsel-projectile-find-dir
     [remap projectile-switch-to-buffer] 'counsel-projectile-switch-to-buffer
     [remap projectile-grep]             'counsel-projectile-grep
     [remap projectile-ag]               'counsel-projectile-ag
-    [remap projectile-switch-project]   'counsel-projectile-switch-project)
+    [remap projectile-switch-project]   'counsel-projectile-switch-project
+    [remap projectile-compile-project]  '+ivy/project-compile)
   
   (map-local!
     :keymaps        'counsel-mode-map

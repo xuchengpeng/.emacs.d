@@ -2,6 +2,9 @@
 
 (use-package projectile
   :commands (projectile-project-root projectile-project-name projectile-project-p)
+  :init
+  (define-key! projectile-mode-map
+    "C-c p"           'projectile-command-map)
   :config
   (setq projectile-enable-caching t
         projectile-cache-file (concat dotemacs-cache-dir "projectile.cache")

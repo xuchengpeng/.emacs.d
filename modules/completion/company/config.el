@@ -2,7 +2,28 @@
 
 (use-package company
   :commands (company-complete-common company-manual-begin company-grab-line)
-  :hook (prog-mode . global-company-mode)
+  :hook ((pre-command . global-company-mode)
+         (find-file . global-company-mode))
+  :init
+  (map-local!
+    :keymaps        'company-mode-map
+    "C-@"           'company-complete
+    "C-x s"         'company-ispell
+    "C-x C-f"       'company-files
+    "C-x C-o"       'company-capf
+    "C-x C-s"       'company-yasnippet)
+
+  (define-key! company-active-map
+    "C-p"           'company-select-previous
+    "C-n"           'company-select-next
+    "TAB"           'company-complete-common-or-cycle
+    "<tab>"         'company-complete-common-or-cycle
+    "S-TAB"         'company-select-previous
+    "<backtab>"     'company-select-previous)
+  
+  (define-key! company-search-map
+    "C-p"           'company-select-previous
+    "C-n"           'company-select-next)
   :config  
   (setq company-idle-delay 0.2
         company-tooltip-limit 15

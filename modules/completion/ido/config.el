@@ -1,6 +1,11 @@
 ;;; completion/ido/config.el -*- lexical-binding: t; -*-
 
 (defun +ido|init ()
+  (define-key! (ido-common-completion-map ido-completion-map ido-file-completion-map)
+    "\C-n"          'ido-next-match
+    "\C-p"          'ido-prev-match
+    "\C-w"          'ido-delete-backward-word-updir)
+  
   (setq ido-ignore-buffers
         '("\\` " "^\\*ESS\\*" "^\\*Messages\\*" "^\\*Help\\*" "^\\*Buffer"
           "^\\*.*Completions\\*$" "^\\*Ediff" "^\\*tramp" "^\\*cvs-"

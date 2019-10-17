@@ -87,6 +87,10 @@
          ;; file names ending with # or ~
          "\\|\\(?:[#~]\\'\\)"))
   
+  ;; Make `counsel-compile' projectile-aware (if you prefer it over
+  ;; `+ivy/compile' and `+ivy/project-compile')
+  (add-to-list 'counsel-compile-root-functions #'projectile-project-root)
+  
   (after! savehist
     ;; Persist `counsel-compile' history
     (add-to-list 'savehist-additional-variables 'counsel-compile-history)))

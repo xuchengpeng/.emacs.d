@@ -85,7 +85,11 @@
          ;; file names beginning with # or .
          "\\(?:\\`[#.]\\)"
          ;; file names ending with # or ~
-         "\\|\\(?:[#~]\\'\\)")))
+         "\\|\\(?:[#~]\\'\\)"))
+  
+  (after! savehist
+    ;; Persist `counsel-compile' history
+    (add-to-list 'savehist-additional-variables 'counsel-compile-history)))
 
 (use-package counsel-projectile
   :commands (counsel-projectile-find-file counsel-projectile-find-dir counsel-projectile-switch-to-buffer

@@ -74,7 +74,8 @@ while they run.")
           (lambda ()
             (add-hook 'window-size-change-functions '+dashboard|resize-on-hook)
             (+dashboard|resize-on-hook)))
-(remove-hook 'window-setup-hook #'dotemacs-display-benchmark-h)
+(unless dotemacs-debug-mode
+  (remove-hook 'window-setup-hook #'dotemacs-display-benchmark-h))
 
 (defun +dashboard|startup-hook ()
   "Setup post initialization hooks.

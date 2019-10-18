@@ -1,5 +1,5 @@
 ;;; ui/modeline/config.el -*- lexical-binding: t; -*-
 
-(add-to-list 'load-path (concat (dir!) "/dotemacs-modeline"))
-(require 'dotemacs-modeline)
-(add-hook 'after-init-hook #'dotemacs-modeline-mode)
+(use-package dotemacs-modeline
+  :straight (dotemacs-modeline :type git :host github :repo "xuchengpeng/dotemacs-modeline")
+  :hook (after-init . dotemacs-modeline-mode))

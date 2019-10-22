@@ -15,10 +15,13 @@
   "t"       '(:ignore t :which-key "toggle")
   
   ;; search
+  "//"      (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
+                  ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
   "/b"      (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
                   ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
   "/d"      '(+default/search-cwd :which-key "Search current directory")
   "/D"      '(+default/search-other-cwd :which-key "Search other directory")
+  "/f"      '(locate :which-key "Locate file")
   "/i"      '(imenu :which-key "Jump to symbol")
   "/l"      '(ace-link :which-key "Jump to link")
   "/p"      '(+default/search-project :which-key "Search project")
@@ -45,12 +48,13 @@
   "cw"      '(delete-trailing-whitespace :which-key "Delete trailing whitespace")
   
   ;; file
-  "fR"      '(projectile-recentf :which-key "Recent project files")
   "fa"      '(projectile-find-other-file :which-key "Find other file")
   "fd"      '(dired :which-key "Find directory")
   "ff"      '(find-file :which-key "Find file")
   "fr"      '(recentf-open-files :which-key "Recent files")
+  "fR"      '(projectile-recentf :which-key "Recent project files")
   "fs"      '(save-buffer :which-key "Save file")
+  "fS"      '(write-file :which-key "Save file as...")
   "fp"      '(projectile-find-file :which-key "Find file in project")
   
   ;; git

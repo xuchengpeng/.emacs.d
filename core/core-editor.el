@@ -57,6 +57,7 @@
 ;;; Extra file extensions to support
 
 (push '("/LICENSE\\'" . text-mode) auto-mode-alist)
+(push '("\\.log\\'" . text-mode) auto-mode-alist)
 
 ;;
 ;; Built-in plugins

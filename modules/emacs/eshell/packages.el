@@ -2,3 +2,4 @@
 
 (package! eshell)
 (package! shell-pop)
+(package! shrink-path)

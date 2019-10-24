@@ -12,6 +12,7 @@
         projectile-globally-ignored-files '(".DS_Store" "Icon" "TAGS")
         projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o")
         projectile-ignored-projects '("~/" "/tmp")
+        projectile-kill-buffers-filter 'kill-only-files
         projectile-files-cache-expire 604800 ; expire after a week
         projectile-sort-order 'recentf
         projectile-use-git-grep t)

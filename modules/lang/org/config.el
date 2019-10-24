@@ -18,9 +18,12 @@
                "\n")))
 
 (defun +org-init-capture-defaults-h ()
-  (defvar +org-capture-posts-file "hugo-posts.org")
-  (defvar +org-capture-todo-file "todo.org")
-  (defvar +org-capture-notes-file "notes.org")
+  (defvar +org-capture-posts-file
+          (expand-file-name "hugo-posts.org" org-directory))
+  (defvar +org-capture-todo-file
+          (expand-file-name "todo.org" org-directory))
+  (defvar +org-capture-notes-file
+          (expand-file-name "notes.org" org-directory))
   (setq org-capture-templates
         '(("h" "Hugo post" entry
            ;; It is assumed that below file is present in `org-directory'
@@ -31,10 +34,10 @@
           ("t" "TODO")
           ("tt" "Todo" entry
            (file+headline +org-capture-todo-file "Inbox")
-           "* TODO %^{Task name}\n%u\n%a\n" :clock-in t :clock-resume t)
+           "* TODO %?\n%i\n%a" :prepend t :kill-buffer t)
           ("tn" "Notes" entry
            (file+headline +org-capture-notes-file "Inbox")
-           "* TODO %^{Task name}\n%u\n%a\n" :clock-in t :clock-resume t))))
+           "* TODO %?\n%i\n%a" :prepend t :kill-buffer t))))
 
 (defun +org-init-export-h ()
   (when (featurep! +export)

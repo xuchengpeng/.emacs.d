@@ -124,7 +124,13 @@ Examples:
 
 ;; undo/redo changes to Emacs' window layout
 (use-package winner
-  :hook (window-configuration-change . winner-mode))
+  :hook (window-configuration-change . winner-mode)
+  :config
+  (winner-mode +1)
+  (appendq! winner-boring-buffers
+            '("*Compile-Log*" "*inferior-lisp*" "*Fuzzy Completions*"
+              "*Apropos*" "*Help*" "*cvs*" "*Buffer List*" "*Ibuffer*"
+              "*esh command on file*")))
 
 ;; Highlight the current line
 (use-package hl-line
@@ -136,7 +142,9 @@ Examples:
   :config
   (setq show-paren-delay 0.1
         show-paren-highlight-openparen t
-        show-paren-when-point-inside-paren t))
+        show-paren-when-point-inside-paren t
+        show-paren-when-point-in-periphery t)
+  (show-paren-mode +1))
 
 ;;
 ;; Theme & font

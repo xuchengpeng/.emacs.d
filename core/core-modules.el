@@ -336,8 +336,8 @@ omitted. eg. (featurep! +flag1)"
              (module (dotemacs-module-p category module))
              ((let ((module (dotemacs-module-from-path)))
                 (unless module
-                  (error "featurep! couldn't figure out what module it was called from (in %s)"
-                         (file!)))
+                  (error "(featurep! %s %s %s) couldn't figure out what module it was called from (in %s)"
+                         category module flag (file!)))
                 (memq category (dotemacs-module-get (car module) (cdr module) :flags)))))
        t))
 

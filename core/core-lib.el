@@ -322,7 +322,7 @@ This macro accepts, in order:
                        (mapcar #'dotemacs-unquote rest)
                      (dotemacs-enlist (dotemacs-unquote (car rest))))))
 
-            ((setq func-forms (list `(lambda () ,@rest)))))
+            ((setq func-forms (list `(lambda (&rest _) ,@rest)))))
       (dolist (hook hook-forms)
         (dolist (func func-forms)
           (push (if remove-p

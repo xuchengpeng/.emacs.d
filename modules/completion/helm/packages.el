@@ -6,3 +6,4 @@
 (package! helm-projectile)
 (when (featurep! +fuzzy)
   (package! helm-flx))
+(package! helm-xref)

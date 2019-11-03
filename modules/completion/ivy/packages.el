@@ -13,3 +13,5 @@
     (package! ivy-prescient)
   (when (featurep! +fuzzy)
     (package! flx)))
+
+(package! ivy-xref)

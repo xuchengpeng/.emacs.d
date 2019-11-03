@@ -35,7 +35,6 @@
            ;; editorconfig
            flycheck
            ;; impatient-mode
-           ;; lookup
            ;; magit
            ;; package-manager
            project

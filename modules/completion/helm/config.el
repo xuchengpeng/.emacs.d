@@ -84,3 +84,6 @@
 (use-package helm-descbinds
   :hook (helm-mode . helm-descbinds-mode))
 
+(use-package helm-xref
+  :after xref
+  :config (setq xref-show-xrefs-function #'helm-xref-show-xrefs))

@@ -149,3 +149,7 @@
 
 ;;;###package amx
 (setq amx-save-file (concat dotemacs-cache-dir "amx-items"))  ; used by `counsel-M-x'
+
+(use-package ivy-xref
+  :after xref
+  :config (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))

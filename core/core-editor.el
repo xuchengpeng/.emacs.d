@@ -16,10 +16,13 @@
 (add-hook! 'find-file-not-found-functions
   (defun dotemacs-create-missing-directories-h ()
     "Automatically create missing directories when creating new files."
-    (let ((parent-directory (file-name-directory buffer-file-name)))
-      (when (and (not (file-exists-p parent-directory))
-                 (y-or-n-p (format "Directory `%s' does not exist! Create it?" parent-directory)))
-        (make-directory parent-directory t)))))
+    (unless (file-remote-p buffer-file-name)
+      (let ((parent-directory (file-name-directory buffer-file-name)))
+        (and (not (file-directory-p parent-directory))
+             (y-or-n-p (format "Directory `%s' does not exist! Create it?"
+                               parent-directory))
+             (progn (make-directory parent-directory 'parents)
+                    t))))))
 
 ;; Don't autosave files or create lock/history/backup files. The
 ;; editor doesn't need to hold our hands so much. We'll rely on git

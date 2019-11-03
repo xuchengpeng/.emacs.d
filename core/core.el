@@ -16,29 +16,29 @@
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
 
-(defvar dotemacs-dir
+(defconst dotemacs-dir
   (eval-when-compile (file-truename user-emacs-directory))
   "The path to this emacs.d directory.")
 
-(defvar dotemacs-core-dir (concat dotemacs-dir "core/")
+(defconst dotemacs-core-dir (concat dotemacs-dir "core/")
   "Where core files are stored.")
 
-(defvar dotemacs-modules-dir (concat dotemacs-dir "modules/")
+(defconst dotemacs-modules-dir (concat dotemacs-dir "modules/")
   "Where modules files are stored.")
 
-(defvar dotemacs-local-dir (concat dotemacs-dir ".local/")
+(defconst dotemacs-local-dir (concat dotemacs-dir ".local/")
   "Root directory for local Emacs files.")
 
-(defvar dotemacs-cache-dir (concat dotemacs-dir ".cache/")
+(defconst dotemacs-cache-dir (concat dotemacs-dir ".cache/")
   "Where cache files are stored.")
 
-(defvar dotemacs-packages-dir (concat dotemacs-local-dir "packages/")
+(defconst dotemacs-packages-dir (concat dotemacs-local-dir "packages/")
   "Where packages are stored.")
 
-(defvar dotemacs-private-dir nil
+(defconst dotemacs-private-dir (concat dotemacs-local-dir "private/")
   "Where your private customizations are placed. Must end in a slash.")
 
-(defvar dotemacs-autoload-file (concat dotemacs-local-dir "autoloads.el")
+(defconst dotemacs-autoload-file (concat dotemacs-local-dir "autoloads.el")
   "The path of autoload file which has all the autoload functions.")
 
 (defvar dotemacs-debug-mode (or (getenv "DEBUG") init-file-debug)

@@ -1,7 +1,7 @@
 # Chuck's Emacs Configuration
 
 [![Made with dotemacs](https://img.shields.io/github/tag/xuchengpeng/.emacs.d.svg?label=release&style=for-the-badge&color=orange)](https://github.com/xuchengpeng/.emacs.d/releases)
-[![Made for Emacs 25.2+](https://img.shields.io/badge/Made_for-Emacs_25.2+-blueviolet.svg?style=for-the-badge)](https://www.gnu.org/software/emacs/)
+[![Made for Emacs 26.1+](https://img.shields.io/badge/Made_for-Emacs_26.1+-blueviolet.svg?style=for-the-badge)](https://www.gnu.org/software/emacs/)
 [![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/travis/xuchengpeng/.emacs.d/master?style=for-the-badge)](https://travis-ci.org/xuchengpeng/.emacs.d)
 
@@ -49,4 +49,4 @@ For example:
 
 ## Supported Emacs versions
 
-The config should run on Emacs 25.2 or greater and is designed to degrade smoothly - see the [Travis build](https://travis-ci.org/xuchengpeng/.emacs.d).
+The config should run on Emacs 26.1 or greater and is designed to degrade smoothly - see the [Travis build](https://travis-ci.org/xuchengpeng/.emacs.d).

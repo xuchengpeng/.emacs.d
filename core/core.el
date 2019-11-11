@@ -1,7 +1,8 @@
 ;;; core.el --- Initialize core configurations. -*- lexical-binding: t; -*-
 
-(when (version< emacs-version "25.2")
-  (error "Emacs version should be 25.2 or higher"))
+(when (version< emacs-version "26.1")
+  (error "Detected Emacs %s. Emacs version should be 26.1 or higher"
+         emacs-version))
 
 ;; Ensure `dotemacs-core-dir' is in `load-path'
 (add-to-list 'load-path (file-name-directory load-file-name))
@@ -9,7 +10,6 @@
 ;;
 ;;; Global variables
 
-(defconst EMACS26+ (> emacs-major-version 25))
 (defconst EMACS27+ (> emacs-major-version 26))
 (defconst IS-MAC     (eq system-type 'darwin))
 (defconst IS-LINUX   (eq system-type 'gnu/linux))

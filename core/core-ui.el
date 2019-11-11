@@ -120,6 +120,10 @@ Examples:
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 ;;
+;; line numbers
+(add-hook 'after-init-hook #'global-display-line-numbers-mode)
+
+;;
 ;; Built-in packages
 
 ;; undo/redo changes to Emacs' window layout

@@ -312,8 +312,6 @@ end of the workspace list."
                    (error "No workspace at #%s" (1+ index)))
                  (+workspace-switch dest)))
               ((stringp index)
-               (unless (member index names)
-                 (error "No workspace named %s" index))
                (+workspace-switch index))
               (t
                (error "Not a valid index: %s" index)))

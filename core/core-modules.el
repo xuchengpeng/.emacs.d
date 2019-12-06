@@ -236,7 +236,7 @@ If ENABLED-ONLY, return nil if the containing module isn't enabled."
           nil))
 
 (defun dotemacs-modules (&optional refresh-p)
-  "Minimally initialize `doom-modules' (a hash table) and return it.
+  "Minimally initialize `dotemacs-modules' (a hash table) and return it.
 This value is cached. If REFRESH-P, then don't use the cached value."
   (or (unless refresh-p dotemacs-modules)
       (let (dotemacs-interactive-mode
@@ -335,13 +335,13 @@ If FLAG is provided, returns t if CATEGORY MODULE has FLAG enabled.
 
   (featurep! :config default)
 
-Module FLAGs are set in your config's `doom!' block, typically in
+Module FLAGs are set in your config's `dotemacs!' block, typically in
 ~/.emacs.d/init.el. Like so:
 
   :config (default +flag1 -flag2)
 
 CATEGORY and MODULE can be omitted When this macro is used from inside a module
-(except your DOOMDIR, which is a special moduel). e.g. (featurep! +flag)"
+(except your dotemacs dir, which is a special moduel). e.g. (featurep! +flag)"
   (and (cond (flag (memq flag (dotemacs-module-get category module :flags)))
              (module (dotemacs-module-p category module))
              ((let ((module (dotemacs-module-from-path)))

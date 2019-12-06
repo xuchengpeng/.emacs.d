@@ -208,25 +208,24 @@ This doesn't require modules to be enabled. For enabled modules us
            return (expand-file-name path)))
 
 (defun dotemacs-module-from-path (&optional path enabled-only)
-  "Returns a cons cell (CATEGORY . MODULE) derived from PATH (a file path)."
-  (let* (file-name-handler-alist
-         (path (file-truename (or path (file!)))))
-    (save-match-data
-      ;; (when (string-match "/modules/\\([^/]+\\)/\\([^/]+\\)\\(?:/.*\\)?$" path)
-      ;;   (when-let* ((category (match-string 1 path))
-      ;;               (module   (match-string 2 path)))
-      ;;     (cons (dotemacs-keyword-intern category)
-      ;;           (intern module))))
-      (cond ((string-match "/modules/\\([^/]+\\)/\\([^/]+\\)\\(?:/.*\\)?$" path)
-             (when-let* ((category (dotemacs-keyword-intern (match-string 1 path)))
-                         (module   (intern (match-string 2 path))))
-               (and (or (null enabled-only)
-                        (dotemacs-module-p category module))
-                    (cons category module))))
-            ((file-in-directory-p path dotemacs-core-dir)
-             (cons :core (intern (file-name-base path))))
-            ((file-in-directory-p path dotemacs-private-dir)
-             (cons :private (intern (file-name-base path))))))))
+  "Returns a cons cell (CATEGORY . MODULE) derived from PATH (a file path).
+If ENABLED-ONLY, return nil if the containing module isn't enabled."
+  (if (null path)
+      (ignore-errors
+        (dotemacs-module-from-path (file!)))
+    (let* ((file-name-handler-alist nil)
+           (path (file-truename (or path (file!)))))
+      (save-match-data
+        (cond ((string-match "/modules/\\([^/]+\\)/\\([^/]+\\)\\(?:/.*\\)?$" path)
+               (when-let* ((category (dotemacs-keyword-intern (match-string 1 path)))
+                           (module   (intern (match-string 2 path))))
+                 (and (or (null enabled-only)
+                          (dotemacs-module-p category module))
+                      (cons category module))))
+              ((file-in-directory-p path dotemacs-core-dir)
+               (cons :core (intern (file-name-base path))))
+              ((file-in-directory-p path dotemacs-private-dir)
+               (cons :private (intern (file-name-base path)))))))))
 
 (defun dotemacs-module-load-path ()
   "Return a list of absolute file paths to activated modules."
@@ -237,7 +236,8 @@ This doesn't require modules to be enabled. For enabled modules us
           nil))
 
 (defun dotemacs-modules (&optional refresh-p)
-  "Minimally initialize `dotemacs-modules' (a hash table) and return it."
+  "Minimally initialize `doom-modules' (a hash table) and return it.
+This value is cached. If REFRESH-P, then don't use the cached value."
   (or (unless refresh-p dotemacs-modules)
       (let (dotemacs-interactive-mode
             dotemacs-modules)
@@ -259,9 +259,10 @@ This doesn't require modules to be enabled. For enabled modules us
 
 MODULES must be in mplist format.
 e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
-  `(let ((modules ',modules))
-    (unless (keywordp (car modules))
-      (setq modules (eval modules t)))
+  `(let ((modules
+          ,@(if (keywordp (car modules))
+               (list (list 'quote modules))
+             modules)))
     (unless dotemacs-modules
       (setq dotemacs-modules
             (make-hash-table :test 'equal
@@ -270,10 +271,11 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
     (let (category m)
       (while modules
         (setq m (pop modules))
-        (cond ((keywordp m) (setq category m))
-              ((not category) (error "No module category specified for %s" m))
-              ((and (listp m)
-                    (keywordp (car m)))
+        (cond ((keywordp m)
+               (setq category m))
+              ((not category)
+               (error "No module category specified for %s" m))
+              ((and (listp m) (keywordp (car m)))
                (pcase (car m)
                  (:cond
                   (cl-loop for (cond . mods) in (cdr m)
@@ -295,7 +297,14 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
     (dotemacs-initialize-modules)))
 
 (defmacro require! (category module &rest plist)
-  "Loads the module specified by CATEGORY (a keyword) and MODULE (a symbol)."
+  "Loads the CATEGORY MODULE module with FLAGS.
+
+CATEGORY is a keyword, MODULE is a symbol and FLAGS are symbols.
+
+  (require! :lang php +lsp)
+
+This is for testing and internal use. This is not the correct way to enable a
+module."
   `(let ((dotemacs-modules (or ,dotemacs-modules (dotemacs-modules)))
          (module-path (dotemacs-module-locate-path ,category ',module)))
      (dotemacs-module-set
@@ -320,18 +329,19 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
              ,category ',module))))
 
 (defmacro featurep! (category &optional module flag)
-  "Returns t if CATEGORY MODULE is enabled. If FLAG is provided, returns t if
-CATEGORY MODULE has FLAG enabled.
+  "Returns t if CATEGORY MODULE is enabled.
+
+If FLAG is provided, returns t if CATEGORY MODULE has FLAG enabled.
 
   (featurep! :config default)
 
-Module FLAGs are set in your config's `dotemacs!' block, typically in
+Module FLAGs are set in your config's `doom!' block, typically in
 ~/.emacs.d/init.el. Like so:
 
   :config (default +flag1 -flag2)
 
-When this macro is used from inside a module, CATEGORY and MODULE can be
-omitted. eg. (featurep! +flag1)"
+CATEGORY and MODULE can be omitted When this macro is used from inside a module
+(except your DOOMDIR, which is a special moduel). e.g. (featurep! +flag)"
   (and (cond (flag (memq flag (dotemacs-module-get category module :flags)))
              (module (dotemacs-module-p category module))
              ((let ((module (dotemacs-module-from-path)))

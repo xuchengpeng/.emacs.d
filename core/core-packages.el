@@ -111,6 +111,7 @@ missing) and shouldn't be deleted.")
   (require 'straight)
   
   (straight--reset-caches)
+  (setq straight-recipe-repositories nil)
   (mapc #'straight-use-recipes dotemacs-core-package-sources)
   (straight-register-package
    `(straight :type git :host github

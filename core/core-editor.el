@@ -5,7 +5,8 @@
 
 ;; Resolve symlinks when opening files, so that any operations are conducted
 ;; from the file's true directory (like `find-file').
-(setq find-file-visit-truename t)
+(setq find-file-visit-truename t
+      vc-follow-symlinks t)
 
 ;; Disable the warning "X and Y are the same file". It's fine to ignore this
 ;; warning as it will redirect you to the existing buffer anyway.
@@ -117,13 +118,7 @@ files, so we replace calls to `pp' with the much faster `prin1'."
   (setq recentf-save-file (concat dotemacs-cache-dir "recentf")
         recentf-max-menu-items 0
         recentf-max-saved-items 200
-        recentf-auto-cleanup 'never
-        recentf-exclude (list "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$" "^/tmp/" "^/ssh:"
-                              "\\.?ido\\.last$" "\\.revive$" "/TAGS$" "^/var/folders/.+$"
-                              (lambda (path)
-                                (ignore-errors (file-in-directory-p path dotemacs-local-dir)))
-                              (lambda (path)
-                                (ignore-errors (file-in-directory-p path dotemacs-cache-dir)))))
+        recentf-auto-cleanup 'never)
   (add-hook 'kill-emacs-hook #'recentf-cleanup)
   (quiet! (recentf-mode +1)))
 

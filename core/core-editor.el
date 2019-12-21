@@ -62,6 +62,7 @@
 
 (push '("/LICENSE\\'" . text-mode) auto-mode-alist)
 (push '("\\.log\\'" . text-mode) auto-mode-alist)
+(push '("\\.env\\'" . sh-mode) auto-mode-alist)
 
 ;;
 ;; Built-in plugins

@@ -272,10 +272,10 @@ belong to the current project."
   (if (null buffer-list)
       (message "No buffers to kill")
     (save-some-buffers)
+    (delete-other-windows)
     (when (memq (current-buffer) buffer-list)
       (switch-to-buffer (dotemacs-fallback-buffer)))
-    (mapc #'dotemacs-kill-buffer-and-windows buffer-list)
-    (delete-other-windows)
+    (mapc #'kill-buffer buffer-list)
     (when interactive
       (message "Killed %s buffers"
                (- (length buffer-list)

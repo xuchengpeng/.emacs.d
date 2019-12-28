@@ -118,6 +118,10 @@
     "TAB"           'ivy-partial-or-done
     "RET"           'ivy-alt-done)
   :config
+  ;; Integrate with `helpful'
+  (setq counsel-describe-function-function #'helpful-callable
+        counsel-describe-variable-function #'helpful-variable)
+
   (setq counsel-find-file-ignore-regexp
         (concat
          ;; file names beginning with # or .

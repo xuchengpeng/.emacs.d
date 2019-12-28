@@ -8,7 +8,6 @@
     [remap apropos]                     'helm-apropos
     [remap find-library]                'helm-locate-library
     [remap bookmark-jump]               'helm-bookmarks
-    [remap describe-key]                'helm-descbinds
     [remap execute-extended-command]    'helm-M-x
     [remap find-file]                   'helm-find-files
     [remap imenu-anywhere]              'helm-imenu-anywhere
@@ -80,9 +79,6 @@
   (setq projectile-completion-system 'helm)
   :config
   (helm-projectile-on))
-
-(use-package helm-descbinds
-  :hook (helm-mode . helm-descbinds-mode))
 
 (use-package helm-xref
   :after xref

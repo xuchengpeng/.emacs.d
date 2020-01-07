@@ -77,47 +77,146 @@
     (use-package ox-publish
       :commands (org-publish-project)
       :config
-      (setq org-html-validation-link nil
-            org-publish-timestamp-directory (concat dotemacs-cache-dir "org-timestamps/"))
-      
+      (setq org-export-in-background t
+            org-publish-timestamp-directory (concat dotemacs-cache-dir "org-timestamps/")
+            ;; Hide html built-in style and script.
+            org-html-htmlize-output-type 'inline-css
+            org-html-head-include-default-style nil
+            org-html-head-include-scripts nil)
       (setq org-publish-project-alist
             '(;; Publish the posts
-              ("blog-notes"
-               :base-directory "~/org/blog"
+              ("site-org"
+               :base-directory "~/site/org"
+               :publishing-directory "~/site/public"
+               ;; :preparation-function
+               ;; :complete-function
+
+               ;; ; Selecting files
                :base-extension "org"
-               :publishing-directory "~/org/public"
+               ;; :exclude "PrivatePage.org"     ;; regexp
+               ;; :include
                :recursive t
+
+               ;; ; Publishing action
                :publishing-function org-html-publish-to-html
-               :headline-levels 4
-               :section-numbers nil
-               :with-author nil
-               :with-creator nil
-               :with-email nil
-               :with-timestamps nil
-               :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/stylesheet.css\"/>"
-               :html-head-include-default-style nil
-               :html-head-include-scripts nil
-               ; :html-preamble nil
-               ; :html-postamble nil
-               :html-link-home "index.html"
-               :html-link-up "sitemap.html"
-               :htmlized-source t
-               :auto-sitemap t
-               :sitemap-filename "sitemap.org"
-               :sitemap-title "Sitemap"
+               ;; :htmlized-source
+
+               ;; ; Generic properties
+               ;; :archived-trees	org-export-with-archived-trees
+               ;; :exclude-tags	org-export-exclude-tags
+               :headline-levels 4 ;; org-export-headline-levels
+               ;; :language	org-export-default-language
+               ;; :preserve-breaks	org-export-preserve-breaks
+               :section-numbers nil	;; org-export-with-section-numbers
+               ;; :select-tags	org-export-select-tags
+               :with-author "xuchengpeng" ;; org-export-with-author
+               ;; :with-broken-links	org-export-with-broken-links
+               ;; :with-clocks	t ;; org-export-with-clocks
+               ;; :with-creator nil ;; org-export-with-creator
+               ;; :with-date org-export-with-date
+               ;; :with-drawers	org-export-with-drawers
+               ;; :with-email	org-export-with-email
+               ;; :with-emphasize	org-export-with-emphasize
+               ;; :with-fixed-width org-export-with-fixed-width
+               ;; :with-footnotes	org-export-with-footnotes
+               ;; :with-latex	org-export-with-latex
+               ;; :with-planning	org-export-with-planning
+               :with-priority t ;; org-export-with-priority ;
+               ;; :with-properties	org-export-with-properties
+               ;; :with-special-strings	org-export-with-special-strings
+               ;; :with-sub-superscript	org-export-with-sub-superscripts
+               ;; :with-tables	org-export-with-tables
+               ;; :with-tags	org-export-with-tags
+               ;; :with-tasks	org-export-with-tasks
+               ;; :with-timestamps	org-export-with-timestamps
+               ;; :with-title	org-export-with-title
+               :with-toc t ;; org-export-with-toc
+               ;; :with-todo-keywords	org-export-with-todo-keywords
+
+               ;; ; HTML specific properties
+               ;; :html-allow-name-attribute-in-anchors	org-html-allow-name-attribute-in-anchors
+               ;; :html-checkbox-type	org-html-checkbox-type
+               ;; :html-container	org-html-container-element
+               ;; :html-divs	org-html-divs
+               :html-doctype "html5" ;; org-html-doctype
+               ;; :html-extension	org-html-extension
+               ;; :html-footnote-format nil ;; org-html-footnote-format
+               ;; :html-footnote-separator	org-html-footnote-separator
+               ;; :html-footnotes-section	org-html-footnotes-section
+               ;; :html-format-drawer-function	org-html-format-drawer-function
+               ;; :html-format-headline-function	org-html-format-headline-function
+               ;; :html-format-inlinetask-function	org-html-format-inlinetask-function
+               ;; :html-head-extra	org-html-head-extra
+               ;; :html-head-include-default-style	org-html-head-include-default-style
+               ;; :html-head-include-scripts	org-html-head-include-scripts
+               ;; :html-head	org-html-head
+               ;; :html-home/up-format	org-html-home/up-format
+               ;; :html-html5-fancy	org-html-html5-fancy
+               ;; :html-indent	org-html-indent
+               ;; :html-infojs-options	org-html-infojs-options
+               ;; :html-infojs-template	org-html-infojs-template
+               ;; :html-inline-image-rules	org-html-inline-image-rules
+               ;; :html-inline-images	org-html-inline-images
+               ;; :html-link-home	org-html-link-home
+               ;; :html-link-org-files-as-html	org-html-link-org-files-as-html
+               ;; :html-link-up	org-html-link-up
+               ;; :html-link-use-abs-url	org-html-link-use-abs-url
+               ;; :html-mathjax-options	org-html-mathjax-options
+               ;; :html-mathjax-template	org-html-mathjax-template
+               ;; :html-metadata-timestamp-format	org-html-metadata-timestamp-format
+               ;; :html-postamble-format t ;; org-html-postamble-format
+               ;; :html-postamble t ;; org-html-postamble
+               ;; :html-preamble-format	org-html-preamble-format
+               ;; :html-preamble nil ;; org-html-preamble
+               ;; :html-self-link-headlines	org-html-self-link-headlines
+               ;; :html-table-align-individual-field	de{org-html-table-align-individual-fields
+               ;; :html-table-attributes	org-html-table-default-attributes
+               ;; :html-table-caption-above	org-html-table-caption-above
+               ;; :html-table-data-tags	org-html-table-data-tags
+               ;; :html-table-header-tags	org-html-table-header-tags
+               ;; :html-table-row-tags	org-html-table-row-tags
+               ;; :html-table-use-header-tags-for-first-column	org-html-table-use-header-tags-for-first-column
+               ;; :html-tag-class-prefix	org-html-tag-class-prefix
+               ;; :html-text-markup-alist	org-html-text-markup-alist
+               ;; :html-todo-kwd-class-prefix	org-html-todo-kwd-class-prefix
+               ;; :html-toplevel-hlevel	org-html-toplevel-hlevel
+               ;; :html-use-infojs	org-html-use-infojs
+               ;; :html-validation-link	org-html-validation-link
+               ;; :html-viewport	org-html-viewport
+               ;; :html-wrap-src-lines	org-html-wrap-src-lines
+               ;; :html-xml-declaration	org-html-xml-declaration
+
+               ;; ; Markdown specific properties
+               ;; :md-footnote-format	org-md-footnote-format
+               ;; :md-footnotes-section	org-md-footnotes-section
+               ;; :md-headline-style	org-md-headline-style
+
+               ;; ; Other options
+               :table-of-contents t
+               ;; :style "<link rel=\"stylesheet\" href=\"../other/mystyle.css\" type=\"text/css\" />"
                )
-      
-              ;; For static files that should remain untouched
-              ("blog-static"
-               :base-directory "~/org/blog"
-               :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|eot\\|svg\\|woff\\|woff2\\|ttf"
-               :publishing-directory "~/org/public"
+              ("site-js"
+               :base-directory "~/site/js/"
+               :base-extension "js"
+               :publishing-directory "~/site/public/js/"
                :recursive t
                :publishing-function org-publish-attachment
                )
-      
-              ;; Combine the two previous components in a single one
-              ("blog" :components ("blog-notes" "blog-static")))))))
+              ("site-css"
+               :base-directory "~/site/css/"
+               :base-extension "css"
+               :publishing-directory "~/site/public/css/"
+               :recursive t
+               :publishing-function org-publish-attachment
+               )
+              ("site-images"
+               :base-directory "~/site/images/"
+               :base-extension "jpg\\|gif\\|png\\|svg\\|gif"
+               :publishing-directory "~/site/public/images/"
+               :recursive t
+               :publishing-function org-publish-attachment
+               )
+              ("site" :components ("site-org" "site-js" "site-css" "site-images")))))))
 
 (use-package org
   :mode ("\\.org$" . org-mode)

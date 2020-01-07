@@ -132,11 +132,10 @@ This should be run whenever init.el or an autoload file is modified."
 (defun dotemacs-module-p (category module &optional flag)
   "Returns t if CATEGORY MODULE is enabled (ie. present in `dotemacs-modules')."
   (declare (pure t) (side-effect-free t))
-  (let ((plist (gethash (cons category module) dotemacs-modules)))
-    (and plist
-         (or (null flag)
-             (memq flag (plist-get plist :flags)))
-         t)))
+  (when-let (plist (gethash (cons category module) dotemacs-modules))
+    (or (null flag)
+        (and (memq flag (plist-get plist :flags))
+             t))))
 
 (defun dotemacs-module-get (category module &optional property)
   "Returns the plist for CATEGORY MODULE. Gets PROPERTY, specifically, if set."

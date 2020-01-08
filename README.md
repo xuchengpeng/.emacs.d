@@ -43,7 +43,7 @@ Install your favorite fonts, or you can find some popular fonts [here](https://g
 
 For example:
 ```el
-(setq dotemacs-font (font-spec :family "Fira Mono" :size 14))
+(setq dotemacs-font (font-spec :family "Fira Code" :size 14))
 (setq dotemacs-cn-font (font-spec :family "STXihei" :size 16))
 ```
 

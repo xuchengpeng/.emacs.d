@@ -83,7 +83,15 @@
         savehist-save-minibuffer-history t
         savehist-autosave-interval nil ; save on kill only
         savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
-  (savehist-mode +1))
+  (savehist-mode +1)
+
+  (add-hook! 'kill-emacs-hook
+    (defun dotemacs-unpropertize-kill-ring-h ()
+      "Remove text properties from `kill-ring' for a smaller savehist file."
+      (setq kill-ring (cl-loop for item in kill-ring
+                               if (stringp item)
+                               collect (substring-no-properties item)
+                               else if item collect it)))))
 
 ;; persistent point location in buffers
 (use-package saveplace

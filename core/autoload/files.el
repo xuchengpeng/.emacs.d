@@ -22,4 +22,7 @@
 (defun dotemacs/sudo-this-file ()
   "Open the current file as root."
   (interactive)
-  (find-alternate-file (dotemacs--sudo-file buffer-file-name)))
+  (find-alternate-file (dotemacs--sudo-file (or buffer-file-name
+                                                (when (or (derived-mode-p 'dired-mode)
+                                                          (derived-mode-p 'wdired-mode))
+                                                  default-directory)))))

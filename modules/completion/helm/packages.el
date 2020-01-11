@@ -6,3 +6,5 @@
 (when (featurep! +fuzzy)
   (package! helm-flx))
 (package! helm-xref)
+(when (featurep! :lang org)
+  (package! helm-org))

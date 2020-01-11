@@ -83,3 +83,12 @@
 (use-package helm-xref
   :after xref
   :config (setq xref-show-xrefs-function #'helm-xref-show-xrefs))
+
+(when (featurep! :lang org)
+  (use-package helm-org
+    :defer t
+    :init
+    (after! helm-mode
+      (pushnew! helm-completing-read-handlers-alist
+                '(org-capture . helm-org-completing-read-tags)
+                '(org-set-tags . helm-org-completing-read-tags)))))

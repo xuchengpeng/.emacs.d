@@ -4,16 +4,26 @@
   :defer t
   :hook (pre-command . ivy-mode)
   :init
-  (setq ivy-re-builders-alist
-        '((counsel-ag . ivy--regex-plus)
-          (counsel-rg . ivy--regex-plus)
-          (counsel-grep . ivy--regex-plus)
-          (swiper . ivy--regex-plus)
-          (swiper-isearch . ivy--regex-plus)
-          ;; Ignore order for non-fuzzy searches by default
-          (t . ivy--regex-ignore-order)))
+  (let ((standard-search-fn
+         (if (featurep! +prescient)
+             #'+ivy-prescient-non-fuzzy
+           #'ivy--regex-plus))
+        (alt-search-fn
+         (if (featurep! +fuzzy)
+             #'ivy--regex-fuzzy
+           ;; Ignore order for non-fuzzy searches by default
+           #'ivy--regex-ignore-order)))
+    (setq ivy-re-builders-alist
+          `((counsel-rg     . ,standard-search-fn)
+            (swiper         . ,standard-search-fn)
+            (swiper-isearch . ,standard-search-fn)
+            (t . ,alt-search-fn))
+          ivy-more-chars-alist
+          '((counsel-rg . 1)
+            (counsel-search . 2)
+            (t . 3))))
   :config
-  (setq ivy-height 15
+  (setq ivy-height 17
         ivy-wrap t
         ivy-fixed-height-minibuffer t
         ivy-initial-inputs-alist nil
@@ -29,41 +39,30 @@
     (setq magit-completing-read-function 'ivy-completing-read))
   (ivy-mode +1))
 
-(when (and (featurep! +fuzzy)
-           (not (featurep! +prescient)))
-  (use-package flx
-    :defer t  ; is loaded by ivy
-    :init
-    (setf (alist-get 't ivy-re-builders-alist) #'ivy--regex-fuzzy)
-    (setq ivy-initial-inputs-alist nil
-          ivy-flx-limit 10000)))
+(use-package flx
+  :when (featurep! +fuzzy)
+  :unless (featurep! +prescient)
+  :defer t  ; is loaded by ivy
+  :init (setq ivy-flx-limit 10000))
 
-(when (featurep! +prescient)
-  (use-package ivy-prescient
-    :hook (ivy-mode . ivy-prescient-mode)
-    :init
-    (setq prescient-filter-method
-          (if (featurep! +fuzzy)
-              '(literal regexp initialism fuzzy)
-            '(literal regexp initialism))
-          ivy-prescient-enable-filtering nil  ; we do this ourselves
-          ivy-prescient-retain-classic-highlighting t
-          ivy-initial-inputs-alist nil
-          ivy-re-builders-alist
-          '((counsel-ag . +ivy-prescient-non-fuzzy)
-            (counsel-rg . +ivy-prescient-non-fuzzy)
-            (counsel-grep . +ivy-prescient-non-fuzzy)
-            (swiper . +ivy-prescient-non-fuzzy)
-            (swiper-isearch . +ivy-prescient-non-fuzzy)
-            (t . ivy-prescient-re-builder)))
-    :config
-    (defun +ivy-prescient-non-fuzzy (str)
-      (let ((prescient-filter-method '(literal regexp)))
-        (ivy-prescient-re-builder str)))
-    
-    ;; NOTE prescient config duplicated with `company'
-    (setq prescient-save-file (concat dotemacs-cache-dir "prescient-save.el"))
-    (prescient-persist-mode +1)))
+(use-package ivy-prescient
+  :if (featurep! +prescient)
+  :hook (ivy-mode . ivy-prescient-mode)
+  :init
+  (setq prescient-filter-method
+        (if (featurep! +fuzzy)
+            '(literal regexp initialism fuzzy)
+          '(literal regexp initialism))
+        ivy-prescient-retain-classic-highlighting t)
+
+  :config
+  (defun +ivy-prescient-non-fuzzy (str)
+    (let ((prescient-filter-method '(literal regexp)))
+      (ivy-prescient-re-builder str)))
+
+  ;; NOTE prescient config duplicated with `company'
+  (setq prescient-save-file (concat dotemacs-cache-dir "prescient-save.el"))
+  (prescient-persist-mode +1))
 
 (use-package ivy-rich
   :hook (ivy-mode . ivy-rich-mode)

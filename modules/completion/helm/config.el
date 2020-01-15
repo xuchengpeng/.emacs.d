@@ -63,6 +63,9 @@
           helm-recentf-fuzzy-match fuzzy
           helm-semantic-fuzzy-match fuzzy))
   
+  (when (executable-find "rg")
+    (setq helm-grep-ag-command "rg --color=always --smart-case --line-number --no-heading %s %s %s"))
+
   (helm-mode +1))
 
 (when (featurep! +fuzzy)

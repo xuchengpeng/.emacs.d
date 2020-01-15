@@ -26,14 +26,16 @@
   (setq ivy-height 17
         ivy-wrap t
         ivy-fixed-height-minibuffer t
-        ivy-initial-inputs-alist nil
-        ivy-use-virtual-buffers t
-        ivy-use-selectable-prompt t
+        ;; disable magic slash on non-match
+        ivy-magic-slash-non-match-action nil
+        ;; don't show recent files in switch-buffer
+        ivy-use-virtual-buffers nil
+        ;; ...but if that ever changes, show their full path
         ivy-virtual-abbreviate 'full
-        ivy-magic-tilde nil
-        ;;ivy-dynamic-exhibit-delay-ms 150
-        ivy-count-format "(%d/%d) "
-        ivy-format-function #'ivy-format-function-line)
+        ;; don't quit minibuffer on delete-error
+        ivy-on-del-error-function #'ignore
+        ;; enable ability to select prompt (alternative to `ivy-immediate-done')
+        ivy-use-selectable-prompt t)
   ;; Integration with `magit'
   (after-load! 'magit
     (setq magit-completing-read-function 'ivy-completing-read))
@@ -117,6 +119,13 @@
     "TAB"           'ivy-partial-or-done
     "RET"           'ivy-alt-done)
   :config
+  (when (executable-find "rg")
+    (setq counsel-grep-base-command "rg --smart-case --no-heading --line-number --color never %s %s"
+          counsel-git-command "rg --files"))
+  (setq counsel-rg-base-command "rg --smart-case --no-heading --line-number --color never %s ."
+        counsel-ag-base-command "ag --smart-case --nocolor --nogroup --numbers %s"
+        counsel-pt-base-command "pt -S --nocolor --nogroup -e %s")
+
   ;; Integrate with `helpful'
   (setq counsel-describe-function-function #'helpful-callable
         counsel-describe-variable-function #'helpful-variable)

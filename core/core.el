@@ -222,11 +222,6 @@ Module load order is determined by your `dotemacs!' block."
   (require 'core-keybinds)
   (require 'core-modules))
 
-(defun dotemacs-finalize ()
-  "dotemacs finalize function.")
-
-(add-hook 'emacs-startup-hook #'dotemacs-finalize)
-
 ;;
 ;;; Bootstrap dotemacs
 

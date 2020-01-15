@@ -1,12 +1,14 @@
 ;;; tools/utils/config.el -*- lexical-binding: t; -*-
 
 (use-package helpful
+  ;; a better *help* buffer
   :commands helpful--read-symbol
   :init
   (global-set-key [remap describe-function] #'helpful-callable)
   (global-set-key [remap describe-command]  #'helpful-command)
   (global-set-key [remap describe-variable] #'helpful-variable)
   (global-set-key [remap describe-key]      #'helpful-key)
+  (global-set-key [remap describe-symbol]   #'helpful-symbol)
   
   (defun dotemacs-use-helpful-a (orig-fn &rest args)
     "Force ORIG-FN to use helpful instead of the old describe-* commands."

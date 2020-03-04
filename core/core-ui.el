@@ -77,12 +77,14 @@ Examples:
 (setq window-resize-pixelwise t
       frame-resize-pixelwise t)
 
-(unless EMACS27+  ; We already do this in early-init.el
-  ;; Disable tool and scrollbars; dotemacs encourages keyboard-centric workflows, so
-  ;; these are just clutter (the scrollbar also impacts Emacs' performance).
-  (push '(menu-bar-lines . 0) default-frame-alist)
-  (push '(tool-bar-lines . 0) default-frame-alist)
-  (push '(vertical-scroll-bars) default-frame-alist))
+(unless (assq 'menu-bar-lines default-frame-alist)
+  ;; We do this in early-init.el too, but in case the user is on Emacs 26 we do
+  ;; it here too: disable tool and scrollbars, as Doom encourages
+  ;; keyboard-centric workflows, so these are just clutter (the scrollbar also
+  ;; impacts performance).
+  (add-to-list 'default-frame-alist '(menu-bar-lines . 0))
+  (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
+  (add-to-list 'default-frame-alist '(vertical-scroll-bars)))
 
 ;; maximized startup
 (unless (frame-parameter nil 'fullscreen)

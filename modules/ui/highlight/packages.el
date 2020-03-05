@@ -5,3 +5,4 @@
 (package! rainbow-delimiters)
 (package! rainbow-mode)
 (package! diff-hl)
+(package! hl-todo)

@@ -73,8 +73,7 @@
       :after ox)))
 
 (defun +org-init-publish-h ()
-  (when (featurep! +publish)
-    (use-package ox-publish
+  (use-package ox-publish
       :commands (org-publish-project)
       :config
       (setq org-export-in-background t
@@ -216,7 +215,7 @@
                :recursive t
                :publishing-function org-publish-attachment
                )
-              ("site" :components ("site-org" "site-js" "site-css" "site-images")))))))
+              ("site" :components ("site-org" "site-js" "site-css" "site-images"))))))
 
 (use-package org
   :mode ("\\.org$" . org-mode)

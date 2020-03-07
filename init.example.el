@@ -48,7 +48,6 @@
            markdown
            (org         ; organize your plain life in plain text
             ;; +export     ; Exporting org to whatever you want
-            +publish    ; Publish org to html blog
             )
            ;; plantuml
            ;; python

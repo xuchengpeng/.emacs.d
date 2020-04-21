@@ -79,7 +79,7 @@ Examples:
 
 (unless (assq 'menu-bar-lines default-frame-alist)
   ;; We do this in early-init.el too, but in case the user is on Emacs 26 we do
-  ;; it here too: disable tool and scrollbars, as Doom encourages
+  ;; it here too: disable tool and scrollbars, as dotemacs encourages
   ;; keyboard-centric workflows, so these are just clutter (the scrollbar also
   ;; impacts performance).
   (add-to-list 'default-frame-alist '(menu-bar-lines . 0))
@@ -173,11 +173,19 @@ Examples:
   (when (display-graphic-p)
     (dotemacs-set-font-fn)))
 
-(defun dotemacs--run-load-theme-hooks-a (theme &rest _)
+(defadvice! dotemacs--run-load-theme-hooks-a (theme &optional _no-confirm no-enable)
   "Set up `dotemacs-load-theme-hook' to run after `load-theme' is called."
-  (setq dotemacs-theme theme)
-  (run-hooks 'dotemacs-load-theme-hook))
-(advice-add #'load-theme :after #'dotemacs--run-load-theme-hooks-a)
+  :after-while #'load-theme
+  (unless no-enable
+    (setq dotemacs-theme theme)
+    (run-hooks 'dotemacs-load-theme-hook)))
+
+(defadvice! dotemacs--disable-enabled-themes-a (theme &optional _no-confirm no-enable)
+  "Disable previously enabled themes before loading a new one.
+Otherwise, themes can conflict with each other."
+  :after-while #'load-theme
+  (unless no-enable
+    (mapc #'disable-theme (remq theme custom-enabled-themes))))
 
 (defun dotemacs-init-theme-h ()
   "Set the theme."

@@ -72,7 +72,7 @@ missing) and shouldn't be deleted.")
 
 ;;; straight
 (setq straight-base-dir dotemacs-local-dir
-      straight-repository-branch "develop"
+      straight-repository-branch "master"
       straight-vc-git-default-clone-depth 1
       straight-recipes-emacsmirror-use-mirror t)
 
@@ -90,7 +90,8 @@ missing) and shouldn't be deleted.")
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
           (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           (format "https://raw.githubusercontent.com/raxod502/straight.el/%s/install.el"
+                   straight-repository-branch)
            'silent 'inhibit-cookies)
         (goto-char (point-max))
         (eval-print-last-sexp)))

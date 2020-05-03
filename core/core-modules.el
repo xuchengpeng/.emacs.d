@@ -295,38 +295,6 @@ e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
       dotemacs-modules)
     (dotemacs-initialize-modules)))
 
-(defmacro require! (category module &rest plist)
-  "Loads the CATEGORY MODULE module with FLAGS.
-
-CATEGORY is a keyword, MODULE is a symbol and FLAGS are symbols.
-
-  (require! :lang php +lsp)
-
-This is for testing and internal use. This is not the correct way to enable a
-module."
-  `(let ((dotemacs-modules (or ,dotemacs-modules (dotemacs-modules)))
-         (module-path (dotemacs-module-locate-path ,category ',module)))
-     (dotemacs-module-set
-      ,category ',module
-      (let ((plist (dotemacs-module-get ,category ',module)))
-        ,(when flags
-           `(plist-put plist :flags `,flags))
-        (unless (plist-member plist :path)
-          (plist-put plist :path ,(dotemacs-module-locate-path category module)))
-        plist))
-     (if (directory-name-p module-path)
-         (condition-case-unless-debug ex
-             (progn
-               (load! "init" module-path :noerror)
-               (load! "config" module-path :noerror))
-           ('error
-            (lwarn 'dotemacs-modules :error
-                   "%s in '%s %s' -> %s"
-                   (car ex) ,category ',module
-                   (error-message-string ex))))
-       (warn 'dotemacs-modules :warning "Couldn't find module '%s %s'"
-             ,category ',module))))
-
 (defmacro featurep! (category &optional module flag)
   "Returns t if CATEGORY MODULE is enabled.
 

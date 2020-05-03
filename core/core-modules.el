@@ -230,7 +230,7 @@ If ENABLED-ONLY, return nil if the containing module isn't enabled."
   "Return a list of absolute file paths to activated modules."
   (declare (pure t) (side-effect-free t))
   (append (list dotemacs-private-dir)
-          (cl-loop for plist being the hash-values of (dotemacs-modules)
+          (cl-loop for plist being the hash-values of dotemacs-modules
                    collect (plist-get plist :path))
           nil))
 

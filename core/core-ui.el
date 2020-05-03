@@ -140,7 +140,7 @@ Examples:
 
 ;; Highlight the current line
 (use-package hl-line
-  :hook ((prog-mode text-mode conf-mode) . hl-line-mode))
+  :hook ((prog-mode text-mode conf-mode special-mode) . hl-line-mode))
 
 ;; highlight matching delimiters
 (use-package paren

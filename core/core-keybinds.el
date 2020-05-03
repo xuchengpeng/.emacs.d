@@ -16,7 +16,7 @@ non-evil users.")
 (require 'general)
 
 (defalias 'define-key! #'general-def)
-(defalias 'unmap! #'general-unbind)
+(defalias 'undefine-key! #'general-unbind)
 
 (general-create-definer map!
   :states nil

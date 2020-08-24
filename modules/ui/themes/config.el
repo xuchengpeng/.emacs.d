@@ -11,18 +11,18 @@
                                :files ("*.el" "themes/*.el"))
     :config
     ;; Enable flashing mode-line on errors
-    (add-hook 'dotemacs-load-theme-hook (lambda! (require 'dotemacs-themes-ext-visual-bell)
+    (add-hook 'dotemacs-load-theme-hook (cmd! (require 'dotemacs-themes-ext-visual-bell)
                                                  (dotemacs-themes-visual-bell-config)))
 
     ;; Corrects (and improves) org-mode's native fontification.
-    (add-hook 'dotemacs-load-theme-hook (lambda! (require 'dotemacs-themes-ext-org)))
+    (add-hook 'dotemacs-load-theme-hook (cmd! (require 'dotemacs-themes-ext-org)))
 
     ;; For treemacs users
     (when (featurep! :ui treemacs)
-      (add-hook 'dotemacs-load-theme-hook (lambda! (require 'dotemacs-themes-ext-treemacs))))
+      (add-hook 'dotemacs-load-theme-hook (cmd! (require 'dotemacs-themes-ext-treemacs))))
     ;; or for neotree users
     (when (featurep! :ui neotree)
-      (add-hook 'dotemacs-load-theme-hook (lambda! (require 'dotemacs-themes-ext-neotree))))
+      (add-hook 'dotemacs-load-theme-hook (cmd! (require 'dotemacs-themes-ext-neotree))))
 
     (unless +themes-color-theme
       (setq +themes-color-theme 'dotemacs-one))

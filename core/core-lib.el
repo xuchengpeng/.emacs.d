@@ -146,19 +146,22 @@ list is returned as-is."
 ;;
 ;;; Sugars
 
-(defmacro λ! (&rest body)
+(defmacro cmd! (&rest body)
   "Expands to (lambda () (interactive) ,@body)."
   (declare (doc-string 1) (pure t) (side-effect-free t))
-  `(lambda () (interactive) ,@body))
-(defalias 'lambda! 'λ!)
+  `(lambda (&rest _) (interactive) ,@body))
 
-(defun λ!! (command &optional arg)
-  "Expands to a command that interactively calls COMMAND with prefix ARG."
+(defmacro cmd!! (command &optional prefix-arg &rest args)
+  "Expands to a closure that interactively calls COMMAND with ARGS.
+A factory for quickly producing interactive, prefixed commands for keybinds or
+aliases."
   (declare (doc-string 1) (pure t) (side-effect-free t))
-  (lambda () (interactive)
-     (let ((current-prefix-arg arg))
-       (call-interactively command))))
-(defalias 'lambda!! 'λ!!)
+  `(lambda (arg &rest _) (interactive "P")
+     (let ((current-prefix-arg (or ,prefix-arg arg)))
+       (,(if args
+             'funcall-interactively
+           'call-interactively)
+        ,command ,@args))))
 
 (defun file! ()
   "Return the emacs lisp file this macro is called from."

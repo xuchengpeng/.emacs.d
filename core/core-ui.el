@@ -86,6 +86,10 @@ Examples:
   (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
   (add-to-list 'default-frame-alist '(vertical-scroll-bars)))
 
+(setq menu-bar-mode nil
+      tool-bar-mode nil
+      scroll-bar-mode nil)
+
 ;; maximized startup
 (unless (frame-parameter nil 'fullscreen)
   (toggle-frame-maximized))

@@ -311,11 +311,10 @@ CATEGORY and MODULE can be omitted When this macro is used from inside a module
 (except your dotemacs dir, which is a special moduel). e.g. (featurep! +flag)"
   (and (cond (flag (memq flag (dotemacs-module-get category module :flags)))
              (module (dotemacs-module-p category module))
-             ((let ((module (dotemacs-module-from-path)))
-                (unless module
-                  (error "(featurep! %s %s %s) couldn't figure out what module it was called from (in %s)"
-                         category module flag (file!)))
-                (memq category (dotemacs-module-get (car module) (cdr module) :flags)))))
+             ((if-let (module (dotemacs-module-from-path))
+                  (memq category (dotemacs-module-get (car module) (cdr module) :flags))
+                (error "(featurep! %s %s %s) couldn't figure out what module it was called from (in %s)"
+                       category module flag (file!)))))
        t))
 
 (provide 'core-modules)

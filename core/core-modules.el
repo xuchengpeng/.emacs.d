@@ -1,6 +1,6 @@
 ;;; core-modules.el --- Core modules. -*- lexical-binding: t; -*-
 
-(defvar dotemacs-modules ()
+(defvar dotemacs-modules (make-hash-table :test 'equal)
   "A hash table of enabled modules. Set by marco `dotemacs!'.")
 
 (defvar dotemacs-modules-dirs
@@ -25,30 +25,30 @@
 ;;
 ;;; Functions
 
+(defun dotemacs-module-loader (file)
+  "Return a closure that loads FILE from a module.
+
+This closure takes two arguments: a cons cell containing (CATEGORY . MODULE)
+symbols, and that module's plist."
+  (declare (pure t) (side-effect-free t))
+  (lambda (module plist)
+    (load! file (plist-get plist :path) t)))
+
 (defun dotemacs-initialize-modules ()
-  "Initialize modules."
-  (unless (hash-table-p dotemacs-modules)
-      (setq dotemacs-modules (make-hash-table :test 'equal)))
-  
+  "Initialize modules."  
   (dotemacs-initialize-autoload)
-  
-  (maphash (lambda (key plist)
-             (load! "packages" (plist-get plist :path) t))
-           dotemacs-modules)
+
+  (maphash (dotemacs-module-loader "packages") dotemacs-modules)
   (when dotemacs-private-dir
     (load! "packages" dotemacs-private-dir t))
   (dotemacs-install-packages dotemacs-packages)
-  
-  (maphash (lambda (key plist)
-             (load! "init" (plist-get plist :path) t))
-           dotemacs-modules)
+
+  (maphash (dotemacs-module-loader "init") dotemacs-modules)
   (when dotemacs-private-dir
     (load! "init" dotemacs-private-dir t))
   (run-hook-wrapped 'dotemacs-before-init-modules-hook #'dotemacs-try-run-hook)
-  
-  (maphash (lambda (key plist)
-             (load! "config" (plist-get plist :path) t))
-           dotemacs-modules)
+
+  (maphash (dotemacs-module-loader "config") dotemacs-modules)
   (when dotemacs-private-dir
     (load! "config" dotemacs-private-dir t))
   (run-hook-wrapped 'dotemacs-init-modules-hook #'dotemacs-try-run-hook))
@@ -150,15 +150,17 @@ This should be run whenever init.el or an autoload file is modified."
 of PROPERTY and VALUEs.
 
 \(fn CATEGORY MODULE PROPERTY VALUE &rest [PROPERTY VALUE [...]])"
-  (if-let ((old-plist (dotemacs-module-get category module)))
-      (progn
-        (when plist
-          (when (cl-oddp (length plist))
-            (signal 'wrong-number-of-arguments (list (length plist))))
-          (while plist
-            (plist-put old-plist (pop plist) (pop plist))))
-        (puthash (cons category module) old-plist dotemacs-modules))
-    (puthash (cons category module) plist dotemacs-modules)))
+  (puthash (cons category module)
+           (if-let (old-plist (dotemacs-module-get category module))
+               (if (null plist)
+                   old-plist
+                 (when (cl-oddp (length plist))
+                   (signal 'wrong-number-of-arguments (list (length plist))))
+                 (while plist
+                   (plist-put old-plist (pop plist) (pop plist)))
+                 old-plist)
+             plist)
+           dotemacs-modules))
 
 (defun dotemacs-module-set (category module &rest plist)
   "Enables a module by adding it to `dotemacs-modules'.
@@ -171,9 +173,7 @@ following properties:
 
 Example:
   (dotemacs-module-set :lang 'haskell :flags '(+intero))"
-  (puthash (cons category module)
-           plist
-           dotemacs-modules))
+  (puthash (cons category module) plist dotemacs-modules))
 
 (defun dotemacs-module-path (category module &optional file)
   "Like `expand-file-name', but expands FILE relative to CATEGORY (keywordp) and
@@ -204,7 +204,7 @@ This doesn't require modules to be enabled. For enabled modules us
            for default-directory in dotemacs-modules-dirs
            for path = (concat category "/" module "/" file)
            if (file-exists-p path)
-           return (expand-file-name path)))
+           return (file-truename path)))
 
 (defun dotemacs-module-from-path (&optional path enabled-only)
   "Returns a cons cell (CATEGORY . MODULE) derived from PATH (a file path).
@@ -234,17 +234,45 @@ If ENABLED-ONLY, return nil if the containing module isn't enabled."
                    collect (plist-get plist :path))
           nil))
 
-(defun dotemacs-modules (&optional refresh-p)
+(defun dotemacs-module-mplist-map (fn mplist)
+  "Apply FN to each module in MPLIST."
+  (let ((mplist (copy-sequence mplist))
+        results
+        category m)
+    (while mplist
+      (setq m (pop mplist))
+      (cond ((keywordp m)
+             (setq category m))
+            ((null category)
+             (error "No module category specified for %s" m))
+            ((and (listp m) (keywordp (car m)))
+             (pcase (car m)
+               (:cond
+                (cl-loop for (cond . mods) in (cdr m)
+                         if (eval cond t)
+                         return (prependq! mplist mods)))
+               (:if (if (eval (cadr m) t)
+                        (push (caddr m) mplist)
+                      (prependq! mplist (cdddr m))))
+               (test (if (or (eval (cadr m) t)
+                             (eq test :unless))
+                         (prependq! mplist (cddr m))))))
+            ((catch 'dotemacs-modules
+               (let* ((module (if (listp m) (car m) m))
+                      (flags  (if (listp m) (cdr m))))
+                 (push (funcall fn category module
+                                :flags (if (listp m) (cdr m))
+                                :path (dotemacs-module-locate-path category module))
+                       results))))))
+    (nreverse results)))
+
+(defun dotemacs-module-list (&optional all-p)
   "Minimally initialize `dotemacs-modules' (a hash table) and return it.
 This value is cached. If REFRESH-P, then don't use the cached value."
-  (or (unless refresh-p dotemacs-modules)
-      (let (dotemacs-interactive-mode
-            dotemacs-modules)
-        (load! "init" dotemacs-private-dir t)
-        (or dotemacs-modules
-            (make-hash-table :test 'equal
-                             :size 20
-                             :rehash-threshold 1.0)))))
+  (if all-p
+      (cl-loop for path in (cdr (dotemacs-module-load-path 'all))
+               collect (dotemacs-module-from-path path))
+    dotemacs-modules))
 
 ;;
 ;;; Module config macros
@@ -254,46 +282,18 @@ This value is cached. If REFRESH-P, then don't use the cached value."
 (put :unless 'lisp-indent-function 'defun)
 
 (defmacro dotemacs! (&rest modules)
-  "Adds MODULES to `dotemacs-modules'.
-
-MODULES must be in mplist format.
-e.g (dotemacs! :feature evil :lang emacs-lisp javascript java)"
+  "Bootstraps dotemacs and its modules."
   `(let ((modules
           ,@(if (keywordp (car modules))
                (list (list 'quote modules))
              modules)))
-    (unless dotemacs-modules
-      (setq dotemacs-modules
-            (make-hash-table :test 'equal
-                             :size (if modules (length modules) 150)
-                             :rehash-threshold 1.0)))
-    (let (category m)
-      (while modules
-        (setq m (pop modules))
-        (cond ((keywordp m)
-               (setq category m))
-              ((not category)
-               (error "No module category specified for %s" m))
-              ((and (listp m) (keywordp (car m)))
-               (pcase (car m)
-                 (:cond
-                  (cl-loop for (cond . mods) in (cdr m)
-                           if (eval cond t)
-                           return (prependq! modules mods)))
-                 (:if (if (eval (cadr m) t)
-                          (push (caddr m) modules)
-                        (prependq! modules (cdddr m))))
-                 (fn (if (or (eval (cadr m) t)
-                             (eq fn :unless))
-                         (prependq! modules (cddr m))))))
-              ((catch 'dotemacs-modules
-                 (let* ((module (if (listp m) (car m) m))
-                        (flags  (if (listp m) (cdr m))))
-                   (if-let ((path (dotemacs-module-locate-path category module)))
-                       (dotemacs-module-set category module :flags flags :path path)
-                     (message "Warning: couldn't find the %s %s module" category module)))))))
-      dotemacs-modules)
-    (dotemacs-initialize-modules)))
+     (dotemacs-module-mplist-map
+      (lambda (category module &rest plist)
+        (if (plist-member plist :path)
+            (apply #'dotemacs-module-set category module plist)
+          (message "WARNING Couldn't find the %s %s module" category module)))
+      modules)
+  (dotemacs-initialize-modules)))
 
 (defmacro featurep! (category &optional module flag)
   "Returns t if CATEGORY MODULE is enabled.

@@ -56,7 +56,7 @@ symbols, and that module's plist."
 (defun dotemacs-initialize-autoload ()
   "Initialize autoloads."
   (if (file-exists-p dotemacs-autoload-file)
-      (load dotemacs-autoload-file t (not dotemacs-debug-mode))
+      (load dotemacs-autoload-file t (not dotemacs-debug-p))
     (let ((targets
            (file-expand-wildcards
             (expand-file-name "autoload/*.el" dotemacs-core-dir))))
@@ -69,7 +69,7 @@ symbols, and that module's plist."
             (dolist (file (directory-files-recursively auto-dir "\\.el$"))
               (push file targets)))))
       (dolist (file (reverse targets))
-        (load file t (not dotemacs-debug-mode))))))
+        (load file t (not dotemacs-debug-p))))))
 
 (defun dotemacs/generate-autoload-file ()
   "Generate the autoloads.el file, specified by `dotemacs-autoload-file'.

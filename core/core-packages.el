@@ -28,10 +28,10 @@ missing) and shouldn't be deleted.")
       package-user-dir (expand-file-name "elpa" dotemacs-packages-dir)
       package-gnupghome-dir (expand-file-name "gnupg" dotemacs-packages-dir)
       load-prefer-newer noninteractive
-      use-package-verbose dotemacs-debug-mode
-      use-package-compute-statistics dotemacs-debug-mode
-      use-package-minimum-reported-time (if dotemacs-debug-mode 0 0.1)
-      use-package-expand-minimally (not dotemacs-debug-mode))
+      use-package-verbose dotemacs-debug-p
+      use-package-compute-statistics dotemacs-debug-p
+      use-package-minimum-reported-time (if dotemacs-debug-p 0 0.1)
+      use-package-expand-minimally (not dotemacs-debug-p))
 
 (defun dotemacs/set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
@@ -123,7 +123,7 @@ missing) and shouldn't be deleted.")
   (dotemacs-log "Initializing dotemacs-packages")
   (mapc #'straight-use-package dotemacs-core-packages)
   
-  (unless dotemacs-interactive-mode
+  (unless dotemacs-interactive-p
     (add-hook 'kill-emacs-hook #'dotemacs--finalize-straight)))
 
 (defun dotemacs-install-packages (packages-list)

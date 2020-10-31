@@ -1,8 +1,9 @@
 ;;; core.el --- Initialize core configurations. -*- lexical-binding: t; -*-
 
-(when (version< emacs-version "26.1")
-  (error "Detected Emacs %s. Emacs version should be 26.1 or higher"
-         emacs-version))
+(eval-when-compile
+  (when (version< emacs-version "26.1")
+    (error "Detected Emacs %s. Emacs version should be 26.1 or higher"
+           emacs-version)))
 
 ;; Ensure `dotemacs-core-dir' is in `load-path'
 (add-to-list 'load-path (file-name-directory load-file-name))
@@ -16,6 +17,13 @@
 (defconst IS-LINUX   (eq system-type 'gnu/linux))
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
+
+(defvar dotemacs-debug-p (or (getenv "DEBUG") init-file-debug)
+  "If non-nil, all dotemacs functions will be verbose. Set DEBUG=1 in the command
+line or use --debug-init to enable this.")
+
+(defvar dotemacs-interactive-p (not noninteractive)
+  "If non-nil, Emacs is in interactive mode.")
 
 (defconst dotemacs-dir
   (eval-when-compile (file-truename user-emacs-directory))
@@ -41,13 +49,6 @@
 
 (defconst dotemacs-autoload-file (concat dotemacs-local-dir "autoloads.el")
   "The path of autoload file which has all the autoload functions.")
-
-(defvar dotemacs-debug-mode (or (getenv "DEBUG") init-file-debug)
-  "If non-nil, all dotemacs functions will be verbose. Set DEBUG=1 in the command
-line or use --debug-init to enable this.")
-
-(defvar dotemacs-interactive-mode (not noninteractive)
-  "If non-nil, Emacs is in interactive mode.")
 
 (defgroup dotemacs nil
   "dotemacs, an Emacs configuration."
@@ -110,8 +111,8 @@ decrease this. If you experience stuttering, increase this.")
 ;;; Emacs core configuration
 
 ;; Reduce debug output, well, unless we've asked for it.
-(setq debug-on-error dotemacs-debug-mode
-      jka-compr-verbose dotemacs-debug-mode)
+(setq debug-on-error dotemacs-debug-p
+      jka-compr-verbose dotemacs-debug-p)
 
 ;; UTF-8 as the default coding system
 (when (fboundp 'set-charset-priority)
@@ -143,7 +144,7 @@ decrease this. If you experience stuttering, increase this.")
 
 ;; Emacs "updates" its ui more often than it needs to, so we slow it down
 ;; slightly, from 0.5s:
-(setq idle-update-delay 1)
+(setq idle-update-delay 1.0)
 
 (setq abbrev-file-name             (concat dotemacs-local-dir "abbrev.el")
       async-byte-compile-log-file  (concat dotemacs-cache-dir "async-bytecomp.log")
@@ -159,7 +160,7 @@ decrease this. If you experience stuttering, increase this.")
 
 (unless custom-file
   (setq custom-file (concat dotemacs-local-dir "custom.el")))
-(load custom-file t (not dotemacs-debug-mode))
+(load custom-file t (not dotemacs-debug-p))
 
 ;;
 ;;; Bootstrap helpers
@@ -169,7 +170,7 @@ decrease this. If you experience stuttering, increase this.")
 easier to tell where the came from.
 
 Meant to be used with `run-hook-wrapped'."
-  (when dotemacs-debug-mode
+  (when dotemacs-debug-p
     (message "Running dotemacs hook: %s" hook))
   (condition-case e
       (funcall hook)

@@ -62,3 +62,7 @@
            sh
            ;; web
            )
+
+;;
+;;; Bootstrap dotemacs
+(dotemacs-initialize)

@@ -193,6 +193,21 @@ If RETURN-P, return the message as a string instead of displaying it."
                      (float-time (time-subtract (current-time) before-init-time))))))
 (add-hook 'window-setup-hook #'dotemacs-display-benchmark-h)
 
+(defun dotemacs-initialize-core ()
+  "Initialize core"
+  ;; Make sure all essential local directories exist
+  (dolist (dir (list dotemacs-local-dir dotemacs-cache-dir))
+    (unless (file-directory-p dir)
+      (make-directory dir t)))
+
+  (require 'core-custom)
+  (require 'core-lib)
+  (require 'core-packages)
+  (require 'core-ui)
+  (require 'core-editor)
+  (require 'core-keybinds)
+  (require 'core-modules))
+
 (defun dotemacs-initialize ()
   "dotemacs initialize function.
 The load order is as follows:
@@ -209,24 +224,12 @@ The load order is as follows:
   `window-setup-hook'
 
 Module load order is determined by your `dotemacs!' block."
-  ;; Make sure all essential local directories exist
-  (dolist (dir (list dotemacs-local-dir dotemacs-cache-dir))
-    (unless (file-directory-p dir)
-      (make-directory dir t)))
-
-  (require 'core-custom)
-  (require 'core-lib)
-  (require 'core-packages)
-  (dotemacs-initialize-packages)
-  (require 'core-ui)
-  (require 'core-editor)
-  (require 'core-keybinds)
-  (require 'core-modules))
+  (dotemacs-initialize-modules))
 
 ;;
-;;; Bootstrap dotemacs
+;;; Initialize dotemacs core
 
-(dotemacs-initialize)
+(dotemacs-initialize-core)
 
 (provide 'core)
 ;;; core.el ends here

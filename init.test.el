@@ -26,3 +26,7 @@
            :lang
            markdown
            sh)
+
+;;
+;;; Bootstrap dotemacs
+(dotemacs-initialize)

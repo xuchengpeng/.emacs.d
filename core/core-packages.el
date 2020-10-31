@@ -145,5 +145,9 @@ e.g. (packages! evil evil-surround)"
   `(dolist (package ',packages)
      (add-to-list 'dotemacs-packages package t)))
 
+;;
+;;; Initialize packages
+(dotemacs-initialize-packages)
+
 (provide 'core-packages)
 ;;; core-packages.el ends here

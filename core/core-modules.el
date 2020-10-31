@@ -293,7 +293,7 @@ This value is cached. If REFRESH-P, then don't use the cached value."
             (apply #'dotemacs-module-set category module plist)
           (message "WARNING Couldn't find the %s %s module" category module)))
       modules)
-  (dotemacs-initialize-modules)))
+  ))
 
 (defmacro featurep! (category &optional module flag)
   "Returns t if CATEGORY MODULE is enabled.

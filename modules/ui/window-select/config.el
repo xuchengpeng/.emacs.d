@@ -14,7 +14,4 @@
            [remap other-window] 'ace-window))))
 
 (use-package winum
-  :hook (buffer-list-update . winum-mode)
-  :config
-  (when (featurep! :ui modeline)
-    (setq winum-auto-setup-mode-line nil)))
+  :hook (after-init . winum-mode))

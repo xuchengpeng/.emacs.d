@@ -25,25 +25,19 @@
     "C-p"           'company-select-previous
     "C-n"           'company-select-next)
   :config  
-  (setq company-idle-delay 0.2
+  (setq company-minimum-prefix-length 2
         company-tooltip-limit 15
         company-tooltip-align-annotations t
-        company-minimum-prefix-length 2
-        company-dabbrev-downcase nil
-        company-dabbrev-ignore-case nil
         company-require-match 'never
-        company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode)
-        company-backends '(company-capf)
+        company-global-modes '(not erc-mode message-mode help-mode gud-mode)
         company-frontends
         '(company-pseudo-tooltip-frontend
-          company-echo-metadata-frontend))
+          company-echo-metadata-frontend)
+        company-backends '(company-capf)
+        company-dabbrev-other-buffers nil
+        company-dabbrev-downcase nil
+        company-dabbrev-ignore-case nil)
 
   (add-hook 'after-change-major-mode-hook #'+company-init-backends-h 'append)
   
   (global-company-mode +1))
-
-(use-package company-prescient
-  :hook (company-mode . company-prescient-mode)
-  :config
-  (setq prescient-save-file (concat dotemacs-cache-dir "prescient-save.el"))
-  (prescient-persist-mode +1))

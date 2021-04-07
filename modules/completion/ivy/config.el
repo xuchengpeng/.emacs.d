@@ -22,12 +22,13 @@
           '((counsel-rg . 1)
             (counsel-search . 2)
             (t . 3))))
+
+  (define-key!
+    [remap switch-to-buffer]            'ivy-switch-buffer)
   :config
   (setq ivy-height 17
         ivy-wrap t
         ivy-fixed-height-minibuffer t
-        ;; disable magic slash on non-match
-        ivy-magic-slash-non-match-action nil
         ;; don't show recent files in switch-buffer
         ivy-use-virtual-buffers nil
         ;; ...but if that ever changes, show their full path
@@ -48,7 +49,7 @@
   :init (setq ivy-flx-limit 10000))
 
 (use-package ivy-prescient
-  :if (featurep! +prescient)
+  :when (featurep! +prescient)
   :hook (ivy-mode . ivy-prescient-mode)
   :init
   (setq prescient-filter-method
@@ -83,25 +84,30 @@
   :hook (ivy-mode . counsel-mode)
   :init
   (define-key!
-    [remap switch-to-buffer]            'ivy-switch-buffer
-    [remap imenu-anywhere]              'ivy-imenu-anywhere
     [remap apropos]                     'counsel-apropos
     [remap bookmark-jump]               'counsel-bookmark
+    [remap compile]                     '+ivy/compile
+    [remap describe-bindings]           'counsel-descbinds
     [remap describe-face]               'counsel-faces
     [remap describe-function]           'counsel-describe-function
-    [remap describe-key]                'counsel-descbinds
     [remap describe-variable]           'counsel-describe-variable
+    [remap describe-symbol]             'counsel-describe-symbol
+    [remap evil-ex-registers]           'counsel-evil-registers
+    [remap evil-show-marks]             'counsel-mark-ring
     [remap execute-extended-command]    'counsel-M-x
     [remap find-file]                   'counsel-find-file
     [remap find-library]                'counsel-find-library
-    [remap info-lookup-symbol]          'counsel-info-lookup-symbol
     [remap imenu]                       'counsel-imenu
+    [remap info-lookup-symbol]          'counsel-info-lookup-symbol
+    [remap load-theme]                  'counsel-load-theme
+    [remap locate]                      'counsel-locate
+    [remap org-goto]                    'counsel-org-goto
+    [remap org-set-tags-command]        'counsel-org-tag
     [remap recentf-open-files]          'counsel-recentf
-    [remap org-capture]                 'counsel-org-capture
+    [remap set-variable]                'counsel-set-variable
     [remap swiper]                      'counsel-grep-or-swiper
-    [remap evil-ex-registers]           'counsel-evil-registers
+    [remap unicode-chars-list-chars]    'counsel-unicode-char
     [remap yank-pop]                    'counsel-yank-pop
-    [remap compile]                     '+ivy/compile
     [remap projectile-find-file]        'counsel-projectile-find-file
     [remap projectile-find-dir]         'counsel-projectile-find-dir
     [remap projectile-switch-to-buffer] 'counsel-projectile-switch-to-buffer

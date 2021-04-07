@@ -32,21 +32,19 @@ Examples:
 ;; middle-click paste at point, not at click
 (setq mouse-yank-at-point t)
 
-;; Enable mouse in terminal Emacs
-(add-hook 'tty-setup-hook #'xterm-mouse-mode)
-
 
 ;;
 ;;; Scrolling
 
 (setq hscroll-margin 2
       hscroll-step 1
-      scroll-conservatively 10
+      scroll-conservatively 101
       scroll-margin 0
       scroll-preserve-screen-position t
+      auto-window-vscroll nil
       ;; mouse
-      mouse-wheel-scroll-amount '(5 ((shift) . 2))
-      mouse-wheel-progressive-speed nil)  ; don't accelerate scrolling
+      mouse-wheel-scroll-amount '(2 ((shift) . 2))
+      mouse-wheel-scroll-amount-horizontal 2)
 
 ;; Remove hscroll-margin in shells, otherwise it causes jumpiness
 (setq-hook! '(eshell-mode-hook term-mode-hook) hscroll-margin 0)
@@ -60,8 +58,6 @@ Examples:
 ;; Don't blink the paren matching the one at point, it's too distracting.
 (setq blink-matching-paren nil)
 
-(setq visible-cursor nil)
-
 ;; Don't stretch the cursor to fit wide characters, it is disorienting,
 ;; especially for tabs.
 (setq x-stretch-cursor nil)
@@ -73,18 +69,12 @@ Examples:
 (setq frame-title-format '("%b – Emacs")
       icon-title-format frame-title-format)
 
-;; Don't resize emacs in steps, it looks weird.
-(setq window-resize-pixelwise t
+(setq window-resize-pixelwise nil
       frame-resize-pixelwise t)
 
-(unless (assq 'menu-bar-lines default-frame-alist)
-  ;; We do this in early-init.el too, but in case the user is on Emacs 26 we do
-  ;; it here too: disable tool and scrollbars, as dotemacs encourages
-  ;; keyboard-centric workflows, so these are just clutter (the scrollbar also
-  ;; impacts performance).
-  (add-to-list 'default-frame-alist '(menu-bar-lines . 0))
-  (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
-  (add-to-list 'default-frame-alist '(vertical-scroll-bars)))
+(push '(menu-bar-lines . 0)   default-frame-alist)
+(push '(tool-bar-lines . 0)   default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
 
 (setq menu-bar-mode nil
       tool-bar-mode nil
@@ -108,14 +98,7 @@ Examples:
 
 ;; Expand the minibuffer to fit multi-line text displayed in the echo-area. This
 ;; doesn't look too great with direnv, however...
-(setq resize-mini-windows 'grow-only
-      ;; But don't let the minibuffer grow beyond this size
-      max-mini-window-height 0.15)
-
-;; Disable help mouse-overs for mode-line segments (i.e. :help-echo text).
-;; They're generally unhelpful and only add confusing visual clutter.
-(setq mode-line-default-help-echo nil
-      show-help-function nil)
+(setq resize-mini-windows 'grow-only)
 
 ;; Typing yes/no is obnoxious when y/n will do
 (fset #'yes-or-no-p #'y-or-n-p)
@@ -126,7 +109,10 @@ Examples:
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 ;;
-;; line numbers
+;;; line numbers
+
+;; Explicitly define a width to reduce the cost of on-the-fly computation
+(setq-default display-line-numbers-width 3)
 (add-hook 'after-init-hook #'global-display-line-numbers-mode)
 
 ;;

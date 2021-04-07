@@ -28,19 +28,38 @@
 ;; Don't autosave files or create lock/history/backup files. The
 ;; editor doesn't need to hold our hands so much. We'll rely on git
 ;; and our own good fortune instead. Fingers crossed!
-(setq auto-save-default nil
-      create-lockfiles nil
+(setq create-lockfiles nil
       make-backup-files nil
-      ;; But have a place to store them in case we do use them...
-      auto-save-list-file-name (concat dotemacs-cache-dir "autosave")
-      backup-directory-alist `(("." . ,(concat dotemacs-cache-dir "backup/"))))
+      ;; But in case the user does enable it, some sensible defaults:
+      version-control t     ; number each backup file
+      backup-by-copying t   ; instead of renaming current file (clobbers links)
+      delete-old-versions t ; clean up after itself
+      kept-old-versions 5
+      kept-new-versions 5
+      backup-directory-alist (list (cons "." (concat dotemacs-cache-dir "backup/")))
+      tramp-backup-directory-alist backup-directory-alist)
+
+;; But turn on auto-save, so we have a fallback in case of crashes or lost data.
+;; Use `recover-file' or `recover-session' to recover them.
+(setq auto-save-default t
+      ;; Don't auto-disable auto-save after deleting big chunks. This defeats
+      ;; the purpose of a failsafe. This adds the risk of losing the data we
+      ;; just deleted, but I believe that's VCS's jurisdiction, not ours.
+      auto-save-include-big-deletions t
+      auto-save-list-file-prefix (concat dotemacs-cache-dir "autosave/")
+      tramp-auto-save-directory  (concat dotemacs-cache-dir "tramp-autosave/")
+      auto-save-file-name-transforms
+      (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
+                  ;; Prefix tramp autosaves to prevent conflicts with local ones
+                  (concat auto-save-list-file-prefix "tramp-\\2") t)
+            (list ".*" auto-save-list-file-prefix t)))
 
 ;;
 ;;; Formatting
 
 ;; Indentation
 (setq-default tab-width 4
-              tab-always-indent t
+              tab-always-indent nil
               indent-tabs-mode nil
               fill-column 120)
 
@@ -54,8 +73,7 @@
       require-final-newline t
       tabify-regexp "^\t* [ \t]+")  ; for :retab
 
-;; Favor hard-wrapping in text modes
-(add-hook 'text-mode-hook #'auto-fill-mode)
+(add-hook 'text-mode-hook #'visual-line-mode)
 
 ;;
 ;;; Extra file extensions to support

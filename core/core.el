@@ -25,8 +25,7 @@ line or use --debug-init to enable this.")
 (defvar dotemacs-interactive-p (not noninteractive)
   "If non-nil, Emacs is in interactive mode.")
 
-(defconst dotemacs-dir
-  (eval-when-compile (file-truename user-emacs-directory))
+(defconst dotemacs-dir user-emacs-directory
   "The path to this emacs.d directory.")
 
 (defconst dotemacs-core-dir (concat dotemacs-dir "core/")
@@ -53,49 +52,6 @@ line or use --debug-init to enable this.")
 (defgroup dotemacs nil
   "dotemacs, an Emacs configuration."
   :group 'emacs)
-
-;;
-;;; Startup optimizations
-
-(setq gc-cons-threshold most-positive-fixnum)
-
-(defvar dotemacs-gc-cons-threshold 16777216 ; 16mb
-  "The default value to use for `gc-cons-threshold'. If you experience freezing,
-decrease this. If you experience stuttering, increase this.")
-(defvar dotemacs--initial-file-name-handler-alist file-name-handler-alist)
-
-;; This is consulted on every `require', `load' and various path/io functions.
-;; You get a minor speed up by nooping this.
-(setq file-name-handler-alist nil)
-
-;; Restore `file-name-handler-alist', because it is needed for handling
-;; encrypted or compressed files, among other things.
-(defun dotemacs-reset-file-handler-alist-h ()
-  (setq file-name-handler-alist dotemacs--initial-file-name-handler-alist))
-(add-hook 'emacs-startup-hook #'dotemacs-reset-file-handler-alist-h)
-
-;; To speed up minibuffer commands (like helm and ivy), we defer garbage
-;; collection while the minibuffer is active.
-(defun dotemacs-defer-garbage-collection-h ()
-  "TODO"
-  (setq gc-cons-threshold most-positive-fixnum))
-
-(defun dotemacs-restore-garbage-collection-h ()
-  "TODO"
-  ;; Defer it so that commands launched immediately after will enjoy the
-  ;; benefits.
-  (run-at-time
-   1 nil (lambda () (setq gc-cons-threshold dotemacs-gc-cons-threshold))))
-
-(add-hook 'minibuffer-setup-hook #'dotemacs-defer-garbage-collection-h)
-(add-hook 'minibuffer-exit-hook #'dotemacs-restore-garbage-collection-h)
-
-;; Not restoring these to their defaults will cause stuttering/freezes.
-(add-hook 'emacs-startup-hook #'dotemacs-restore-garbage-collection-h)
-
-;; When Emacs loses focus seems like a great time to do some garbage collection
-;; all sneaky breeky like, so we can return a fresh(er) Emacs.
-(add-hook 'focus-out-hook #'garbage-collect)
 
 ;;
 ;;; Custom error types
@@ -126,12 +82,9 @@ decrease this. If you experience stuttering, increase this.")
 ;; often do anything about them besides changing packages upstream
 (setq ad-redefinition-action 'accept)
 
-;; Make apropos omnipotent. It's more useful this way.
-(setq apropos-do-all t)
-
-;; Don't make a second case-insensitive pass over `auto-mode-alist'. If it has
-;; to, it's our (the user's) failure. One case for all!
-(setq auto-mode-case-fold nil)
+;; Reduce debug output, well, unless we've asked for it.
+(setq debug-on-error dotemacs-debug-p
+      jka-compr-verbose dotemacs-debug-p)
 
 ;; Display the bare minimum at startup. We don't need all that noise. The
 ;; dashboard/empty scratch buffer is good enough.
@@ -140,7 +93,8 @@ decrease this. If you experience stuttering, increase this.")
       inhibit-default-init t
       initial-major-mode 'fundamental-mode
       initial-scratch-message nil)
-(fset #'display-startup-echo-area-message #'ignore)
+(unless (daemonp)
+  (advice-add #'display-startup-echo-area-message :override #'ignore))
 
 ;; Emacs "updates" its ui more often than it needs to, so we slow it down
 ;; slightly, from 0.5s:
@@ -163,6 +117,74 @@ decrease this. If you experience stuttering, increase this.")
 (load custom-file t (not dotemacs-debug-p))
 
 ;;
+;;; Optimizations
+
+;; A second, case-insensitive pass over `auto-mode-alist' is time wasted, and
+;; indicates misconfiguration (don't rely on case insensitivity for file names).
+(setq auto-mode-case-fold nil)
+
+;; Disable bidirectional text rendering for a modest performance boost. I've set
+;; this to `nil' in the past, but the `bidi-display-reordering's docs say that
+;; is an undefined state and suggest this to be just as good:
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+
+;; Disabling the BPA makes redisplay faster, but might produce incorrect display
+;; reordering of bidirectional text with embedded parentheses and other bracket
+;; characters whose 'paired-bracket' Unicode property is non-nil.
+(setq bidi-inhibit-bpa t)  ; Emacs 27 only
+
+;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions
+;; in non-focused windows.
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
+
+;; More performant rapid scrolling over unfontified regions. May cause brief
+;; spells of inaccurate syntax highlighting right after scrolling, which should
+;; quickly self-correct.
+(setq fast-but-imprecise-scrolling t)
+
+;; Don't ping things that look like domain names.
+(setq ffap-machine-p-known 'reject)
+
+;; Resizing the Emacs frame can be a terribly expensive part of changing the
+;; font. By inhibiting this, we halve startup times, particularly when we use
+;; fonts that are larger than the system default (which would resize the frame).
+(setq frame-inhibit-implied-resize t)
+
+;; Adopt a sneaky garbage collection strategy of waiting until idle time to
+;; collect; staving off the collector while the user is working.
+(setq gcmh-idle-delay 5
+      gcmh-high-cons-threshold (* 16 1024 1024)  ; 16mb
+      gcmh-verbose dotemacs-debug-p)
+
+;; Emacs "updates" its ui more often than it needs to, so we slow it down
+;; slightly from 0.5s:
+(setq idle-update-delay 1.0)
+
+;; Font compacting can be terribly expensive, especially for rendering icon
+;; fonts on Windows. Whether disabling it has a notable affect on Linux and Mac
+;; hasn't been determined, but we inhibit it there anyway. This increases memory
+;; usage, however!
+(setq inhibit-compacting-font-caches t)
+
+;; Introduced in Emacs HEAD (b2f8c9f), this inhibits fontification while
+;; receiving input, which should help with performance while scrolling.
+(setq redisplay-skip-fontification-on-input t)
+
+;; Performance on Windows is considerably worse than elsewhere. We'll need
+;; everything we can get.
+(when IS-WINDOWS
+  (setq w32-get-true-file-attributes nil   ; decrease file IO workload
+        w32-pipe-read-delay 0              ; faster ipc
+        w32-pipe-buffer-size (* 64 1024))) ; read more at a time (was 4K)
+
+;; Remove command line options that aren't relevant to our current OS; means
+;; slightly less to process at startup.
+(unless IS-MAC   (setq command-line-ns-option-alist nil))
+(unless IS-LINUX (setq command-line-x-option-alist nil))
+
+;;
 ;;; Bootstrap helpers
 
 (defun dotemacs-try-run-hook (hook)
@@ -179,6 +201,25 @@ Meant to be used with `run-hook-wrapped'."
   ;; return nil so `run-hook-wrapped' won't short circuit
   nil)
 
+(defun dotemacs-run-hook-on (hook-var triggers)
+  "Configure HOOK-VAR to be invoked exactly once after init whenever any of the
+TRIGGERS are invoked. Once HOOK-VAR gets triggered, it resets to nil.
+
+HOOK-VAR is a quoted hook.
+
+TRIGGERS is a list of quoted hooks and/or sharp-quoted functions."
+  (let ((fn (intern (format "%s-h" hook-var))))
+    (fset
+     fn (lambda (&rest _)
+          (when after-init-time
+            (run-hook-wrapped hook-var #'dotemacs-try-run-hook)
+            (set hook-var nil))))
+    (put hook-var 'permanent-local t)
+    (dolist (on triggers)
+      (if (functionp on)
+          (advice-add on :before fn)
+        (add-hook on fn)))))
+
 ;; benchmark
 (defun dotemacs-display-benchmark-h (&optional return-p)
   "Display a benchmark, showing number of packages and modules, and how quickly
@@ -192,7 +233,6 @@ If RETURN-P, return the message as a string instead of displaying it."
            (or dotemacs-init-time
                (setq dotemacs-init-time
                      (float-time (time-subtract (current-time) before-init-time))))))
-(add-hook 'window-setup-hook #'dotemacs-display-benchmark-h)
 
 (defun dotemacs-initialize-core ()
   "Initialize core"
@@ -225,6 +265,8 @@ The load order is as follows:
   `window-setup-hook'
 
 Module load order is determined by your `dotemacs!' block."
+  (add-hook 'window-setup-hook #'dotemacs-display-benchmark-h)
+
   (dotemacs-initialize-modules))
 
 ;;

@@ -62,50 +62,6 @@ at the values with which this function was called."
   (lambda (&rest pre-args)
     (apply fn (append pre-args args))))
 
-(defun dotemacs--resolve-path-forms (spec &optional directory)
-  "Converts a simple nested series of or/and forms into a series of
-`file-exists-p' checks.
-
-For example
-
-  (dotemacs--resolve-path-forms
-    '(or A (and B C))
-    \"~\")
-
-Returns (approximately):
-
-  '(let* ((_directory \"~\")
-          (A (expand-file-name A _directory))
-          (B (expand-file-name B _directory))
-          (C (expand-file-name C _directory)))
-     (or (and (file-exists-p A) A)
-         (and (if (file-exists-p B) B)
-              (if (file-exists-p C) C))))
-
-This is used by `associate!', `file-exists-p!' and `project-file-exists-p!'."
-  (declare (pure t) (side-effect-free t))
-  (cond ((stringp spec)
-         `(let ((--file-- ,(if (file-name-absolute-p spec)
-                             spec
-                           `(expand-file-name ,spec ,directory))))
-            (and (file-exists-p --file--)
-                 --file--)))
-        ((and (listp spec)
-              (memq (car spec) '(or and)))
-         `(,(car spec)
-           ,@(cl-loop for i in (cdr spec)
-                      collect (dotemacs--resolve-path-forms i directory))))
-        ((or (symbolp spec)
-             (listp spec))
-         `(let ((--file-- ,(if (and directory
-                                    (or (not (stringp directory))
-                                        (file-name-absolute-p directory)))
-                               `(expand-file-name ,spec ,directory)
-                             spec)))
-            (and (file-exists-p --file--)
-                 --file--)))
-        (spec)))
-
 ;;
 ;;; Helpers
 

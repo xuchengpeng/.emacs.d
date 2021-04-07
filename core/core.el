@@ -25,6 +25,9 @@ line or use --debug-init to enable this.")
 (defvar dotemacs-interactive-p (not noninteractive)
   "If non-nil, Emacs is in interactive mode.")
 
+(defvar dotemacs-init-time nil
+  "The time it took, in seconds, for Emacs to initialize.")
+
 (defconst dotemacs-dir user-emacs-directory
   "The path to this emacs.d directory.")
 

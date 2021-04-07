@@ -8,9 +8,6 @@
         dotemacs-modules-dir)
   "A list of module root directories. Order determines priority.")
 
-(defvar dotemacs-init-time nil
-  "The time it took, in seconds, for Emacs to initialize.")
-
 ;;
 ;;; Custom hooks
 
@@ -204,7 +201,7 @@ This doesn't require modules to be enabled. For enabled modules us
            for default-directory in dotemacs-modules-dirs
            for path = (concat category "/" module "/" file)
            if (file-exists-p path)
-           return (file-truename path)))
+           return (expand-file-name path)))
 
 (defun dotemacs-module-from-path (&optional path enabled-only)
   "Returns a cons cell (CATEGORY . MODULE) derived from PATH (a file path).
@@ -213,7 +210,7 @@ If ENABLED-ONLY, return nil if the containing module isn't enabled."
       (ignore-errors
         (dotemacs-module-from-path (file!)))
     (let* ((file-name-handler-alist nil)
-           (path (file-truename (or path (file!)))))
+           (path (expand-file-name (or path (file!)))))
       (save-match-data
         (cond ((string-match "/modules/\\([^/]+\\)/\\([^/]+\\)\\(?:/.*\\)?$" path)
                (when-let* ((category (dotemacs-keyword-intern (match-string 1 path)))
@@ -221,12 +218,14 @@ If ENABLED-ONLY, return nil if the containing module isn't enabled."
                  (and (or (null enabled-only)
                           (dotemacs-module-p category module))
                       (cons category module))))
-              ((file-in-directory-p path dotemacs-core-dir)
+              ((or (string-match-p (concat "^" (regexp-quote dotemacs-core-dir)) path)
+                   (file-in-directory-p path dotemacs-core-dir))
                (cons :core (intern (file-name-base path))))
-              ((file-in-directory-p path dotemacs-private-dir)
+              ((or (string-match-p (concat "^" (regexp-quote dotemacs-private-dir)) path)
+                   (file-in-directory-p path dotemacs-private-dir))
                (cons :private (intern (file-name-base path)))))))))
 
-(defun dotemacs-module-load-path ()
+(defun dotemacs-module-load-path (&optional module-dirs)
   "Return a list of absolute file paths to activated modules."
   (declare (pure t) (side-effect-free t))
   (append (list dotemacs-private-dir)
@@ -254,16 +253,17 @@ If ENABLED-ONLY, return nil if the containing module isn't enabled."
                (:if (if (eval (cadr m) t)
                         (push (caddr m) mplist)
                       (prependq! mplist (cdddr m))))
-               (test (if (or (eval (cadr m) t)
-                             (eq test :unless))
+               (test (if (xor (eval (cadr m) t)
+                              (eq test :unless))
                          (prependq! mplist (cddr m))))))
             ((catch 'dotemacs-modules
                (let* ((module (if (listp m) (car m) m))
                       (flags  (if (listp m) (cdr m))))
-                 (push (funcall fn category module
-                                :flags (if (listp m) (cdr m))
-                                :path (dotemacs-module-locate-path category module))
-                       results))))))
+                 (let ((path (dotemacs-module-locate-path category module)))
+                   (push (funcall fn category module
+                                  :flags (if (listp m) (cdr m))
+                                  :path (if (stringp path) (file-truename path)))
+                         results)))))))
     (nreverse results)))
 
 (defun dotemacs-module-list (&optional all-p)

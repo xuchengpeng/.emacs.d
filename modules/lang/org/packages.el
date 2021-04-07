@@ -1,6 +1,7 @@
 ;;; lang/org/packages.el -*- lexical-binding: t; -*-
 
-(package! org-plus-contrib)
+(package! '(org-mode :type git :host github :repo "emacs-straight/org-mode"
+                     :files ("*.el" "lisp/*.el" "contrib/lisp/*.el")))
 (package! htmlize)
 
 (when (featurep! +export)

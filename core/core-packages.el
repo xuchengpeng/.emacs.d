@@ -4,22 +4,6 @@
   "A list of packages that must be installed (and will be auto-installed if
 missing) and shouldn't be deleted.")
 
-(defvar dotemacs-core-package-sources
-  '((org-elpa :local-repo nil)
-    (melpa
-     :type git :host github
-     :repo "melpa/melpa"
-     :no-build t)
-    (gnu-elpa-mirror
-     :type git :host github
-     :repo "emacs-straight/gnu-elpa-mirror"
-     :no-build t)
-    (emacsmirror-mirror
-     :type git :host github
-     :repo "emacs-straight/emacsmirror-mirror"
-     :no-build t))
-  "A list of recipes for straight's recipe repos.")
-
 (defvar dotemacs-packages ()
   "A list of enabled packages.")
 
@@ -74,6 +58,7 @@ missing) and shouldn't be deleted.")
 (setq straight-base-dir dotemacs-local-dir
       straight-repository-branch "master"
       straight-vc-git-default-clone-depth 1
+      straight-recipes-gnu-elpa-use-mirror t
       straight-recipes-emacsmirror-use-mirror t)
 
 (defun dotemacs--finalize-straight ()
@@ -110,10 +95,7 @@ missing) and shouldn't be deleted.")
   (dotemacs-log "Initializing straight")
   (dotemacs-ensure-straight)
   (require 'straight)
-  
-  (straight--reset-caches)
-  (setq straight-recipe-repositories nil)
-  (mapc #'straight-use-recipes dotemacs-core-package-sources)
+
   (straight-register-package
    `(straight :type git :host github
               :repo ,(format "%s/straight.el" straight-repository-user)

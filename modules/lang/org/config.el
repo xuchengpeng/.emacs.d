@@ -218,6 +218,8 @@
               ("site" :components ("site-org" "site-js" "site-css" "site-images"))))))
 
 (use-package org
+  ; :straight (org-mode :type git :host github :repo "emacs-straight/org-mode"
+  ;                     :files ("*.el" "lisp/*.el" "contrib/lisp/*.el"))
   :mode ("\\.org$" . org-mode)
   :init
   (setq org-directory "~/org/"

@@ -1,14 +1,8 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
-(setq gc-cons-threshold most-positive-fixnum)
-
-(setq load-prefer-newer noninteractive)
-
-(let (file-name-handler-alist)
-  (setq user-emacs-directory (file-name-directory load-file-name)))
-
-(load (concat user-emacs-directory "core/core")
-      nil 'nomessage)
+(unless (boundp 'dotemacs)
+  (load (concat (file-name-directory load-file-name) "early-init")
+        nil t))
 
 (dotemacs! :completion
            company

@@ -3,18 +3,18 @@
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
 
-;; In Emacs 27+, package initialization occurs before `user-init-file' is
-;; loaded, but after `early-init-file'. Doom handles package initialization, so
-;; we must prevent Emacs from doing it early!
 (setq package-enable-at-startup nil)
-(advice-add #'package--ensure-init-file :override #'ignore)
+(fset #'package--ensure-init-file #'ignore)
 
-;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . 0) default-frame-alist)
-(push '(vertical-scroll-bars) default-frame-alist)
+(unless (daemonp)
+  (defvar dotemacs--initial-file-name-handler-alist file-name-handler-alist)
+  (setq file-name-handler-alist nil)
+  (defun dotemacs-reset-file-handler-alist-h ()
+    (dolist (handler file-name-handler-alist)
+      (add-to-list 'dotemacs--initial-file-name-handler-alist handler))
+    (setq file-name-handler-alist dotemacs--initial-file-name-handler-alist))
+  (add-hook 'emacs-startup-hook #'dotemacs-reset-file-handler-alist-h))
 
-;; Resizing the Emacs frame can be a terribly expensive part of changing the
-;; font. By inhibiting this, we easily halve startup times with fonts that are
-;; larger than the system default.
-(setq frame-inhibit-implied-resize t)
+(setq user-emacs-directory (file-name-directory load-file-name))
+
+(load (concat user-emacs-directory "core/core") nil 'nomessage)

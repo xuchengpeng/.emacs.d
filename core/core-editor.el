@@ -25,34 +25,19 @@
              (progn (make-directory parent-directory 'parents)
                     t))))))
 
-;; Don't autosave files or create lock/history/backup files. The
-;; editor doesn't need to hold our hands so much. We'll rely on git
-;; and our own good fortune instead. Fingers crossed!
-(setq create-lockfiles nil
+(setq auto-save-default nil
+      auto-save-list-file-name (concat dotemacs-cache-dir "autosave")
+      create-lockfiles nil
+      backup-directory-alist (list (cons "." (concat dotemacs-cache-dir "backup/")))
       make-backup-files nil
+      tramp-auto-save-directory  (concat dotemacs-cache-dir "tramp-autosave/")
+      tramp-backup-directory-alist backup-directory-alist
       ;; But in case the user does enable it, some sensible defaults:
       version-control t     ; number each backup file
       backup-by-copying t   ; instead of renaming current file (clobbers links)
       delete-old-versions t ; clean up after itself
       kept-old-versions 5
-      kept-new-versions 5
-      backup-directory-alist (list (cons "." (concat dotemacs-cache-dir "backup/")))
-      tramp-backup-directory-alist backup-directory-alist)
-
-;; But turn on auto-save, so we have a fallback in case of crashes or lost data.
-;; Use `recover-file' or `recover-session' to recover them.
-(setq auto-save-default t
-      ;; Don't auto-disable auto-save after deleting big chunks. This defeats
-      ;; the purpose of a failsafe. This adds the risk of losing the data we
-      ;; just deleted, but I believe that's VCS's jurisdiction, not ours.
-      auto-save-include-big-deletions t
-      auto-save-list-file-prefix (concat dotemacs-cache-dir "autosave/")
-      tramp-auto-save-directory  (concat dotemacs-cache-dir "tramp-autosave/")
-      auto-save-file-name-transforms
-      (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
-                  ;; Prefix tramp autosaves to prevent conflicts with local ones
-                  (concat auto-save-list-file-prefix "tramp-\\2") t)
-            (list ".*" auto-save-list-file-prefix t)))
+      kept-new-versions 5)
 
 ;;
 ;;; Formatting

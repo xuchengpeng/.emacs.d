@@ -21,7 +21,7 @@
            modeline
            ;; neotree
            themes
-           treemacs
+           ;; treemacs
            (window-select +ace-window)
            workspaces
            

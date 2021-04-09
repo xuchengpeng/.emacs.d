@@ -150,9 +150,9 @@ files, so we replace calls to `pp' with the much faster `prin1'."
   (quiet! (recentf-mode +1)))
 
 (use-package server
-  :when (display-graphic-p)
   :defer 1
   :config
+  (setq server-auth-dir (concat dotemacs-dir "server/"))
   (unless (server-running-p)
     (server-start)))
 

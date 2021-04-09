@@ -11,7 +11,6 @@
         which-key-min-display-lines 6
         which-key-side-window-slot -10)
   :config
-  (set-face-attribute 'which-key-local-map-description-face nil :weight 'bold)
   (which-key-setup-side-window-bottom)
   (setq-hook! 'which-key-init-buffer-hook line-spacing 3)
   (which-key-mode +1))

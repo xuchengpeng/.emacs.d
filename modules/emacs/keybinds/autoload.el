@@ -14,7 +14,8 @@ If prefix ARG is set, prompt for a directory to search from."
               (read-directory-name "Search directory: ")
             default-directory)))
     (call-interactively
-     (cond ((featurep! :completion ivy)  #'counsel-rg)
+     (cond ((featurep! :completion ivy)   #'counsel-rg)
+           ((featurep! :completion helm)  #'helm-do-grep-ag)
            (#'rgrep)))))
 
 ;;;###autoload
@@ -36,7 +37,8 @@ If prefix ARG is set, prompt for a known project to search from."
                 (user-error "There are no known projects"))
             default-directory)))
     (call-interactively
-     (cond ((featurep! :completion ivy)  #'counsel-projectile-rg)
+     (cond ((featurep! :completion ivy)   #'counsel-projectile-rg)
+           ((featurep! :completion helm)  #'helm-projectile-ag)
            (#'projectile-grep)))))
 
 ;;;###autoload

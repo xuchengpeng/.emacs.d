@@ -67,6 +67,18 @@ line or use --debug-init to enable this.")
 (define-error 'dotemacs-package-error "Error with packages" 'dotemacs-error)
 
 ;;
+;;; Custom hooks
+
+(defvar dotemacs-first-input-hook nil
+  "Transient hooks run before the first user input.")
+
+(defvar dotemacs-first-file-hook nil
+  "Transient hooks run before the first interactively opened file.")
+
+(defvar dotemacs-first-buffer-hook nil
+  "Transient hooks run before the first interactively opened buffer.")
+
+;;
 ;;; Emacs core configuration
 
 ;; Reduce debug output, well, unless we've asked for it.
@@ -269,6 +281,9 @@ The load order is as follows:
 
 Module load order is determined by your `dotemacs!' block."
   (add-hook 'window-setup-hook #'dotemacs-display-benchmark-h)
+  (dotemacs-run-hook-on 'dotemacs-first-buffer-hook '(find-file-hook dotemacs-switch-buffer-hook))
+  (dotemacs-run-hook-on 'dotemacs-first-file-hook   '(find-file-hook dired-initial-position-hook))
+  (dotemacs-run-hook-on 'dotemacs-first-input-hook  '(pre-command-hook))
 
   (dotemacs-initialize-modules))
 

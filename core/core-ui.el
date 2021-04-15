@@ -3,12 +3,6 @@
 (defvar dotemacs-theme nil
   "A symbol representing the color theme to load.")
 
-(defvar dotemacs-load-theme-hook nil
-  "Hook run when the theme is initialized.")
-
-(defvar dotemacs-init-ui-hook nil
-  "List of hooks to run when the UI has been initialized.")
-
 (defvar dotemacs-font nil
   "The default font to use.
 
@@ -20,6 +14,49 @@ Examples:
 
 (defvar dotemacs-cn-font nil
   "The chinese font to use.")
+
+;;
+;;; Custom hooks
+
+(defvar dotemacs-load-theme-hook nil
+  "Hook run when the theme is initialized.")
+
+(defvar dotemacs-init-ui-hook nil
+  "List of hooks to run when the UI has been initialized.")
+
+(defvar dotemacs-switch-buffer-hook nil
+  "A list of hooks run after changing the current buffer.")
+
+(defvar dotemacs-inhibit-switch-buffer-hooks nil
+  "Letvar for inhibiting `dotemacs-switch-buffer-hook'. Do not set this directly.")
+
+(defun dotemacs-run-switch-buffer-hooks-a (orig-fn buffer-or-name &rest args)
+  (if (or dotemacs-inhibit-switch-buffer-hooks
+          (and buffer-or-name
+               (eq (current-buffer)
+                   (get-buffer buffer-or-name)))
+          (and (eq orig-fn #'switch-to-buffer) (car args)))
+      (apply orig-fn buffer-or-name args)
+    (let ((gc-cons-threshold most-positive-fixnum)
+          (dotemacs-inhibit-switch-buffer-hooks t)
+          (inhibit-redisplay t))
+      (when-let (buffer (apply orig-fn buffer-or-name args))
+        (with-current-buffer (if (windowp buffer)
+                                 (window-buffer buffer)
+                               buffer)
+          (run-hooks 'dotemacs-switch-buffer-hook))
+        buffer))))
+
+(defun dotemacs-run-switch-to-next-prev-buffer-hooks-a (orig-fn &rest args)
+  (if dotemacs-inhibit-switch-buffer-hooks
+      (apply orig-fn args)
+    (let ((gc-cons-threshold most-positive-fixnum)
+          (dotemacs-inhibit-switch-buffer-hooks t)
+          (inhibit-redisplay t))
+      (when-let (buffer (apply orig-fn args))
+        (with-current-buffer buffer
+          (run-hooks 'dotemacs-switch-buffer-hook))
+        buffer))))
 
 ;;
 ;;; General UX
@@ -192,7 +229,13 @@ Otherwise, themes can conflict with each other."
 
 (defun dotemacs-init-ui-h ()
   "Initialize ui."
-  (run-hook-wrapped 'dotemacs-init-ui-hook #'dotemacs-try-run-hook))
+  (run-hook-wrapped 'dotemacs-init-ui-hook #'dotemacs-try-run-hook)
+
+  (dolist (fn '(switch-to-next-buffer switch-to-prev-buffer))
+    (advice-add fn :around #'dotemacs-run-switch-to-next-prev-buffer-hooks-a))
+  (dolist (fn '(switch-to-buffer display-buffer))
+    (advice-add fn :around #'dotemacs-run-switch-buffer-hooks-a)))
+
 (add-hook 'window-setup-hook #'dotemacs-init-ui-h)
 
 (provide 'core-ui)

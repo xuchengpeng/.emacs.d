@@ -6,14 +6,14 @@
 (setq package-enable-at-startup nil)
 (fset #'package--ensure-init-file #'ignore)
 
-(unless (daemonp)
-  (defvar dotemacs--initial-file-name-handler-alist file-name-handler-alist)
-  (setq file-name-handler-alist nil)
-  (defun dotemacs-reset-file-handler-alist-h ()
-    (dolist (handler file-name-handler-alist)
-      (add-to-list 'dotemacs--initial-file-name-handler-alist handler))
-    (setq file-name-handler-alist dotemacs--initial-file-name-handler-alist))
-  (add-hook 'emacs-startup-hook #'dotemacs-reset-file-handler-alist-h))
+(unless (or (daemonp) noninteractive)
+  (let ((old-file-name-handler-alist file-name-handler-alist))
+    (setq-default file-name-handler-alist nil)
+    (defun dotemacs-reset-file-handler-alist-h ()
+      (setq file-name-handler-alist
+            (delete-dups (append file-name-handler-alist
+                                 old-file-name-handler-alist))))
+    (add-hook 'emacs-startup-hook #'dotemacs-reset-file-handler-alist-h)))
 
 (setq user-emacs-directory (file-name-directory load-file-name))
 

@@ -270,8 +270,7 @@ If ENABLED-ONLY, return nil if the containing module isn't enabled."
   "Minimally initialize `dotemacs-modules' (a hash table) and return it.
 This value is cached. If REFRESH-P, then don't use the cached value."
   (if all-p
-      (cl-loop for path in (cdr (dotemacs-module-load-path 'all))
-               collect (dotemacs-module-from-path path))
+      (mapcar #'dotemacs-module-from-path (cdr (dotemacs-module-load-path 'all)))
     dotemacs-modules))
 
 ;;

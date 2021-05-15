@@ -208,38 +208,59 @@ line or use --debug-init to enable this.")
 ;;
 ;;; Bootstrap helpers
 
-(defun dotemacs-try-run-hook (hook)
-  "Run HOOK (a hook function), but marks thrown errors to make it a little
-easier to tell where the came from.
-
+(defun dotemacs-run-hook (hook)
+  "Run HOOK (a hook function) with better error handling.
 Meant to be used with `run-hook-wrapped'."
-  (when dotemacs-debug-p
-    (message "Running dotemacs hook: %s" hook))
-  (condition-case e
+  (dotemacs-log "Running dotemacs hook: %s" hook)
+  (condition-case-unless-debug e
       (funcall hook)
-    ((debug error)
+    (user-error
+     (warn "Warning: %s" (error-message-string e)))
+    (error
      (signal 'dotemacs-hook-error (list hook e))))
   ;; return nil so `run-hook-wrapped' won't short circuit
   nil)
 
-(defun dotemacs-run-hook-on (hook-var triggers)
-  "Configure HOOK-VAR to be invoked exactly once after init whenever any of the
-TRIGGERS are invoked. Once HOOK-VAR gets triggered, it resets to nil.
+(defun dotemacs-run-hooks (&rest hooks)
+  "Run HOOKS (a list of hook variable symbols) with better error handling.
+Is used as advice to replace `run-hooks'."
+  (dolist (hook hooks)
+    (condition-case-unless-debug e
+        (run-hook-wrapped hook #'dotemacs-run-hook)
+      (dotemacs-hook-error
+       (unless debug-on-error
+         (lwarn hook :error "Error running hook %S because: %s" (cadr e) (caddr e)))
+       (signal 'dotemacs-hook-error (cons hook (cdr e)))))))
+
+(defun dotemacs-run-hook-on (hook-var trigger-hooks)
+  "Configure HOOK-VAR to be invoked exactly once when any of the TRIGGER-HOOKS
+are invoked *after* Emacs has initialized (to reduce false positives). Once
+HOOK-VAR is triggered, it is reset to nil.
 
 HOOK-VAR is a quoted hook.
-
-TRIGGERS is a list of quoted hooks and/or sharp-quoted functions."
-  (let ((fn (intern (format "%s-h" hook-var))))
-    (fset
-     fn (lambda (&rest _)
-          (when after-init-time
-            (run-hook-wrapped hook-var #'dotemacs-try-run-hook)
-            (set hook-var nil))))
-    (put hook-var 'permanent-local t)
-    (dolist (on triggers)
-      (if (functionp on)
-          (advice-add on :before fn)
-        (add-hook on fn)))))
+TRIGGER-HOOK is a list of quoted hooks and/or sharp-quoted functions."
+  (dolist (hook trigger-hooks)
+    (let ((fn (intern (format "%s-init-on-%s-h" hook-var hook))))
+      (fset
+       fn (lambda (&rest _)
+            ;; Only trigger this after Emacs has initialized.
+            (when (and after-init-time
+                       (or (daemonp)
+                           (and (boundp hook)
+                                (symbol-value hook))))
+              (dotemacs-run-hooks hook-var)
+              (set hook-var nil))))
+      (cond ((daemonp)
+             ;; In a daemon session we don't need all these lazy loading
+             ;; shenanigans. Just load everything immediately.
+             (add-hook 'after-init-hook fn 'append))
+            ((eq hook 'find-file-hook)
+             ;; Advise `after-find-file' instead of using `find-file-hook'
+             ;; because the latter is triggered too late (after the file has
+             ;; opened and modes are all set up).
+             (advice-add 'after-find-file :before fn '((depth . -101))))
+            ((add-hook hook fn (if EMACS27+ -101))))
+      fn)))
 
 ;; benchmark
 (defun dotemacs-display-benchmark-h (&optional return-p)

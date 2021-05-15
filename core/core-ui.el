@@ -229,7 +229,7 @@ Otherwise, themes can conflict with each other."
 
 (defun dotemacs-init-ui-h ()
   "Initialize ui."
-  (run-hook-wrapped 'dotemacs-init-ui-hook #'dotemacs-try-run-hook)
+  (dotemacs-run-hooks 'dotemacs-init-ui-hook)
 
   (dolist (fn '(switch-to-next-buffer switch-to-prev-buffer))
     (advice-add fn :around #'dotemacs-run-switch-to-next-prev-buffer-hooks-a))

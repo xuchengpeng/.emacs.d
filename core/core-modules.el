@@ -43,12 +43,12 @@ symbols, and that module's plist."
   (maphash (dotemacs-module-loader "init") dotemacs-modules)
   (when dotemacs-private-dir
     (load! "init" dotemacs-private-dir t))
-  (run-hook-wrapped 'dotemacs-before-init-modules-hook #'dotemacs-try-run-hook)
+  (dotemacs-run-hooks 'dotemacs-before-init-modules-hook)
 
   (maphash (dotemacs-module-loader "config") dotemacs-modules)
   (when dotemacs-private-dir
     (load! "config" dotemacs-private-dir t))
-  (run-hook-wrapped 'dotemacs-init-modules-hook #'dotemacs-try-run-hook))
+  (dotemacs-run-hooks 'dotemacs-init-modules-hook))
 
 (defun dotemacs-initialize-autoload ()
   "Initialize autoloads."

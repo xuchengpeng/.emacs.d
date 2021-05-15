@@ -71,12 +71,15 @@ line or use --debug-init to enable this.")
 
 (defvar dotemacs-first-input-hook nil
   "Transient hooks run before the first user input.")
+(put 'dotemacs-first-input-hook 'permanent-local t)
 
 (defvar dotemacs-first-file-hook nil
   "Transient hooks run before the first interactively opened file.")
+(put 'dotemacs-first-file-hook 'permanent-local t)
 
 (defvar dotemacs-first-buffer-hook nil
   "Transient hooks run before the first interactively opened buffer.")
+(put 'dotemacs-first-buffer-hook 'permanent-local t)
 
 ;;
 ;;; Emacs core configuration

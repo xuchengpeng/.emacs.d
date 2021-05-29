@@ -57,7 +57,7 @@ missing) and shouldn't be deleted.")
 ;;; straight
 (setq straight-base-dir dotemacs-local-dir
       straight-repository-branch "master"
-      straight-vc-git-default-clone-depth 1
+      straight-vc-git-default-clone-depth '(1 single-branch)
       straight-recipes-gnu-elpa-use-mirror t
       straight-recipes-emacsmirror-use-mirror t)
 

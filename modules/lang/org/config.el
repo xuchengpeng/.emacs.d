@@ -239,6 +239,7 @@
   (setq org-log-done 'time
         org-startup-indented t
         org-startup-folded t
+        org-persist-directory (concat dotemacs-cache-dir "org-persist/")
         org-clock-persist t
         org-clock-persist-file (concat dotemacs-cache-dir "org-clock-save.el")
         org-clock-in-resume t

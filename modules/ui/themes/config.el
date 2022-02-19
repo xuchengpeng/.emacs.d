@@ -6,9 +6,6 @@
 (defun +themes-init-theme-h ()
   "Set the theme."
   (use-package dotemacs-themes
-    :straight (dotemacs-themes :type git :host github
-                               :repo "xuchengpeng/dotemacs-themes"
-                               :files ("*.el" "themes/*.el"))
     :config
     ;; Enable flashing mode-line on errors
     (add-hook 'dotemacs-load-theme-hook (cmd! (require 'dotemacs-themes-ext-visual-bell)

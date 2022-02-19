@@ -55,7 +55,7 @@ missing) and shouldn't be deleted.")
   (if value (setq package-selected-packages value)))
 
 ;;; straight
-(setq straight-base-dir dotemacs-local-dir
+(setq straight-base-dir (file-truename dotemacs-local-dir)
       straight-repository-branch "master"
       straight-vc-git-default-clone-depth '(1 single-branch)
       straight-recipes-gnu-elpa-use-mirror t
@@ -68,19 +68,33 @@ missing) and shouldn't be deleted.")
 
 (defun dotemacs-ensure-straight ()
   "Ensure `straight' is installed and was compiled with this version of Emacs."
-  (defvar bootstrap-version)
-  (let* ((user-emacs-directory straight-base-dir)
-         (bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-         (bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           (format "https://raw.githubusercontent.com/raxod502/straight.el/%s/install.el"
-                   straight-repository-branch)
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage)))
+  (let ((repo-dir (dotemacs-path straight-base-dir "straight/repos/straight.el"))
+        (repo-url "https://github.com/raxod502/straight.el.git")
+        (branch straight-repository-branch)
+        (call (lambda (&rest args)
+                (apply #'dotemacs-call-process args))))
+    (unless (file-directory-p repo-dir)
+      (unless (executable-find "git")
+        (dotemacs-log "Git isn't present on your system. Cannot proceed."))
+      (funcall call "git" "clone" repo-url repo-dir
+                    "--depth 1"
+                    "--no-tags"
+                    "--branch" branch))
+    (require 'straight (concat repo-dir "/straight.el"))
+    (dotemacs-log "Initializing recipes")
+    (mapc #'straight-use-recipes
+          '((melpa              :type git :host github
+                                :repo "melpa/melpa"
+                                :build nil)
+            (gnu-elpa-mirror    :type git :host github
+                                :repo "emacs-straight/gnu-elpa-mirror"
+                                :build nil)
+            (el-get             :type git :host github
+                                :repo "dimitri/el-get"
+                                :build nil)
+            (emacsmirror-mirror :type git :host github
+                                :repo "emacs-straight/emacsmirror-mirror"
+                                :build nil)))))
 
 ;;
 ;;; Functions
@@ -94,14 +108,12 @@ missing) and shouldn't be deleted.")
   
   (dotemacs-log "Initializing straight")
   (dotemacs-ensure-straight)
-  (require 'straight)
 
-  (straight-register-package
+  (straight-use-package
    `(straight :type git :host github
               :repo ,(format "%s/straight.el" straight-repository-user)
               :files ("straight*.el")
-              :branch ,straight-repository-branch
-              :no-byte-compile t))
+              :branch ,straight-repository-branch))
   (dotemacs-log "Initializing dotemacs-packages")
   (mapc #'straight-use-package dotemacs-core-packages)
   

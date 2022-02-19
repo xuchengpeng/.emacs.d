@@ -15,9 +15,11 @@
   "t"       '(:ignore t :which-key "toggle")
   
   ;; search
-  "//"      (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
+  "//"      (cond ((featurep! :completion vertico) '(consult-line :which-key "Search buffer"))
+                  ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
                   ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
-  "/b"      (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
+  "/b"      (cond ((featurep! :completion vertico) '(consult-line :which-key "Search buffer"))
+                  ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
                   ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
   "/d"      '(+default/search-cwd :which-key "Search current directory")
   "/D"      '(+default/search-other-cwd :which-key "Search other directory")

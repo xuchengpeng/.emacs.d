@@ -6,7 +6,7 @@
 
 (dotemacs! :completion
            company
-           ivy
+           vertico
            :ui
            (window-select +switch-window)
            workspaces

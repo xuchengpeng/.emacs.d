@@ -15,9 +15,11 @@
   "t"       '(:ignore t :which-key "toggle")
   
   ;; search
-  "//"      (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
+  "//"      (cond ((featurep! :completion vertico) '(consult-line :which-key "Search buffer"))
+                  ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
                   ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
-  "/b"      (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
+  "/b"      (cond ((featurep! :completion vertico) '(consult-line :which-key "Search buffer"))
+                  ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
                   ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
   "/d"      '(+default/search-cwd :which-key "Search current directory")
   "/D"      '(+default/search-other-cwd :which-key "Search other directory")
@@ -144,7 +146,9 @@
   "M-y"             'yank-pop
   "C-x C-f"         'find-file
   "C-x r b"         'bookmark-jump
-  "C-s"             (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
+  "C-s"             (cond ((featurep! :completion vertico) '(consult-line :which-key "Search buffer"))
+                          ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
                           ((featurep! :completion ivy) '(swiper :which-key "Search buffer")))
-  "C-r"             (cond ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
+  "C-r"             (cond ((featurep! :completion vertico) '(consult-line :which-key "Search buffer"))
+                          ((featurep! :completion helm) '(helm-occur :which-key "Search buffer"))
                           ((featurep! :completion ivy) '(swiper :which-key "Search buffer"))))

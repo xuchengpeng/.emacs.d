@@ -8,7 +8,8 @@
            company
            ;; helm
            ;; ido
-           ivy
+           ;; ivy
+           vertico
            
            :editor
            ;; evil

@@ -1,0 +1,32 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  unix-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        emacs_version: [27.1, 27.2, snapshot]
+    steps:
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs_version }}
+      - name: Check out .emacs.d
+        uses: actions/checkout@v2
+      - name: Show emacs version
+        run: emacs --version
+      - name: Set up test
+        run: emacs --batch -l init.test.el
+      - name: Cache package builds
+        uses: actions/cache@v2
+        with:
+          path: .local/straight/repos
+          key: ${{ runner.os }}-build-dotemacs-packages-${{ hashFiles('**/packages.el') }}
+          restore-keys: |
+            ${{ runner.os }}-build-dotemacs-packages-

@@ -19,10 +19,12 @@ jobs:
           version: ${{ matrix.emacs_version }}
       - name: Check out .emacs.d
         uses: actions/checkout@v2
+      - name: Clone straight.el
+        run: git clone https://github.com/raxod502/straight.el.git .local/straight/repos/straight.el --depth 1 --no-tags --branch master
       - name: Show emacs version
         run: emacs --version
       - name: Set up test
-        run: emacs --batch -l init.test.el
+        run: emacs --debug-init --batch -l init.test.el
       - name: Cache package builds
         uses: actions/cache@v2
         with:

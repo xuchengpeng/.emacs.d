@@ -83,7 +83,8 @@ missing) and shouldn't be deleted.")
     (require 'straight (concat repo-dir "/straight.el"))
     (dotemacs-log "Initializing recipes")
     (mapc #'straight-use-recipes
-          '((melpa              :type git :host github
+          '((org-elpa :local-repo nil)
+            (melpa              :type git :host github
                                 :repo "melpa/melpa"
                                 :build nil)
             (gnu-elpa-mirror    :type git :host github

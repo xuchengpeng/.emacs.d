@@ -284,19 +284,18 @@ advised)."
 (defmacro add-hook! (hooks &rest rest)
   "A convenience macro for adding N functions to M hooks.
 
-If N and M = 1, there's no benefit to using this macro over `add-hook'.
-
 This macro accepts, in order:
 
-  1. Optional properties :local and/or :append, which will make the hook
-     buffer-local or append to the list of hooks (respectively),
-  2. The hook(s) to be added to: either an unquoted mode, an unquoted list of
-     modes, a quoted hook variable or a quoted list of hook variables. If
-     unquoted, '-hook' will be appended to each symbol.
-  3. The function(s) to be added: this can be one function, a list thereof, a
-     list of `defun's, or body forms (implicitly wrapped in a closure).
+  1. The mode(s) or hook(s) to add to. This is either an unquoted mode, an
+     unquoted list of modes, a quoted hook variable or a quoted list of hook
+     variables.
+  2. Optional properties :local, :append, and/or :depth [N], which will make the
+     hook buffer-local or append to the list of hooks (respectively),
+  3. The function(s) to be added: this can be a quoted function, a quoted list
+     thereof, a list of `defun' or `cl-defun' forms, or arbitrary forms (will
+     implicitly be wrapped in a lambda).
 
-\(fn HOOKS [:append :local] FUNCTIONS)"
+\(fn HOOKS [:append :local [:depth N]] FUNCTIONS-OR-FORMS...)"
   (declare (indent (lambda (indent-point state)
                      (goto-char indent-point)
                      (when (looking-at-p "\\s-*(")
@@ -305,43 +304,38 @@ This macro accepts, in order:
   (let* ((hook-forms (dotemacs--resolve-hook-forms hooks))
          (func-forms ())
          (defn-forms ())
-         append-p
-         local-p
-         remove-p
-         depth
-         forms)
+         append-p local-p remove-p depth)
     (while (keywordp (car rest))
       (pcase (pop rest)
         (:append (setq append-p t))
         (:depth  (setq depth (pop rest)))
         (:local  (setq local-p t))
         (:remove (setq remove-p t))))
-    (let ((first (car-safe (car rest))))
-      (cond ((null first)
-             (setq func-forms rest))
-
-            ((eq first 'defun)
-             (setq func-forms (mapcar #'cadr rest)
-                   defn-forms rest))
-
-            ((memq first '(quote function))
-             (setq func-forms
-                   (if (cdr rest)
-                       (mapcar #'dotemacs-unquote rest)
-                     (dotemacs-enlist (dotemacs-unquote (car rest))))))
-
-            ((setq func-forms (list `(lambda (&rest _) ,@rest)))))
-      (dolist (hook hook-forms)
-        (dolist (func func-forms)
-          (push (if remove-p
-                    `(remove-hook ',hook #',func ,local-p)
-                  `(add-hook ',hook #',func ,(or depth append-p) ,local-p))
-                forms)))
-      (macroexp-progn
-       (append defn-forms
-               (if append-p
-                   (nreverse forms)
-                 forms))))))
+    (while rest
+      (let* ((next (pop rest))
+             (first (car-safe next)))
+        (push (cond ((memq first '(function nil))
+                     next)
+                    ((eq first 'quote)
+                     (let ((quoted (cadr next)))
+                       (if (atom quoted)
+                           next
+                         (when (cdr quoted)
+                           (setq rest (cons (list first (cdr quoted)) rest)))
+                         (list first (car quoted)))))
+                    ((memq first '(defun cl-defun))
+                     (push next defn-forms)
+                     (list 'function (cadr next)))
+                    ((prog1 `(lambda (&rest _) ,@(cons next rest))
+                       (setq rest nil))))
+              func-forms)))
+    `(progn
+       ,@defn-forms
+       (dolist (hook (nreverse ',hook-forms))
+         (dolist (func (list ,@func-forms))
+           ,(if remove-p
+                `(remove-hook hook func ,local-p)
+              `(add-hook hook func ,(or depth append-p) ,local-p)))))))
 
 (defmacro remove-hook! (hooks &rest rest)
   "A convenience macro for removing N functions from M hooks.

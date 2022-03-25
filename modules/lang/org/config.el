@@ -224,7 +224,8 @@
   :mode ("\\.org$" . org-mode)
   :init
   (setq org-directory "~/org/"
-        org-agenda-files (list org-directory))
+        org-agenda-files (list org-directory)
+        org-persist-directory (concat dotemacs-cache-dir "org-persist/"))
   (add-hook! 'org-load-hook
              #'+org-init-capture-defaults-h
              #'+org-init-export-h
@@ -239,7 +240,6 @@
   (setq org-log-done 'time
         org-startup-indented t
         org-startup-folded t
-        org-persist-directory (concat dotemacs-cache-dir "org-persist/")
         org-clock-persist t
         org-clock-persist-file (concat dotemacs-cache-dir "org-clock-save.el")
         org-clock-in-resume t

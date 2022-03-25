@@ -1,8 +1,8 @@
 ;;; core.el --- Initialize core configurations. -*- lexical-binding: t; -*-
 
 (eval-when-compile
-  (when (version< emacs-version "26.1")
-    (error "Detected Emacs %s. Emacs version should be 26.1 or higher"
+  (when (version< emacs-version "27.1")
+    (error "Detected Emacs %s. Emacs version should be 27.1 or higher"
            emacs-version)))
 
 ;; Ensure `dotemacs-core-dir' is in `load-path'
@@ -11,8 +11,8 @@
 ;;
 ;;; Global variables
 
-(defconst EMACS27+   (> emacs-major-version 26))
 (defconst EMACS28+   (> emacs-major-version 27))
+(defconst EMACS29+   (> emacs-major-version 28))
 (defconst IS-MAC     (eq system-type 'darwin))
 (defconst IS-LINUX   (eq system-type 'gnu/linux))
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
@@ -261,7 +261,7 @@ TRIGGER-HOOK is a list of quoted hooks and/or sharp-quoted functions."
              ;; because the latter is triggered too late (after the file has
              ;; opened and modes are all set up).
              (advice-add 'after-find-file :before fn '((depth . -101))))
-            ((add-hook hook fn (if EMACS27+ -101))))
+            ((add-hook hook fn -101)))
       fn)))
 
 ;; benchmark

@@ -1,9 +1,10 @@
 # Chuck's Emacs Configuration
 
-[![Made with dotemacs](https://img.shields.io/github/tag/xuchengpeng/.emacs.d.svg?label=release&style=for-the-badge&color=orange)](https://github.com/xuchengpeng/.emacs.d/releases)
-[![Made for Emacs 26.1+](https://img.shields.io/badge/Made_for-Emacs_26.1+-blueviolet.svg?style=for-the-badge)](https://www.gnu.org/software/emacs/)
-[![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Build Status](https://img.shields.io/travis/xuchengpeng/.emacs.d/master?style=for-the-badge)](https://travis-ci.org/xuchengpeng/.emacs.d)
+[![Made with dotemacs](https://img.shields.io/github/tag/xuchengpeng/.emacs.d.svg?label=release&style=flat-square&color=orange)](https://github.com/xuchengpeng/.emacs.d/releases)
+[![Made for Emacs 26.1+](https://img.shields.io/badge/Made_for-Emacs_27.1+-blueviolet.svg?style=flat-square)](https://www.gnu.org/software/emacs/)
+[![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+![Latest commit](https://img.shields.io/github/last-commit/xuchengpeng/.emacs.d/master?style=flat-square)
+[![Build Actions](https://github.com/xuchengpeng/.emacs.d/actions/workflows/test.yml/badge.svg?style=flat-square)](https://github.com/xuchengpeng/.emacs.d/actions)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
@@ -49,4 +50,4 @@ For example:
 
 ## Supported Emacs versions
 
-The config should run on Emacs 26.1 or greater and is designed to degrade smoothly - see the [Travis build](https://travis-ci.org/xuchengpeng/.emacs.d).
+The config should run on Emacs 27.1 or greater and is designed to degrade smoothly - see the [Build actions](https://github.com/xuchengpeng/.emacs.d/actions).

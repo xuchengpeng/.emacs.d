@@ -6,7 +6,8 @@
 ;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
 ;; packages are compiled ahead-of-time when they are installed and site files
 ;; are compiled when gccemacs is installed.
-(setq native-comp-deferred-compilation nil)
+(setq native-comp-deferred-compilation nil
+      comp-deferred-compilation nil)
 
 (setq package-enable-at-startup nil)
 (fset #'package--ensure-init-file #'ignore)

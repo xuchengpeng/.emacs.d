@@ -11,6 +11,7 @@
 ;;
 ;;; Global variables
 
+(defconst NATIVECOMP (if (fboundp 'native-comp-available-p) (native-comp-available-p)))
 (defconst EMACS28+   (> emacs-major-version 27))
 (defconst EMACS29+   (> emacs-major-version 28))
 (defconst IS-MAC     (eq system-type 'darwin))
@@ -80,6 +81,14 @@ line or use --debug-init to enable this.")
 (defvar dotemacs-first-buffer-hook nil
   "Transient hooks run before the first interactively opened buffer.")
 (put 'dotemacs-first-buffer-hook 'permanent-local t)
+
+;;
+;;; Native Compilation support (http://akrl.sdf.org/gccemacs.html)
+
+(when NATIVECOMP
+  ;; Don't store eln files in ~/.emacs.d/eln-cache (they are likely to be purged
+  ;; when upgrading Doom).
+  (add-to-list 'native-comp-eln-load-path (concat dotemacs-cache-dir "eln/")))
 
 ;;
 ;;; Emacs core configuration

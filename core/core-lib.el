@@ -44,7 +44,7 @@
 Does not interrupt the minibuffer if it is in use, but still logs to *Messages*.
 Accepts the same arguments as `message'."
   `(when dotemacs-debug-p
-     (let ((inhibit-message (active-minibuffer-window)))
+     (let ((inhibit-message t))
        (message
         ,(concat (propertize "dotemacs " 'face 'font-lock-comment-face)
                  format-string)

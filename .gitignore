@@ -1,5 +1,6 @@
 .cache/
 .local/
+eln-cache/
 org/*.*
 server/
 /init.el

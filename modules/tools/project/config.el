@@ -6,7 +6,7 @@
   "name of `fd-find' executable binary")
 
 (use-package projectile
-  :commands (projectile-project-root projectile-project-name projectile-project-p)
+  :defer 1
   :init
   (define-key! projectile-mode-map
     "C-c p"           'projectile-command-map)

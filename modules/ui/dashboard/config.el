@@ -84,9 +84,9 @@ assume a filename and skip displaying Dashboard."
         (add-hook 'after-init-hook (lambda ()
                                      ;; Display useful lists of items
                                      (+dashboard|init)))
-        (add-hook 'emacs-startup-hook '(lambda ()
-                                         (switch-to-buffer +dashboard-buffer-name)
-                                         (goto-char (point-min))
-                                         (redisplay))))))
+        (add-hook 'emacs-startup-hook (lambda ()
+                                        (switch-to-buffer +dashboard-buffer-name)
+                                        (goto-char (point-min))
+                                        (redisplay))))))
 
 (+dashboard|startup-hook)

@@ -86,8 +86,7 @@ line or use --debug-init to enable this.")
 ;;; Native Compilation support (http://akrl.sdf.org/gccemacs.html)
 
 (when NATIVECOMP
-  ;; Don't store eln files in ~/.emacs.d/eln-cache (they are likely to be purged
-  ;; when upgrading Doom).
+  ;; Don't store eln files in ~/.emacs.d/eln-cache.
   (add-to-list 'native-comp-eln-load-path (concat dotemacs-cache-dir "eln/")))
 
 ;;

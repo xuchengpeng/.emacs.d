@@ -20,7 +20,7 @@ jobs:
       - name: Check out .emacs.d
         uses: actions/checkout@v2
       - name: Clone straight.el
-        run: git clone https://github.com/raxod502/straight.el.git .local/straight/repos/straight.el --depth 1 --no-tags --branch master
+        run: git clone https://github.com/raxod502/straight.el.git .local/straight/repos/straight.el --depth 1 --no-tags --branch develop
       - name: Show emacs version
         run: emacs --version
       - name: Set up test

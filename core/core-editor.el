@@ -141,5 +141,8 @@ files, so we replace calls to `pp' with the much faster `prin1'."
   (unless (server-running-p)
     (server-start)))
 
+(use-package so-long
+  :hook(dotemacs-first-file . global-so-long-mode))
+
 (provide 'core-editor)
 ;;; core-editor.el ends here

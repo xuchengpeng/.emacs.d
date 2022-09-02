@@ -156,27 +156,30 @@ aliases."
 (defmacro after! (package &rest body)
   "Evaluate BODY after PACKAGE have loaded.
 
-PACKAGE is a symbol or list of them. These are package names, not modes,
-functions or variables. It can be:
+PACKAGE is a symbol (or list of them) referring to Emacs features (aka
+packages). PACKAGE may use :or/:any and :and/:all operators. The precise format
+is:
 
 - An unquoted package symbol (the name of a package)
     (after! helm BODY...)
-- An unquoted list of package symbols (i.e. BODY is evaluated once both magit
-  and git-gutter have loaded)
-    (after! (magit git-gutter) BODY...)
 - An unquoted, nested list of compound package lists, using any combination of
   :or/:any and :and/:all
     (after! (:or package-a package-b ...)  BODY...)
     (after! (:and package-a package-b ...) BODY...)
     (after! (:and package-a (:or package-b package-c) ...) BODY...)
-  Without :or/:any/:and/:all, :and/:all are implied.
+- An unquoted list of package symbols (i.e. BODY is evaluated once both magit
+  and git-gutter have loaded)
+    (after! (magit git-gutter) BODY...)
+  If :or/:any/:and/:all are omitted, :and/:all are implied.
 
-This is a wrapper around `eval-after-load' that:
+This emulates `eval-after-load' with a few key differences:
 
-1. Suppresses warnings for disabled packages at compile-time
-2. No-ops for package that are disabled by the user (via `package!')
-3. Supports compound package statements (see below)
-4. Prevents eager expansion pulling in autoloaded macros all at once"
+1. No-ops for package that are disabled by the user (via `package!') or not
+   installed yet.
+2. Supports compound package statements (see :or/:any and :and/:all above).
+
+Since the contents of these blocks will never by byte-compiled, avoid putting
+things you want byte-compiled in them! Like function/macro definitions."
   (declare (indent defun) (debug t))
   (if (symbolp package)
       (unless (memq package (bound-and-true-p dotemacs-disabled-packages))
@@ -184,24 +187,16 @@ This is a wrapper around `eval-after-load' that:
                       (require package nil 'noerror))
                   #'progn
                 #'with-no-warnings)
-              (let ((body (macroexp-progn body)))
-                `(if (featurep ',package)
-                     ,body
-                   ;; We intentionally avoid `with-eval-after-load' to prevent
-                   ;; eager macro expansion from pulling (or failing to pull) in
-                   ;; autoloaded macros/packages.
-                   (eval-after-load ',package ',body)))))
+              `(eval-after-load ',package ',(macroexp-progn body))))
     (let ((p (car package)))
-      (cond ((not (keywordp p))
-             `(after! (:and ,@package) ,@body))
-            ((memq p '(:or :any))
+      (cond ((memq p '(:or :any))
              (macroexp-progn
               (cl-loop for next in (cdr package)
                        collect `(after! ,next ,@body))))
             ((memq p '(:and :all))
-             (dolist (next (cdr package))
-               (setq body `((after! ,next ,@body))))
-             (car body))))))
+             (dolist (next (reverse (cdr package)) (car body))
+               (setq body `((after! ,next ,@body)))))
+            (`(after! (:and ,@package) ,@body))))))
 
 (defmacro setq! (&rest settings)
   "A stripped-down `customize-set-variable' with the syntax of `setq'."

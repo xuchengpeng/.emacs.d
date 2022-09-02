@@ -9,9 +9,9 @@
 ; (package! smex)
 (package! amx)
 
-(if (featurep! +prescient)
+(if (modulep! +prescient)
     (package! ivy-prescient)
-  (when (featurep! +fuzzy)
+  (when (modulep! +fuzzy)
     (package! flx)))
 
 (package! ivy-xref)

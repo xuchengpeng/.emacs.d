@@ -38,7 +38,7 @@
 (defun +eshell/search-history ()
   "Search the eshell command history with helm, ivy or `eshell-list-history'."
   (interactive)
-  (cond ((featurep! :completion ivy)
+  (cond ((modulep! :completion ivy)
          (require 'em-hist)
          (let* ((ivy-completion-beg (eshell-bol))
                 (ivy-completion-end (point-at-eol))
@@ -53,7 +53,7 @@
                         (ring-elements eshell-history-ring)))
                      :initial-input input
                      :action #'ivy-completion-in-region-action)))
-        ((featurep! :completion helm)
+        ((modulep! :completion helm)
          (helm-eshell-history))
         ((eshell-list-history))))
 

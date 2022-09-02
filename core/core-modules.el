@@ -294,12 +294,12 @@ This value is cached. If REFRESH-P, then don't use the cached value."
       modules)
   ))
 
-(defmacro featurep! (category &optional module flag)
+(defmacro modulep! (category &optional module flag)
   "Returns t if CATEGORY MODULE is enabled.
 
 If FLAG is provided, returns t if CATEGORY MODULE has FLAG enabled.
 
-  (featurep! :config default)
+  (modulep! :config default)
 
 Module FLAGs are set in your config's `dotemacs!' block, typically in
 ~/.emacs.d/init.el. Like so:
@@ -307,12 +307,12 @@ Module FLAGs are set in your config's `dotemacs!' block, typically in
   :config (default +flag1 -flag2)
 
 CATEGORY and MODULE can be omitted When this macro is used from inside a module
-(except your dotemacs dir, which is a special moduel). e.g. (featurep! +flag)"
+(except your dotemacs dir, which is a special moduel). e.g. (modulep! +flag)"
   (and (cond (flag (memq flag (dotemacs-module-get category module :flags)))
              (module (dotemacs-module-p category module))
              ((if-let (module (dotemacs-module-from-path))
                   (memq category (dotemacs-module-get (car module) (cdr module) :flags))
-                (error "(featurep! %s %s %s) couldn't figure out what module it was called from (in %s)"
+                (error "(modulep! %s %s %s) couldn't figure out what module it was called from (in %s)"
                        category module flag (file!)))))
        t))
 

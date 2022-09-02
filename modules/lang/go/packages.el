@@ -2,5 +2,5 @@
 
 (package! go-mode)
 
-(when (featurep! :completion company)
+(when (modulep! :completion company)
   (package! company-go))

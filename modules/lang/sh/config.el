@@ -16,7 +16,7 @@
                '(sh (nil "^\\s-*function\\s-+\\([[:alpha:]_-][[:alnum:]_-]*\\)\\s-*\\(?:()\\)?" 1)
                     (nil "^\\s-*\\([[:alpha:]_-][[:alnum:]_-]*\\)\\s-*()" 1))))
 
-(when (featurep! :completion company)
+(when (modulep! :completion company)
   (use-package company-shell
     :after sh-script
     :config

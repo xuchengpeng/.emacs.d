@@ -16,7 +16,7 @@
     "ts" '(+go/test-single :which-key "test single")
     "tn" '(+go/test-nested :which-key "test nested")))
 
-(when (featurep! :completion company)
+(when (modulep! :completion company)
   (use-package company-go
     :after go-mode
     :config

@@ -187,6 +187,6 @@ _q_: Quit
 
 (add-hook 'after-init-hook
           (lambda ()
-            (if (featurep! :editor evil)
+            (if (modulep! :editor evil)
                 (load! "+evil-bindings")
               (load! "+emacs-bindings"))))

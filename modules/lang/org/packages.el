@@ -5,6 +5,6 @@
                              :includes org))
 (package! htmlize)
 
-(when (featurep! +export)
+(when (modulep! +export)
   (package! ox-pandoc)
   (package! ox-hugo))

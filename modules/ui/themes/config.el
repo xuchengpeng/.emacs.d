@@ -15,10 +15,10 @@
     (add-hook 'dotemacs-load-theme-hook (cmd! (require 'dotemacs-themes-ext-org)))
 
     ;; For treemacs users
-    (when (featurep! :ui treemacs)
+    (when (modulep! :ui treemacs)
       (add-hook 'dotemacs-load-theme-hook (cmd! (require 'dotemacs-themes-ext-treemacs))))
     ;; or for neotree users
-    (when (featurep! :ui neotree)
+    (when (modulep! :ui neotree)
       (add-hook 'dotemacs-load-theme-hook (cmd! (require 'dotemacs-themes-ext-neotree))))
 
     (unless +themes-color-theme

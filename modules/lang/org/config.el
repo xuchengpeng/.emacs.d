@@ -40,7 +40,7 @@
            "* TODO %?\n%i\n%a" :prepend t :kill-buffer t))))
 
 (defun +org-init-export-h ()
-  (when (featurep! +export)
+  (when (modulep! +export)
     (when (executable-find "pandoc")
       (use-package ox-pandoc
         :after ox

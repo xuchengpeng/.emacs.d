@@ -41,7 +41,7 @@
         ;; disable special behavior for left/right, M-left/right keys.
         helm-ff-lynx-style-map nil)
   
-  (let ((fuzzy (featurep! +fuzzy)))
+  (let ((fuzzy (modulep! +fuzzy)))
     (setq helm-apropos-fuzzy-match fuzzy
           helm-bookmark-show-location fuzzy
           helm-buffers-fuzzy-matching fuzzy
@@ -61,7 +61,7 @@
   (helm-mode +1))
 
 (use-package helm-flx
-  :when (featurep! +fuzzy)
+  :when (modulep! +fuzzy)
   :hook (helm-mode . helm-flx-mode)
   :config (helm-flx-mode +1))
 
@@ -80,7 +80,7 @@
   :config (setq xref-show-xrefs-function #'helm-xref-show-xrefs))
 
 (use-package helm-org
-  :when (featurep! :lang org)
+  :when (modulep! :lang org)
   :defer t
   :init
   (after! helm-mode

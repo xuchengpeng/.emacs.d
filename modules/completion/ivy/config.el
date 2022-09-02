@@ -5,11 +5,11 @@
   :hook (pre-command . ivy-mode)
   :init
   (let ((standard-search-fn
-         (if (featurep! +prescient)
+         (if (modulep! +prescient)
              #'+ivy-prescient-non-fuzzy
            #'ivy--regex-plus))
         (alt-search-fn
-         (if (featurep! +fuzzy)
+         (if (modulep! +fuzzy)
              #'ivy--regex-fuzzy
            ;; Ignore order for non-fuzzy searches by default
            #'ivy--regex-ignore-order)))
@@ -43,17 +43,17 @@
   (ivy-mode +1))
 
 (use-package flx
-  :when (featurep! +fuzzy)
-  :unless (featurep! +prescient)
+  :when (modulep! +fuzzy)
+  :unless (modulep! +prescient)
   :defer t  ; is loaded by ivy
   :init (setq ivy-flx-limit 10000))
 
 (use-package ivy-prescient
-  :when (featurep! +prescient)
+  :when (modulep! +prescient)
   :hook (ivy-mode . ivy-prescient-mode)
   :init
   (setq prescient-filter-method
-        (if (featurep! +fuzzy)
+        (if (modulep! +fuzzy)
             '(literal regexp initialism fuzzy)
           '(literal regexp initialism))
         ivy-prescient-retain-classic-highlighting t)

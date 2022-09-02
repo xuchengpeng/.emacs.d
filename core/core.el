@@ -11,7 +11,6 @@
 ;;
 ;;; Global variables
 
-(defconst NATIVECOMP (if (fboundp 'native-comp-available-p) (native-comp-available-p)))
 (defconst EMACS28+   (> emacs-major-version 27))
 (defconst EMACS29+   (> emacs-major-version 28))
 (defconst IS-MAC     (eq system-type 'darwin))
@@ -85,7 +84,7 @@ line or use --debug-init to enable this.")
 ;;
 ;;; Native Compilation support (http://akrl.sdf.org/gccemacs.html)
 
-(when NATIVECOMP
+(when (featurep 'native-compile)
   ;; Don't store eln files in ~/.emacs.d/eln-cache.
   (add-to-list 'native-comp-eln-load-path (concat dotemacs-cache-dir "eln/")))
 

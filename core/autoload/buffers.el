@@ -144,7 +144,7 @@ See `dotemacs-real-buffer-p' for details on what that means."
   "Return a list of buffers whose `major-mode' is `eq' to MODE(S).
 
 If DERIVED-P, test with `derived-mode-p', otherwise use `eq'."
-  (let ((modes (dotemacs-enlist modes)))
+  (let ((modes (ensure-list modes)))
     (cl-remove-if-not (if derived-p
                           (lambda (buf)
                             (with-current-buffer buf

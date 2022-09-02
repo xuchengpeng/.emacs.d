@@ -22,11 +22,6 @@
     (setq exp (cadr exp)))
   exp)
 
-(defun dotemacs-enlist (exp)
-  "Return EXP wrapped in a list, or as-is if already a list."
-  (declare (pure t) (side-effect-free t))
-  (if (listp exp) exp (list exp)))
-
 (defun dotemacs-keyword-intern (str)
   "Converts STR (a string) into a keyword (`keywordp')."
   (declare (pure t) (side-effect-free t))
@@ -96,7 +91,7 @@ code of the process and OUTPUT is its stdout output."
 If a mode is quoted, it is left as is. If the entire HOOKS list is quoted, the
 list is returned as-is."
   (declare (pure t) (side-effect-free t))
-  (let ((hook-list (dotemacs-enlist (dotemacs-unquote hooks))))
+  (let ((hook-list (ensure-list (dotemacs-unquote hooks))))
     (if (eq (car-safe hooks) 'quote)
         hook-list
       (cl-loop for hook in hook-list
@@ -501,7 +496,7 @@ DOCSTRING and BODY are as in `defun'.
     (setq docstring nil))
   (let (where-alist)
     (while (keywordp (car body))
-      (push `(cons ,(pop body) (dotemacs-enlist ,(pop body)))
+      (push `(cons ,(pop body) (ensure-list ,(pop body)))
             where-alist))
     `(progn
        (defun ,symbol ,arglist ,docstring ,@body)
@@ -521,11 +516,25 @@ testing advice (when combined with `rotate-text').
     (unless (stringp docstring)
       (push docstring body))
     (while (keywordp (car body))
-      (push `(cons ,(pop body) (dotemacs-enlist ,(pop body)))
+      (push `(cons ,(pop body) (ensure-list ,(pop body)))
             where-alist))
     `(dolist (targets (list ,@(nreverse where-alist)))
        (dolist (target (cdr targets))
          (advice-remove target #',symbol)))))
+
+;;
+;;; Backports
+
+;; Introduced in Emacs 28.1
+(unless (fboundp 'ensure-list)
+  (defun ensure-list (object)
+    "Return OBJECT as a list.
+If OBJECT is already a list, return OBJECT itself.  If it's
+not a list, return a one-element list containing OBJECT."
+    (declare (pure t) (side-effect-free t))
+    (if (listp object)
+        object
+      (list object))))
 
 (provide 'core-lib)
 ;;; core-lib.el ends here

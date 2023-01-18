@@ -1,4 +1,4 @@
-;;; core.el --- Initialize core configurations. -*- lexical-binding: t; -*-
+;;; dotemacs.el --- Initialize dotemacs configurations. -*- lexical-binding: t; -*-
 
 (eval-when-compile
   (when (version< emacs-version "27.1")
@@ -31,8 +31,8 @@ line or use --debug-init to enable this.")
 (defconst dotemacs-dir user-emacs-directory
   "The path to this emacs.d directory.")
 
-(defconst dotemacs-core-dir (concat dotemacs-dir "core/")
-  "Where core files are stored.")
+(defconst dotemacs-core-dir (file-name-directory load-file-name)
+  "The root directory of dotemacs's core files. Must end with a slash.")
 
 (defconst dotemacs-modules-dir (concat dotemacs-dir "modules/")
   "Where modules files are stored.")
@@ -292,20 +292,20 @@ If RETURN-P, return the message as a string instead of displaying it."
     (unless (file-directory-p dir)
       (make-directory dir t)))
 
-  (require 'core-custom)
-  (require 'core-lib)
-  (require 'core-packages)
-  (require 'core-ui)
-  (require 'core-editor)
-  (require 'core-keybinds)
-  (require 'core-modules))
+  (require 'dotemacs-custom)
+  (require 'dotemacs-lib)
+  (require 'dotemacs-packages)
+  (require 'dotemacs-ui)
+  (require 'dotemacs-editor)
+  (require 'dotemacs-keybinds)
+  (require 'dotemacs-modules))
 
 (defun dotemacs-initialize ()
   "dotemacs initialize function.
 The load order is as follows:
 
   ~/.emacs.d/init.el
-  ~/.emacs.d/core/core.el
+  ~/.emacs.d/lisp/dotemacs.el
   Module packages.el files
   Module init.el files
   `dotemacs-before-init-modules-hook'
@@ -328,5 +328,5 @@ Module load order is determined by your `dotemacs!' block."
 
 (dotemacs-initialize-core)
 
-(provide 'core)
-;;; core.el ends here
+(provide 'dotemacs)
+;;; dotemacs.el ends here

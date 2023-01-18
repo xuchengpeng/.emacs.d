@@ -1,4 +1,4 @@
-;;; core-modules.el --- Core modules. -*- lexical-binding: t; -*-
+;;; dotemacs-modules.el --- dotemacs modules. -*- lexical-binding: t; -*-
 
 (defvar dotemacs-modules (make-hash-table :test 'equal)
   "A hash table of enabled modules. Set by marco `dotemacs!'.")
@@ -71,7 +71,7 @@ symbols, and that module's plist."
 (defun dotemacs/generate-autoload-file ()
   "Generate the autoloads.el file, specified by `dotemacs-autoload-file'.
 
-It scans and reads core/autoload/*.el, modules/*/*/autoload.el and
+It scans and reads dotemacs/autoload/*.el, modules/*/*/autoload.el and
 modules/*/*/autoload/*.el, and generates an autoloads file at the path specified
 by `dotemacs-autoload-file'. This file tells Emacs where to find lazy-loaded
 functions.
@@ -316,5 +316,5 @@ CATEGORY and MODULE can be omitted When this macro is used from inside a module
                        category module flag (file!)))))
        t))
 
-(provide 'core-modules)
-;;; core-modules.el ends here
+(provide 'dotemacs-modules)
+;;; dotemacs-modules.el ends here

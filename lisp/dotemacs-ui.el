@@ -1,4 +1,4 @@
-;;; core-ui.el --- Initialize core ui configurations. -*- lexical-binding: t; -*-
+;;; dotemacs-ui.el --- Initialize dotemacs ui configurations. -*- lexical-binding: t; -*-
 
 (defvar dotemacs-theme nil
   "A symbol representing the color theme to load.")
@@ -238,5 +238,5 @@ Otherwise, themes can conflict with each other."
 
 (add-hook 'window-setup-hook #'dotemacs-init-ui-h)
 
-(provide 'core-ui)
-;;; core-ui.el ends here
+(provide 'dotemacs-ui)
+;;; dotemacs-ui.el ends here

@@ -1,4 +1,4 @@
-;;; core-keybinds.el -*- lexical-binding: t; -*-
+;;; dotemacs-keybinds.el -*- lexical-binding: t; -*-
 
 (defvar dotemacs-leader-key "SPC"
   "The leader prefix key for Evil users.")
@@ -41,5 +41,5 @@ non-evil users.")
     :prefix dotemacs-localleader-key
     :non-normal-prefix dotemacs-localleader-alt-key))
 
-(provide 'core-keybinds)
-;;; core-keybinds.el ends here
+(provide 'dotemacs-keybinds)
+;;; dotemacs-keybinds.el ends here

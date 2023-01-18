@@ -1,4 +1,4 @@
-;;; core-packages.el --- Initialize core packages configurations. -*- lexical-binding: t; -*-
+;;; dotemacs-packages.el --- Initialize dotemacs packages configurations. -*- lexical-binding: t; -*-
 
 (defvar dotemacs-core-packages '(straight use-package bind-key general)
   "A list of packages that must be installed (and will be auto-installed if
@@ -144,5 +144,5 @@ e.g. (packages! evil evil-surround)"
 ;;; Initialize packages
 (dotemacs-initialize-packages)
 
-(provide 'core-packages)
-;;; core-packages.el ends here
+(provide 'dotemacs-packages)
+;;; dotemacs-packages.el ends here

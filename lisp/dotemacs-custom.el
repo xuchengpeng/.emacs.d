@@ -1,4 +1,4 @@
-;;; core-custom.el --- Customizations. -*- lexical-binding: t; -*-
+;;; dotemacs-custom.el --- Customizations. -*- lexical-binding: t; -*-
 
 (defcustom dotemacs-full-name "Chuck"
   "Set user full name."
@@ -25,5 +25,5 @@
   :type 'boolean
   :group 'dotemacs)
 
-(provide 'core-custom)
-;;; core-custom.el ends here
+(provide 'dotemacs-custom)
+;;; dotemacs-custom.el ends here

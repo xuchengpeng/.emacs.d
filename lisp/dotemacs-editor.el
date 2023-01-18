@@ -1,4 +1,4 @@
-;;; core-editor.el --- Initialize core editor configurations. -*- lexical-binding: t; -*-
+;;; dotemacs-editor.el --- Initialize dotemacs editor configurations. -*- lexical-binding: t; -*-
 
 ;;
 ;;; File handling
@@ -144,5 +144,5 @@ files, so we replace calls to `pp' with the much faster `prin1'."
 (use-package so-long
   :hook(dotemacs-first-file . global-so-long-mode))
 
-(provide 'core-editor)
-;;; core-editor.el ends here
+(provide 'dotemacs-editor)
+;;; dotemacs-editor.el ends here

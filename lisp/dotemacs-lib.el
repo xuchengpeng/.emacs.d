@@ -1,4 +1,4 @@
-;;; core-lib.el --- Initialize core lib configurations. -*- lexical-binding: t; -*-
+;;; dotemacs-lib.el --- Initialize dotemacs lib configurations. -*- lexical-binding: t; -*-
 
 (require 'cl-lib)
 (require 'subr-x)
@@ -531,5 +531,5 @@ not a list, return a one-element list containing OBJECT."
         object
       (list object))))
 
-(provide 'core-lib)
-;;; core-lib.el ends here
+(provide 'dotemacs-lib)
+;;; dotemacs-lib.el ends here

@@ -1,4 +1,4 @@
-;;; core/autoload/test.el -*- lexical-binding: t; -*-
+;;; lisp/autoload/test.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defun dotemacs/run-test ()

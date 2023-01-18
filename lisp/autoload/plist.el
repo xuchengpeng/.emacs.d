@@ -1,4 +1,4 @@
-;;; core/autoload/plist.el -*- lexical-binding: t; -*-
+;;; lisp/autoload/plist.el -*- lexical-binding: t; -*-
 
 ;;
 ;;; Macros

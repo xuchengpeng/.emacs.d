@@ -1,4 +1,4 @@
-;;; core/autoload/buffers.el -*- lexical-binding: t; -*-
+;;; lisp/autoload/buffers.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defvar dotemacs-real-buffer-functions

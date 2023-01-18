@@ -1,4 +1,4 @@
-;;; core/autoload/ui.el -*- lexical-binding: t; -*-
+;;; lisp/autoload/ui.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defun dotemacs/set-frame-opacity (opacity)

@@ -1,4 +1,4 @@
-;;; core/autoload/files.el -*- lexical-binding: t; -*-
+;;; lisp/autoload/files.el -*- lexical-binding: t; -*-
 
 (defun dotemacs--sudo-file (file)
   (let ((host (or (file-remote-p file 'host) "localhost")))

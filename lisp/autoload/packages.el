@@ -1,4 +1,4 @@
-;;; core/autoload/packages.el -*- lexical-binding: t; -*-
+;;; lisp/autoload/packages.el -*- lexical-binding: t; -*-
 
 ;;;###autoload
 (defun dotemacs/upgrade-packages ()

@@ -3,4 +3,4 @@
 
 (package! '(dotemacs-themes :type git :host github
                             :repo "xuchengpeng/dotemacs-themes"
-                            :files ("*.el" "themes/*.el")))
+                            :files ("*.el" "themes/*.el" "extensions/*.el")))

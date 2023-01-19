@@ -17,7 +17,7 @@
 (use-package orderless
   :after (vertico)
   :config
-  (setq completion-styles '(orderless)
+  (setq completion-styles '(orderless basic)
         orderless-component-separator "[ &]"))
 
 (use-package consult
@@ -38,12 +38,14 @@
     [remap switch-to-buffer-other-window] #'consult-buffer-other-window
     [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
     [remap yank-pop]                      #'consult-yank-pop)
-  (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
-  (advice-add #'multi-occur :override #'consult-multi-occur)
   :config
   (setq consult-project-root-function #'dotemacs-project-root
         consult-narrow-key "<"
-        consult-line-numbers-widen t))
+        consult-line-numbers-widen t
+        consult-async-min-input 2
+        consult-async-refresh-delay  0.15
+        consult-async-input-throttle 0.2
+        consult-async-input-debounce 0.1))
 
 (use-package embark
   :defer t

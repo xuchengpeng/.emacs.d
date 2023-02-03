@@ -3,7 +3,7 @@
 [![Made with dotemacs](https://img.shields.io/github/tag/xuchengpeng/.emacs.d.svg?label=release&style=flat-square)](https://github.com/xuchengpeng/.emacs.d/releases)
 [![Made for Emacs 27.1+](https://img.shields.io/badge/Made_for-Emacs_27.1+-blueviolet.svg?style=flat-square)](https://www.gnu.org/software/emacs/)
 [![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-![Latest commit](https://img.shields.io/github/last-commit/xuchengpeng/.emacs.d/master?style=flat-square)
+![Latest commit](https://img.shields.io/github/last-commit/xuchengpeng/.emacs.d/main?style=flat-square)
 [![Build Actions](https://img.shields.io/github/workflow/status/xuchengpeng/.emacs.d/Tests?style=flat-square)](https://github.com/xuchengpeng/.emacs.d/actions)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->

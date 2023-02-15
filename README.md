@@ -1,19 +1,20 @@
 # Chuck's Emacs Configuration
 
-[![Made with dotemacs](https://img.shields.io/github/tag/xuchengpeng/.emacs.d.svg?label=release&style=flat-square)](https://github.com/xuchengpeng/.emacs.d/releases)
-[![Made for Emacs 27.1+](https://img.shields.io/badge/Made_for-Emacs_27.1+-blueviolet.svg?style=flat-square)](https://www.gnu.org/software/emacs/)
-[![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-![Latest commit](https://img.shields.io/github/last-commit/xuchengpeng/.emacs.d/main?style=flat-square)
-[![Build Actions](https://img.shields.io/github/workflow/status/xuchengpeng/.emacs.d/Tests?style=flat-square)](https://github.com/xuchengpeng/.emacs.d/actions)
+[![Releases](https://img.shields.io/github/v/release/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/releases/latest)
+[![Last commit](https://img.shields.io/github/last-commit/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/pulse)
+[![License](https://img.shields.io/github/license/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/blob/main/LICENSE)
+[![Repo size](https://img.shields.io/github/repo-size/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/xuchengpeng/.emacs.d/test.yml?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/actions)
+[![Made for Emacs 27.1+](https://img.shields.io/badge/Made_for-Emacs_27.1+-blueviolet.svg?style=for-the-badge)](https://www.gnu.org/software/emacs/)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
 - [Chuck's Emacs Configuration](#chucks-emacs-configuration)
-    - [Install](#install)
-    - [Customization](#customization)
-    - [Install fonts (Optional)](#install-fonts-optional)
-    - [Supported Emacs versions](#supported-emacs-versions)
+  - [Install](#install)
+  - [Customization](#customization)
+  - [Install fonts (Optional)](#install-fonts-optional)
+  - [Supported Emacs versions](#supported-emacs-versions)
 
 <!-- markdown-toc end -->
 

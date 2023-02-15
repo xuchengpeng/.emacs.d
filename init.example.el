@@ -47,6 +47,7 @@
            ;; data
            ;; go
            ;; javascript
+           ;; lua
            markdown
            (org         ; organize your plain life in plain text
             ;; +export     ; Exporting org to whatever you want

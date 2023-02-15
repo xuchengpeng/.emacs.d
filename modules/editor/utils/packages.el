@@ -5,4 +5,3 @@
 (package! undo-tree)
 (package! smartparens)
 (package! avy)
-(package! format-all)

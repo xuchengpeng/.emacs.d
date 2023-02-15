@@ -15,6 +15,7 @@
            electric
            keybinds
            :tools
+           lsp
            project
            utils
            :lang

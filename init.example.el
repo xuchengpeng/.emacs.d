@@ -20,9 +20,8 @@
            dashboard
            highlight
            modeline
-           ;; neotree
            themes
-           ;; treemacs
+           treemacs
            (window-select +ace-window)
            workspaces
            
@@ -46,7 +45,7 @@
            :lang
            cc
            ;; data
-           go
+           ;; go
            ;; javascript
            markdown
            (org         ; organize your plain life in plain text

@@ -45,7 +45,7 @@
   "cc"      '(compile :which-key "Compile")
   "cC"      '(recompile :which-key "Recompile")
   "cf"      '(hydra-flycheck/body :which-key "Flycheck")
-  "cF"      '(format-all-buffer :which-key "Format")
+  "cF"      '(lsp-format-buffer :which-key "Format")
   "cg"      '(hydra-avy/body :which-key "Goto")
   "cm"      '(hydra-mark/body :which-key "Mark")
   "cM"      '(hydra-multiple-cursors/body :which-key "Multiple cursors")

@@ -40,6 +40,7 @@
            ;; magit
            ;; package-manager
            project
+           ;; tree-sitter
            utils
            
            :lang

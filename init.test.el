@@ -17,6 +17,7 @@
            :tools
            lsp
            project
+           tree-sitter
            utils
            :lang
            markdown

@@ -95,13 +95,11 @@ line or use --debug-init to enable this.")
 (setq debug-on-error dotemacs-debug-p
       jka-compr-verbose dotemacs-debug-p)
 
-;; Contrary to what many Emacs users have in their configs, you don't need more
-;; than this to make UTF-8 the default coding system:
 (set-language-environment "UTF-8")
-;; ...but the clipboard's on Windows could be in another encoding (likely
-;; utf-16), so let Emacs/the OS decide what to use there.
+(setq default-input-method nil)
 (unless IS-WINDOWS
   (setq selection-coding-system 'utf-8)) ; with sugar on top
+(setq-default buffer-file-coding-system 'utf-8-unix)
 
 ;; Disable warnings from legacy advice system. They aren't useful, and we can't
 ;; often do anything about them besides changing packages upstream

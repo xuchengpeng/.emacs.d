@@ -4,7 +4,7 @@
 [![Last commit](https://img.shields.io/github/last-commit/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/pulse)
 [![License](https://img.shields.io/github/license/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/blob/main/LICENSE)
 [![Repo size](https://img.shields.io/github/repo-size/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/xuchengpeng/.emacs.d/test.yml?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/actions)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/xuchengpeng/.emacs.d/ci.yml?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/actions)
 [![Made for Emacs 27.1+](https://img.shields.io/badge/Made_for-Emacs_27.1+-blueviolet.svg?style=for-the-badge)](https://www.gnu.org/software/emacs/)
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->

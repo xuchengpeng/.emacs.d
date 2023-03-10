@@ -1,13 +1,11 @@
-name: Tests
+name: CI
 
 on:
   pull_request:
   push:
-    branches:
-      - main
 
 jobs:
-  unix-test:
+  tests:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -32,3 +30,25 @@ jobs:
           key: ${{ runner.os }}-build-dotemacs-packages-${{ hashFiles('**/packages.el') }}
           restore-keys: |
             ${{ runner.os }}-build-dotemacs-packages-
+  release:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs:
+      - tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: simple
+          package-name: .emacs.d
+      - uses: actions/checkout@v3
+      - name: tag stable versions
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/google-github-actions/release-please-action.git"
+          git tag -d stable || true
+          git push origin :stable || true
+          git tag -a stable -m "Last Stable Release"
+          git push origin stable

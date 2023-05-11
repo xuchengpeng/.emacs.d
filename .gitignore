@@ -3,6 +3,5 @@
 eln-cache/
 org/*.*
 server/
-/init.el
 *.elc
 *~

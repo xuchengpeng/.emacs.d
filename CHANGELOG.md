@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/xuchengpeng/.emacs.d/compare/v1.8.1...v2.0.0) (2023-05-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **config:** refactoring framework
+
+### Code Refactoring
+
+* **config:** refactoring framework ([8204f5a](https://github.com/xuchengpeng/.emacs.d/commit/8204f5a963ecc0fc58e47a081f945bf9ab38f911))
+
 ## [1.8.1](https://github.com/xuchengpeng/.emacs.d/compare/v1.8.0...v1.8.1) (2023-03-10)
 
 

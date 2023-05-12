@@ -51,13 +51,13 @@
         auto-revert-stop-on-user-input nil))
 
 (use-package recentf
+  :hook (find-file . recentf-mode)
   :commands recentf-open-files
   :config
   (setq recentf-save-file (concat dotemacs-cache-dir "recentf")
         recentf-max-saved-items 200
         recentf-auto-cleanup nil)
-  (add-hook 'kill-emacs-hook #'recentf-cleanup)
-  (recentf-mode +1))
+  (add-hook 'kill-emacs-hook #'recentf-cleanup))
 
 (use-package savehist
   :hook (post-command . savehist-mode)

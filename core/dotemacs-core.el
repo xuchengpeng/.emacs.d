@@ -1,5 +1,11 @@
 ;;; dotemacs-core.el --- Emacs Core functions.
 
+(set-language-environment "UTF-8")
+(setq default-input-method nil)
+(unless (memq system-type '(cygwin windows-nt ms-dos))
+  (setq selection-coding-system 'utf-8))
+(setq-default buffer-file-coding-system 'utf-8-unix)
+
 (defun dotemacs-call-process (command &rest args)
   "Execute COMMAND with ARGS synchronously.
 

@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.0...v2.0.1) (2023-05-12)
+
+
+### Bug Fixes
+
+* **company:** add company-mode keymaps ([3b5d111](https://github.com/xuchengpeng/.emacs.d/commit/3b5d111967b76a9823131563399bb32390d4e6e8))
+* **encoding:** set utf-8 as default ([9a9af01](https://github.com/xuchengpeng/.emacs.d/commit/9a9af01a9c2504542d4a988d288179c800e29f2e))
+* **keybinds:** add buffer,file,project,search keybindings ([033402c](https://github.com/xuchengpeng/.emacs.d/commit/033402c2979626d952f078101a16626781846269))
+* **straight:** clone straight.el on first startup ([6b5b885](https://github.com/xuchengpeng/.emacs.d/commit/6b5b8856b7fc0b0753aa757284f2d1d604f43ce7))
+* **themes:** clone doom-themes to local repository ([5cd6e49](https://github.com/xuchengpeng/.emacs.d/commit/5cd6e49e4786df7426f2441b2dfb09a30c07aeae))
+
 ## [2.0.0](https://github.com/xuchengpeng/.emacs.d/compare/v1.8.1...v2.0.0) (2023-05-11)
 
 

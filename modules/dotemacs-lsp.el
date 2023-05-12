@@ -14,9 +14,8 @@
 
 (use-package consult-lsp
   :defer t
-  :init
-  (define-key! lsp-mode-map
-    [remap xref-find-apropos] #'consult-lsp-symbols))
+  :config
+  (define-key lsp-mode-map [remap xref-find-apropos] 'consult-lsp-symbols))
 
 (provide 'dotemacs-lsp)
 ;;; dotemacs-lsp.el ends here

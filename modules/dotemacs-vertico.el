@@ -28,21 +28,22 @@
 (use-package consult
   :defer t
   :init
-  (define-key!
-    [remap apropos]                       #'consult-apropos
-    [remap bookmark-jump]                 #'consult-bookmark
-    [remap evil-show-marks]               #'consult-mark
-    [remap evil-show-registers]           #'consult-register
-    [remap goto-line]                     #'consult-goto-line
-    [remap imenu]                         #'consult-imenu
-    [remap locate]                        #'consult-locate
-    [remap load-theme]                    #'consult-theme
-    [remap man]                           #'consult-man
-    [remap recentf-open-files]            #'consult-recent-file
-    [remap switch-to-buffer]              #'consult-buffer
-    [remap switch-to-buffer-other-window] #'consult-buffer-other-window
-    [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
-    [remap yank-pop]                      #'consult-yank-pop)
+  (global-set-key (kbd "C-r") 'consult-line)
+  (global-set-key (kbd "C-s") 'consult-line)
+  (global-set-key [remap apropos]                       'consult-apropos)
+  (global-set-key [remap bookmark-jump]                 'consult-bookmark)
+  (global-set-key [remap evil-show-marks]               'consult-mark)
+  (global-set-key [remap evil-show-registers]           'consult-register)
+  (global-set-key [remap goto-line]                     'consult-goto-line)
+  (global-set-key [remap imenu]                         'consult-imenu)
+  (global-set-key [remap locate]                        'consult-locate)
+  (global-set-key [remap load-theme]                    'consult-theme)
+  (global-set-key [remap man]                           'consult-man)
+  (global-set-key [remap recentf-open-files]            'consult-recent-file)
+  (global-set-key [remap switch-to-buffer]              'consult-buffer)
+  (global-set-key [remap switch-to-buffer-other-window] 'consult-buffer-other-window)
+  (global-set-key [remap switch-to-buffer-other-frame]  'consult-buffer-other-frame)
+  (global-set-key [remap yank-pop]                      'consult-yank-pop)
   :config
   (setq consult-narrow-key "<"
         consult-line-numbers-widen t
@@ -55,7 +56,7 @@
   :defer t
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
-  (define-key! [remap describe-bindings] #'embark-bindings))
+  (global-set-key [remap describe-bindings] 'embark-bindings))
 
 (provide 'dotemacs-vertico)
 ;;; dotemacs-vertico.el ends here

@@ -6,7 +6,8 @@
   :defer 1
   :hook (pre-command . which-key-mode)
   :init
-  (setq which-key-sort-order #'which-key-key-order-alpha
+  (setq which-key-idle-delay 0.5
+        which-key-sort-order #'which-key-key-order-alpha
         which-key-sort-uppercase-first nil
         which-key-add-column-padding 1
         which-key-max-display-columns nil

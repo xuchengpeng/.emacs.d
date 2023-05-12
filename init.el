@@ -59,10 +59,7 @@ by dotemacs.")
 ;; the modules
 (if (file-exists-p dotemacs-modules-file)
     (load dotemacs-modules-file)
-  (message "[dotemacs] Missing personal modules file %s" dotemacs-modules-file)
-  (message "[dotemacs] Falling back to the bundled example file sample/dotemacs-modules.el")
-  (message "[dotemacs] You should copy this file to your personal configuration folder and tweak it to your liking")
-  (load (expand-file-name "sample/dotemacs-modules.el" dotemacs-dir)))
+  (message "[dotemacs] Missing personal modules file %s" dotemacs-modules-file))
 
 ;; load the personal settings
 (when (file-exists-p dotemacs-personal-dir)

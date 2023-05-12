@@ -5,7 +5,7 @@
 (use-package ace-window
   :defer t
   :init
-  (global-set-key [remap other-window] #'ace-window)
+  (global-set-key [remap other-window] 'ace-window)
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 

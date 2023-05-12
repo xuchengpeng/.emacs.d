@@ -51,6 +51,17 @@ built from this.")
         company-dabbrev-downcase nil
         company-dabbrev-ignore-case nil)
 
+  (define-key company-active-map (kbd "TAB") #'company-complete-common-or-cycle)
+  (define-key company-active-map (kbd "<tab>") #'company-complete-common-or-cycle)
+  (define-key company-active-map (kbd "<backtab>") (lambda ()
+                                                     (interactive)
+                                                     (company-complete-common-or-cycle -1)))
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous)
+
+  (define-key company-search-map (kbd "C-n") #'company-select-next)
+  (define-key company-search-map (kbd "C-p") #'company-select-previous)
+
   (add-hook 'after-change-major-mode-hook #'+company-init-backends 'append))
 
 (provide 'dotemacs-company)

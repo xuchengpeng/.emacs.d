@@ -9,17 +9,14 @@
       straight-vc-git-default-clone-depth '(1 single-branch))
 
 (defun dotemacs-ensure-straight ()
-  (let ((repo-dir (expand-file-name "straight/repos/straight.el" straight-base-dir))
-        (repo-url "https://github.com/radian-software/straight.el.git")
-        (call (lambda (&rest args)
-                (apply #'dotemacs-call-process args))))
+  (let ((repo-dir (concat straight-base-dir "straight/repos/straight.el"))
+        (repo-url "https://github.com/radian-software/straight.el.git"))
     (unless (file-directory-p repo-dir)
       (unless (executable-find "git")
         (message "[dotemacs] Git isn't present on your system. Cannot proceed."))
-      (funcall call "git" "clone" repo-url repo-dir
-                    "--depth 1"
-                    "--no-tags"
-                    "--branch" straight-repository-branch))
+      (dotemacs-call-process "git" "clone" repo-url repo-dir
+                             "--depth" "1" "--no-tags"
+                             "--branch" straight-repository-branch))
     (require 'straight (concat repo-dir "/straight.el"))
     (mapc #'straight-use-recipes
           '((org-elpa :local-repo nil)

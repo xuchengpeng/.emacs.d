@@ -1,6 +1,6 @@
 ;;; dotemacs-themes.el --- Themes.
 
-(dotemacs-require-packages '(doom-themes))
+(dotemacs-require-package `(doom-themes :local-repo "doom-themes"))
 
 (use-package doom-themes
   :config

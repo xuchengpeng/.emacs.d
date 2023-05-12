@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.1...v2.0.2) (2023-05-12)
+
+
+### Bug Fixes
+
+* **recentf:** enabled with find-file-hook ([2a61c4f](https://github.com/xuchengpeng/.emacs.d/commit/2a61c4f4be6e9f9f2797b3e94c8b29962425ffaf))
+
 ## [2.0.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.0...v2.0.1) (2023-05-12)
 
 

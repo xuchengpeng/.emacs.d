@@ -13,14 +13,12 @@
   :defer 1
   :init
   (setq projectile-cache-file (concat dotemacs-cache-dir "projectile.cache")
-        projectile-auto-discover nil
-        projectile-enable-caching (not noninteractive)
+        projectile-enable-caching t
         projectile-globally-ignored-files '(".DS_Store" "TAGS")
         projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o")
         projectile-kill-buffers-filter 'kill-only-files
         projectile-known-projects-file (concat dotemacs-cache-dir "projectile.projects"))
   :config
-  (projectile-mode +1)
   (setq projectile-generic-command
         (cond
          ((executable-find "fd")
@@ -29,7 +27,9 @@
           "rg -0 --files --follow --color=never --hidden -g!.git")
          ("find . -type f -print0"))
         projectile-git-submodule-command nil
-        projectile-indexing-method 'hybrid))
+        projectile-indexing-method 'hybrid)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1))
 
 (provide 'dotemacs-projectile)
 ;;; dotemacs-projectile.el ends here

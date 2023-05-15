@@ -1,5 +1,12 @@
 ;;; dotemacs-treemacs.el --- File tree.
 
+;;; Commentary:
+;;
+;; File tree configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(treemacs treemacs-projectile))
 
 (use-package treemacs

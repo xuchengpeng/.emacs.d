@@ -1,5 +1,12 @@
 ;;; dotemacs-themes.el --- Themes.
 
+;;; Commentary:
+;;
+;; Themes configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-package `(doom-themes :local-repo "doom-themes"))
 
 (use-package doom-themes

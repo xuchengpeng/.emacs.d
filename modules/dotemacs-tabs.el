@@ -1,5 +1,12 @@
 ;;; dotemacs-tabs.el --- Tabs.
 
+;;; Commentary:
+;;
+;; Tabs configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(centaur-tabs))
 
 (use-package centaur-tabs

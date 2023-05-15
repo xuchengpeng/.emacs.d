@@ -1,5 +1,12 @@
 ;;; dotemacs-lsp.el --- LSP.
 
+;;; Commentary:
+;;
+;; LSP configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(lsp-mode lsp-ui consult-lsp))
 
 (use-package lsp-mode

@@ -1,5 +1,12 @@
 ;;; dotemacs-flycheck.el --- Flycheck.
 
+;;; Commentary:
+;;
+;; Flycheck configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(flycheck))
 
 (use-package flycheck

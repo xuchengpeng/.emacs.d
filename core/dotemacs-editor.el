@@ -1,5 +1,12 @@
 ;;; dotemacs-editor.el --- Editor configurations.
 
+;;; Commentary:
+;;
+;; Editor configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(avy smartparens undo-tree expand-region))
 
 (setq find-file-visit-truename t

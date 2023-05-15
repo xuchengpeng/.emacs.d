@@ -1,5 +1,12 @@
 ;;; dotemacs-projectile.el --- Project management.
 
+;;; Commentary:
+;;
+;; Projectile configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(projectile))
 
 (use-package projectile

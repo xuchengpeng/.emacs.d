@@ -1,5 +1,12 @@
 ;;; dotemacs-vertico.el --- emacs-which-key
 
+;;; Commentary:
+;;
+;; which-key configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(which-key))
 
 (use-package which-key

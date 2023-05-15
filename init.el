@@ -1,5 +1,12 @@
 ;;; init.el --- dotemacs's configuration.
 
+;;; Commentary:
+;;
+;; Configuration entry.
+;;
+
+;;; Code:
+
 (when (version< emacs-version "28.1")
   (error "Detected Emacs %s. Emacs version should be 28.1 or higher" emacs-version))
 

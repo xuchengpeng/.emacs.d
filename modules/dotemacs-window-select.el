@@ -1,5 +1,12 @@
 ;;; dotemacs-window-select.el --- Switch window.
 
+;;; Commentary:
+;;
+;; Switch window configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(ace-window winum))
 
 (use-package ace-window

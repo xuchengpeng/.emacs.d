@@ -1,5 +1,12 @@
 ;;; dotemacs-modules.el --- A listing of modules to load on startup
 
+;;; Commentary:
+;;
+;; Modules definition.
+;;
+
+;;; Code:
+
 (require 'dotemacs-themes)
 (require 'dotemacs-which-key)
 (require 'dotemacs-vertico)

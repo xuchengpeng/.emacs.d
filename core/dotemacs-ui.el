@@ -1,5 +1,12 @@
 ;;; dotemacs-ui.el --- Initialize dotemacs ui configurations.
 
+;;; Commentary:
+;;
+;; UI configuration.
+;;
+
+;;; Code:
+
 (defvar dotemacs-font nil
   "The default font to use.
 

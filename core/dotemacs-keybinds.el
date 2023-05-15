@@ -1,5 +1,12 @@
 ;;; dotemacs-keybinds.el --- dotemacs keybindings.
 
+;;; Commentary:
+;;
+;; dotemacs keybinds.
+;;
+
+;;; Code:
+
 (defvar dotemacs-leader-map (make-sparse-keymap)
   "Leader map.")
 (global-set-key (kbd "M-SPC") dotemacs-leader-map)

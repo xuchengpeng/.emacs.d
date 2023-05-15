@@ -1,5 +1,12 @@
 ;;; dotemacs-core.el --- Emacs Core functions.
 
+;;; Commentary:
+;;
+;; Core configuration.
+;;
+
+;;; Code:
+
 (set-language-environment "UTF-8")
 (setq default-input-method nil)
 (unless (memq system-type '(cygwin windows-nt ms-dos))

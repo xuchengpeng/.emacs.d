@@ -1,5 +1,12 @@
 ;;; dotemacs-highlight.el --- Highlight.
 
+;;; Commentary:
+;;
+;; Highlight configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(symbol-overlay diff-hl hl-todo))
 
 (use-package symbol-overlay

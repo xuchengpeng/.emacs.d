@@ -1,5 +1,12 @@
 ;;; dotemacs-packages.el --- Initialize dotemacs packages configurations.
 
+;;; Commentary:
+;;
+;; Package configuration.
+;;
+
+;;; Code:
+
 (setq package-enable-at-startup nil
       package-user-dir (concat dotemacs-local-dir "elpa/")
       package-gnupghome-dir (expand-file-name "gpg" package-user-dir))

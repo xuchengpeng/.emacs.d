@@ -1,5 +1,12 @@
 ;;; dotemacs-tree-sitter.el --- tree-sitter
 
+;;; Commentary:
+;;
+;; tree-sitter configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(tree-sitter tree-sitter-langs))
 
 (use-package tree-sitter

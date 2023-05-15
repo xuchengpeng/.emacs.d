@@ -1,15 +1,23 @@
 ;;; dotemacs-company.el --- company-mode.
 
+;;; Commentary:
+;;
+;; Company configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-packages '(company))
 
 (defvar +company-backend-alist
   '((text-mode (:separate company-dabbrev company-yasnippet company-ispell))
     (prog-mode company-capf company-yasnippet)
     (conf-mode company-capf company-dabbrev-code company-yasnippet))
-  "An alist matching modes to company backends. The backends for any mode is
-built from this.")
+  "An alist matching modes to company backends.
+The backends for any mode is built from this.")
 
 (defun +company--backends ()
+  "Company backends."
   (let (backends)
     (let ((mode major-mode)
           (modes (list major-mode)))

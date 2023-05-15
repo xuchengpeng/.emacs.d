@@ -1,5 +1,12 @@
 ;;; dotemacs-vertico.el --- Vertico
 
+;;; Commentary:
+;;
+;; Vertico configuration.
+;;
+
+;;; Code:
+
 (dotemacs-require-package `(vertico :type git :host github :repo "minad/vertico"
                                     :files ("*.el" "extensions/*.el")))
 (dotemacs-require-packages '(orderless consult embark embark-consult))

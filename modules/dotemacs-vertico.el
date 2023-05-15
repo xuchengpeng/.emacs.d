@@ -59,6 +59,21 @@
         consult-async-input-throttle 0.2
         consult-async-input-debounce 0.1))
 
+(defun dotemacs-search-cwd (&optional arg)
+  "Conduct a text search in files under the current folder.
+If prefix ARG is set, prompt for a directory to search from."
+  (interactive "P")
+  (let ((default-directory
+          (if arg
+              (read-directory-name "Search directory: ")
+            default-directory)))
+    (consult-ripgrep default-directory)))
+
+(defun dotemacs-search-other-cwd ()
+  "Conduct a text search in another directory."
+  (interactive)
+  (dotemacs-search-cwd 'other))
+
 (use-package embark
   :defer t
   :init

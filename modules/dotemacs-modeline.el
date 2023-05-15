@@ -409,15 +409,7 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
               ((bound-and-true-p window-numbering-mode)
                (window-numbering-get-number-string))
               (t ""))))
-    (if (and (length> num 0)
-             (length> (cl-mapcan
-                       (lambda (frame)
-                         ;; Exclude minibuffer and child frames
-                         (unless (and (fboundp 'frame-parent)
-                                      (frame-parent frame))
-                           (window-list frame 'never)))
-                       (visible-frame-list))
-                      1))
+    (if (length> num 0)
         (propertize (format " %s " num)
                     'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-major-mode))
       (dotemacs-modeline-spc))))

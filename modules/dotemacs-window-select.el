@@ -17,7 +17,9 @@
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (use-package winum
-  :hook (window-selection-change-functions . winum-mode))
+  :hook (window-configuration-change . winum-mode)
+  :config
+  (setq winum-auto-setup-mode-line nil))
 
 (provide 'dotemacs-window-select)
 ;;; dotemacs-window-select.el ends here

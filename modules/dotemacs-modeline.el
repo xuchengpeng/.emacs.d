@@ -101,24 +101,10 @@ It respects `dotemacs-modeline-enable-word-count'."
   "Face used for the minor-modes segment in the mode-line."
   :group 'dotemacs-modeline-faces)
 
-(defface dotemacs-modeline-project-parent-dir
-  '((t (:inherit (dotemacs-modeline font-lock-comment-face bold))))
-  "Face used for the project parent directory of the mode-line buffer path."
-  :group 'dotemacs-modeline-faces)
-
-(defface dotemacs-modeline-project-dir
-  '((t (:inherit (dotemacs-modeline font-lock-string-face bold))))
-  "Face used for the project directory of the mode-line buffer path."
-  :group 'dotemacs-modeline-faces)
-
-(defface dotemacs-modeline-project-root-dir
-  '((t (:inherit (dotemacs-modeline-emphasis bold))))
-  "Face used for the project part of the mode-line buffer path."
-  :group 'dotemacs-modeline-faces)
-
-(defface dotemacs-modeline-debug
-  '((t (:inherit (dotemacs-modeline font-lock-doc-face) :slant normal)))
-  "Face for debug-level messages in the mode-line. Used by vcs, checker, etc."
+(defface dotemacs-modeline-panel
+  '((t (:inherit dotemacs-modeline-highlight)))
+  "Face for \\='X out of Y\\=' segments.
+This applies to `anzu', `evil-substitute', `iedit' etc."
   :group 'dotemacs-modeline-faces)
 
 (defface dotemacs-modeline-info
@@ -157,9 +143,6 @@ Also see the face `dotemacs-modeline-unread-number'."
 ;;
 
 (declare-function face-remap-remove-relative "face-remap")
-(declare-function ffip-project-root "ext:find-file-in-project")
-(declare-function project-root "project")
-(declare-function projectile-project-root "ext:projectile")
 
 ;; Keep `dotemacs-modeline-current-window' up-to-date
 (defun dotemacs-modeline--selected-window ()
@@ -352,14 +335,24 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 ;; Segments
 ;;
 
+(defvar evil-mc-frozen)
 (defvar evil-state)
 (defvar evil-visual-beginning)
 (defvar evil-visual-end)
 (defvar flycheck-current-errors)
+(defvar iedit-occurrences-overlays)
+(defvar symbol-overlay-keywords-alist)
+(defvar symbol-overlay-temp-symbol)
 (defvar text-scale-mode-amount)
 (defvar winum-auto-setup-mode-line)
 
 (declare-function flycheck-count-errors "ext:flycheck")
+(declare-function iedit-find-current-occurrence-overlay "ext:iedit-lib")
+(declare-function iedit-prev-occurrence "ext:iedit-lib")
+(declare-function mc/num-cursors "ext:multiple-cursors-core")
+(declare-function symbol-overlay-assoc "ext:symbol-overlay")
+(declare-function symbol-overlay-get-list "ext:symbol-overlay")
+(declare-function symbol-overlay-get-symbol "ext:symbol-overlay")
 (declare-function window-numbering-clear-mode-line "ext:window-numbering")
 (declare-function window-numbering-get-number-string "ext:window-numbering")
 (declare-function window-numbering-install-mode-line "ext:window-numbering")
@@ -416,13 +409,11 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 
 (defsubst dotemacs-modeline--buffer-simple-name ()
   "The buffer simple name."
-  (concat
-    (if buffer-file-name "%I ")
-    (propertize "%b"
-                'face (dotemacs-modeline-face
-                      (if (buffer-modified-p)
-                          'dotemacs-modeline-buffer-modified
-                        'dotemacs-modeline-buffer-file)))))
+  (propertize "%b"
+              'face (dotemacs-modeline-face
+                    (if (buffer-modified-p)
+                        'dotemacs-modeline-buffer-modified
+                      'dotemacs-modeline-buffer-file))))
 
 (dotemacs-modeline-def-segment buffer-info-simple
   "Display only the current buffer's name, but with fontification."
@@ -607,12 +598,94 @@ icons."
       (`interrupted (propertize " Interrupted " 'face (dotemacs-modeline-face 'dotemacs-modeline-warning)))
       (`suspicious '(propertize " Suspicious " 'face (dotemacs-modeline-face 'dotemacs-modeline-urgent))))))
 
+(defun dotemacs-modeline-themes--overlay-sort (a b)
+  "Sort overlay A and B."
+  (< (overlay-start a) (overlay-start b)))
+
+(defsubst dotemacs-modeline--iedit ()
+  "Show the number of iedit regions matches + what match you're on."
+  (when (and (bound-and-true-p iedit-mode)
+             (bound-and-true-p iedit-occurrences-overlays))
+    (propertize
+     (let ((this-oc (or (let ((inhibit-message t))
+                          (iedit-find-current-occurrence-overlay))
+                        (save-excursion (iedit-prev-occurrence)
+                                        (iedit-find-current-occurrence-overlay))))
+           (length (length iedit-occurrences-overlays)))
+       (format " %s/%d "
+               (if this-oc
+                   (- length
+                      (length (memq this-oc (sort (append iedit-occurrences-overlays nil)
+                                                  #'dotemacs-modeline-themes--overlay-sort)))
+                      -1)
+                 "-")
+               length))
+     'face (dotemacs-modeline-face 'dotemacs-modeline-panel))))
+
+(defsubst dotemacs-modeline--symbol-overlay ()
+  "Show the number of matches for symbol overlay."
+  (when (and (dotemacs-modeline--active)
+             (bound-and-true-p symbol-overlay-keywords-alist)
+             (not (bound-and-true-p symbol-overlay-temp-symbol))
+             (not (bound-and-true-p iedit-mode)))
+    (let* ((keyword (symbol-overlay-assoc (symbol-overlay-get-symbol t)))
+           (symbol (car keyword))
+           (before (symbol-overlay-get-list -1 symbol))
+           (after (symbol-overlay-get-list 1 symbol))
+           (count (length before)))
+      (if (symbol-overlay-assoc symbol)
+          (propertize
+           (format (concat  " %d/%d " (and (cadr keyword) "in scope "))
+                   (+ count 1)
+                   (+ count (length after)))
+           'face (dotemacs-modeline-face 'dotemacs-modeline-panel))))))
+
+(defsubst dotemacs-modeline--multiple-cursors ()
+  "Show the number of multiple cursors."
+  (cl-destructuring-bind (count . face)
+    (cond ((bound-and-true-p multiple-cursors-mode)
+           (cons (mc/num-cursors)
+                 (dotemacs-modeline-face 'dotemacs-modeline-panel)))
+          ((bound-and-true-p evil-mc-cursor-list)
+           (cons (length evil-mc-cursor-list)
+                 (dotemacs-modeline-face (if evil-mc-frozen
+                                         'dotemacs-modeline-bar
+                                       'dotemacs-modeline-panel))))
+          ((cons nil nil)))
+    (when count
+      (concat (propertize " " 'face face)
+              (propertize "I"
+                          'face `(:inherit ,face :height 1.4 :weight normal)
+                          'display '(raise -0.1))
+              (propertize (format " %d " count)
+                          'face face)))))
+
+(defsubst dotemacs-modeline--buffer-size ()
+  "Show buffer size."
+  (when buffer-file-name
+    (concat (dotemacs-modeline-spc)
+            (propertize "%I"
+                        'face (dotemacs-modeline-face)
+                        'help-echo "Buffer size
+  mouse-1: Display Line and Column Mode Menu"
+                        'mouse-face 'dotemacs-modeline-highlight
+                        'local-map mode-line-column-line-number-mode-map)
+            (dotemacs-modeline-spc))))
+
+(dotemacs-modeline-def-segment matches
+  "Displays matches."
+  (let ((meta (concat (dotemacs-modeline--iedit)
+                      (dotemacs-modeline--symbol-overlay)
+                      (dotemacs-modeline--multiple-cursors))))
+    (or (and (not (string-empty-p meta)) meta)
+        (dotemacs-modeline--buffer-size))))
+
 ;;
 ;; Modelines
 ;;
 
 (dotemacs-modeline-def-modeline main
-  (bar window-number buffer-info-simple buffer-position word-count selection-info)
+  (bar window-number matches buffer-info-simple buffer-position word-count selection-info)
   (minor-modes buffer-encoding major-mode process vcs checker))
 
 (defun dotemacs-modeline-set-main-modeline (&optional default)

@@ -20,7 +20,7 @@ Users of Emacs dotemacs are encouraged to keep their personal configuration
 changes in this directory.  All Emacs Lisp files there are loaded automatically
 by dotemacs.")
 (defvar dotemacs-personal-preload-dir (expand-file-name "preload/" dotemacs-personal-dir)
-  "This directory is for your personal configuration, that you want loaded before dotemacs.")
+  "This directory is for your personal configuration loaded before dotemacs.")
 (defvar dotemacs-modules-file (expand-file-name "dotemacs-modules.el" dotemacs-personal-dir)
   "This file contains a list of modules that will be loaded by dotemacs.")
 (defvar dotemacs-local-dir (expand-file-name ".local/" dotemacs-dir)

@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.3](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.2...v2.0.3) (2023-05-16)
+
+
+### Bug Fixes
+
+* **consult:** support search current and other directory ([1379542](https://github.com/xuchengpeng/.emacs.d/commit/13795421786a5eda0e07ffbc60d2bccba3850f75))
+* **diagnostics:** fix warnings ([55f8a21](https://github.com/xuchengpeng/.emacs.d/commit/55f8a21bc5b0675686f6eadbd22f815410f27b1e))
+* **flycheck:** bind flycheck-command-map with C-c f ([f53f660](https://github.com/xuchengpeng/.emacs.d/commit/f53f660b5df2f65c15cfae0d8e90804e32a3018b))
+* **modeline:** add matches ([8be2528](https://github.com/xuchengpeng/.emacs.d/commit/8be2528076bc15b70445cf7b19ee4e0656538822))
+* **modeline:** refactoring segments ([5ad058b](https://github.com/xuchengpeng/.emacs.d/commit/5ad058bffd8ef17f5dbe51eebe0b58d461fe5008))
+* **projectile:** bind projectile-command-map with C-c p ([33eb4ce](https://github.com/xuchengpeng/.emacs.d/commit/33eb4cede1afdca1061b29a1e68a4cf5b2b298f0))
+* **winum:** active with window-configuration-change-hook ([79943b8](https://github.com/xuchengpeng/.emacs.d/commit/79943b83e3182a953ce6c88264d844ba94dcfcb4))
+
 ## [2.0.2](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.1...v2.0.2) (2023-05-12)
 
 

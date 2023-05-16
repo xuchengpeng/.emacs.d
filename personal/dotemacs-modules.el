@@ -11,7 +11,6 @@
 (require 'dotemacs-which-key)
 (require 'dotemacs-vertico)
 (require 'dotemacs-company)
-(require 'dotemacs-lsp)
 (require 'dotemacs-projectile)
 (require 'dotemacs-tabs)
 (require 'dotemacs-modeline)

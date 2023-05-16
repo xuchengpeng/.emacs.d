@@ -101,6 +101,11 @@ It respects `dotemacs-modeline-enable-word-count'."
   "Face used for the minor-modes segment in the mode-line."
   :group 'dotemacs-modeline-faces)
 
+(defface dotemacs-modeline-project-root-dir
+  '((t (:inherit (dotemacs-modeline-emphasis bold))))
+  "Face used for the project part of the mode-line buffer path."
+  :group 'dotemacs-modeline-faces)
+
 (defface dotemacs-modeline-panel
   '((t (:inherit dotemacs-modeline-highlight)))
   "Face for \\='X out of Y\\=' segments.
@@ -276,11 +281,11 @@ Throws an error if it doesn't exist."
 (defun dotemacs-modeline-set-modeline (key &optional default)
   "Set the modeline format. Does nothing if the modeline KEY doesn't exist.
 If DEFAULT is non-nil, set the default mode-line for all buffers."
-  (when-let* ((modeline (dotemacs-modeline key)))
+  (when-let ((modeline (dotemacs-modeline key)))
     (setf (if default
               (default-value 'mode-line-format)
             mode-line-format)
-          modeline)))
+          (list "%e" modeline))))
 
 
 ;;
@@ -345,6 +350,7 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 (declare-function iedit-find-current-occurrence-overlay "ext:iedit-lib")
 (declare-function iedit-prev-occurrence "ext:iedit-lib")
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
+(declare-function projectile-project-root "ext:projectile")
 (declare-function symbol-overlay-assoc "ext:symbol-overlay")
 (declare-function symbol-overlay-get-list "ext:symbol-overlay")
 (declare-function symbol-overlay-get-symbol "ext:symbol-overlay")
@@ -416,13 +422,49 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
    (dotemacs-modeline-spc)
    (dotemacs-modeline--buffer-simple-name)))
 
+(defun dotemacs-modeline--project-root ()
+  "Get project root directory."
+  (when (bound-and-true-p projectile-mode)
+    (projectile-project-root)))
+
+(defsubst dotemacs-modeline--buffer-name ()
+  "The buffer name."
+  (let ((file-path (file-local-name (or (buffer-file-name (buffer-base-buffer)) "")))
+        (project-root (or (dotemacs-modeline--project-root) default-directory)))
+    (concat
+      ;; Project directory
+      (propertize (concat (file-name-nondirectory (directory-file-name project-root)) "/")
+                  'face (dotemacs-modeline-face 'dotemacs-modeline-project-root-dir))
+      ;; Relative path
+      (propertize
+        (when-let (relative-path (file-relative-name
+                                  (or (file-name-directory file-path) "./")
+                                  project-root))
+          (if (string= relative-path "./")
+              ""
+            relative-path))
+        'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-path))
+      ;; File name
+      (propertize (file-name-nondirectory file-path)
+                  'face (dotemacs-modeline-face (if (buffer-modified-p)
+                                                    'dotemacs-modeline-buffer-modified
+                                                  'dotemacs-modeline-buffer-file))))))
+
+(dotemacs-modeline-def-segment buffer-info
+  "Display buffer info."
+  (concat
+    (dotemacs-modeline-spc)
+    (if buffer-file-name
+        (dotemacs-modeline--buffer-name)
+      (dotemacs-modeline--buffer-simple-name))))
+
 (dotemacs-modeline-def-segment buffer-default-directory
   "Displays `default-directory'. This is for special buffers like the scratch
 buffer where knowing the current project directory is important."
-  (let ((face (if (dotemacs-modeline--active) 'dotemacs-modeline-buffer-path)))
-    (concat (dotemacs-modeline-spc)
-            (propertize (abbreviate-file-name default-directory)
-                        'face face))))
+  (concat
+    (dotemacs-modeline-spc)
+    (propertize (abbreviate-file-name default-directory)
+                'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-path))))
 
 (dotemacs-modeline-def-segment buffer-encoding
   "Displays the encoding and eol style of the buffer the same way Atom does."
@@ -680,8 +722,16 @@ icons."
 ;;
 
 (dotemacs-modeline-def-modeline main
-  (bar window-number matches buffer-info-simple buffer-position word-count selection-info)
+  (bar window-number matches buffer-info buffer-position word-count selection-info)
   (minor-modes buffer-encoding major-mode process vcs checker))
+
+(dotemacs-modeline-def-modeline special
+  (bar window-number matches buffer-info-simple buffer-position)
+  (major-mode process))
+
+(dotemacs-modeline-def-modeline project
+  (bar window-number buffer-default-directory buffer-position)
+  (major-mode process))
 
 (defun dotemacs-modeline-set-main-modeline (&optional default)
   "Set main mode-line.
@@ -689,6 +739,24 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
   (dotemacs-modeline-set-modeline 'main default))
 
 (dotemacs-modeline-set-main-modeline t)
+
+(defvar dotemacs-modeline-mode-alist
+  '((message-mode . special)
+    (circe-mode . special)
+    (erc-mode . special)
+    (rcirc-mode . special)
+    (Info-mode .  special))
+  "Alist of major modes and mode-lines.")
+
+(defun dotemacs-modeline-auto-set-modeline ()
+  "Set mode-line base on major-mode."
+  (catch 'found
+    (dolist (x dotemacs-modeline-mode-alist)
+      (when (derived-mode-p (car x))
+        (dotemacs-modeline-set-modeline (cdr x))
+        (throw 'found x)))))
+
+(add-hook 'after-change-major-mode-hook #'dotemacs-modeline-auto-set-modeline)
 
 (provide 'dotemacs-modeline)
 ;;; dotemacs-modeline.el ends here

@@ -7,17 +7,11 @@
 
 ;;; Code:
 
-(dotemacs-require-packages '(symbol-overlay diff-hl hl-todo))
+(dotemacs-require-packages '(symbol-overlay hl-todo))
 
 (use-package symbol-overlay
   :commands symbol-overlay-mode
   :hook (prog-mode . symbol-overlay-mode))
-
-(use-package diff-hl
-  :hook ((prog-mode after-save) . diff-hl-mode)
-  :config
-  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode)

@@ -247,12 +247,7 @@ Also see the face `dotemacs-modeline-unread-number'."
   "Define a modeline format and byte-compiles it.
 NAME is a symbol to identify it (used by `dotemacs-modeline' for retrieval).
 LHS and RHS are lists of symbols of modeline segments defined with
-`dotemacs-modeline-def-modeline-segment'.
-Example:
-  (dotemacs-modeline-def-modeline minimal
-    (bar \" \" buffer-info)
-    (media-info major-mode))
-  (dotemacs-set-modeline 'minimal t)"
+`dotemacs-modeline-def-modeline-segment'."
   (let ((sym (intern (format "dotemacs-modeline-format--%s" name)))
         (lhs-forms (dotemacs-modeline--prepare-segments lhs))
         (rhs-forms (dotemacs-modeline--prepare-segments rhs)))
@@ -284,7 +279,7 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
   (when-let* ((modeline (dotemacs-modeline key)))
     (setf (if default
               (default-value 'mode-line-format)
-            (buffer-local-value 'mode-line-format (current-buffer)))
+            mode-line-format)
           modeline)))
 
 

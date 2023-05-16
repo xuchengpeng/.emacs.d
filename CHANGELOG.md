@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.4](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.3...v2.0.4) (2023-05-16)
+
+
+### Bug Fixes
+
+* **git:** add magit package ([408c924](https://github.com/xuchengpeng/.emacs.d/commit/408c924d4aebe1b2b63218f44facf272ff566c75))
+* **lsp:** remove lsp-mode,lsp-ui,consult-lsp ([5c9cf29](https://github.com/xuchengpeng/.emacs.d/commit/5c9cf29af2e3d7ee8392f93d1135af072e0eeb47))
+* **modeline:** add buffer info with project directory ([19f89fc](https://github.com/xuchengpeng/.emacs.d/commit/19f89fc439dbb070c1e615209cbb2b0653ab3096))
+* **modeline:** buffer-local-value is obsolete ([4cab98f](https://github.com/xuchengpeng/.emacs.d/commit/4cab98f10782c32243a1a7ea50e2d01aef9eef1e))
+
 ## [2.0.3](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.2...v2.0.3) (2023-05-16)
 
 

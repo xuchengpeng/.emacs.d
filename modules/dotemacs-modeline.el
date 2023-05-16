@@ -35,10 +35,8 @@ If the actual char height is larger, it respects the actual char height."
 
 (defcustom dotemacs-modeline-continuous-word-count-modes
   '(markdown-mode gfm-mode org-mode)
-  "Major modes in which to display word count continuously.
-
-It respects `dotemacs-modeline-enable-word-count'."
-  :type '(repeat (symbol :tag "Major-Mode") )
+  "Major modes in which to display word count continuously."
+  :type '(repeat (symbol :tag "Major-Mode"))
   :group 'dotemacs-modeline)
 
 (defcustom dotemacs-modeline-minor-modes nil
@@ -347,6 +345,9 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 (defvar winum-auto-setup-mode-line)
 
 (declare-function flycheck-count-errors "ext:flycheck")
+(declare-function flycheck-list-errors "ext:flycheck")
+(declare-function flycheck-next-error "ext:flycheck")
+(declare-function flycheck-previous-error "ext:flycheck")
 (declare-function iedit-find-current-occurrence-overlay "ext:iedit-lib")
 (declare-function iedit-prev-occurrence "ext:iedit-lib")
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
@@ -420,7 +421,8 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
   "Display only the current buffer's name, but with fontification."
   (concat
    (dotemacs-modeline-spc)
-   (dotemacs-modeline--buffer-simple-name)))
+   (dotemacs-modeline--buffer-simple-name)
+   (dotemacs-modeline-spc)))
 
 (defun dotemacs-modeline--project-root ()
   "Get project root directory."
@@ -456,7 +458,8 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
     (dotemacs-modeline-spc)
     (if buffer-file-name
         (dotemacs-modeline--buffer-name)
-      (dotemacs-modeline--buffer-simple-name))))
+      (dotemacs-modeline--buffer-simple-name))
+    (dotemacs-modeline-spc)))
 
 (dotemacs-modeline-def-segment buffer-default-directory
   "Displays `default-directory'. This is for special buffers like the scratch
@@ -464,11 +467,13 @@ buffer where knowing the current project directory is important."
   (concat
     (dotemacs-modeline-spc)
     (propertize (abbreviate-file-name default-directory)
-                'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-path))))
+                'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-path))
+    (dotemacs-modeline-spc)))
 
 (dotemacs-modeline-def-segment buffer-encoding
   "Displays the encoding and eol style of the buffer the same way Atom does."
-  (concat (pcase (coding-system-eol-type buffer-file-coding-system)
+  (concat (dotemacs-modeline-spc)
+          (pcase (coding-system-eol-type buffer-file-coding-system)
             (0 "LF ")
             (1 "CRLF ")
             (2 "CR ")
@@ -481,12 +486,21 @@ buffer where knowing the current project directory is important."
 
 (dotemacs-modeline-def-segment buffer-position
   "The buffer position information."
-  '(" " "%2l:%c" " " (-3 "%p") " "))
+  (when-let (position '("" "%l:%c" " " (-3 "%p") "%%"))
+    (concat
+      (dotemacs-modeline-spc)
+      (propertize (format-mode-line position)
+                  'face (dotemacs-modeline-face)
+                  'help-echo "Buffer position\n\
+mouse-1: Display Line and Column Mode Menu"
+                  'mouse-face 'dotemacs-modeline-highlight
+                  'local-map mode-line-column-line-number-mode-map)
+      (dotemacs-modeline-spc))))
 
 (dotemacs-modeline-def-segment word-count
   "The buffer word count."
   (when (member major-mode dotemacs-modeline-continuous-word-count-modes)
-    (propertize (format " %dW" (count-words (point-min) (point-max)))
+    (propertize (format " %dW " (count-words (point-min) (point-max)))
                 'face (dotemacs-modeline-face))))
 
 (defsubst dotemacs-modeline-column (pos)
@@ -543,7 +557,8 @@ By default, this shows the information specified by `global-mode-string'."
         `((:propertize ("" minor-mode-alist)
             face ,face
             mouse-face ,mouse-face
-            help-echo ,help-echo)
+            help-echo ,help-echo
+            local-map ,mode-line-minor-mode-keymap)
           ,(dotemacs-modeline-spc)))
     ""))
 
@@ -618,22 +633,37 @@ By default, this shows the information specified by `global-mode-string'."
   "Displays color-coded flycheck error status in the current buffer with pretty
 icons."
   (when (boundp 'flycheck-last-status-change)
-    (pcase flycheck-last-status-change
-      (`finished
-       (when flycheck-current-errors
-         (let-alist (flycheck-count-errors flycheck-current-errors)
-           (let ((error (or .error 0))
-                  (warning (or .warning 0))
-                  (info (or .info 0)))
-             (format " %s %s %s "
-                     (propertize (concat "E" (number-to-string error)) 'face (dotemacs-modeline-face 'dotemacs-modeline-urgent))
-                     (propertize (concat "W" (number-to-string warning)) 'face (dotemacs-modeline-face 'dotemacs-modeline-warning))
-                     (propertize (concat "I" (number-to-string info)) 'face (dotemacs-modeline-face 'dotemacs-modeline-info)))))))
-      (`running nil)
-      (`not-checked nil)
-      (`errored (propertize " Error " 'face (dotemacs-modeline-face 'dotemacs-modeline-urgent)))
-      (`interrupted (propertize " Interrupted " 'face (dotemacs-modeline-face 'dotemacs-modeline-warning)))
-      (`suspicious '(propertize " Suspicious " 'face (dotemacs-modeline-face 'dotemacs-modeline-urgent))))))
+    (when-let (text
+      (pcase flycheck-last-status-change
+        (`finished
+          (when flycheck-current-errors
+            (let-alist (flycheck-count-errors flycheck-current-errors)
+              (let ((error (or .error 0))
+                    (warning (or .warning 0))
+                    (info (or .info 0)))
+                (format " %s %s %s "
+                        (propertize (concat "E" (number-to-string error))
+                                    'face (dotemacs-modeline-face 'dotemacs-modeline-urgent))
+                        (propertize (concat "W" (number-to-string warning))
+                                    'face (dotemacs-modeline-face 'dotemacs-modeline-warning))
+                        (propertize (concat "I" (number-to-string info))
+                                    'face (dotemacs-modeline-face 'dotemacs-modeline-info)))))))
+        (`running nil)
+        (`not-checked nil)
+        (`errored (propertize " Error " 'face (dotemacs-modeline-face 'dotemacs-modeline-urgent)))
+        (`interrupted (propertize " Interrupted " 'face (dotemacs-modeline-face 'dotemacs-modeline-warning)))
+        (`suspicious '(propertize " Suspicious " 'face (dotemacs-modeline-face 'dotemacs-modeline-urgent)))))
+      (propertize text
+                  'mouse-face 'dotemacs-modeline-highlight
+                  'help-echo "Flycheck
+  mouse-1: Next error
+  mouse-2: Show all errors
+  mouse-3: Previous error"
+                  'local-map (let ((map (make-sparse-keymap)))
+                        (define-key map [mode-line mouse-1] #'flycheck-next-error)
+                        (define-key map [mode-line mouse-2] #'flycheck-list-errors)
+                        (define-key map [mode-line mouse-3] #'flycheck-previous-error)
+                        map)))))
 
 (defun dotemacs-modeline-themes--overlay-sort (a b)
   "Sort overlay A and B."

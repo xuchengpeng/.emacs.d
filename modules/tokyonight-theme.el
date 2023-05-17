@@ -147,6 +147,20 @@
    `(centaur-tabs-active-bar-face ((t (:inherit mode-line-highlight))))
    `(centaur-tabs-modified-marker-selected ((t (:inherit centaur-tabs-selected :foreground ,orange))))
    `(centaur-tabs-modified-marker-unselected ((t (:inherit centaur-tabs-unselected :foreground ,orange))))
+
+   ;; company
+   `(company-tooltip ((t (:foreground ,fg :background ,bg-dark))))
+   `(company-tooltip-selection ((t (:foreground ,comment :background ,bg-hl))))
+   `(company-tooltip-common ((t (:inherit company-tooltip :foreground ,red))))
+   `(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :foreground ,red))))
+   `(company-tooltip-search ((t (:inherit company-tooltip :foreground ,blue))))
+   `(company-tooltip-annotation ((t (:inherit company-tooltip :foreground ,green))))
+   `(company-tooltip-annotation-selection ((t (:inherit company-tooltip-selection :foreground ,green))))
+   `(company-scrollbar-fg ((t (:background ,bg-hl))))
+   `(company-scrollbar-bg ((t (:background ,bg-dark))))
+   `(company-preview ((t (:foreground ,comment :background ,bg-hl))))
+   `(company-preview-common ((t (:inherit company-preview :foreground ,red))))
+   `(company-preview-search ((t (:inherit company-preview :foreground ,blue))))
    ))
 
 ;;;###autoload

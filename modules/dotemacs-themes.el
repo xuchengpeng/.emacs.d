@@ -7,12 +7,8 @@
 
 ;;; Code:
 
-(dotemacs-require-package `(doom-themes :local-repo "doom-themes"))
-
-(use-package doom-themes
-  :config
-  (load-theme 'doom-one t)
-  (doom-themes-visual-bell-config))
+(load "tokyonight-theme" 'nomessage t)
+(load-theme 'tokyonight t)
 
 (provide 'dotemacs-themes)
 ;;; dotemacs-themes.el ends here

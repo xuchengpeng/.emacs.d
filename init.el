@@ -49,7 +49,7 @@ by dotemacs.")
 ;; config changes made through the customize UI will be stored here
 (setq custom-file (expand-file-name "custom.el" dotemacs-local-dir))
 (when (file-exists-p custom-file)
-  (load custom-file))
+  (load custom-file 'nomessage t))
 
 ;; preload the personal settings from `dotemacs-personal-preload-dir'
 (when (file-exists-p dotemacs-personal-preload-dir)
@@ -65,7 +65,7 @@ by dotemacs.")
 
 ;; the modules
 (if (file-exists-p dotemacs-modules-file)
-    (load dotemacs-modules-file)
+    (load dotemacs-modules-file 'nomessage t)
   (message "[dotemacs] Missing personal modules file %s" dotemacs-modules-file))
 
 ;; load the personal settings

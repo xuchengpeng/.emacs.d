@@ -45,7 +45,7 @@
    ;; Basic faces
    `(cursor ((t (:background ,white))))
    `(default ((t ,(list :foreground fg :background bg))))
-   `(fringe ((t ,(list :background bg-dark :foreground fg-gutter))))
+   `(fringe ((t ,(list :foreground fg-dark :background bg-dark))))
    `(link ((t (:foreground ,dark5 :underline t))))
    `(link-visited ((t (:foreground ,dark5 :underline t))))
    `(match ((t (:background ,dark5))))
@@ -161,6 +161,14 @@
    `(company-preview ((t (:foreground ,comment :background ,bg-hl))))
    `(company-preview-common ((t (:inherit company-preview :foreground ,red))))
    `(company-preview-search ((t (:inherit company-preview :foreground ,blue))))
+
+   ;; flycheck
+   `(flycheck-error          ((t (:underline (:style wave :color ,red)))))
+   `(flycheck-warning        ((t (:underline (:style wave :color ,orange)))))
+   `(flycheck-info           ((t (:underline (:style wave :color ,green)))))
+   `(flycheck-fringe-error   ((t (:inherit fringe :foreground ,red))))
+   `(flycheck-fringe-warning ((t (:inherit fringe :foreground ,orange))))
+   `(flycheck-fringe-info    ((t (:inherit fringe :foreground ,green))))
    ))
 
 ;;;###autoload

@@ -79,7 +79,7 @@
    `(font-lock-type-face ((t (:foreground ,blue0))))
    `(font-lock-variable-name-face ((t (:foreground ,fg))))
    `(font-lock-warning-face ((t (:foreground ,yellow))))
-     
+
    ;; Calendar
    `(holiday-face ((t (:foreground ,red1))))
 
@@ -94,6 +94,7 @@
    `(custom-state ((t (:foreground ,green))))
 
    ;; Diff
+   `(diff-changed ((t ,(list :foreground blue :background 'unspecified))))
    `(diff-removed ((t ,(list :foreground red :background 'unspecified))))
    `(diff-added ((t ,(list :foreground green :background 'unspecified))))
 
@@ -125,6 +126,27 @@
    `(mode-line-emphasis ((t (:foreground ,blue))))
    `(mode-line-highlight ((t (:foreground ,fg-gutter :background ,blue :box nil))))
    `(header-line ((t (:inherit mode-line))))
+   `(header-line-highlight ((t (:inherit mode-line-highlight))))
+
+   ;; tab-line / tab-bar
+   `(tab-line ((t (:foreground ,fg-dark :background ,bg-dark))))
+   `(tab-line-tab ((t (:foreground ,fg :background ,bg))))
+   `(tab-line-tab-inactive ((t (:foreground ,fg-dark :background ,bg-dark))))
+   `(tab-line-tab-inactive-alternate ((t (:inherit tab-line-tab-inactive))))
+   `(tab-line-tab-current ((t (:foreground ,fg :background ,bg))))
+   `(tab-bar ((t (:foreground ,fg-dark :background ,bg-dark))))
+   `(tab-bar-tab ((t (:foreground ,fg :background ,bg))))
+   `(tab-bar-tab-inactive ((t (:foreground ,fg-dark :background ,bg-dark))))
+
+   ;; centaur-tabs
+   `(centaur-tabs-default ((t (:inherit tab-bar :box nil))))
+   `(centaur-tabs-selected ((t (:inherit tab-bar-tab :box nil))))
+   `(centaur-tabs-unselected ((t (:inherit tab-bar-tab-inactive :box nil))))
+   `(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selecte :foreground ,orange))))
+   `(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselecte :foreground ,orange))))
+   `(centaur-tabs-active-bar-face ((t (:inherit mode-line-highlight))))
+   `(centaur-tabs-modified-marker-selected ((t (:inherit centaur-tabs-selected :foreground ,orange))))
+   `(centaur-tabs-modified-marker-unselected ((t (:inherit centaur-tabs-unselected :foreground ,orange))))
    ))
 
 ;;;###autoload

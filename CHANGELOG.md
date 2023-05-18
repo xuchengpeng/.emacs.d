@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.0.5](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.4...v2.0.5) (2023-05-18)
+
+
+### Bug Fixes
+
+* **consult:** find files using fd ([89d7531](https://github.com/xuchengpeng/.emacs.d/commit/89d75317ce4bdb7b5ba6ac2bb81b30809b08106e))
+* **editor:** add multiple cursors ([0661aed](https://github.com/xuchengpeng/.emacs.d/commit/0661aedcbc2b92546bd873bd6e83e0e9575116a7))
+* **expand-region:** bind with C-= ([6bdfd8c](https://github.com/xuchengpeng/.emacs.d/commit/6bdfd8cd32abbba431bdd65284110ed769ec94b5))
+* **mark:** customize mark keybinds ([f511feb](https://github.com/xuchengpeng/.emacs.d/commit/f511feb2167148aff40c5cb9066f0234cb320153))
+* **modeline:** add mouse face and map ([8ad848a](https://github.com/xuchengpeng/.emacs.d/commit/8ad848a28b6b2be778a807fffb2b2d6cea9a3996))
+* **modeline:** set multiple-cursors matches face ([d88bbf9](https://github.com/xuchengpeng/.emacs.d/commit/d88bbf95205dd3ffe439bfc306317dcb886dd960))
+* **themes:** use tokyonight as default ([9a59752](https://github.com/xuchengpeng/.emacs.d/commit/9a597522363a2486e8639b6a6c465b15bbb7d442))
+* **tokyonight:** add centaur-tabs faces ([12bbabd](https://github.com/xuchengpeng/.emacs.d/commit/12bbabdbfc0c332983979635b6728fea00d3cbc4))
+* **tokyonight:** add company faces ([d4a79c7](https://github.com/xuchengpeng/.emacs.d/commit/d4a79c772b64d991ab5e7692568f462acd67ac4a))
+* **tokyonight:** add flycheck faces ([9544dcd](https://github.com/xuchengpeng/.emacs.d/commit/9544dcd1fff8e798e88cb430c943ecae4392b4f7))
+* **tokyonight:** add search faces ([15763c1](https://github.com/xuchengpeng/.emacs.d/commit/15763c19094ac56005beba2597dcefb3e0c7ebcb))
+* **tokyonight:** add vertico-current face ([a2fa0f8](https://github.com/xuchengpeng/.emacs.d/commit/a2fa0f8e1f14a5b5f5bcac49c9176d8653122afa))
+* **tokyonight:** customize search foreground color ([a2a13d0](https://github.com/xuchengpeng/.emacs.d/commit/a2a13d03d9936296076042a862e038f5963e5fdb))
+* **treemacs:** do not show line numbers ([2bd402b](https://github.com/xuchengpeng/.emacs.d/commit/2bd402b39e6d560188b7caa84693b7ae90adc7d8))
+* **undo-tree:** do not show line numbers ([396b30a](https://github.com/xuchengpeng/.emacs.d/commit/396b30a54b6f9644365552611d769c0a2f3544a0))
+* **vertico:** add marginalia ([a4f7234](https://github.com/xuchengpeng/.emacs.d/commit/a4f723473b10b4dfd18ad61f8002713d82247494))
+* **which-key:** set line-space in which-key buffer ([3e57da6](https://github.com/xuchengpeng/.emacs.d/commit/3e57da677381056196ac114afaf841ee7f70c5b1))
+
 ## [2.0.4](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.3...v2.0.4) (2023-05-16)
 
 

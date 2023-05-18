@@ -51,7 +51,7 @@
    `(match ((t (:background ,dark5))))
    `(shadow ((t (:foreground ,dark5))))
    `(minibuffer-prompt ((t :foreground ,magenta)))
-   `(region ((t (:background ,bg-hl :foreground unspecified))))
+   `(region ((t (:background ,bg-hl :extend t))))
    `(secondary-selection ((t ,(list :background bg-hl :foreground 'unspecified))))
    `(trailing-whitespace ((t ,(list :foreground white :background red))))
    `(border ((t ,(list :background bg :foreground bg-hl))))
@@ -169,6 +169,9 @@
    `(flycheck-fringe-error   ((t (:inherit fringe :foreground ,red))))
    `(flycheck-fringe-warning ((t (:inherit fringe :foreground ,orange))))
    `(flycheck-fringe-info    ((t (:inherit fringe :foreground ,green))))
+
+   ;; vertico
+   `(vertico-current ((t (:inherit region :extend t))))
    ))
 
 ;;;###autoload

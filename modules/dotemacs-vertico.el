@@ -9,7 +9,7 @@
 
 (dotemacs-require-package `(vertico :type git :host github :repo "minad/vertico"
                                     :files ("*.el" "extensions/*.el")))
-(dotemacs-require-packages '(orderless consult embark embark-consult))
+(dotemacs-require-packages '(orderless consult embark embark-consult marginalia))
 
 (use-package vertico
   :hook (pre-command . vertico-mode)
@@ -77,6 +77,13 @@ If prefix ARG is set, prompt for a directory to search from."
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   (global-set-key [remap describe-bindings] 'embark-bindings))
+
+(use-package marginalia
+  :after (vertico)
+  :init
+  (define-key minibuffer-local-map (kbd "M-A") 'marginalia-cycle)
+  :config
+  (marginalia-mode))
 
 (provide 'dotemacs-vertico)
 ;;; dotemacs-vertico.el ends here

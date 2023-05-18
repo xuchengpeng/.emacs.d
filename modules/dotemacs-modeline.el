@@ -720,12 +720,7 @@ icons."
                                        'dotemacs-modeline-panel))))
           ((cons nil nil)))
     (when count
-      (concat (propertize " " 'face face)
-              (propertize "I"
-                          'face `(:inherit ,face :height 1.4 :weight normal)
-                          'display '(raise -0.1))
-              (propertize (format " %d " count)
-                          'face face)))))
+      (propertize (format " MC:%d " count) 'face face))))
 
 (defsubst dotemacs-modeline--buffer-size ()
   "Show buffer size."

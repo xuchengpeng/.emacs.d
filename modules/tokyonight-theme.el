@@ -48,7 +48,7 @@
    `(fringe ((t ,(list :foreground fg-dark :background bg-dark))))
    `(link ((t (:foreground ,dark5 :underline t))))
    `(link-visited ((t (:foreground ,dark5 :underline t))))
-   `(match ((t (:foreground ,yellow :background ,bg :inverse-video t))))
+   `(match ((t (:foreground ,orange :background ,bg :inverse-video t))))
    `(shadow ((t (:foreground ,dark5))))
    `(minibuffer-prompt ((t :foreground ,magenta)))
    `(region ((t (:background ,bg-hl :extend t))))
@@ -65,8 +65,8 @@
    `(line-number-current-line ((t (:inherit line-number :foreground ,fg :background ,bg-hl))))
 
    ;; isearch
-   `(isearch ((t (:foreground ,yellow :background ,bg :inverse-video t))))
-   `(isearch-fail ((t (:foreground ,yellow :background ,red1 :inverse-video t))))
+   `(isearch ((t (:foreground ,orange :background ,bg :inverse-video t))))
+   `(isearch-fail ((t (:foreground ,orange :background ,red1 :inverse-video t))))
    `(lazy-highlight ((t (:foreground ,cyan :background ,bg :inverse-video t))))
 
    `(font-lock-builtin-face ((t (:foreground ,purple))))

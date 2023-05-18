@@ -54,6 +54,8 @@
 
 (global-set-key (kbd "C-r") 'consult-line)
 (global-set-key (kbd "C-s") 'consult-line)
+(global-set-key (kbd "C-.") 'set-mark-command)
+(global-set-key (kbd "C-x C-.") 'pop-global-mark)
 (global-set-key (kbd "C-=") 'er/expand-region)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)

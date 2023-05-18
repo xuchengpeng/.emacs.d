@@ -28,7 +28,7 @@
 
 (define-key dotemacs-leader-map "f"  '("Files" . (keymap)))
 (define-key dotemacs-leader-map "fd" '("Find directory" . dired))
-(define-key dotemacs-leader-map "ff" '("Find file" . find-file))
+(define-key dotemacs-leader-map "ff" '("Find file" . dotemacs-find-file))
 (define-key dotemacs-leader-map "fr" '("Recent files" . recentf-open-files))
 (define-key dotemacs-leader-map "fs" '("Save file" . save-buffer))
 (define-key dotemacs-leader-map "fw" '("Write file" . write-file))

@@ -22,9 +22,11 @@
   (setq projectile-generic-command
         (cond
          ((executable-find "fd")
-          "fd . -0 -H --color=never --type file --type symlink --follow --exclude .git")
+          (concat "fd . -0 -H --color=never --type file --type symlink --follow --exclude .git"
+                  (if IS-WINDOWS " --path-separator=/")))
          ((executable-find "rg")
-          "rg -0 --files --follow --color=never --hidden -g!.git")
+          (concat "rg -0 --files --follow --color=never --hidden -g!.git"
+                  (if IS-WINDOWS " --path-separator=/")))
          ("find . -type f -print0"))
         projectile-git-submodule-command nil
         projectile-indexing-method 'hybrid)

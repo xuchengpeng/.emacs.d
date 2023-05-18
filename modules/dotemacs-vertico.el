@@ -55,7 +55,47 @@
         consult-async-min-input 2
         consult-async-refresh-delay  0.15
         consult-async-input-throttle 0.2
-        consult-async-input-debounce 0.1))
+        consult-async-input-debounce 0.1
+        consult-find-args (if IS-WINDOWS
+                              "find . -not ( -wholename \\*/.\\* -prune )"
+                            consult-find-args)))
+
+(defvar consult--fd-command nil
+  "Consult fd command name.")
+
+(defun consult--fd-builder (input)
+  "Consult fd command builder with INPUT."
+  (unless consult--fd-command
+    (setq consult--fd-command "fd"))
+  (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+               (`(,re . ,hl) (funcall consult--regexp-compiler
+                                      arg 'extended t)))
+    (when re
+      (cons (append
+             (list consult--fd-command
+                   "--color=never" "--full-path" "--ignore-case" "--hidden" "--exclude" ".git"
+                   (if IS-WINDOWS "--path-separator=/" "")
+                   (consult--join-regexps re 'extended))
+             opts)
+            hl))))
+
+(autoload #'consult--directory-prompt "consult")
+(defun consult-fd (&optional dir initial)
+  "Search for files in DIR matching input regexp given INITIAL input."
+  (interactive "P")
+  (pcase-let* ((`(,prompt ,paths ,dir) (consult--directory-prompt "Fd" dir))
+               (default-directory dir))
+    (find-file (consult--find prompt #'consult--fd-builder initial))))
+
+(defun dotemacs-find-file (&optional dir initial)
+  "Search for files in DIR matching input regexp given INITIAL input."
+  (interactive "P")
+  (cond
+   ((executable-find "fd")
+    (consult-fd dir initial))
+   ((executable-find "find")
+    (consult-find dir initial))
+   (find-file dir initial)))
 
 (defun dotemacs-search-cwd (&optional arg)
   "Conduct a text search in files under the current folder.

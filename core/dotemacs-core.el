@@ -7,9 +7,14 @@
 
 ;;; Code:
 
+(defconst IS-MAC      (eq system-type 'darwin))
+(defconst IS-LINUX    (memq system-type '(gnu gnu/linux gnu/kfreebsd berkeley-unix)))
+(defconst IS-WINDOWS  (memq system-type '(cygwin windows-nt ms-dos)))
+(defconst IS-BSD      (memq system-type '(darwin berkeley-unix gnu/kfreebsd)))
+
 (set-language-environment "UTF-8")
 (setq default-input-method nil)
-(unless (memq system-type '(cygwin windows-nt ms-dos))
+(unless IS-WINDOWS
   (setq selection-coding-system 'utf-8))
 (setq-default buffer-file-coding-system 'utf-8-unix)
 

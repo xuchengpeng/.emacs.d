@@ -9,6 +9,7 @@
 
 (require 'dotemacs-themes)
 (require 'dotemacs-which-key)
+(require 'dotemacs-editing)
 (require 'dotemacs-vertico)
 (require 'dotemacs-company)
 (require 'dotemacs-projectile)

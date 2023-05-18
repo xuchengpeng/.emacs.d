@@ -7,8 +7,6 @@
 
 ;;; Code:
 
-(dotemacs-require-packages '(avy smartparens undo-tree expand-region))
-
 (setq find-file-visit-truename t
       vc-follow-symlinks t
       find-file-suppress-same-file-warnings t)
@@ -94,28 +92,6 @@
 
 (use-package so-long
   :hook(find-file . global-so-long-mode))
-
-(use-package avy
-  :defer t)
-
-(use-package expand-region
-  :defer t
-  :bind ("C-=" . er/expand-region))
-
-(use-package undo-tree
-  :hook (find-file . global-undo-tree-mode)
-  :init
-  (add-hook 'undo-tree-visualizer-mode-hook (lambda () (display-line-numbers-mode -1)))
-  :config
-  (setq undo-tree-history-directory-alist `(("." . ,(concat dotemacs-cache-dir "undo-tree-hist/")))
-        undo-tree-auto-save-history t))
-
-(use-package smartparens
-  :hook ((find-file . smartparens-global-mode)
-         ;; (prog-mode . smartparens-strict-mode)
-         )
-  :config
-  (require 'smartparens-config))
 
 (provide 'dotemacs-editor)
 ;;; dotemacs-editor.el ends here

@@ -52,5 +52,12 @@
 (define-key dotemacs-leader-map "qq" '("Quit Emacs" . kill-emacs))
 (define-key dotemacs-leader-map "qQ" '("Save and quit Emacs" . save-buffers-kill-terminal))
 
+(global-set-key (kbd "C-r") 'consult-line)
+(global-set-key (kbd "C-s") 'consult-line)
+(global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
 (provide 'dotemacs-keybinds)
 ;;; dotemacs-keybinds.el ends here

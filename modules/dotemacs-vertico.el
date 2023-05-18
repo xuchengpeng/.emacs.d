@@ -35,8 +35,6 @@
 (use-package consult
   :defer t
   :init
-  (global-set-key (kbd "C-r") 'consult-line)
-  (global-set-key (kbd "C-s") 'consult-line)
   (global-set-key [remap apropos]                       'consult-apropos)
   (global-set-key [remap bookmark-jump]                 'consult-bookmark)
   (global-set-key [remap evil-show-marks]               'consult-mark)

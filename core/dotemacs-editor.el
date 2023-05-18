@@ -99,7 +99,8 @@
   :defer t)
 
 (use-package expand-region
-  :defer t)
+  :defer t
+  :bind ("C-=" . er/expand-region))
 
 (use-package undo-tree
   :hook (find-file . global-undo-tree-mode)

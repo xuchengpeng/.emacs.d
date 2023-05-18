@@ -22,6 +22,7 @@
         which-key-side-window-slot -10)
   :config
   (which-key-setup-side-window-bottom)
+  (add-hook 'which-key-init-buffer-hook (lambda () (setq line-spacing 3)))
   (which-key-mode +1))
 
 (provide 'dotemacs-which-key)

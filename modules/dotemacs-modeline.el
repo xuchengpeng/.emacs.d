@@ -1,10 +1,5 @@
-;;; ui/modeline/dotemacs-modeline.el --- modeline.
-
+;;; ui/modeline/dotemacs-modeline.el --- modeline. -*- lexical-binding: t; -*-
 ;;; Commentary:
-;;
-;; dotemacs modeline.
-;; 
-
 ;;; Code:
 
 (require 'cl-lib)
@@ -215,8 +210,6 @@ Also see the face `dotemacs-modeline-unread-number'."
           (if (frame-focus-state (frame-parent))
               (progn
                 (dotemacs-modeline-focus)
-                ;; HACK: pulse after focusing in the frame to refresh the buffer name.
-                ;; @see https://github.com/seagle0128/dotemacs-modeline/issues/591
                 (when (fboundp 'pulse-momentary-highlight-region)
                   (pulse-momentary-highlight-region 0 0)))
             (dotemacs-modeline-unfocus)))
@@ -233,46 +226,74 @@ Also see the face `dotemacs-modeline-unread-number'."
 (defvar dotemacs-modeline-fn-alist ())
 (defvar dotemacs-modeline-var-alist ())
 
-(defmacro dotemacs-modeline-def-segment (name &rest forms)
-  "Define a modeline segment and byte compiles it with NAME and FORMS."
+(defmacro dotemacs-modeline-def-segment (name &rest body)
+  "Define a modeline segment NAME with BODY and byte compiles it."
   (declare (indent defun) (doc-string 2))
-  (let ((sym (intern (format "dotemacs-modeline-segment--%s" name))))
-    `(progn
-       (defun ,sym () ,@forms)
-       ,(unless (bound-and-true-p byte-compile-current-file)
-          `(let (byte-compile-warnings)
-             (byte-compile #',sym))))))
+  (let ((sym (intern (format "dotemacs-modeline-segment--%s" name)))
+        (docstring (if (stringp (car body))
+                       (pop body)
+                     (format "%s modeline segment" name))))
+    (cond ((and (symbolp (car body))
+                (not (cdr body)))
+           (add-to-list 'dotemacs-modeline-var-alist (cons name (car body)))
+           `(add-to-list 'dotemacs-modeline-var-alist (cons ',name ',(car body))))
+          (t
+           (add-to-list 'dotemacs-modeline-fn-alist (cons name sym))
+           `(progn
+              (defun ,sym () ,docstring ,@body)
+              (add-to-list 'dotemacs-modeline-fn-alist (cons ',name ',sym))
+              ,(unless (bound-and-true-p byte-compile-current-file)
+                 `(let (byte-compile-warnings)
+                    (unless (and (fboundp 'subr-native-elisp-p)
+                                 (subr-native-elisp-p (symbol-function #',sym)))
+                      (byte-compile #',sym)))))))))
 
-(defsubst dotemacs-modeline--prepare-segments (segments)
-  "Prepare modelin SEGMENTS."
-  (cl-loop for seg in segments
-           if (stringp seg)
-           collect seg
-           else
-           collect (list (intern (format "dotemacs-modeline-segment--%s" (symbol-name seg))))))
+(defun dotemacs-modeline--prepare-segments (segments)
+  "Prepare mode-line `SEGMENTS'."
+  (let (forms it)
+    (dolist (seg segments)
+      (cond ((stringp seg)
+             (push seg forms))
+            ((symbolp seg)
+             (cond ((setq it (cdr (assq seg dotemacs-modeline-fn-alist)))
+                    (push (list :eval (list it)) forms))
+                   ((setq it (cdr (assq seg dotemacs-modeline-var-alist)))
+                    (push it forms))
+                   ((error "%s is not a defined segment" seg))))
+            ((error "%s is not a valid segment" seg))))
+    (nreverse forms)))
 
-(defmacro dotemacs-modeline-def-modeline (name lhs &optional rhs)
+(defun dotemacs-modeline-def-modeline (name lhs &optional rhs)
   "Define a modeline format and byte-compiles it.
 NAME is a symbol to identify it (used by `dotemacs-modeline' for retrieval).
 LHS and RHS are lists of symbols of modeline segments defined with
-`dotemacs-modeline-def-modeline-segment'."
+`dotemacs-modeline-def-segment'.
+
+Example:
+  (dotemacs-modeline-def-modeline \\='minimal
+    \\='(bar matches \" \" buffer-info)
+    \\='(media-info major-mode))
+  (dotemacs-modeline-set-modeline \\='minimal t)"
   (let ((sym (intern (format "dotemacs-modeline-format--%s" name)))
         (lhs-forms (dotemacs-modeline--prepare-segments lhs))
         (rhs-forms (dotemacs-modeline--prepare-segments rhs)))
-    `(progn
-       (defun ,sym ()
-         (let ((lhs (list ,@lhs-forms))
-               (rhs (list ,@rhs-forms)))
-           (let ((rhs-str (format-mode-line (cons "" rhs))))
-             (list lhs
-                   (propertize
-                    " " 'display
-                    `((space :align-to (- (+ right right-fringe right-margin)
-                                          ,(+ 1 (string-width rhs-str))))))
-                   rhs-str))))
-       ,(unless (bound-and-true-p byte-compile-current-file)
-          `(let (byte-compile-warnings)
-             (byte-compile #',sym))))))
+    (defalias sym
+      (lambda ()
+        (list lhs-forms
+              (propertize
+               " "
+               'face (dotemacs-modeline-face)
+               'display `(space
+                          :align-to
+                          (- (+ right right-fringe right-margin scroll-bar)
+                             ,(let ((rhs-str (format-mode-line (cons "" rhs-forms))))
+                                (* (string-width rhs-str) 1.0)))))
+              rhs-forms))
+      (concat "Modeline:\n"
+              (format "  %s\n  %s"
+                      (prin1-to-string lhs)
+                      (prin1-to-string rhs))))))
+(put 'dotemacs-modeline-def-modeline 'lisp-indent-function 'defun)
 
 (defun dotemacs-modeline (key)
   "Return a mode-line configuration associated with KEY (a symbol).
@@ -289,7 +310,6 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
               (default-value 'mode-line-format)
             mode-line-format)
           (list "%e" modeline))))
-
 
 ;;
 ;; Helpers
@@ -759,17 +779,17 @@ icons."
 ;; Modelines
 ;;
 
-(dotemacs-modeline-def-modeline main
-  (bar window-number matches buffer-info buffer-position word-count selection-info)
-  (compilation minor-modes buffer-encoding major-mode process vcs checker))
+(dotemacs-modeline-def-modeline 'main
+  '(bar window-number matches buffer-info buffer-position word-count selection-info)
+  '(compilation minor-modes buffer-encoding major-mode process vcs checker))
 
-(dotemacs-modeline-def-modeline special
-  (bar window-number matches buffer-info-simple buffer-position)
-  (compilation major-mode process))
+(dotemacs-modeline-def-modeline 'special
+  '(bar window-number matches buffer-info-simple buffer-position)
+  '(compilation major-mode process))
 
-(dotemacs-modeline-def-modeline project
-  (bar window-number buffer-default-directory buffer-position)
-  (compilation major-mode process))
+(dotemacs-modeline-def-modeline 'project
+  '(bar window-number buffer-default-directory buffer-position)
+  '(compilation major-mode process))
 
 (defun dotemacs-modeline-set-main-modeline (&optional default)
   "Set main mode-line.

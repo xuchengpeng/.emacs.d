@@ -1,4 +1,4 @@
-;;; dotemacs-editor.el --- Editor configurations.
+;;; dotemacs-editor.el --- Editor configurations. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

@@ -1,4 +1,4 @@
-;;; dotemacs-themes.el --- Themes.
+;;; dotemacs-themes.el --- Themes. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

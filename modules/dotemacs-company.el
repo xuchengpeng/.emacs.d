@@ -1,4 +1,4 @@
-;;; dotemacs-company.el --- company-mode.
+;;; dotemacs-company.el --- company-mode. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

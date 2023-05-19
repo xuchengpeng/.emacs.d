@@ -1,4 +1,4 @@
-;;; dotemacs-vertico.el --- Vertico
+;;; dotemacs-vertico.el --- Vertico. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

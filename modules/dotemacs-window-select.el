@@ -1,4 +1,4 @@
-;;; dotemacs-window-select.el --- Switch window.
+;;; dotemacs-window-select.el --- Switch window. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

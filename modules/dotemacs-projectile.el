@@ -1,4 +1,4 @@
-;;; dotemacs-projectile.el --- Project management.
+;;; dotemacs-projectile.el --- Project management. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

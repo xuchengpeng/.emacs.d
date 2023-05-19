@@ -1,4 +1,4 @@
-;;; dotemacs-packages.el --- Initialize dotemacs packages configurations.
+;;; dotemacs-packages.el --- Initialize dotemacs packages configurations. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

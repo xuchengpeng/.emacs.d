@@ -1,4 +1,4 @@
-;;; dotemacs-ui.el --- Initialize dotemacs ui configurations.
+;;; dotemacs-ui.el --- Initialize dotemacs ui configurations. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

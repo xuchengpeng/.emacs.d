@@ -1,4 +1,4 @@
-;;; dotemacs-highlight.el --- Highlight.
+;;; dotemacs-highlight.el --- Highlight. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

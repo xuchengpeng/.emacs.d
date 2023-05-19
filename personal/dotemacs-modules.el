@@ -1,4 +1,4 @@
-;;; dotemacs-modules.el --- A listing of modules to load on startup
+;;; dotemacs-modules.el --- A listing of modules to load on startup. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

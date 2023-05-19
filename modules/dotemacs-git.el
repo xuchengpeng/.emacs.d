@@ -1,4 +1,4 @@
-;;; dotemacs-git.el --- Git.
+;;; dotemacs-git.el --- Git. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

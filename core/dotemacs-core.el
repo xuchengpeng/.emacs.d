@@ -1,4 +1,4 @@
-;;; dotemacs-core.el --- Emacs Core functions.
+;;; dotemacs-core.el --- Emacs Core functions. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

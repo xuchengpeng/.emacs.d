@@ -1,4 +1,4 @@
-;;; dotemacs-tabs.el --- Tabs.
+;;; dotemacs-tabs.el --- Tabs. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

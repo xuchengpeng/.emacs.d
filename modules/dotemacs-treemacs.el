@@ -1,4 +1,4 @@
-;;; dotemacs-treemacs.el --- File tree.
+;;; dotemacs-treemacs.el --- File tree. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

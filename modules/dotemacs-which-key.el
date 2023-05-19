@@ -1,4 +1,4 @@
-;;; dotemacs-vertico.el --- emacs-which-key
+;;; dotemacs-vertico.el --- emacs-which-key. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

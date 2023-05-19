@@ -1,4 +1,4 @@
-;;; tokyonight-theme.el --- TokyoNight theme.
+;;; tokyonight-theme.el --- TokyoNight theme. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

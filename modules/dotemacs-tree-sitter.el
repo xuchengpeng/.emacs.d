@@ -1,4 +1,4 @@
-;;; dotemacs-tree-sitter.el --- tree-sitter
+;;; dotemacs-tree-sitter.el --- tree-sitter. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

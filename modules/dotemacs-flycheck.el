@@ -1,4 +1,4 @@
-;;; dotemacs-flycheck.el --- Flycheck.
+;;; dotemacs-flycheck.el --- Flycheck. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

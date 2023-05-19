@@ -1,4 +1,4 @@
-;;; dotemacs-editing.el --- Editing utils.
+;;; dotemacs-editing.el --- Editing utils. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

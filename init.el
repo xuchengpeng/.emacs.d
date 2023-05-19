@@ -1,4 +1,4 @@
-;;; init.el --- dotemacs's configuration.
+;;; init.el --- dotemacs's configuration. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

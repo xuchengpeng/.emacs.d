@@ -1,4 +1,4 @@
-;;; dotemacs-keybinds.el --- dotemacs keybindings.
+;;; dotemacs-keybinds.el --- dotemacs keybindings. -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

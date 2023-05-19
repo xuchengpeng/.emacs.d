@@ -141,6 +141,11 @@ Also see the face `dotemacs-modeline-unread-number'."
   "The face used for the left-most bar in the mode-line of an inactive window."
   :group 'dotemacs-modeline-faces)
 
+(defface dotemacs-modeline-compilation
+  '((t (:inherit dotemacs-modeline-warning :slant italic)))
+  "Face for compilation progress."
+  :group 'dotemacs-modeline-faces)
+
 ;;
 ;; Externals
 ;;
@@ -258,7 +263,7 @@ LHS and RHS are lists of symbols of modeline segments defined with
        (defun ,sym ()
          (let ((lhs (list ,@lhs-forms))
                (rhs (list ,@rhs-forms)))
-           (let ((rhs-str (format-mode-line rhs)))
+           (let ((rhs-str (format-mode-line (cons "" rhs))))
              (list lhs
                    (propertize
                     " " 'display
@@ -344,6 +349,7 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 (defvar text-scale-mode-amount)
 (defvar winum-auto-setup-mode-line)
 
+(declare-function compilation-goto-in-progress-buffer "compile")
 (declare-function flycheck-count-errors "ext:flycheck")
 (declare-function flycheck-list-errors "ext:flycheck")
 (declare-function flycheck-next-error "ext:flycheck")
@@ -547,20 +553,19 @@ By default, this shows the information specified by `global-mode-string'."
      (format-mode-line mode-line-misc-info)))
 
 (dotemacs-modeline-def-segment minor-modes
-  (if dotemacs-modeline-minor-modes
-      (let ((face (dotemacs-modeline-face 'dotemacs-modeline-buffer-minor-mode))
-            (mouse-face 'dotemacs-modeline-highlight)
-            (help-echo "Minor mode
-    mouse-1: Display minor mode menu
-    mouse-2: Show help for minor mode
-    mouse-3: Toggle minor modes"))
-        `((:propertize ("" minor-mode-alist)
-            face ,face
-            mouse-face ,mouse-face
-            help-echo ,help-echo
-            local-map ,mode-line-minor-mode-keymap)
-          ,(dotemacs-modeline-spc)))
-    ""))
+  (when dotemacs-modeline-minor-modes
+    (let ((face (dotemacs-modeline-face 'dotemacs-modeline-buffer-minor-mode))
+          (mouse-face 'dotemacs-modeline-highlight)
+          (help-echo "Minor mode
+  mouse-1: Display minor mode menu
+  mouse-2: Show help for minor mode
+  mouse-3: Toggle minor modes"))
+      `((:propertize ("" minor-mode-alist)
+          face ,face
+          mouse-face ,mouse-face
+          help-echo ,help-echo
+          local-map ,mode-line-minor-mode-keymap)
+        ,(dotemacs-modeline-spc)))))
 
 (dotemacs-modeline-def-segment major-mode
   "The major mode, including environment and text-scale info."
@@ -742,21 +747,29 @@ icons."
     (or (and (not (string-empty-p meta)) meta)
         (dotemacs-modeline--buffer-size))))
 
+(dotemacs-modeline-def-segment compilation
+  (when (bound-and-true-p compilation-in-progress)
+    (propertize " [Compiling] "
+                'face (dotemacs-modeline-face 'dotemacs-modeline-compilation)
+                'help-echo "Compiling; mouse-2: Goto Buffer"
+                'mouse-face 'dotemacs-modeline-highlight
+                'local-map (make-mode-line-mouse-map 'mouse-2 #'compilation-goto-in-progress-buffer))))
+
 ;;
 ;; Modelines
 ;;
 
 (dotemacs-modeline-def-modeline main
   (bar window-number matches buffer-info buffer-position word-count selection-info)
-  (minor-modes buffer-encoding major-mode process vcs checker))
+  (compilation minor-modes buffer-encoding major-mode process vcs checker))
 
 (dotemacs-modeline-def-modeline special
   (bar window-number matches buffer-info-simple buffer-position)
-  (major-mode process))
+  (compilation major-mode process))
 
 (dotemacs-modeline-def-modeline project
   (bar window-number buffer-default-directory buffer-position)
-  (major-mode process))
+  (compilation major-mode process))
 
 (defun dotemacs-modeline-set-main-modeline (&optional default)
   "Set main mode-line.

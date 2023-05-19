@@ -20,6 +20,7 @@
 (require 'dotemacs-window-select)
 (require 'dotemacs-flycheck)
 (require 'dotemacs-git)
+(require 'dotemacs-lang)
 
 (provide 'dotemacs-modules)
 ;;; dotemacs-modules.el ends here

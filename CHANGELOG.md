@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.6](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.5...v2.0.6) (2023-05-19)
+
+
+### Bug Fixes
+
+* add file grep keybinding ([f9ef401](https://github.com/xuchengpeng/.emacs.d/commit/f9ef40141e2ed13249afbc303bcd5f8a30a8a35f))
+* **lang:** add markdown-mode,markdown-toc ([e63ca1f](https://github.com/xuchengpeng/.emacs.d/commit/e63ca1f161da977cd0c5757791008c7d136caceb))
+* **modeline:** add compilation status ([6dac6ac](https://github.com/xuchengpeng/.emacs.d/commit/6dac6ac475da82a289238e524fde48d27f9fdc69))
+* **modeline:** refactoring core library ([1ce141a](https://github.com/xuchengpeng/.emacs.d/commit/1ce141a2399dd4e374c72ea9f87327f549b3145e))
+* **modeline:** show misc info ([89127fe](https://github.com/xuchengpeng/.emacs.d/commit/89127fe3713a0fbdd967d1c633f67a51c982dfdb))
+* set lexical-binding ([c704ffe](https://github.com/xuchengpeng/.emacs.d/commit/c704ffe1d15fe72a86423c5841eeaa36f104389c))
+* **tokyonight:** customize font-lock faces ([6d4fb48](https://github.com/xuchengpeng/.emacs.d/commit/6d4fb488d6021615228c21ecbfb8edfcfd49f257))
+
 ## [2.0.5](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.4...v2.0.5) (2023-05-18)
 
 

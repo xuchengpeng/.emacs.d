@@ -69,6 +69,7 @@
    `(isearch-fail ((t (:foreground ,orange :background ,red1 :inverse-video t))))
    `(lazy-highlight ((t (:foreground ,cyan :background ,bg :inverse-video t))))
 
+   `(font-lock-bracket-face ((t (:foreground ,blue1))))
    `(font-lock-builtin-face ((t (:foreground ,purple))))
    `(font-lock-comment-face ((t (:foreground ,comment))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,comment))))
@@ -77,11 +78,12 @@
    `(font-lock-function-name-face ((t (:foreground ,blue))))
    `(font-lock-keyword-face ((t (:foreground ,magenta))))
    `(font-lock-negation-char-face ((t (:foreground ,green))))
+   `(font-lock-operator-face ((t (:foreground ,magenta))))
    `(font-lock-preprocessor-face ((t (:foreground ,purple))))
    `(font-lock-regexp-grouping-backslash ((t (:foreground ,yellow))))
    `(font-lock-regexp-grouping-construct ((t (:foreground ,magenta))))
    `(font-lock-string-face ((t (:foreground ,green))))
-   `(font-lock-type-face ((t (:foreground ,blue0))))
+   `(font-lock-type-face ((t (:foreground ,blue))))
    `(font-lock-variable-name-face ((t (:foreground ,fg))))
    `(font-lock-warning-face ((t (:foreground ,yellow))))
 

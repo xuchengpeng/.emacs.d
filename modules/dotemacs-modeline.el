@@ -569,8 +569,12 @@ block selection."
 (dotemacs-modeline-def-segment misc-info
   "Mode line construct for miscellaneous information.
 By default, this shows the information specified by `global-mode-string'."
-  (dotemacs-modeline-display-text
-     (format-mode-line mode-line-misc-info)))
+  (when (dotemacs-modeline--active)
+    (dotemacs-modeline-display-text
+      (concat
+        (dotemacs-modeline-spc)
+        (format-mode-line mode-line-misc-info)
+        (dotemacs-modeline-spc)))))
 
 (dotemacs-modeline-def-segment minor-modes
   (when dotemacs-modeline-minor-modes
@@ -781,15 +785,15 @@ icons."
 
 (dotemacs-modeline-def-modeline 'main
   '(bar window-number matches buffer-info buffer-position word-count selection-info)
-  '(compilation minor-modes buffer-encoding major-mode process vcs checker))
+  '(compilation misc-info minor-modes buffer-encoding major-mode process vcs checker))
 
 (dotemacs-modeline-def-modeline 'special
   '(bar window-number matches buffer-info-simple buffer-position)
-  '(compilation major-mode process))
+  '(compilation misc-info major-mode process))
 
 (dotemacs-modeline-def-modeline 'project
   '(bar window-number buffer-default-directory buffer-position)
-  '(compilation major-mode process))
+  '(compilation misc-info major-mode process))
 
 (defun dotemacs-modeline-set-main-modeline (&optional default)
   "Set main mode-line.

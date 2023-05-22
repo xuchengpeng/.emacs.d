@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(avy smartparens undo-tree expand-region multiple-cursors))
+(dotemacs-require-packages '(avy smartparens undo-tree expand-region multiple-cursors move-text))
 
 (use-package avy
   :defer t)
@@ -29,6 +29,9 @@
   :defer t
   :init
   (setq mc/list-file (concat dotemacs-cache-dir "mc-lists.el")))
+
+(use-package move-text
+  :defer t)
 
 (provide 'dotemacs-editing)
 ;;; dotemacs-editing.el ends here

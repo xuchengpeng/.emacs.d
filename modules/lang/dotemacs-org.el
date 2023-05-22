@@ -12,10 +12,6 @@
         org-persist-directory (concat dotemacs-cache-dir "org-persist/")
         org-publish-timestamp-directory (concat dotemacs-cache-dir "org-timestamps/"))
   :config
-  ;; System locale to use for formatting time values.
-  ;; Make sure that the weekdays in the time stamps of your Org mode files and in the agenda appear in English.
-  (setq system-time-locale "C")
-
   (defvar +org-capture-todo-file (expand-file-name "todo.org" org-directory))
   (defvar +org-capture-notes-file (expand-file-name "notes.org" org-directory))
   (setq org-default-notes-file +org-capture-notes-file

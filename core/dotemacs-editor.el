@@ -21,7 +21,7 @@
       backup-directory-alist (list (cons "." (concat dotemacs-cache-dir "backup/")))
       tramp-backup-directory-alist backup-directory-alist)
 
-(setq auto-save-default t
+(setq auto-save-default nil
       auto-save-include-big-deletions t
       auto-save-list-file-prefix (concat dotemacs-cache-dir "autosave/")
       tramp-auto-save-directory  (concat dotemacs-cache-dir "tramp-autosave/")

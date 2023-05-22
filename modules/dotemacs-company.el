@@ -9,37 +9,20 @@
 
 (dotemacs-require-packages '(company))
 
-(defvar +company-backend-alist
+(defvar dotemacs-company-backend-alist
   '((text-mode (:separate company-dabbrev company-yasnippet company-ispell))
     (prog-mode company-capf company-yasnippet)
     (conf-mode company-capf company-dabbrev-code company-yasnippet))
   "An alist matching modes to company backends.
 The backends for any mode is built from this.")
 
-(defun +company--backends ()
-  "Company backends."
-  (let (backends)
-    (let ((mode major-mode)
-          (modes (list major-mode)))
-      (while (setq mode (get mode 'derived-mode-parent))
-        (push mode modes))
-      (dolist (mode modes)
-        (dolist (backend (append (cdr (assq mode +company-backend-alist))
-                                 (default-value 'company-backends)))
-          (push backend backends)))
-      (delete-dups
-       (append (cl-loop for (mode . backends) in +company-backend-alist
-                        if (or (eq major-mode mode)  ; major modes
-                               (and (boundp mode)
-                                    (symbol-value mode))) ; minor modes
-                        append backends)
-               (nreverse backends))))))
-
-(defun +company-init-backends ()
+(defun dotemacs-set-company-backends ()
   "Set `company-backends' for the current buffer."
-  (or (memq major-mode '(fundamental-mode special-mode))
-      buffer-read-only
-      (setq-local company-backends (+company--backends))))
+  (catch 'found
+    (dolist (x dotemacs-company-backend-alist)
+      (when (derived-mode-p (car x))
+        (setq-local company-backends (cdr x))
+        (throw 'found x)))))
 
 (use-package company
   :commands (company-complete-common company-complete-common-or-cycle company-manual-begin company-grab-line)
@@ -70,7 +53,7 @@ The backends for any mode is built from this.")
   (define-key company-search-map (kbd "C-n") #'company-select-next)
   (define-key company-search-map (kbd "C-p") #'company-select-previous)
 
-  (add-hook 'after-change-major-mode-hook #'+company-init-backends 'append))
+  (add-hook 'after-change-major-mode-hook #'dotemacs-set-company-backends 'append))
 
 (provide 'dotemacs-company)
 ;;; dotemacs-company.el ends here

@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.7](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.6...v2.0.7) (2023-05-22)
+
+
+### Bug Fixes
+
+* **auto-save:** disabled by default ([80ac548](https://github.com/xuchengpeng/.emacs.d/commit/80ac548dc8200350a07fd58e064b7b1d510c4bfa))
+* **company:** set local company backends after change major mode ([0791240](https://github.com/xuchengpeng/.emacs.d/commit/07912402c476cea877251d13010c3ed8987395c4))
+* **display-line-numbers:** enable on prog-mode,conf-mode ([c00a412](https://github.com/xuchengpeng/.emacs.d/commit/c00a4128320d5323d2983c813c5d0687d576b0d8))
+* **editor:** use move-text to move current line or region up or down ([bc6a86c](https://github.com/xuchengpeng/.emacs.d/commit/bc6a86cb8f8e24a65c4cd6c05fd7efc88f365bc3))
+* **eshell:** customize built-in eshell ([b5d24ea](https://github.com/xuchengpeng/.emacs.d/commit/b5d24ea265e8a1e333427842c8ca092599ac18d5))
+* **keybinds:** add explorer&terminal keybinds ([2c8cc2d](https://github.com/xuchengpeng/.emacs.d/commit/2c8cc2dd8dd8adee5dbc6da3d85c0a5498553b29))
+* **lang:** add lua-mode ([44c93ff](https://github.com/xuchengpeng/.emacs.d/commit/44c93ff592dc8572a21bca566fe15b8ba73db015))
+* **markdown:** bind local leader with markdown-mode-style-map ([4ccf2ed](https://github.com/xuchengpeng/.emacs.d/commit/4ccf2ed6118409d85135fb20821ee3bc674891d3))
+* **markdown:** customize markdown command ([db79388](https://github.com/xuchengpeng/.emacs.d/commit/db79388150fb3e36d6207ee9324e6cde02a7b266))
+* **org:** customize agenda,capture,publish-project ([82ee7c6](https://github.com/xuchengpeng/.emacs.d/commit/82ee7c641e29addfffce7e41e83d0d3d8c1c4eb5))
+
 ## [2.0.6](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.5...v2.0.6) (2023-05-19)
 
 

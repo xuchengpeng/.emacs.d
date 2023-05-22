@@ -4,6 +4,7 @@
 
 (add-to-list 'load-path (expand-file-name "lang/" dotemacs-modules-dir))
 
+(require 'dotemacs-org)
 (require 'dotemacs-markdown)
 (require 'dotemacs-lua)
 

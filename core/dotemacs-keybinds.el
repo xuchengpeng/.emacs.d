@@ -43,6 +43,11 @@
 (define-key dotemacs-leader-map "fs" '("Save file" . save-buffer))
 (define-key dotemacs-leader-map "fw" '("Write file" . write-file))
 
+(define-key dotemacs-leader-map "o"  '("Open" . (keymap)))
+(define-key dotemacs-leader-map "oa" '("Org agenda" . org-agenda))
+(define-key dotemacs-leader-map "oc" '("Org capture" . org-capture))
+(define-key dotemacs-leader-map "op" '("Org publish project" . org-publish-project))
+
 (define-key dotemacs-leader-map "p"  '("Project" . (keymap)))
 (define-key dotemacs-leader-map "pf" '("Find file in project" . projectile-find-file))
 (define-key dotemacs-leader-map "po" '("Find other project file" . projectile-find-other-file))

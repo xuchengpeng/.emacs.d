@@ -9,8 +9,6 @@
 
 (use-package undo-tree
   :hook (find-file . global-undo-tree-mode)
-  :init
-  (add-hook 'undo-tree-visualizer-mode-hook (lambda () (display-line-numbers-mode -1)))
   :config
   (setq undo-tree-history-directory-alist `(("." . ,(concat dotemacs-cache-dir "undo-tree-hist/")))
         undo-tree-auto-save-history t))

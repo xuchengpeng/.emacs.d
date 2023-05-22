@@ -12,8 +12,6 @@
 (use-package treemacs
   :defer t
   :commands (treemacs)
-  :init
-  (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
   :config
   (setq treemacs-follow-after-init     t
         treemacs-is-never-other-window t

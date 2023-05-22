@@ -67,8 +67,8 @@ Examples:
 (advice-add #'display-startup-echo-area-message :override #'ignore)
 (advice-add #'display-startup-screen :override #'ignore)
 
-(setq-default display-line-numbers-width 3)
-(add-hook 'after-init-hook #'global-display-line-numbers-mode)
+(use-package display-line-numbers
+  :hook ((prog-mode conf-mode) . display-line-numbers-mode))
 
 (use-package winner
   :hook (window-configuration-change . winner-mode)

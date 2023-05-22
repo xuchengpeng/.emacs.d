@@ -53,11 +53,7 @@
 (defun dotemacs-require-packages (packages-list)
   (mapc #'dotemacs-require-package packages-list))
 
-(defvar dotemacs-core-packages '(use-package bind-key)
-  "A list of packages that must be installed (and will be auto-installed if
-missing) and shouldn't be deleted.")
-
-(dotemacs-require-packages dotemacs-core-packages)
+(dotemacs-require-packages '(use-package bind-key))
 
 (provide 'dotemacs-packages)
 ;;; dotemacs-packages.el ends here

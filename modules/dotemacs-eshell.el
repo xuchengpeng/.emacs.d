@@ -32,7 +32,6 @@
         eshell-glob-case-insensitive t
         eshell-error-if-no-glob t)
     (add-hook 'eshell-mode-hook (lambda ()
-                                  (display-line-numbers-mode -1)
                                   (setq-local hscroll-margin 0)))
     (with-eval-after-load 'em-alias
       (setq eshell-command-aliases-list (append eshell-command-aliases-list dotemacs-eshell-aliases))))

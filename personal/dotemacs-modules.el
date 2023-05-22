@@ -21,6 +21,7 @@
 (require 'dotemacs-flycheck)
 (require 'dotemacs-git)
 (require 'dotemacs-lang)
+(require 'dotemacs-eshell)
 
 (provide 'dotemacs-modules)
 ;;; dotemacs-modules.el ends here

@@ -56,7 +56,7 @@
         auto-revert-stop-on-user-input nil))
 
 (use-package recentf
-  :hook (find-file . recentf-mode)
+  :hook (after-init . recentf-mode)
   :commands recentf-open-files
   :config
   (setq recentf-save-file (concat dotemacs-cache-dir "recentf")

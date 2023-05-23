@@ -19,12 +19,6 @@ Examples:
 (defvar dotemacs-cn-font nil
   "The chinese font to use.")
 
-(menu-bar-mode -1)
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-
 (unless (frame-parameter nil 'fullscreen)
   (toggle-frame-maximized))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))

@@ -794,6 +794,10 @@ icons."
   '(bar window-number buffer-default-directory buffer-position)
   '(compilation misc-info major-mode process))
 
+(dotemacs-modeline-def-modeline 'dashboard
+  '(bar window-number buffer-default-directory)
+  '(compilation misc-info major-mode process))
+
 (defun dotemacs-modeline-set-main-modeline (&optional default)
   "Set main mode-line.
 If DEFAULT is non-nil, set the default mode-line for all buffers."

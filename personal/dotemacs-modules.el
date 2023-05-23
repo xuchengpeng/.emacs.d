@@ -8,6 +8,8 @@
 ;;; Code:
 
 (require 'dotemacs-themes)
+(require 'dotemacs-benchmark)
+(require 'dotemacs-dashboard)
 (require 'dotemacs-which-key)
 (require 'dotemacs-editing)
 (require 'dotemacs-vertico)

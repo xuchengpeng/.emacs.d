@@ -61,6 +61,7 @@ Examples:
     (setq use-short-answers t)
   (fset 'yes-or-no-p 'y-or-n-p))
 
+(setq-default major-mode 'text-mode)
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message user-login-name
       inhibit-default-init t

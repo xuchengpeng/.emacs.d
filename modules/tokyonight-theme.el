@@ -5,40 +5,140 @@
 (deftheme tokyonight
   "TokyoNight theme.")
 
-(let ((bg-dark "#1e2030")
-      (bg "#222436")
-      (bg-hl "#2f334d")
-      (terminal-black "#444a73")
-      (fg "#c8d3f5")
-      (fg-dark "#828bb8")
-      (fg-gutter "#3b4261")
-      (white "#ffffff")
-      (comment "#7a88cf")
-      (dark3 "#545c7e")
-      (dark5 "#737aa2")
-      (blue0 "#3e68d7")
-      (blue "#82aaff")
-      (blue1 "#65bcff")
-      (blue2 "#0db9d7")
-      (blue5 "#89ddff")
-      (blue6 "#b4f9f8")
-      (blue7 "#394b70")
-      (cyan "#86e1fc")
-      (magenta "#c099ff")
-      (magenta2 "#ff007c")
-      (purple "#fca7ea")
-      (orange "#ff966c")
-      (yellow "#ffc777")
-      (green "#c3e88d")
-      (green1 "#4fd6be")
-      (green2 "#41a6b5")
-      (teal "#4fd6be")
-      (red "#ff757f")
-      (red1 "#c53b53"))
-  (custom-theme-set-variables
-   'tokyonight
-   '(frame-background-mode (quote dark)))
+(defgroup tokyonight-theme nil
+  "TokyoNight theme group."
+  :group 'faces)
 
+(defcustom tokyonight-theme-style 'storm
+  "Default color style."
+  :type 'choice
+  :group 'tokyonight-theme)
+
+(defcustom tokyonight-override-colors-alist '()
+  "Place to override default theme colors."
+  :type 'alist
+  :group 'tokyonight-theme)
+
+(defconst tokyonight-storm-colors-alist
+  '(("bg-dark" . "#1f2335")
+    ("bg" . "#24283b")
+    ("bg-hl" . "#292e42")
+    ("terminal-black" . "#414868")
+    ("fg" . "#c0caf5")
+    ("fg-dark" . "#a9b1d6")
+    ("fg-gutter" . "#3b4261")
+    ("white" . "#ffffff")
+    ("comment" . "#565f89")
+    ("dark3" . "#545c7e")
+    ("dark5" . "#737aa2")
+    ("blue0" . "#3d59a1")
+    ("blue" . "#7aa2f7")
+    ("blue1" . "#2ac3de")
+    ("blue2" . "#0db9d7")
+    ("blue5" . "#89ddff")
+    ("blue6" . "#b4f9f8")
+    ("blue7" . "#394b70")
+    ("cyan" . "#7dcfff")
+    ("magenta" . "#bb9af7")
+    ("magenta2" . "#ff007c")
+    ("purple" . "#9d7cd8")
+    ("orange" . "#ff9e64")
+    ("yellow" . "#e0af68")
+    ("green" . "#9ece6a")
+    ("green1" . "#73daca")
+    ("green2" . "#41a6b5")
+    ("teal" . "#1abc9c")
+    ("red" . "#f7768e")
+    ("red1" . "#db4b4b")))
+
+(defconst tokyonight-night-colors-alist
+  (append tokyonight-storm-colors-alist
+          '(("bg" . "#1a1b26")
+            ("bg-dark" . "#16161e"))))
+
+(defconst tokyonight-moon-colors-alist
+  '(("bg-dark" . "#1e2030")
+    ("bg" . "#222436")
+    ("bg-hl" . "#2f334d")
+    ("terminal-black" . "#444a73")
+    ("fg" . "#c8d3f5")
+    ("fg-dark" . "#828bb8")
+    ("fg-gutter" . "#3b4261")
+    ("white" . "#ffffff")
+    ("comment" . "#7a88cf")
+    ("dark3" . "#545c7e")
+    ("dark5" . "#737aa2")
+    ("blue0" . "#3e68d7")
+    ("blue" . "#82aaff")
+    ("blue1" . "#65bcff")
+    ("blue2" . "#0db9d7")
+    ("blue5" . "#89ddff")
+    ("blue6" . "#b4f9f8")
+    ("blue7" . "#394b70")
+    ("cyan" . "#86e1fc")
+    ("magenta" . "#c099ff")
+    ("magenta2" . "#ff007c")
+    ("purple" . "#fca7ea")
+    ("orange" . "#ff966c")
+    ("yellow" . "#ffc777")
+    ("green" . "#c3e88d")
+    ("green1" . "#4fd6be")
+    ("green2" . "#41a6b5")
+    ("teal" . "#4fd6be")
+    ("red" . "#ff757f")
+    ("red1" . "#c53b53")))
+
+(defconst tokyonight-day-colors-alist
+  '(("bg-dark" . "#e9e9ec")
+    ("bg" . "#e1e2e7")
+    ("bg-hl" . "#c4c8da")
+    ("terminal-black" . "#a1a6c5")
+    ("fg" . "#3760bf")
+    ("fg-dark" . "#6172b0")
+    ("fg-gutter" . "#a8aecb")
+    ("white" . "#ffffff")
+    ("comment" . "#848cb5")
+    ("dark3" . "#8990b3")
+    ("dark5" . "#68709a")
+    ("blue0" . "#7890dd")
+    ("blue" . "#2e7de9")
+    ("blue1" . "#188092")
+    ("blue2" . "#07879d")
+    ("blue5" . "#006a83")
+    ("blue6" . "#2e5857")
+    ("blue7" . "#92a6d5")
+    ("cyan" . "#007197")
+    ("magenta" . "#9854f1")
+    ("magenta2" . "#d20065")
+    ("purple" . "#7847bd")
+    ("orange" . "#b15c00")
+    ("yellow" . "#8c6c3e")
+    ("green" . "#587539")
+    ("green1" . "#387068")
+    ("green2" . "#38919f")
+    ("teal" . "#118c74")
+    ("red" . "#f52a65")
+    ("red1" . "#c64343")))
+
+(defmacro tokyonight-with-color-variables (&rest body)
+  "Execute BODY with variables bound to the colors."
+  (declare (indent 0))
+  `(let (,@(mapcar (lambda (cons)
+                     (list (intern (car cons)) (cdr cons)))
+                   (cond
+                    ((eq tokyonight-theme-style 'storm)
+                    (append tokyonight-storm-colors-alist tokyonight-override-colors-alist))
+                    ((eq tokyonight-theme-style 'night)
+                    (append tokyonight-night-colors-alist tokyonight-override-colors-alist))
+                    ((eq tokyonight-theme-style 'moon)
+                    (append tokyonight-moon-colors-alist tokyonight-override-colors-alist))
+                    ((eq tokyonight-theme-style 'day)
+                    (append tokyonight-day-colors-alist tokyonight-override-colors-alist))
+                    (t
+                    (append tokyonight-storm-colors-alist tokyonight-override-colors-alist)))))
+     ,@body))
+
+(tokyonight-with-color-variables
   (custom-theme-set-faces
    'tokyonight
 
@@ -179,7 +279,12 @@
 
    ;; vertico
    `(vertico-current ((t (:inherit region :extend t))))
-   ))
+  )
+
+  (custom-theme-set-variables
+   'tokyonight
+   `(ansi-color-names-vector [,bg ,red ,green ,yellow ,blue ,magenta ,cyan ,fg]))
+)
 
 ;;;###autoload
 (when load-file-name

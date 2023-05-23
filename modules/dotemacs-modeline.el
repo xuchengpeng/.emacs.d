@@ -12,8 +12,7 @@
 
 (defgroup dotemacs-modeline nil
   "A minimal and modern mode-line."
-  :group 'mode-line
-  :link '(url-link :tag "Homepage" "https://github.com/seagle0128/dotemacs-modeline"))
+  :group 'mode-line)
 
 (defcustom dotemacs-modeline-height 23
   "How tall the mode-line should be. It's only respected in GUI.

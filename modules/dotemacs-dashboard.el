@@ -96,7 +96,8 @@
         (run-hooks 'dotemacs-dashboard--functions)
         (goto-char pt))
       (unless (eq major-mode 'dotemacs-dashboard-mode)
-        (dotemacs-dashboard-mode)))))
+        (dotemacs-dashboard-mode))
+      (current-buffer))))
 
 (defun dotemacs-dashboard--resize (&optional _)
   (let ((space-win (get-buffer-window dotemacs-dashboard--buffer-name))
@@ -106,7 +107,7 @@
       (with-selected-window space-win
         (dotemacs-dashboard--reload)))))
 
-(defun dotemacs-dashboard--init ()
+(defun dotemacs-dashboard--init (&optional _)
   "Initializes dashboard."
   (add-to-list 'dotemacs-modeline-mode-alist '(dotemacs-dashboard-mode . dashboard))
   (when (equal (buffer-name) "*scratch*")

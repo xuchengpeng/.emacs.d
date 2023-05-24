@@ -21,6 +21,7 @@
 (setq ffap-machine-p-known 'reject)
 (setq redisplay-skip-fontification-on-input t)
 
+(setq-default mode-line-format nil)
 (push '(menu-bar-lines . 0)   default-frame-alist)
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)

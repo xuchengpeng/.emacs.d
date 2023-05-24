@@ -47,11 +47,11 @@
             :files ("straight*.el")
             :branch ,straight-repository-branch))
 
-(defun dotemacs-require-package (package)
-  (straight-use-package package))
+(defmacro dotemacs-require-package (package)
+  `(straight-use-package ,package))
 
-(defun dotemacs-require-packages (packages-list)
-  (mapc #'dotemacs-require-package packages-list))
+(defmacro dotemacs-require-packages (packages-list)
+  `(mapc #'straight-use-package ,packages-list))
 
 (dotemacs-require-packages '(use-package bind-key))
 

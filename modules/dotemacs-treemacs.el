@@ -10,7 +10,6 @@
 (dotemacs-require-packages '(treemacs treemacs-projectile))
 
 (use-package treemacs
-  :defer t
   :commands (treemacs)
   :config
   (setq treemacs-follow-after-init     t

@@ -19,10 +19,6 @@ Examples:
 (defvar dotemacs-cn-font nil
   "The chinese font to use.")
 
-(unless (frame-parameter nil 'fullscreen)
-  (toggle-frame-maximized))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 (setq hscroll-margin 2
       hscroll-step 1
       scroll-conservatively 101
@@ -98,7 +94,7 @@ Examples:
     (dolist (charset '(kana han symbol cjk-misc bopomofo))
       (set-fontset-font (frame-parameter nil 'font) charset dotemacs-cn-font))))
 
-(defun dotemacs-init-fonts ()
+(defun dotemacs-init-fonts (&optional _)
   "Set the font."
   (add-to-list 'after-make-frame-functions
                (lambda (new-frame)
@@ -107,6 +103,7 @@ Examples:
                    (dotemacs-set-font))))
   (when (display-graphic-p)
     (dotemacs-set-font)))
+
 (add-hook 'window-setup-hook #'dotemacs-init-fonts)
 
 (provide 'dotemacs-ui)

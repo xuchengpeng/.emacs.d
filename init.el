@@ -10,8 +10,8 @@
 (when (version< emacs-version "28.1")
   (error "Detected Emacs %s. Emacs version should be 28.1 or higher" emacs-version))
 
-;; Always load newest byte code
-(setq load-prefer-newer t)
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 16 1024 1024))))
 
 ;; Define dotemacs's directory structure
 (defvar dotemacs-dir (file-name-directory load-file-name)
@@ -38,10 +38,6 @@ by dotemacs.")
 ;; add dotemacs's directories to Emacs's `load-path'
 (add-to-list 'load-path dotemacs-core-dir)
 (add-to-list 'load-path dotemacs-modules-dir)
-
-;; reduce the frequency of garbage collection by making it happen on
-;; each 50MB of allocated data (the default is on every 0.76MB)
-(setq gc-cons-threshold 50000000)
 
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)

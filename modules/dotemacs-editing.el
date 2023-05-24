@@ -21,15 +21,15 @@
   (require 'smartparens-config))
 
 (use-package expand-region
-  :defer t)
+  :commands (er/expand-region))
 
 (use-package multiple-cursors
-  :defer t
+  :commands (mc/mark-all-like-this mc/mark-next-like-this mc/mark-previous-like-this)
   :init
   (setq mc/list-file (concat dotemacs-cache-dir "mc-lists.el")))
 
 (use-package move-text
-  :defer t)
+  :commands (move-text-up move-text-down))
 
 (provide 'dotemacs-editing)
 ;;; dotemacs-editing.el ends here

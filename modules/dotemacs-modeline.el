@@ -803,8 +803,6 @@ icons."
 If DEFAULT is non-nil, set the default mode-line for all buffers."
   (dotemacs-modeline-set-modeline 'main default))
 
-(dotemacs-modeline-set-main-modeline t)
-
 (defvar dotemacs-modeline-mode-alist
   '((message-mode . special)
     (circe-mode . special)
@@ -822,6 +820,7 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
         (throw 'found x)))))
 
 (add-hook 'after-change-major-mode-hook #'dotemacs-modeline-auto-set-modeline)
+(add-hook 'after-init-hook (lambda () (dotemacs-modeline-set-main-modeline t)))
 
 (provide 'dotemacs-modeline)
 ;;; dotemacs-modeline.el ends here

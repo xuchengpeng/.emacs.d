@@ -285,6 +285,10 @@
    `(flycheck-fringe-warning ((t (:inherit fringe :foreground ,orange))))
    `(flycheck-fringe-info    ((t (:inherit fringe :foreground ,green))))
 
+   ;; flyspell
+   `(flyspell-duplicate ((t (:underline (:style wave :color ,orange) :inherit unspecified))))
+   `(flyspell-incorrect ((t (:underline (:style wave :color ,red) :inherit unspecified))))
+
    ;; vertico
    `(vertico-current ((t (:inherit region :extend t))))
   )

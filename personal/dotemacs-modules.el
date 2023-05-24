@@ -1,10 +1,5 @@
 ;;; dotemacs-modules.el --- A listing of modules to load on startup. -*- lexical-binding: t; -*-
-
 ;;; Commentary:
-;;
-;; Modules definition.
-;;
-
 ;;; Code:
 
 (require 'dotemacs-themes)
@@ -21,6 +16,7 @@
 (require 'dotemacs-highlight)
 (require 'dotemacs-window-select)
 (require 'dotemacs-flycheck)
+(require 'dotemacs-flyspell)
 (require 'dotemacs-git)
 (require 'dotemacs-lang)
 (require 'dotemacs-eshell)

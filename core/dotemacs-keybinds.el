@@ -48,6 +48,7 @@
 (define-key dotemacs-leader-map "oc" '("Org capture" . org-capture))
 (define-key dotemacs-leader-map "op" '("Org publish project" . org-publish-project))
 (define-key dotemacs-leader-map "oe" '("Explorer" . treemacs))
+(define-key dotemacs-leader-map "os" '("Spell check" . flyspell-correct-wrapper))
 (define-key dotemacs-leader-map "ot" '("Terminal" . eshell))
 
 (define-key dotemacs-leader-map "p"  '("Project" . (keymap)))

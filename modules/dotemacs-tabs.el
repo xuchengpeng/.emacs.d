@@ -12,7 +12,8 @@
 (use-package centaur-tabs
   :hook (find-file . centaur-tabs-mode)
   :init
-  (setq centaur-tabs-set-icons nil
+  (setq centaur-tabs-height 16
+        centaur-tabs-set-icons nil
         centaur-tabs-style "bar"
         centaur-tabs-set-bar 'left
         centaur-tabs-set-close-button nil

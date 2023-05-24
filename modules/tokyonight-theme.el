@@ -123,7 +123,8 @@
 (defmacro tokyonight-with-color-variables (&rest body)
   "Execute BODY with variables bound to the colors."
   (declare (indent 0))
-  `(let (,@(mapcar (lambda (cons)
+  `(let ((class '((class color) (min-colors 89)))
+         ,@(mapcar (lambda (cons)
                      (list (intern (car cons)) (cdr cons)))
                    (cond
                     ((eq tokyonight-theme-style 'storm)
@@ -247,10 +248,10 @@
 
    ;; centaur-tabs
    `(centaur-tabs-default ((t (:inherit tab-bar :box nil))))
-   `(centaur-tabs-selected ((t (:inherit tab-bar-tab :box nil))))
-   `(centaur-tabs-unselected ((t (:inherit tab-bar-tab-inactive :box nil))))
-   `(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selecte :foreground ,orange))))
-   `(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselecte :foreground ,orange))))
+   `(centaur-tabs-selected ((t (:inherit tab-bar-tab :box nil :weight bold))))
+   `(centaur-tabs-unselected ((t (:inherit tab-bar-tab-inactive :box nil :weight light))))
+   `(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground ,orange))))
+   `(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground ,orange))))
    `(centaur-tabs-active-bar-face ((t (:inherit mode-line-highlight))))
    `(centaur-tabs-modified-marker-selected ((t (:inherit centaur-tabs-selected :foreground ,orange))))
    `(centaur-tabs-modified-marker-unselected ((t (:inherit centaur-tabs-unselected :foreground ,orange))))

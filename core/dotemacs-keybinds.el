@@ -48,7 +48,6 @@
 (define-key dotemacs-leader-map "oc" '("Org capture" . org-capture))
 (define-key dotemacs-leader-map "op" '("Org publish project" . org-publish-project))
 (define-key dotemacs-leader-map "oe" '("Explorer" . treemacs))
-(define-key dotemacs-leader-map "os" '("Spell check" . flyspell-correct-wrapper))
 (define-key dotemacs-leader-map "ot" '("Terminal" . eshell))
 
 (define-key dotemacs-leader-map "p"  '("Project" . (keymap)))
@@ -57,6 +56,10 @@
 (define-key dotemacs-leader-map "pr" '("Recent project files" . projectile-recentf))
 (define-key dotemacs-leader-map "ps" '("Search project" . consult-ripgrep))
 (define-key dotemacs-leader-map "pp" '("Switch project" . projectile-switch-project))
+
+(define-key dotemacs-leader-map "q"  '("Quit" . (keymap)))
+(define-key dotemacs-leader-map "qq" '("Quit Emacs" . kill-emacs))
+(define-key dotemacs-leader-map "qQ" '("Save and quit Emacs" . save-buffers-kill-terminal))
 
 (define-key dotemacs-leader-map "s"  '("Search" . (keymap)))
 (define-key dotemacs-leader-map "sb" '("Search buffer" . consult-line))
@@ -69,9 +72,13 @@
 (define-key dotemacs-leader-map "sm" '("Jump to bookmark" . bookmark-jump))
 (define-key dotemacs-leader-map "ss" '("Search symbol at point" . dotemacs-search-symbol-at-point))
 
-(define-key dotemacs-leader-map "q"  '("Quit" . (keymap)))
-(define-key dotemacs-leader-map "qq" '("Quit Emacs" . kill-emacs))
-(define-key dotemacs-leader-map "qQ" '("Save and quit Emacs" . save-buffers-kill-terminal))
+(define-key dotemacs-leader-map "t"  '("Toggle" . (keymap)))
+(define-key dotemacs-leader-map "tf" '("Flycheck" . flycheck-mode))
+(define-key dotemacs-leader-map "tl" '("Line numbers" . display-line-numbers-mode))
+(define-key dotemacs-leader-map "ts" '("Spell checker" . flyspell-mode))
+(define-key dotemacs-leader-map "tv" '("Visible mode" . visible-mode))
+(define-key dotemacs-leader-map "tw" '("Soft line wrapping" . visual-line-mode))
+(define-key dotemacs-leader-map "tz" '("Zen mode" . toggle-frame-fullscreen))
 
 (global-set-key (kbd "C-r") 'consult-line)
 (global-set-key (kbd "C-s") 'consult-line)

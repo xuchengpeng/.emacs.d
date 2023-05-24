@@ -60,11 +60,14 @@
 
 (define-key dotemacs-leader-map "s"  '("Search" . (keymap)))
 (define-key dotemacs-leader-map "sb" '("Search buffer" . consult-line))
+(define-key dotemacs-leader-map "sB" '("Search all open buffers" . consult-line-multi))
 (define-key dotemacs-leader-map "sd" '("Search current directory" . dotemacs-search-cwd))
 (define-key dotemacs-leader-map "sD" '("Search other directory" . dotemacs-search-other-cwd))
+(define-key dotemacs-leader-map "sf" '("Locate file" . locate))
 (define-key dotemacs-leader-map "si" '("Jump to symbol" . imenu))
 (define-key dotemacs-leader-map "sl" '("Jump to visible link" . link-hint-open-link))
 (define-key dotemacs-leader-map "sm" '("Jump to bookmark" . bookmark-jump))
+(define-key dotemacs-leader-map "ss" '("Search symbol at point" . dotemacs-search-symbol-at-point))
 
 (define-key dotemacs-leader-map "q"  '("Quit" . (keymap)))
 (define-key dotemacs-leader-map "qq" '("Quit Emacs" . kill-emacs))

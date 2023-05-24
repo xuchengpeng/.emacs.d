@@ -98,6 +98,11 @@
     (consult-find dir initial))
    (find-file dir initial)))
 
+(defun dotemacs-search-symbol-at-point ()
+  "Search symbol at point."
+  (interactive)
+  (consult-line (thing-at-point 'symbol)))
+
 (defun dotemacs-search-cwd (&optional arg)
   "Conduct a text search in files under the current folder.
 If prefix ARG is set, prompt for a directory to search from."

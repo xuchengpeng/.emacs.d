@@ -162,8 +162,10 @@
    `(error ((t (:foreground ,red))))
    `(warning ((t (:foreground ,orange))))
    `(success ((t (:foreground ,green))))
-   `(line-number ((t (:inherit default :foreground ,comment :background ,bg))))
-   `(line-number-current-line ((t (:inherit line-number :foreground ,fg :background ,bg-hl))))
+
+   ;; line-number
+   `(line-number ((t (:inherit default :foreground ,dark3))))
+   `(line-number-current-line ((t (:inherit line-number :foreground ,fg))))
 
    ;; isearch
    `(isearch ((t (:foreground ,orange :background ,bg :inverse-video t))))

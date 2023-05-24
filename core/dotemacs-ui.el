@@ -65,7 +65,9 @@ Examples:
 (advice-add #'display-startup-screen :override #'ignore)
 
 (use-package display-line-numbers
-  :hook ((prog-mode conf-mode) . display-line-numbers-mode))
+  :hook ((prog-mode text-mode conf-mode) . display-line-numbers-mode)
+  :config
+  (setq-default display-line-numbers-width 3))
 
 (use-package winner
   :hook (window-configuration-change . winner-mode)

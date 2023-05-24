@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.8](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.7...v2.0.8) (2023-05-24)
+
+
+### Bug Fixes
+
+* add more search commands ([d92d751](https://github.com/xuchengpeng/.emacs.d/commit/d92d7514adc7606e647370a9b76ba52f0ad01d87))
+* **dashboard:** dashboard like alpha-nvim ([cc7990f](https://github.com/xuchengpeng/.emacs.d/commit/cc7990fcd58a92bcb8d599dcd82b716dcecf8595))
+* **flyspell:** use aspell as backend ([16658af](https://github.com/xuchengpeng/.emacs.d/commit/16658af669949f5833f2a1ef8babaaa4ad7e1a7a))
+* improve performance ([cfe6b03](https://github.com/xuchengpeng/.emacs.d/commit/cfe6b0339b7fc63271c6d018780141b3f1c04115))
+* **keybinds:** add mode toggle keybinds ([ee78e5d](https://github.com/xuchengpeng/.emacs.d/commit/ee78e5d48e05a3e8efdb62979decf745a56cbf7c))
+* reasonable defaults ([0603f3a](https://github.com/xuchengpeng/.emacs.d/commit/0603f3a551025cbc5c99eec80348e133ad49ecd3))
+* **recentf:** active after init ([6f7e3f2](https://github.com/xuchengpeng/.emacs.d/commit/6f7e3f297bfc2b3262c52e6fdc66ee56b9aae060))
+* **tokyonight:** add eshell faces ([569a031](https://github.com/xuchengpeng/.emacs.d/commit/569a031a5653af45a9b39a1041c951d8bae74bfd))
+* **tokyonight:** add theme styles ([2a6a51c](https://github.com/xuchengpeng/.emacs.d/commit/2a6a51c8a62527ffdebd4947cc3e9e9e7c5764be))
+* **tokyonight:** do not highlight current line number ([f3cc909](https://github.com/xuchengpeng/.emacs.d/commit/f3cc909f983fa6a82c4c0860eaabe7292d73b6bf))
+* **tokyonight:** fix centaur-tabs style ([3094ac2](https://github.com/xuchengpeng/.emacs.d/commit/3094ac249f46c88ecf75cf841ce32dc6b6e0736c))
+* **vertico:** customize consult-fd with args ([bbf6b39](https://github.com/xuchengpeng/.emacs.d/commit/bbf6b392944fc6f69a284ff2bc172ea0d163ce26))
+
 ## [2.0.7](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.6...v2.0.7) (2023-05-22)
 
 

@@ -60,22 +60,23 @@
                               "find . -not ( -wholename \\*/.\\* -prune )"
                             consult-find-args)))
 
-(defvar consult--fd-command nil
-  "Consult fd command name.")
+(defvar consult-fd-args nil
+  "Command line arguments for fd.")
 
 (defun consult--fd-builder (input)
   "Consult fd command builder with INPUT."
-  (unless consult--fd-command
-    (setq consult--fd-command "fd"))
-  (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+  (unless consult-fd-args
+    (setq consult-fd-args
+          (concat "fd --color=never --full-path --ignore-case --hidden --exclude .git"
+                  (if IS-WINDOWS " --path-separator=/"))))
+  (pcase-let* ((cmd (split-string-and-unquote consult-fd-args))
+               (`(,arg . ,opts) (consult--command-split input))
                (`(,re . ,hl) (funcall consult--regexp-compiler
                                       arg 'extended t)))
     (when re
       (cons (append
-             (list consult--fd-command
-                   "--color=never" "--full-path" "--ignore-case" "--hidden" "--exclude" ".git"
-                   (if IS-WINDOWS "--path-separator=/" "")
-                   (consult--join-regexps re 'extended))
+             cmd
+             (list (consult--join-regexps re 'extended))
              opts)
             hl))))
 

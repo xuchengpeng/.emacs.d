@@ -33,7 +33,7 @@ The backends for any mode is built from this.")
         company-tooltip-limit 15
         company-tooltip-align-annotations t
         company-require-match 'never
-        company-global-modes '(not erc-mode circe-mode message-mode help-mode gud-mode vterm-mode)
+        company-global-modes '(not erc-mode circe-mode message-mode help-mode gud-mode eshell-mode shell-mode)
         company-frontends
         '(company-pseudo-tooltip-frontend
           company-echo-metadata-frontend)

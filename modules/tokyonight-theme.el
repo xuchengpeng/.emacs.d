@@ -128,15 +128,15 @@
                      (list (intern (car cons)) (cdr cons)))
                    (cond
                     ((eq tokyonight-theme-style 'storm)
-                    (append tokyonight-storm-colors-alist tokyonight-override-colors-alist))
+                     (append tokyonight-storm-colors-alist tokyonight-override-colors-alist))
                     ((eq tokyonight-theme-style 'night)
-                    (append tokyonight-night-colors-alist tokyonight-override-colors-alist))
+                     (append tokyonight-night-colors-alist tokyonight-override-colors-alist))
                     ((eq tokyonight-theme-style 'moon)
-                    (append tokyonight-moon-colors-alist tokyonight-override-colors-alist))
+                     (append tokyonight-moon-colors-alist tokyonight-override-colors-alist))
                     ((eq tokyonight-theme-style 'day)
-                    (append tokyonight-day-colors-alist tokyonight-override-colors-alist))
+                     (append tokyonight-day-colors-alist tokyonight-override-colors-alist))
                     (t
-                    (append tokyonight-storm-colors-alist tokyonight-override-colors-alist)))))
+                     (append tokyonight-storm-colors-alist tokyonight-override-colors-alist)))))
      ,@body))
 
 (tokyonight-with-color-variables
@@ -266,15 +266,15 @@
    `(centaur-tabs-modified-marker-unselected ((t (:inherit centaur-tabs-unselected :foreground ,orange))))
 
    ;; company
-   `(company-tooltip ((t (:foreground ,fg :background ,bg-dark))))
-   `(company-tooltip-selection ((t (:foreground ,comment :background ,bg-hl))))
+   `(company-tooltip ((t (:foreground ,fg :background ,bg-hl))))
+   `(company-tooltip-selection ((t (:foreground ,comment :inverse-video t))))
    `(company-tooltip-common ((t (:inherit company-tooltip :foreground ,red))))
    `(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :foreground ,red))))
    `(company-tooltip-search ((t (:inherit company-tooltip :foreground ,blue))))
    `(company-tooltip-annotation ((t (:inherit company-tooltip :foreground ,green))))
    `(company-tooltip-annotation-selection ((t (:inherit company-tooltip-selection :foreground ,green))))
-   `(company-scrollbar-fg ((t (:background ,bg-hl))))
-   `(company-scrollbar-bg ((t (:background ,bg-dark))))
+   `(company-tooltip-scrollbar-thumb ((t (:background ,dark3))))
+   `(company-tooltip-scrollbar-track ((t (:background ,bg-hl))))
    `(company-preview ((t (:foreground ,comment :background ,bg-hl))))
    `(company-preview-common ((t (:inherit company-preview :foreground ,red))))
    `(company-preview-search ((t (:inherit company-preview :foreground ,blue))))

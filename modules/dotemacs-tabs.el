@@ -1,16 +1,11 @@
 ;;; dotemacs-tabs.el --- Tabs. -*- lexical-binding: t; -*-
-
 ;;; Commentary:
-;;
-;; Tabs configuration.
-;;
-
 ;;; Code:
 
 (dotemacs-require-packages '(centaur-tabs))
 
 (use-package centaur-tabs
-  :hook (find-file . centaur-tabs-mode)
+  :hook ((find-file dired-initial-position) . centaur-tabs-mode)
   :init
   (setq centaur-tabs-height 16
         centaur-tabs-set-icons nil

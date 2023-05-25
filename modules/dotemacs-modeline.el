@@ -429,10 +429,9 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
               ((bound-and-true-p window-numbering-mode)
                (window-numbering-get-number-string))
               (t ""))))
-    (if (length> num 0)
-        (propertize (format " %s " num)
-                    'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-major-mode))
-      (dotemacs-modeline-spc))))
+    (when (length> num 0)
+      (propertize (format " %s " num)
+                  'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-major-mode)))))
 
 (defsubst dotemacs-modeline--buffer-simple-name ()
   "The buffer simple name."
@@ -569,11 +568,9 @@ block selection."
   "Mode line construct for miscellaneous information.
 By default, this shows the information specified by `global-mode-string'."
   (when (dotemacs-modeline--active)
-    (dotemacs-modeline-display-text
-      (concat
-        (dotemacs-modeline-spc)
-        (format-mode-line mode-line-misc-info)
-        (dotemacs-modeline-spc)))))
+    (let ((meta (format-mode-line mode-line-misc-info)))
+      (unless (string-empty-p meta)
+        (dotemacs-modeline-display-text (format " %s " meta))))))
 
 (dotemacs-modeline-def-segment minor-modes
   (when dotemacs-modeline-minor-modes
@@ -617,8 +614,9 @@ By default, this shows the information specified by `global-mode-string'."
 
 (dotemacs-modeline-def-segment process
   "The process info."
-  (dotemacs-modeline-display-text
-   (format-mode-line mode-line-process)))
+  (let ((meta (format-mode-line mode-line-process)))
+    (unless (string-empty-p meta)
+      (dotemacs-modeline-display-text (format " %s " meta)))))
 
 (defvar-local dotemacs-modeline--vcs-text nil)
 (defun dotemacs-modeline-update-vcs-text (&rest _)

@@ -193,68 +193,6 @@
    ;; Calendar
    `(holiday-face ((t (:foreground ,red1))))
 
-   ;; Compilation
-   `(compilation-info ((t ,(list :foreground green :inherit 'unspecified))))
-   `(compilation-warning ((t ,(list :foreground yellow :bold t :inherit 'unspecified))))
-   `(compilation-error ((t (:foreground ,red))))
-   `(compilation-mode-line-failt ((t ,(list :foreground red :weight 'bold :inherit 'unspecified))))
-   `(compilation-mode-line-exit ((t ,(list :foreground green :weight 'bold :inherit 'unspecified))))
-
-   ;; Custom
-   `(custom-state ((t (:foreground ,green))))
-
-   ;; Diff
-   `(diff-changed ((t ,(list :foreground blue :background 'unspecified))))
-   `(diff-removed ((t ,(list :foreground red :background 'unspecified))))
-   `(diff-added ((t ,(list :foreground green :background 'unspecified))))
-
-   ;; diff-hl
-   `(diff-hl-change ((t (:foreground ,bg :background ,blue))))
-   `(diff-hl-delete ((t (:foreground ,bg :background ,red))))
-   `(diff-hl-insert ((t (:foreground ,bg :background ,green))))
-
-   ;; Dired
-   `(dired-directory ((t (:foreground ,magenta))))
-   `(dired-ignored ((t ,(list :foreground blue7 :inherit 'unspecified))))
-
-   ;; Add ido support
-   `(ido-first-match ((t (:foreground ,yellow :bold nil))))
-   `(ido-only-match ((t (:foreground ,orange))))
-   `(ido-subdir ((t (:foreground ,green))))
-
-   ;; eshell
-   `(eshell-prompt ((t (:foreground ,magenta :weight bold))))
-   `(eshell-ls-archive ((t (:foreground ,red))))
-   `(eshell-ls-backup ((t (:inherit font-lock-comment-face))))
-   `(eshell-ls-clutter ((t (:inherit font-lock-comment-face))))
-   `(eshell-ls-directory ((t (:foreground ,blue))))
-   `(eshell-ls-executable ((t (:foreground ,green))))
-   `(eshell-ls-missing ((t (:inherit font-lock-warning-face))))
-   `(eshell-ls-product ((t (:inherit font-lock-doc-face))))
-   `(eshell-ls-special ((t (:foreground ,yellow :weight bold))))
-   `(eshell-ls-symlink ((t (:foreground ,cyan :weight bold))))
-   `(eshell-ls-unreadable ((t (:foreground ,fg))))
-
-   ;; mode-line / header-line
-   `(mode-line ((t (:foreground ,fg :background ,bg-dark :weight normal :box (:line-width 1 :color ,bg-dark)))))
-   `(mode-line-buffer-id ((t (:foreground ,fg :background unspecified))))
-   `(mode-line-active ((t (:inherit mode-line))))
-   `(mode-line-inactive ((t (:inherit mode-line :foreground ,dark5 :background ,bg :weight normal))))
-   `(mode-line-emphasis ((t (:foreground ,blue))))
-   `(mode-line-highlight ((t (:foreground ,fg-gutter :background ,blue :box nil))))
-   `(header-line ((t (:inherit mode-line))))
-   `(header-line-highlight ((t (:inherit mode-line-highlight))))
-
-   ;; tab-line / tab-bar
-   `(tab-line ((t (:foreground ,fg-dark :background ,bg-dark))))
-   `(tab-line-tab ((t (:foreground ,fg :background ,bg))))
-   `(tab-line-tab-inactive ((t (:foreground ,fg-dark :background ,bg-dark))))
-   `(tab-line-tab-inactive-alternate ((t (:inherit tab-line-tab-inactive))))
-   `(tab-line-tab-current ((t (:foreground ,fg :background ,bg))))
-   `(tab-bar ((t (:foreground ,fg-dark :background ,bg-dark))))
-   `(tab-bar-tab ((t (:foreground ,fg :background ,bg))))
-   `(tab-bar-tab-inactive ((t (:foreground ,fg-dark :background ,bg-dark))))
-
    ;; centaur-tabs
    `(centaur-tabs-default ((t (:inherit tab-bar :box nil))))
    `(centaur-tabs-selected ((t (:inherit tab-bar-tab :box nil :weight bold))))
@@ -279,6 +217,51 @@
    `(company-preview-common ((t (:inherit company-preview :foreground ,red))))
    `(company-preview-search ((t (:inherit company-preview :foreground ,blue))))
 
+   ;; Compilation
+   `(compilation-info ((t ,(list :foreground green :inherit 'unspecified))))
+   `(compilation-warning ((t ,(list :foreground yellow :bold t :inherit 'unspecified))))
+   `(compilation-error ((t (:foreground ,red))))
+   `(compilation-mode-line-failt ((t ,(list :foreground red :weight 'bold :inherit 'unspecified))))
+   `(compilation-mode-line-exit ((t ,(list :foreground green :weight 'bold :inherit 'unspecified))))
+
+   ;; completions
+   `(completions-annotations ((t (:foreground ,comment :background unspecified :slant italic))))
+   `(completions-common-part ((t (:foreground ,blue6 :background unspecified))))
+   `(completions-first-difference ((t (:foreground ,orange :background unspecified :weight bold))))
+   `(completions-highlight ((t (:foreground ,fg :background ,bg-hl))))
+   `(completions-group-title ((t (:foreground ,dark5 :background unspecified :slant italic))))
+   `(completions-group-separator ((t (:foreground ,dark5 :background unspecified :strike-through t))))
+
+   ;; Custom
+   `(custom-state ((t (:foreground ,green))))
+
+   ;; Diff
+   `(diff-changed ((t ,(list :foreground blue :background 'unspecified))))
+   `(diff-removed ((t ,(list :foreground red :background 'unspecified))))
+   `(diff-added ((t ,(list :foreground green :background 'unspecified))))
+
+   ;; diff-hl
+   `(diff-hl-change ((t (:foreground ,bg :background ,blue))))
+   `(diff-hl-delete ((t (:foreground ,bg :background ,red))))
+   `(diff-hl-insert ((t (:foreground ,bg :background ,green))))
+
+   ;; Dired
+   `(dired-directory ((t (:foreground ,magenta))))
+   `(dired-ignored ((t ,(list :foreground blue7 :inherit 'unspecified))))
+
+   ;; eshell
+   `(eshell-prompt ((t (:foreground ,magenta :weight bold))))
+   `(eshell-ls-archive ((t (:foreground ,red))))
+   `(eshell-ls-backup ((t (:inherit font-lock-comment-face))))
+   `(eshell-ls-clutter ((t (:inherit font-lock-comment-face))))
+   `(eshell-ls-directory ((t (:foreground ,blue))))
+   `(eshell-ls-executable ((t (:foreground ,green))))
+   `(eshell-ls-missing ((t (:inherit font-lock-warning-face))))
+   `(eshell-ls-product ((t (:inherit font-lock-doc-face))))
+   `(eshell-ls-special ((t (:foreground ,yellow :weight bold))))
+   `(eshell-ls-symlink ((t (:foreground ,cyan :weight bold))))
+   `(eshell-ls-unreadable ((t (:foreground ,fg))))
+
    ;; flycheck
    `(flycheck-error          ((t (:underline (:style wave :color ,red)))))
    `(flycheck-warning        ((t (:underline (:style wave :color ,orange)))))
@@ -290,6 +273,31 @@
    ;; flyspell
    `(flyspell-duplicate ((t (:underline (:style wave :color ,orange) :inherit unspecified))))
    `(flyspell-incorrect ((t (:underline (:style wave :color ,red) :inherit unspecified))))
+
+   ;; Add ido support
+   `(ido-first-match ((t (:foreground ,yellow :bold nil))))
+   `(ido-only-match ((t (:foreground ,orange))))
+   `(ido-subdir ((t (:foreground ,green))))
+
+   ;; mode-line / header-line
+   `(mode-line ((t (:foreground ,fg :background ,bg-dark :weight normal :box (:line-width 1 :color ,bg-dark)))))
+   `(mode-line-buffer-id ((t (:foreground ,fg :background unspecified))))
+   `(mode-line-active ((t (:inherit mode-line))))
+   `(mode-line-inactive ((t (:inherit mode-line :foreground ,dark5 :background ,bg :weight normal))))
+   `(mode-line-emphasis ((t (:foreground ,blue))))
+   `(mode-line-highlight ((t (:foreground ,fg-gutter :background ,blue :box nil))))
+   `(header-line ((t (:inherit mode-line))))
+   `(header-line-highlight ((t (:inherit mode-line-highlight))))
+
+   ;; tab-line / tab-bar
+   `(tab-line ((t (:foreground ,fg-dark :background ,bg-dark))))
+   `(tab-line-tab ((t (:foreground ,fg :background ,bg))))
+   `(tab-line-tab-inactive ((t (:foreground ,fg-dark :background ,bg-dark))))
+   `(tab-line-tab-inactive-alternate ((t (:inherit tab-line-tab-inactive))))
+   `(tab-line-tab-current ((t (:foreground ,fg :background ,bg))))
+   `(tab-bar ((t (:foreground ,fg-dark :background ,bg-dark))))
+   `(tab-bar-tab ((t (:foreground ,fg :background ,bg))))
+   `(tab-bar-tab-inactive ((t (:foreground ,fg-dark :background ,bg-dark))))
 
    ;; vertico
    `(vertico-current ((t (:inherit region :extend t))))

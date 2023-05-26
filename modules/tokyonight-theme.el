@@ -151,7 +151,7 @@
    `(link-visited ((t (:foreground ,dark5 :underline t))))
    `(match ((t (:foreground ,orange :background ,bg :inverse-video t))))
    `(shadow ((t (:foreground ,dark5))))
-   `(minibuffer-prompt ((t :foreground ,magenta)))
+   `(minibuffer-prompt ((t :foreground ,magenta :background unspecified)))
    `(region ((t (:background ,bg-hl :extend t))))
    `(secondary-selection ((t ,(list :background bg-hl :foreground 'unspecified))))
    `(trailing-whitespace ((t ,(list :foreground white :background red))))

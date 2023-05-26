@@ -274,6 +274,9 @@
    `(flyspell-duplicate ((t (:underline (:style wave :color ,orange) :inherit unspecified))))
    `(flyspell-incorrect ((t (:underline (:style wave :color ,red) :inherit unspecified))))
 
+   ;; hl-line
+   `(hl-line ((t (:background ,bg-hl :extend t))))
+
    ;; Add ido support
    `(ido-first-match ((t (:foreground ,yellow :bold nil))))
    `(ido-only-match ((t (:foreground ,orange))))

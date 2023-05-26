@@ -13,6 +13,9 @@
 (setq gc-cons-threshold most-positive-fixnum)
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 16 1024 1024))))
 
+(defgroup dotemacs nil
+  "Emacs framework.")
+
 ;; Define dotemacs's directory structure
 (defvar dotemacs-dir (file-name-directory load-file-name)
   "The root dir of the Emacs dotemacs distribution.")

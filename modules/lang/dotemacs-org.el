@@ -2,12 +2,24 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(htmlize))
+(dotemacs-require-package '(org :host github :repo "emacs-straight/org-mode" :branch "release_9.6.6"))
+(dotemacs-require-packages '(org-roam htmlize))
+
+(defcustom dotemacs-org-dir "~/org/"
+  "Org directory."
+  :type 'string
+  :group 'dotemacs)
+
+(defcustom dotemacs-org-site-dir nil
+  "Org site directory."
+  :type 'string
+  :group 'dotemacs)
 
 (use-package org
   :mode ("\\.org$" . org-mode)
   :init
-  (setq org-directory "~/org/"
+  (setq org-directory dotemacs-org-dir
+        org-id-locations-file (expand-file-name ".orgids" org-directory)
         org-agenda-files (list org-directory)
         org-persist-directory (concat dotemacs-cache-dir "org-persist/")
         org-publish-timestamp-directory (concat dotemacs-cache-dir "org-timestamps/"))
@@ -21,7 +33,24 @@
            "* [ ] %?\n%i\n%a" :prepend t :kill-buffer t)
           ("n" "Notes" entry
            (file+headline +org-capture-notes-file "Inbox")
-           "* %u %?\n%i\n%a" :prepend t :kill-buffer t))))
+           "* %u %?\n%i\n%a" :prepend t :kill-buffer t)))
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "PROJECT(p)" "|" "DONE(d)" "CANCELLED(c)"))
+        org-todo-keyword-faces
+        '(("STARTED" . font-lock-constant-face)
+          ("HOLD" . warning)
+          ("WAIT" . warning)
+          ("CANCELLED" . error)
+          ("PROJECT" . font-lock-doc-face))))
+
+(use-package org-roam
+  :defer t
+  :init
+  (setq org-roam-directory (file-truename dotemacs-org-dir)
+        org-roam-db-location (concat org-roam-directory "org-roam.db"))
+  :config
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-enable))
 
 (use-package org-clock
   :commands org-clock-save
@@ -33,9 +62,6 @@
         org-clock-out-remove-zero-time-clocks t
         org-clock-history-length 20)
   (add-hook 'kill-emacs-hook #'org-clock-save))
-
-(defvar dotemacs-org-site-dir nil
-  "Org site directory.")
 
 (use-package ox-publish
   :commands org-publish-project

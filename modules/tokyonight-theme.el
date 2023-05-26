@@ -263,9 +263,9 @@
    `(eshell-ls-unreadable ((t (:foreground ,fg))))
 
    ;; flycheck
-   `(flycheck-error          ((t (:underline (:style wave :color ,red)))))
-   `(flycheck-warning        ((t (:underline (:style wave :color ,orange)))))
-   `(flycheck-info           ((t (:underline (:style wave :color ,green)))))
+   `(flycheck-error          ((t (:underline (:style wave :color ,red) :background unspecified))))
+   `(flycheck-warning        ((t (:underline (:style wave :color ,orange) :background unspecified))))
+   `(flycheck-info           ((t (:underline (:style wave :color ,green) :background unspecified))))
    `(flycheck-fringe-error   ((t (:inherit fringe :foreground ,red))))
    `(flycheck-fringe-warning ((t (:inherit fringe :foreground ,orange))))
    `(flycheck-fringe-info    ((t (:inherit fringe :foreground ,green))))

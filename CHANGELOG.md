@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.9](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.8...v2.0.9) (2023-05-27)
+
+
+### Bug Fixes
+
+* **company:** disabled in shell ([95bd317](https://github.com/xuchengpeng/.emacs.d/commit/95bd31762416d7bef4863a6100b84808a6947ba9))
+* **modeline:** add padding for process ([2fb3ead](https://github.com/xuchengpeng/.emacs.d/commit/2fb3ead67f170918d92065ca4503a3b3b7faa069))
+* **org:** use org-roam to take notes ([6e59e9b](https://github.com/xuchengpeng/.emacs.d/commit/6e59e9b22a8b8560670cb0af5edc744d37f1c275))
+* **themes:** load tokyonight styles with command ([a151faa](https://github.com/xuchengpeng/.emacs.d/commit/a151faae913f002f5b7428f6870031855b040732))
+* **tokyonight:** add completions faces ([2bb355e](https://github.com/xuchengpeng/.emacs.d/commit/2bb355eda3bdba64a5bee65e5713586632cc9027))
+* **tokyonight:** add hl-line face ([4345cf7](https://github.com/xuchengpeng/.emacs.d/commit/4345cf7b04af9e0bedcffc3f6bba1384a4e1cfaa))
+* **tokyonight:** customize company scrollbar faces ([a7bff3f](https://github.com/xuchengpeng/.emacs.d/commit/a7bff3f36359ff239d6eb7e7f7944d6bb64b3cd1))
+* **tokyonight:** set flycheck background unspecified ([82fe46d](https://github.com/xuchengpeng/.emacs.d/commit/82fe46dbcdff41e6c5735bef78fcb223a35f8398))
+* **tokyonight:** set minibuffer-prompt background unspecified ([1f81dbe](https://github.com/xuchengpeng/.emacs.d/commit/1f81dbea86e10a3ce0731ffd786c086b960e5f14))
+* **undo-tree:** do not auto save history ([315be25](https://github.com/xuchengpeng/.emacs.d/commit/315be254f7d1bdc160bc75fe63e5b0e89c4a0a2a))
+
 ## [2.0.8](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.7...v2.0.8) (2023-05-24)
 
 

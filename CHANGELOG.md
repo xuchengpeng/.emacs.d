@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.10](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.9...v2.0.10) (2023-06-06)
+
+
+### Bug Fixes
+
+* **tokyonight:** region background diff from highlight ([366ea8b](https://github.com/xuchengpeng/.emacs.d/commit/366ea8bbb896e8e84cf8c8f77d135123e58809a2))
+
 ## [2.0.9](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.8...v2.0.9) (2023-05-27)
 
 

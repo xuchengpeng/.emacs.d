@@ -152,7 +152,7 @@
    `(match ((t (:foreground ,orange :background ,bg :inverse-video t))))
    `(shadow ((t (:foreground ,dark5))))
    `(minibuffer-prompt ((t :foreground ,magenta :background unspecified)))
-   `(region ((t (:background ,bg-hl :extend t))))
+   `(region ((t (:background ,dark3 :extend t))))
    `(secondary-selection ((t ,(list :background bg-hl :foreground 'unspecified))))
    `(trailing-whitespace ((t ,(list :foreground white :background red))))
    `(border ((t ,(list :background bg :foreground bg-hl))))
@@ -303,7 +303,7 @@
    `(tab-bar-tab-inactive ((t (:foreground ,fg-dark :background ,bg-dark))))
 
    ;; vertico
-   `(vertico-current ((t (:inherit region :extend t))))
+   `(vertico-current ((t (:background ,bg-hl :extend t))))
   )
 
   (custom-theme-set-variables

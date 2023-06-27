@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.11](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.10...v2.0.11) (2023-06-27)
+
+
+### Bug Fixes
+
+* **org:** bump release 9.6.7 ([47632a1](https://github.com/xuchengpeng/.emacs.d/commit/47632a163813aac0148cf92abc334f8e64e0987f))
+
 ## [2.0.10](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.9...v2.0.10) (2023-06-06)
 
 

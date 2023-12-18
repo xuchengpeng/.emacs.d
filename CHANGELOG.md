@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.12](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.11...v2.0.12) (2023-12-18)
+
+
+### Bug Fixes
+
+* **ci:** add emacs 29.1 to the CI matrix ([721a584](https://github.com/xuchengpeng/.emacs.d/commit/721a58437d59101ec181acb37c5d1b9076115320))
+* **org:** bump release 9.6.13 ([40242ae](https://github.com/xuchengpeng/.emacs.d/commit/40242aeb5faabf6c5197d8194fd5c6b46bf5d32a))
+
 ## [2.0.11](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.10...v2.0.11) (2023-06-27)
 
 

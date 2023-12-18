@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-package '(org :host github :repo "emacs-straight/org-mode" :branch "release_9.6.7"))
+(dotemacs-require-package '(org :host github :repo "emacs-straight/org-mode" :branch "release_9.6.13"))
 (dotemacs-require-packages '(org-roam htmlize))
 
 (defcustom dotemacs-org-dir "~/org/"

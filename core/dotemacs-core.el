@@ -46,14 +46,5 @@ code of the process and OUTPUT is its stdout output."
               -1)
           (string-trim (buffer-string)))))
 
-(defun dotemacs-eval-after-init (form)
-  "Add `(lambda () FORM)' to `after-init-hook'.
-
-    If Emacs has already finished initialization, also eval FORM immediately."
-  (let ((func (list 'lambda nil form)))
-    (add-hook 'after-init-hook func)
-    (when after-init-time
-      (eval form))))
-
 (provide 'dotemacs-core)
 ;;; dotemacs-core.el ends here

@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.1.0](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.12...v2.1.0) (2023-12-19)
+
+
+### Features
+
+* **lsp:** add lsp-mode support ([2df6ff8](https://github.com/xuchengpeng/.emacs.d/commit/2df6ff8131585ce314b290dcc5136031f671213d))
+
+
+### Bug Fixes
+
+* **autorevert:** enable after init ([6fb16bd](https://github.com/xuchengpeng/.emacs.d/commit/6fb16bd68bcd6ed029980fbde5047066e3ede20c))
+* **core:** remove unused function ([46b1384](https://github.com/xuchengpeng/.emacs.d/commit/46b13848cbc20d63e4f7c13109c90eb885925f16))
+* **dired:** makeing dired pretty ([8b49ba9](https://github.com/xuchengpeng/.emacs.d/commit/8b49ba981e812975fe5f7f03f47c21a13b1779a7))
+* **git:** remove magit ([3ad7419](https://github.com/xuchengpeng/.emacs.d/commit/3ad7419e49276b270bc65390e306463740ec17fa))
+* **keybinds:** add lsp keymap ([07a37d8](https://github.com/xuchengpeng/.emacs.d/commit/07a37d842ec177ef96c4d91dd3853c06923fc2fe))
+* **keybinds:** bind major mode map to M-SPC m ([8235ce9](https://github.com/xuchengpeng/.emacs.d/commit/8235ce933f357cfad3aeef81ab4b40e80efbd7ee))
+* **lsp:** disable features that have great potential to be slow ([24272fe](https://github.com/xuchengpeng/.emacs.d/commit/24272feaf6cc644ca94307c803799dcec19ee793))
+* **lsp:** enable modeline ([6442de7](https://github.com/xuchengpeng/.emacs.d/commit/6442de747b968eb7eb27d8d14c1eb329563193b6))
+* **lua:** enable lsp after lua-mode ([47af6d1](https://github.com/xuchengpeng/.emacs.d/commit/47af6d1ff2037a862135bbd4e844bace3a858571))
+* **org:** remove org-roam ([2cddcac](https://github.com/xuchengpeng/.emacs.d/commit/2cddcace6226dea08b85b4c87122525832f61df5))
+* **pyright:** customize python interpreter by youself ([a8ffaf6](https://github.com/xuchengpeng/.emacs.d/commit/a8ffaf6e3f9b9b1f5c641d240d17a3d09520e1e1))
+* **pyright:** symbol's value is void while init ([480923f](https://github.com/xuchengpeng/.emacs.d/commit/480923f430b6ec7cb3c601c85ee30e3824c54178))
+* **python:** prefer pyright as language server ([58540d7](https://github.com/xuchengpeng/.emacs.d/commit/58540d722d1d7ee1a3de5b7a0189431e46195aa8))
+* **tabs:** disable tabs by default ([8eb4d47](https://github.com/xuchengpeng/.emacs.d/commit/8eb4d47789f743927ae7b3a3df84e0ea42aefc4b))
+* **tree-sitter:** remove tree-sitter ([bf5eb24](https://github.com/xuchengpeng/.emacs.d/commit/bf5eb24a72565441b8d309e47b6564b27b369221))
+* **treemacs:** remove treemacs ([8f83627](https://github.com/xuchengpeng/.emacs.d/commit/8f836277cf2ab95245e0d29777bbb8c659f8b098))
+* **vertico:** proper consult-fd ([461faf2](https://github.com/xuchengpeng/.emacs.d/commit/461faf2f4528c29641bab55caebeb600460f7e84))
+
 ## [2.0.12](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.11...v2.0.12) (2023-12-18)
 
 

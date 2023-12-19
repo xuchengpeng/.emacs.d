@@ -11,7 +11,6 @@
 (require 'dotemacs-company)
 (require 'dotemacs-projectile)
 (require 'dotemacs-modeline)
-(require 'dotemacs-treemacs)
 (require 'dotemacs-highlight)
 (require 'dotemacs-window-select)
 (require 'dotemacs-flycheck)

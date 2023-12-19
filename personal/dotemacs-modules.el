@@ -10,7 +10,6 @@
 (require 'dotemacs-vertico)
 (require 'dotemacs-company)
 (require 'dotemacs-projectile)
-(require 'dotemacs-tabs)
 (require 'dotemacs-modeline)
 (require 'dotemacs-treemacs)
 (require 'dotemacs-highlight)

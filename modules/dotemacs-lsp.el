@@ -12,7 +12,12 @@
         lsp-server-install-dir (concat dotemacs-local-dir "lsp")
         lsp-keymap-prefix nil
         lsp-modeline-diagnostics-enable t
-        lsp-modeline-code-actions-segments '(count name)))
+        lsp-modeline-code-actions-segments '(count name)
+        lsp-keep-workspace-alive nil
+        lsp-enable-folding nil
+        lsp-enable-text-document-color nil
+        lsp-enable-on-type-formatting nil
+        lsp-headerline-breadcrumb-enable nil))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode))

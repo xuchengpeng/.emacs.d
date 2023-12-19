@@ -49,7 +49,7 @@
 (setq bookmark-default-file (concat dotemacs-local-dir "bookmarks"))
 
 (use-package autorevert
-  :hook (find-file . global-auto-revert-mode)
+  :hook (after-init . global-auto-revert-mode)
   :config
   (setq auto-revert-verbose t
         auto-revert-use-notify nil

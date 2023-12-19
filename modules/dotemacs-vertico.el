@@ -32,6 +32,9 @@
         completion-category-overrides '((file (styles orderless partial-completion)))
         orderless-component-separator "[ &]"))
 
+(defvar consult-fd-args nil
+  "Command line arguments for fd.")
+
 (use-package consult
   :defer t
   :init
@@ -49,6 +52,9 @@
   (global-set-key [remap switch-to-buffer-other-window] 'consult-buffer-other-window)
   (global-set-key [remap switch-to-buffer-other-frame]  'consult-buffer-other-frame)
   (global-set-key [remap yank-pop]                      'consult-yank-pop)
+  (unless consult-fd-args
+    (setq consult-fd-args (concat "fd --color=never -i -H -E .git --regex"
+                            (if IS-WINDOWS " --path-separator=/" ""))))
   :config
   (setq consult-narrow-key "<"
         consult-line-numbers-widen t
@@ -60,33 +66,29 @@
                               "find . -not ( -wholename \\*/.\\* -prune )"
                             consult-find-args)))
 
-(defvar consult-fd-args nil
-  "Command line arguments for fd.")
-
-(defun consult--fd-builder (input)
-  "Consult fd command builder with INPUT."
-  (unless consult-fd-args
-    (setq consult-fd-args
-          (concat "fd --color=never --full-path --ignore-case --hidden --exclude .git"
-                  (if IS-WINDOWS " --path-separator=/"))))
-  (pcase-let* ((cmd (split-string-and-unquote consult-fd-args))
-               (`(,arg . ,opts) (consult--command-split input))
-               (`(,re . ,hl) (funcall consult--regexp-compiler
-                                      arg 'extended t)))
-    (when re
-      (cons (append
-             cmd
-             (list (consult--join-regexps re 'extended))
-             opts)
-            hl))))
+;;;###autoload
+(defun consult--fd-make-builder ()
+  "Consult fd command builder."
+  (let ((cmd (split-string-and-unquote consult-fd-args)))
+    (lambda (input)
+      (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+                   (`(,re . ,hl) (funcall consult--regexp-compiler
+                                          arg 'extended t)))
+        (when re
+          (cons (append cmd
+                        (list (consult--join-regexps re 'extended))
+                        opts)
+                hl))))))
 
 (autoload #'consult--directory-prompt "consult")
+;;;###autoload
 (defun consult-fd (&optional dir initial)
   "Search for files in DIR matching input regexp given INITIAL input."
   (interactive "P")
   (pcase-let* ((`(,prompt ,paths ,dir) (consult--directory-prompt "Fd" dir))
-               (default-directory dir))
-    (find-file (consult--find prompt #'consult--fd-builder initial))))
+                (default-directory dir)
+                (builder (consult--fd-make-builder paths)))
+    (find-file (consult--find prompt builder initial))))
 
 (defun dotemacs-find-file (&optional dir initial)
   "Search for files in DIR matching input regexp given INITIAL input."

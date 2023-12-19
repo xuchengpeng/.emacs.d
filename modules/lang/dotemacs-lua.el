@@ -13,6 +13,7 @@
   :init
   (add-to-list 'dotemacs-company-backend-alist '(lua-mode company-lua company-capf company-dabbrev-code company-yasnippet))
   (add-to-list 'dotemacs-major-mode-map-alist '(lua-mode . dotemacs-lua-mode-map))
+  (add-hook 'lua-mode-hook #'lsp-deferred)
   :config
   (setq lua-indent-level 2)
 

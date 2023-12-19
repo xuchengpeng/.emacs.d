@@ -5,7 +5,6 @@
 (dotemacs-require-packages '(lsp-mode lsp-ui consult-lsp))
 
 (use-package lsp-mode
-  :hook (lua-mode . lsp-deferred)
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-session-file (concat dotemacs-cache-dir "lsp-session")

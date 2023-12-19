@@ -12,10 +12,9 @@
 (use-package lsp-pyright
   :defer t
   :hook (python-mode . (lambda ()
+                         (setq lsp-pyright-python-executable-cmd python-shell-interpreter)
                          (require 'lsp-pyright)
-                         (lsp-deferred)))
-  :init
-  (setq lsp-pyright-python-executable-cmd python-shell-interpreter))
+                         (lsp-deferred))))
 
 (provide 'dotemacs-python)
 ;;; dotemacs-python.el ends here

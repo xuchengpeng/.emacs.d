@@ -10,7 +10,9 @@
   :init
   (setq lsp-session-file (concat dotemacs-cache-dir "lsp-session")
         lsp-server-install-dir (concat dotemacs-local-dir "lsp")
-        lsp-keymap-prefix nil))
+        lsp-keymap-prefix nil
+        lsp-modeline-diagnostics-enable t
+        lsp-modeline-code-actions-segments '(count name)))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode))

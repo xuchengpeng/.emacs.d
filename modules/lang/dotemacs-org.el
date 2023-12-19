@@ -3,7 +3,7 @@
 ;;; Code:
 
 (dotemacs-require-package '(org :host github :repo "emacs-straight/org-mode" :branch "release_9.6.13"))
-(dotemacs-require-packages '(org-roam htmlize))
+(dotemacs-require-packages '(htmlize))
 
 (defcustom dotemacs-org-dir "~/org/"
   "Org directory."
@@ -42,15 +42,6 @@
           ("WAIT" . warning)
           ("CANCELLED" . error)
           ("PROJECT" . font-lock-doc-face))))
-
-(use-package org-roam
-  :defer t
-  :init
-  (setq org-roam-directory (file-truename dotemacs-org-dir)
-        org-roam-db-location (concat org-roam-directory "org-roam.db"))
-  :config
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  (org-roam-db-autosync-enable))
 
 (use-package org-clock
   :commands org-clock-save

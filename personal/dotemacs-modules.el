@@ -4,6 +4,7 @@
 
 (require 'dotemacs-themes)
 (require 'dotemacs-benchmark)
+(require 'dotemacs-dired)
 (require 'dotemacs-dashboard)
 (require 'dotemacs-which-key)
 (require 'dotemacs-editing)

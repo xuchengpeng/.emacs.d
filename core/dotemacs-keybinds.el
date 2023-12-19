@@ -57,7 +57,7 @@
 (define-key dotemacs-leader-map "oa" '("Org agenda" . org-agenda))
 (define-key dotemacs-leader-map "oc" '("Org capture" . org-capture))
 (define-key dotemacs-leader-map "op" '("Org publish project" . org-publish-project))
-(define-key dotemacs-leader-map "oe" '("Explorer" . dired))
+(define-key dotemacs-leader-map "od" '("Dired" . dired-jump))
 (define-key dotemacs-leader-map "ot" '("Terminal" . eshell))
 
 (define-key dotemacs-leader-map "p"  '("Project" . (keymap)))

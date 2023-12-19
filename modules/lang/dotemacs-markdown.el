@@ -37,7 +37,7 @@ Returns its exit code."
 (use-package markdown-mode
   :mode ("/README\\(?:\\.md\\)?\\'" . gfm-mode)
   :init
-  (add-to-list 'dotemacs-localleader-mode-map-alist '(markdown-mode . markdown-mode-command-map))
+  (add-to-list 'dotemacs-major-mode-map-alist '(markdown-mode . markdown-mode-command-map))
   :config
   (setq markdown-command #'dotemacs-markdown-compile)
   (define-key markdown-mode-command-map "i" markdown-mode-style-map))

@@ -11,18 +11,18 @@
   "Leader map.")
 (global-set-key (kbd "M-SPC") dotemacs-leader-map)
 
-(defvar dotemacs-localleader-mode-map-alist nil
+(defvar dotemacs-major-mode-map-alist nil
   "Alist of major modes and mode map.")
 
-(defun dotemacs-set-localleader-mode-map ()
+(defun dotemacs-set-major-mode-map ()
   "Set mode map base on major-mode."
   (catch 'found
-    (dolist (x dotemacs-localleader-mode-map-alist)
+    (dolist (x dotemacs-major-mode-map-alist)
       (when (derived-mode-p (car x))
-        (local-set-key (kbd "M-SPC l") (symbol-value (cdr x)))
+        (local-set-key (kbd "M-SPC m") (symbol-value (cdr x)))
         (throw 'found x)))))
 
-(add-hook 'after-change-major-mode-hook #'dotemacs-set-localleader-mode-map)
+(add-hook 'after-change-major-mode-hook #'dotemacs-set-major-mode-map)
 
 (define-key dotemacs-leader-map "b"  '("Buffers" . (keymap)))
 (define-key dotemacs-leader-map "bb" '("Switch buffer" . switch-to-buffer))

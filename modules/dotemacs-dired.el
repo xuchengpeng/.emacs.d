@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(diredfl))
+(dotemacs-require-packages '(diredfl dired-rsync))
 
 (use-package dired
   :commands (dired dired-jump)
@@ -45,6 +45,11 @@
 
 (use-package diredfl
   :hook (dired-mode . diredfl-mode))
+
+(use-package dired-rsync
+  :after (dired)
+  :config
+  (define-key dired-mode-map (kbd "C-c C-r") #'dired-rsync))
 
 (provide 'dotemacs-dired)
 ;;; dotemacs-dired.el ends here

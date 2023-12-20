@@ -43,16 +43,6 @@
 (define-key dotemacs-leader-map "fs" '("Save file" . save-buffer))
 (define-key dotemacs-leader-map "fw" '("Write file" . write-file))
 
-(define-key dotemacs-leader-map "l"  '("Lsp" . (keymap)))
-(define-key dotemacs-leader-map "la" '("Code Action" . lsp-execute-code-action))
-(define-key dotemacs-leader-map "ld" '("Find Definition" . lsp-find-definition))
-(define-key dotemacs-leader-map "lf" '("Format" . lsp-format-buffer))
-(define-key dotemacs-leader-map "li" '("Find Implementation" . lsp-find-implementation))
-(define-key dotemacs-leader-map "lr" '("Find References" . lsp-find-references))
-(define-key dotemacs-leader-map "lR" '("Rename" . lsp-rename))
-(define-key dotemacs-leader-map "ls" '("File Symbols" . consult-lsp-file-symbols))
-(define-key dotemacs-leader-map "lS" '("Workspace Symbols" . consult-lsp-symbols))
-
 (define-key dotemacs-leader-map "o"  '("Open" . (keymap)))
 (define-key dotemacs-leader-map "oa" '("Org agenda" . org-agenda))
 (define-key dotemacs-leader-map "oc" '("Org capture" . org-capture))

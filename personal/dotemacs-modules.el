@@ -19,7 +19,7 @@
 (require 'dotemacs-git)
 (require 'dotemacs-lang)
 (require 'dotemacs-eshell)
-(require 'dotemacs-lsp)
+(require 'dotemacs-lsp-mode)
 
 (provide 'dotemacs-modules)
 ;;; dotemacs-modules.el ends here

@@ -7,7 +7,6 @@
 (require 'dotemacs-org)
 (require 'dotemacs-markdown)
 (require 'dotemacs-lua)
-(require 'dotemacs-python)
 
 (provide 'dotemacs-lang)
 ;;; dotemacs-lang.el ends here

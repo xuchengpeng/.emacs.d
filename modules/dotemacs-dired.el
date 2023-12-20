@@ -19,7 +19,10 @@
         image-dired-gallery-dir (concat image-dired-dir "gallery/")
         image-dired-temp-image-file (concat image-dired-dir "temp-image")
         image-dired-temp-rotate-image-file (concat image-dired-dir "temp-rotate-image")
-        image-dired-thumb-size 150))
+        image-dired-thumb-size 150)
+  :config
+  (define-key dired-mode-map (kbd "C-c C-e") #'wdired-change-to-wdired-mode)
+  (put 'dired-find-alternate-file 'disabled nil))
 
 (use-package dired-x
   :hook (dired-mode . dired-omit-mode)

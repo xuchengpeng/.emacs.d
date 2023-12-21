@@ -51,11 +51,9 @@
 (define-key dotemacs-leader-map "ot" '("Terminal" . eshell))
 
 (define-key dotemacs-leader-map "p"  '("Project" . (keymap)))
-(define-key dotemacs-leader-map "pf" '("Find file in project" . projectile-find-file))
-(define-key dotemacs-leader-map "po" '("Find other project file" . projectile-find-other-file))
-(define-key dotemacs-leader-map "pr" '("Recent project files" . projectile-recentf))
+(define-key dotemacs-leader-map "pf" '("Find file in project" . project-find-file))
 (define-key dotemacs-leader-map "ps" '("Search project" . consult-ripgrep))
-(define-key dotemacs-leader-map "pp" '("Switch project" . projectile-switch-project))
+(define-key dotemacs-leader-map "pp" '("Switch project" . project-switch-project))
 
 (define-key dotemacs-leader-map "q"  '("Quit" . (keymap)))
 (define-key dotemacs-leader-map "qq" '("Quit Emacs" . kill-emacs))

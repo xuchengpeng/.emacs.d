@@ -58,7 +58,7 @@
   (define-key dotemacs-dashboard-mode-map "f" 'find-file)
   (define-key dotemacs-dashboard-mode-map "r" 'recentf-open-files)
   (define-key dotemacs-dashboard-mode-map "g" 'dotemacs-search-cwd)
-  (define-key dotemacs-dashboard-mode-map "p" 'projectile-switch-project)
+  (define-key dotemacs-dashboard-mode-map "p" 'project-switch-project)
   (define-key dotemacs-dashboard-mode-map "b" 'bookmark-jump)
   (let* ((menu
           '(("Find file" . "f")

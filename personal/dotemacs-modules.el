@@ -10,7 +10,6 @@
 (require 'dotemacs-editing)
 (require 'dotemacs-vertico)
 (require 'dotemacs-corfu)
-(require 'dotemacs-projectile)
 (require 'dotemacs-modeline)
 (require 'dotemacs-highlight)
 (require 'dotemacs-eglot)

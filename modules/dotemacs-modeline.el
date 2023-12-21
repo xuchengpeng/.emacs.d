@@ -387,7 +387,6 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 (declare-function iedit-find-current-occurrence-overlay "ext:iedit-lib")
 (declare-function iedit-prev-occurrence "ext:iedit-lib")
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
-(declare-function projectile-project-root "ext:projectile")
 (declare-function symbol-overlay-assoc "ext:symbol-overlay")
 (declare-function symbol-overlay-get-list "ext:symbol-overlay")
 (declare-function symbol-overlay-get-symbol "ext:symbol-overlay")
@@ -461,22 +460,32 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 
 (defun dotemacs-modeline--project-root ()
   "Get project root directory."
-  (when (bound-and-true-p projectile-mode)
-    (projectile-project-root)))
+  (when-let ((project (project-current)))
+    (expand-file-name
+      (if (fboundp 'project-root)
+          (project-root project)
+        (car (with-no-warnings
+               (project-roots project)))))))
+
+(defun dotemacs-modeline-project-root ()
+  "Get the path to the root of your project.
+Return `default-directory' if no project was found."
+  (abbreviate-file-name
+   (or (dotemacs-modeline--project-root) default-directory)))
 
 (defsubst dotemacs-modeline--buffer-name ()
   "The buffer name."
-  (let ((file-path (file-local-name (or (buffer-file-name (buffer-base-buffer)) "")))
-        (project-root (or (dotemacs-modeline--project-root) default-directory)))
+  (let* ((root-path (file-local-name (dotemacs-modeline-project-root)))
+         (file-path (file-local-name (or (buffer-file-name (buffer-base-buffer)) ""))))
     (concat
       ;; Project directory
-      (propertize (concat (file-name-nondirectory (directory-file-name project-root)) "/")
+      (propertize (concat (file-name-nondirectory (directory-file-name root-path)) "/")
                   'face (dotemacs-modeline-face 'dotemacs-modeline-project-root-dir))
       ;; Relative path
       (propertize
         (when-let (relative-path (file-relative-name
                                   (or (file-name-directory file-path) "./")
-                                  project-root))
+                                  root-path))
           (if (string= relative-path "./")
               ""
             relative-path))

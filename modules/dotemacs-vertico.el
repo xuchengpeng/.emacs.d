@@ -29,8 +29,8 @@
   :config
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
-        completion-category-overrides '((file (styles orderless partial-completion)))
-        orderless-component-separator "[ &]"))
+        completion-category-overrides '((file (styles basic partial-completion)))
+        orderless-component-separator #'orderless-escapable-split-on-space))
 
 (defvar consult-fd-args nil
   "Command line arguments for fd.")

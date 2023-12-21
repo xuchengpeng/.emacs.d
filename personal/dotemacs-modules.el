@@ -9,7 +9,7 @@
 (require 'dotemacs-which-key)
 (require 'dotemacs-editing)
 (require 'dotemacs-vertico)
-(require 'dotemacs-company)
+(require 'dotemacs-corfu)
 (require 'dotemacs-projectile)
 (require 'dotemacs-modeline)
 (require 'dotemacs-highlight)

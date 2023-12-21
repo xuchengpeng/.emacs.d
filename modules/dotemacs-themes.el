@@ -6,6 +6,7 @@
 (defun dotemacs-init-theme ()
   "Init theme."
   (load "tokyonight-theme" 'nomessage t)
+  (setq tokyonight-theme-style 'moon)
   (load-theme 'tokyonight t))
 
 (add-hook 'after-init-hook #'dotemacs-init-theme)

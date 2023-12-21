@@ -2,17 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(avy smartparens expand-region multiple-cursors move-text vundo))
+(dotemacs-require-packages '(avy expand-region multiple-cursors move-text vundo))
 
 (use-package avy
   :defer t)
-
-(use-package smartparens
-  :hook ((find-file . smartparens-global-mode)
-         ;; (prog-mode . smartparens-strict-mode)
-         )
-  :config
-  (require 'smartparens-config))
 
 (use-package expand-region
   :commands (er/expand-region))

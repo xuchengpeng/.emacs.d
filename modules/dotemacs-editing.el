@@ -2,18 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(avy smartparens undo-tree expand-region multiple-cursors move-text))
+(dotemacs-require-packages '(avy smartparens expand-region multiple-cursors move-text vundo))
 
 (use-package avy
   :defer t)
-
-(use-package undo-tree
-  :hook (find-file . global-undo-tree-mode)
-  :config
-  (setq undo-tree-history-directory-alist `(("." . ,(concat dotemacs-cache-dir "undo-tree-hist/")))
-        undo-tree-auto-save-history nil
-        undo-tree-visualizer-diff t
-        undo-tree-enable-undo-in-region t))
 
 (use-package smartparens
   :hook ((find-file . smartparens-global-mode)
@@ -32,6 +24,9 @@
 
 (use-package move-text
   :commands (move-text-up move-text-down))
+
+(use-package vundo
+  :bind ("C-x u" . vundo))
 
 (provide 'dotemacs-editing)
 ;;; dotemacs-editing.el ends here

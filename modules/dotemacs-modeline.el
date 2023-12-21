@@ -707,11 +707,11 @@ By default, this shows the information specified by `global-mode-string'."
                  (t (let ((num (+ .error .warning .note)))
                       (when (> num 0)
                         (format "%s/%s/%s"
-                                (propertize (concat "E" (number-to-string .error))
+                                (propertize (number-to-string .error)
                                     'face (dotemacs-modeline-face 'dotemacs-modeline-urgent))
-                                (propertize (concat "W" (number-to-string .warning))
+                                (propertize (number-to-string .warning)
                                     'face (dotemacs-modeline-face 'dotemacs-modeline-warning))
-                                (propertize (concat "I" (number-to-string .note))
+                                (propertize (number-to-string .note)
                                             'face (dotemacs-modeline-face 'dotemacs-modeline-info)))))))))
             (propertize
              text

@@ -13,13 +13,13 @@
 (require 'dotemacs-projectile)
 (require 'dotemacs-modeline)
 (require 'dotemacs-highlight)
-(require 'dotemacs-window-select)
+(require 'dotemacs-eglot)
 (require 'dotemacs-flymake)
 (require 'dotemacs-flyspell)
+(require 'dotemacs-window-select)
 (require 'dotemacs-git)
 (require 'dotemacs-lang)
 (require 'dotemacs-eshell)
-(require 'dotemacs-lsp-mode)
 
 (provide 'dotemacs-modules)
 ;;; dotemacs-modules.el ends here

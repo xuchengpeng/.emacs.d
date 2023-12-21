@@ -232,6 +232,12 @@
    `(completions-group-title ((t (:foreground ,dark5 :background unspecified :slant italic))))
    `(completions-group-separator ((t (:foreground ,dark5 :background unspecified :strike-through t))))
 
+   ;; corfu
+   `(corfu-default ((t (:foreground ,fg :background ,bg-dark))))
+   `(corfu-current ((t (:foreground ,fg :background ,bg-hl))))
+   `(corfu-bar ((t (:foreground ,fg :background ,dark3))))
+   `(corfu-border ((t (:foreground ,fg :background ,dark5))))
+
    ;; Custom
    `(custom-state ((t (:foreground ,green))))
 

@@ -73,7 +73,7 @@
 (define-key dotemacs-leader-map "ss" '("Search symbol at point" . dotemacs-search-symbol-at-point))
 
 (define-key dotemacs-leader-map "t"  '("Toggle" . (keymap)))
-(define-key dotemacs-leader-map "tf" '("Flycheck" . flycheck-mode))
+(define-key dotemacs-leader-map "tf" '("Flymake" . flymake-mode))
 (define-key dotemacs-leader-map "tl" '("Line numbers" . display-line-numbers-mode))
 (define-key dotemacs-leader-map "ts" '("Spell checker" . flyspell-mode))
 (define-key dotemacs-leader-map "tv" '("Visible mode" . visible-mode))

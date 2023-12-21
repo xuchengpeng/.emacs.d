@@ -14,7 +14,7 @@
 (require 'dotemacs-modeline)
 (require 'dotemacs-highlight)
 (require 'dotemacs-window-select)
-(require 'dotemacs-flycheck)
+(require 'dotemacs-flymake)
 (require 'dotemacs-flyspell)
 (require 'dotemacs-git)
 (require 'dotemacs-lang)

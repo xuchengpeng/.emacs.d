@@ -104,6 +104,11 @@ If the actual char height is larger, it respects the actual char height."
 This applies to `anzu', `evil-substitute', `iedit' etc."
   :group 'dotemacs-modeline-faces)
 
+(defface dotemacs-modeline-debug
+  '((t (:inherit (dotemacs-modeline font-lock-doc-face) :slant normal)))
+  "Face for debug-level messages in the modeline. Used by checker."
+  :group 'dotemacs-modeline-faces)
+
 (defface dotemacs-modeline-info
   '((t (:inherit (dotemacs-modeline success))))
   "Face for info-level messages in the mode-line. Used by vcs, checker, etc."
@@ -185,11 +190,7 @@ Also see the face `dotemacs-modeline-unread-number'."
                                      dotemacs-modeline
                                      solaire-mode-line-face
                                      solaire-mode-line-active-face
-                                     paradox-mode-line-face
-                                     flycheck-color-mode-line-error-face
-                                     flycheck-color-mode-line-warning-face
-                                     flycheck-color-mode-line-info-face
-                                     flycheck-color-mode-line-success-face))
+                                     paradox-mode-line-face))
 
 (defvar dotemacs-modeline--remap-face-cookie-alist nil)
 (defun dotemacs-modeline-focus ()
@@ -361,7 +362,9 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 (defvar evil-state)
 (defvar evil-visual-beginning)
 (defvar evil-visual-end)
-(defvar flycheck-current-errors)
+(defvar flymake--mode-line-format)
+(defvar flymake--state)
+(defvar flymake-menu)
 (defvar iedit-occurrences-overlays)
 (defvar symbol-overlay-keywords-alist)
 (defvar symbol-overlay-temp-symbol)
@@ -369,10 +372,18 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 (defvar winum-auto-setup-mode-line)
 
 (declare-function compilation-goto-in-progress-buffer "compile")
-(declare-function flycheck-count-errors "ext:flycheck")
-(declare-function flycheck-list-errors "ext:flycheck")
-(declare-function flycheck-next-error "ext:flycheck")
-(declare-function flycheck-previous-error "ext:flycheck")
+(declare-function flymake--diag-type "ext:flymake" t t)
+(declare-function flymake--handle-report "ext:flymake")
+(declare-function flymake--lookup-type-property "ext:flymake")
+(declare-function flymake--state-diags "ext:flymake" t t)
+(declare-function flymake-disabled-backends "ext:flymake")
+(declare-function flymake-goto-next-error "ext:flymake")
+(declare-function flymake-goto-prev-error "ext:flymake")
+(declare-function flymake-reporting-backends "ext:flymake")
+(declare-function flymake-running-backends "ext:flymake")
+(declare-function flymake-show-buffer-diagnostics "ext:flymake")
+(declare-function flymake-show-buffer-diagnostics "ext:flymake")
+(declare-function flymake-start "ext:flymake")
 (declare-function iedit-find-current-occurrence-overlay "ext:iedit-lib")
 (declare-function iedit-prev-occurrence "ext:iedit-lib")
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
@@ -486,8 +497,7 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
     (dotemacs-modeline-spc)))
 
 (dotemacs-modeline-def-segment buffer-default-directory
-  "Displays `default-directory'. This is for special buffers like the scratch
-buffer where knowing the current project directory is important."
+  "Displays `default-directory'."
   (concat
     (dotemacs-modeline-spc)
     (propertize (abbreviate-file-name default-directory)
@@ -655,41 +665,82 @@ By default, this shows the information specified by `global-mode-string'."
                  'local-map (get-text-property 1 'local-map vc-mode))
      (dotemacs-modeline-spc))))
 
-(dotemacs-modeline-def-segment checker
-  "Displays color-coded flycheck error status in the current buffer with pretty
-icons."
-  (when (boundp 'flycheck-last-status-change)
-    (when-let (text
-      (pcase flycheck-last-status-change
-        (`finished
-          (when flycheck-current-errors
-            (let-alist (flycheck-count-errors flycheck-current-errors)
-              (let ((error (or .error 0))
-                    (warning (or .warning 0))
-                    (info (or .info 0)))
-                (format " %s %s %s "
-                        (propertize (concat "E" (number-to-string error))
+(with-eval-after-load 'flymake
+  (unless (boundp 'flymake--state)
+    (defvaralias 'flymake--state 'flymake--backend-state))
+  (unless (fboundp 'flymake--state-diags)
+    (defalias 'flymake--state-diags 'flymake--backend-state-diags)))
+
+(defvar-local dotemacs-modeline--flymake-text nil)
+(defun dotemacs-modeline-update-flymake-text (&rest _)
+  "Update flymake text."
+  (setq flymake--mode-line-format nil) ; remove the lighter of minor mode
+  (setq dotemacs-modeline--flymake-text
+        (let* ((known (hash-table-keys flymake--state))
+               (running (flymake-running-backends))
+               (disabled (flymake-disabled-backends))
+               (reported (flymake-reporting-backends))
+               (all-disabled (and disabled (null running)))
+               (some-waiting (cl-set-difference running reported))
+               (warning-level (warning-numeric-level :warning))
+               (note-level (warning-numeric-level :debug))
+               (.error 0)
+               (.warning 0)
+               (.note 0))
+          (maphash (lambda (_b state)
+                     (cl-loop
+                      with diags = (flymake--state-diags state)
+                      for diag in diags do
+                      (let ((severity (flymake--lookup-type-property (flymake--diag-type diag) 'severity
+                                                                     (warning-numeric-level :error))))
+                        (cond ((> severity warning-level) (cl-incf .error))
+                              ((> severity note-level) (cl-incf .warning))
+                              (t (cl-incf .note))))))
+                   flymake--state)
+          (when-let
+              ((text
+                (cond
+                 (some-waiting (and dotemacs-modeline--flymake-text
+                                    (propertize dotemacs-modeline--flymake-text 'face 'dotemacs-modeline-debug)))
+                 ((null known) nil)
+                 (all-disabled nil)
+                 (t (let ((num (+ .error .warning .note)))
+                      (when (> num 0)
+                        (format "%s/%s/%s"
+                                (propertize (concat "E" (number-to-string .error))
                                     'face (dotemacs-modeline-face 'dotemacs-modeline-urgent))
-                        (propertize (concat "W" (number-to-string warning))
+                                (propertize (concat "W" (number-to-string .warning))
                                     'face (dotemacs-modeline-face 'dotemacs-modeline-warning))
-                        (propertize (concat "I" (number-to-string info))
-                                    'face (dotemacs-modeline-face 'dotemacs-modeline-info)))))))
-        (`running nil)
-        (`not-checked nil)
-        (`errored (propertize " Error " 'face (dotemacs-modeline-face 'dotemacs-modeline-urgent)))
-        (`interrupted (propertize " Interrupted " 'face (dotemacs-modeline-face 'dotemacs-modeline-warning)))
-        (`suspicious '(propertize " Suspicious " 'face (dotemacs-modeline-face 'dotemacs-modeline-urgent)))))
-      (propertize text
-                  'mouse-face 'dotemacs-modeline-highlight
-                  'help-echo "Flycheck
+                                (propertize (concat "I" (number-to-string .note))
+                                            'face (dotemacs-modeline-face 'dotemacs-modeline-info)))))))))
+            (propertize
+             text
+             'help-echo (cond
+                         (some-waiting "Checking...")
+                         ((null known) "No Checker")
+                         (all-disabled "All Checkers Disabled")
+                         (t (format "error: %d, warning: %d, note: %d
   mouse-1: Next error
   mouse-2: Show all errors
   mouse-3: Previous error"
-                  'local-map (let ((map (make-sparse-keymap)))
-                        (define-key map [mode-line mouse-1] #'flycheck-next-error)
-                        (define-key map [mode-line mouse-2] #'flycheck-list-errors)
-                        (define-key map [mode-line mouse-3] #'flycheck-previous-error)
-                        map)))))
+                                    .error .warning .note)))
+             'mouse-face 'dotemacs-modeline-highlight
+             'local-map (let ((map (make-sparse-keymap)))
+                          (define-key map [mode-line mouse-1] #'flymake-goto-next-error)
+                          (define-key map [mode-line mouse-2] #'flymake-show-buffer-diagnostics)
+                          (define-key map [mode-line mouse-3] #'flymake-goto-prev-error)
+                          map))))))
+(advice-add #'flymake--handle-report :after #'dotemacs-modeline-update-flymake-text)
+
+(dotemacs-modeline-def-segment checker
+  "Displays color-coded flymake error status in the current buffer with pretty icons."
+  (when (and (bound-and-true-p flymake-mode)
+             (bound-and-true-p flymake--state))
+    (if dotemacs-modeline--flymake-text
+        (concat (dotemacs-modeline-spc)
+                dotemacs-modeline--flymake-text
+                (dotemacs-modeline-spc))
+      "")))
 
 (defun dotemacs-modeline-themes--overlay-sort (a b)
   "Sort overlay A and B."

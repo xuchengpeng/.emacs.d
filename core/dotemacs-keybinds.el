@@ -50,11 +50,6 @@
 (define-key dotemacs-leader-map "od" '("Dired" . dired-jump))
 (define-key dotemacs-leader-map "ot" '("Terminal" . eshell))
 
-(define-key dotemacs-leader-map "p"  '("Project" . (keymap)))
-(define-key dotemacs-leader-map "pf" '("Find file in project" . project-find-file))
-(define-key dotemacs-leader-map "ps" '("Search project" . consult-ripgrep))
-(define-key dotemacs-leader-map "pp" '("Switch project" . project-switch-project))
-
 (define-key dotemacs-leader-map "q"  '("Quit" . (keymap)))
 (define-key dotemacs-leader-map "qq" '("Quit Emacs" . kill-emacs))
 (define-key dotemacs-leader-map "qQ" '("Save and quit Emacs" . save-buffers-kill-terminal))
@@ -68,6 +63,7 @@
 (define-key dotemacs-leader-map "si" '("Jump to symbol" . imenu))
 (define-key dotemacs-leader-map "sl" '("Jump to visible link" . link-hint-open-link))
 (define-key dotemacs-leader-map "sm" '("Jump to bookmark" . bookmark-jump))
+(define-key dotemacs-leader-map "sp" '("Search project" . consult-ripgrep))
 (define-key dotemacs-leader-map "ss" '("Search symbol at point" . dotemacs-search-symbol-at-point))
 
 (define-key dotemacs-leader-map "t"  '("Toggle" . (keymap)))

@@ -53,7 +53,7 @@
 (defmacro dotemacs-require-packages (packages-list)
   `(mapc #'straight-use-package ,packages-list))
 
-(dotemacs-require-packages '(use-package bind-key))
+(dotemacs-require-package '(use-package :host github :repo "emacs-straight/use-package"))
 
 (provide 'dotemacs-packages)
 ;;; dotemacs-packages.el ends here

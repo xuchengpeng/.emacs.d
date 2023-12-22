@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.1.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.1.0...v2.1.1) (2023-12-22)
+
+
+### Bug Fixes
+
+* **corfu:** customize popupinfo delay ([03ed2e3](https://github.com/xuchengpeng/.emacs.d/commit/03ed2e3e76ad00eee4f57df08db96ccb6fcf9656))
+* **corfu:** replace company ([540fe4c](https://github.com/xuchengpeng/.emacs.d/commit/540fe4c3751668938e430bbac6799f7976ea9108))
+* **dired:** add rsync support ([0210d82](https://github.com/xuchengpeng/.emacs.d/commit/0210d8261bfdb02e6768f6437569cde139a89f7f))
+* **dired:** reuse current buffer by pressing 'a' ([6926f74](https://github.com/xuchengpeng/.emacs.d/commit/6926f741a72cc9d15fd83ea92a611bc074132436))
+* **eglot:** customize code keymaps ([bdedbae](https://github.com/xuchengpeng/.emacs.d/commit/bdedbae7ad57873f79c8b2003e774b91a7f7bb65))
+* **eldoc-box:** add eldoc-box with eglot ([8bcd7ad](https://github.com/xuchengpeng/.emacs.d/commit/8bcd7ad13a59da6886ab9e70e78543ab61a7550f))
+* **electric-pair:** replace smartparens with electric-pair ([fc1fa3b](https://github.com/xuchengpeng/.emacs.d/commit/fc1fa3b5effc634b8233854867d91e72b772f0b5))
+* **flycheck:** use right fringe ([21c2d21](https://github.com/xuchengpeng/.emacs.d/commit/21c2d21db4e62437b5c673c8b0cbcb064b19b360))
+* **flymake:** replace flycheck ([c621c61](https://github.com/xuchengpeng/.emacs.d/commit/c621c61d9d08a1f4d560bfb4846cad39ba8feb8b))
+* **lsp-mode:** refactoring ([5a55e8a](https://github.com/xuchengpeng/.emacs.d/commit/5a55e8acd1640e00770b474085ef5bfcd6944530))
+* **lsp:** disable some features ([771694d](https://github.com/xuchengpeng/.emacs.d/commit/771694dbd353280e548c5408d2b0293752b7a15c))
+* **lsp:** prefer eglot as default lsp server ([1952ac2](https://github.com/xuchengpeng/.emacs.d/commit/1952ac2b942737e05ac6083ca0f099219ecccab2))
+* **projectile:** prefer project instead of projectile ([3116ff1](https://github.com/xuchengpeng/.emacs.d/commit/3116ff18cde0ead4ffab01c3e3aa443656573fb7))
+* **project:** project-prefix-map bind with (C-x p) by default ([7d0de63](https://github.com/xuchengpeng/.emacs.d/commit/7d0de63de5f605532f12534fdec16350d14c94db))
+* **themes:** set tokyonight-moon as default style ([d74e86b](https://github.com/xuchengpeng/.emacs.d/commit/d74e86ba9944e61234d7910f2fc4239c728ec563))
+* **tokyonight:** add corfu support ([b6e0970](https://github.com/xuchengpeng/.emacs.d/commit/b6e0970ace9e2c3e53717503784c040decb5b88f))
+* **undo:** replace undo-tree with vundo ([988fe14](https://github.com/xuchengpeng/.emacs.d/commit/988fe1419dd592134ba2ecdb524dd81e05ab351a))
+* **use-package:** install from mirror ([5f83d1f](https://github.com/xuchengpeng/.emacs.d/commit/5f83d1fb6be3b33a4713bd8837dc72a3520180ad))
+* **vertico:** simply installation ([76c1ea8](https://github.com/xuchengpeng/.emacs.d/commit/76c1ea8b492e5efaad060a6aeb7872a8a151464a))
+* **xref:** improvement ([f024d32](https://github.com/xuchengpeng/.emacs.d/commit/f024d322820e6ddaa78d0d646bcbbbe616349bf5))
+
 ## [2.1.0](https://github.com/xuchengpeng/.emacs.d/compare/v2.0.12...v2.1.0) (2023-12-19)
 
 

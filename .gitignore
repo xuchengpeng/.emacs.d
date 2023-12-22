@@ -5,3 +5,4 @@ org/*.*
 server/
 *.elc
 *~
+/projects

@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(consult-eglot))
+(dotemacs-require-packages '(consult-eglot eldoc-box))
 
 (use-package eglot
   :commands (eglot eglot-ensure)
@@ -30,6 +30,9 @@
 
 (use-package consult-eglot
   :defer t)
+
+(use-package eldoc-box
+  :hook ((eglot-managed-mode . eldoc-box-hover-at-point-mode)))
 
 (provide 'dotemacs-eglot)
 ;;; dotemacs-eglot.el ends here

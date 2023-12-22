@@ -255,6 +255,10 @@
    `(dired-directory ((t (:foreground ,magenta))))
    `(dired-ignored ((t ,(list :foreground blue7 :inherit 'unspecified))))
 
+   ;; eldoc-box
+   `(eldoc-box-body ((t (:inherit tooltip))))
+   `(eldoc-box-border ((t (:foreground ,fg :background ,dark5))))
+
    ;; eshell
    `(eshell-prompt ((t (:foreground ,magenta :weight bold))))
    `(eshell-ls-archive ((t (:foreground ,red))))

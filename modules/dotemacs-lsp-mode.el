@@ -24,15 +24,15 @@
         lsp-enable-symbol-highlighting nil
         lsp-lens-enable nil
         lsp-signature-auto-activate nil)
-  (define-key dotemacs-leader-map "l"  '("Lsp" . (keymap)))
-  (define-key dotemacs-leader-map "la" '("Code Action" . lsp-execute-code-action))
-  (define-key dotemacs-leader-map "ld" '("Find Definition" . lsp-find-definition))
-  (define-key dotemacs-leader-map "lf" '("Format" . lsp-format-buffer))
-  (define-key dotemacs-leader-map "li" '("Find Implementation" . lsp-find-implementation))
-  (define-key dotemacs-leader-map "lr" '("Find References" . lsp-find-references))
-  (define-key dotemacs-leader-map "lR" '("Rename" . lsp-rename))
-  (define-key dotemacs-leader-map "ls" '("File Symbols" . consult-lsp-file-symbols))
-  (define-key dotemacs-leader-map "lS" '("Workspace Symbols" . consult-lsp-symbols)))
+  (define-key dotemacs-leader-map "c"  '("Code" . (keymap)))
+  (define-key dotemacs-leader-map "ca" '("Code Action" . lsp-execute-code-action))
+  (define-key dotemacs-leader-map "cd" '("Find Definition" . lsp-find-definition))
+  (define-key dotemacs-leader-map "cf" '("Format" . lsp-format-buffer))
+  (define-key dotemacs-leader-map "ci" '("Find Implementation" . lsp-find-implementation))
+  (define-key dotemacs-leader-map "cr" '("Find References" . lsp-find-references))
+  (define-key dotemacs-leader-map "cR" '("Rename" . lsp-rename))
+  (define-key dotemacs-leader-map "cs" '("File Symbols" . consult-lsp-file-symbols))
+  (define-key dotemacs-leader-map "cS" '("Workspace Symbols" . consult-lsp-symbols)))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode))

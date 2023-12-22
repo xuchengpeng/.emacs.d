@@ -1,15 +1,8 @@
 ;;; dotemacs-vertico.el --- Vertico. -*- lexical-binding: t; -*-
-
 ;;; Commentary:
-;;
-;; Vertico configuration.
-;;
-
 ;;; Code:
 
-(dotemacs-require-package `(vertico :type git :host github :repo "minad/vertico"
-                                    :files ("*.el" "extensions/*.el")))
-(dotemacs-require-packages '(orderless consult embark embark-consult marginalia))
+(dotemacs-require-packages '(vertico orderless consult embark embark-consult marginalia))
 
 (use-package vertico
   :hook (pre-command . vertico-mode)

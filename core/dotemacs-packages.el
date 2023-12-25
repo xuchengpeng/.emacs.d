@@ -49,8 +49,7 @@ re-downloaded in order to locate PACKAGE."
 
 (defun dotemacs-require-packages (packages)
   "Install PACKAGES."
-  (dolist (package packages)
-    (dotemacs-require-package package)))
+  (mapc #'dotemacs-require-package packages))
 
 (dotemacs-require-package 'use-package)
 

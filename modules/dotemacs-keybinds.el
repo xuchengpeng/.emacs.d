@@ -1,10 +1,5 @@
 ;;; dotemacs-keybinds.el --- dotemacs keybindings. -*- lexical-binding: t; -*-
-
 ;;; Commentary:
-;;
-;; dotemacs keybinds.
-;;
-
 ;;; Code:
 
 (defvar dotemacs-leader-map (make-sparse-keymap)

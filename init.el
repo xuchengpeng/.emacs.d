@@ -14,7 +14,8 @@
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 16 1024 1024))))
 
 (defgroup dotemacs nil
-  "Emacs framework.")
+  "Emacs framework."
+  :group 'convenience)
 
 ;; Define dotemacs's directory structure
 (defvar dotemacs-dir (file-name-directory load-file-name)
@@ -56,11 +57,11 @@ by dotemacs.")
   (mapc 'load (directory-files dotemacs-personal-preload-dir 't "^[^#\.].*el$")))
 
 ;; load core
+(require 'dotemacs-custom)
 (require 'dotemacs-core)
 (require 'dotemacs-packages)
 (require 'dotemacs-ui)
 (require 'dotemacs-editor)
-(require 'dotemacs-keybinds)
 
 ;; the modules
 (if (file-exists-p dotemacs-modules-file)

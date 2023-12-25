@@ -66,8 +66,6 @@ LOAD-DURATION is the time taken in milliseconds to load FEATURE.")
   (let ((package-count 0))
     (when (bound-and-true-p package-alist)
       (setq package-count (length package-activated-list)))
-    (when (boundp 'straight--profile-cache)
-      (setq package-count (+ (hash-table-count straight--profile-cache) package-count)))
     (funcall (if return-p #'format #'message)
              "dotemacs loaded %d packages in %.2fms"
              package-count

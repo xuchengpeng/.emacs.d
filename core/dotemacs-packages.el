@@ -1,59 +1,58 @@
-;;; dotemacs-packages.el --- Initialize dotemacs packages configurations. -*- lexical-binding: t; -*-
-
+;;; dotemacs-packages.el --- Packages configurations. -*- lexical-binding: t; -*-
 ;;; Commentary:
-;;
-;; Package configuration.
-;;
-
 ;;; Code:
 
-(setq package-enable-at-startup nil
+(require 'package)
+
+(defun dotemacs-set-package-archives (archives)
+  "Switch to specific package ARCHIVES repository."
+  (let ((proto (if (gnutls-available-p) "https" "http")))
+    (cond
+     ((eq archives 'melpa)
+      (setq package-archives `(("gnu"   . ,(format "%s://elpa.gnu.org/packages/" proto))
+                               ("melpa" . ,(format "%s://melpa.org/packages/" proto)))))
+     ((eq archives 'tuna)
+      (setq package-archives `(("gnu"   . ,(format "%s://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/" proto))
+                               ("melpa" . ,(format "%s://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/" proto)))))
+     ((eq archives 'custom)
+      (setq package-archives dotemacs-custom-package-archives))
+     (t
+      (error "Unknown archives: '%s'" archives)))))
+
+(dotemacs-set-package-archives dotemacs-package-archives)
+
+(setq load-prefer-newer t
+      package-enable-at-startup nil
       package-user-dir (concat dotemacs-local-dir "elpa/")
-      package-gnupghome-dir (expand-file-name "gpg" package-user-dir))
+      package-gnupghome-dir (expand-file-name "gnupg" package-user-dir))
 
-(setq straight-base-dir (file-truename dotemacs-local-dir)
-      straight-repository-branch "master"
-      straight-vc-git-default-clone-depth '(1 single-branch))
+(package-initialize)
 
-(defun dotemacs-ensure-straight ()
-  (let ((repo-dir (concat straight-base-dir "straight/repos/straight.el"))
-        (repo-url "https://github.com/radian-software/straight.el.git"))
-    (unless (file-directory-p repo-dir)
-      (unless (executable-find "git")
-        (message "[dotemacs] Git isn't present on your system. Cannot proceed."))
-      (dotemacs-call-process "git" "clone" repo-url repo-dir
-                             "--depth" "1" "--no-tags"
-                             "--branch" straight-repository-branch))
-    (require 'straight (concat repo-dir "/straight.el"))
-    (mapc #'straight-use-recipes
-          '((org-elpa :local-repo nil)
-            (melpa              :type git :host github
-                                :repo "melpa/melpa"
-                                :build nil)
-            (gnu-elpa-mirror    :type git :host github
-                                :repo "emacs-straight/gnu-elpa-mirror"
-                                :build nil)
-            (el-get             :type git :host github
-                                :repo "dimitri/el-get"
-                                :build nil)
-            (emacsmirror-mirror :type git :host github
-                                :repo "emacs-straight/emacsmirror-mirror"
-                                :build nil)))))
+(defun dotemacs-require-package (package &optional min-version no-refresh)
+  "Install given PACKAGE, optionally requiring MIN-VERSION.
+If NO-REFRESH is non-nil, the available package lists will not be
+re-downloaded in order to locate PACKAGE."
+  (when (stringp min-version)
+    (setq min-version (version-to-list min-version)))
+  (or (package-installed-p package min-version)
+      (let* ((known (cdr (assoc package package-archive-contents)))
+             (best (car (sort known (lambda (a b)
+                                      (version-list-<= (package-desc-version b)
+                                                       (package-desc-version a)))))))
+        (if (and best (version-list-<= min-version (package-desc-version best)))
+            (package-install best)
+          (if no-refresh
+              (error "No version of %s >= %S is available" package min-version)
+            (package-refresh-contents)
+            (dotemacs-require-package package min-version t)))
+        (package-installed-p package min-version))))
 
-(dotemacs-ensure-straight)
-(straight-use-package
- `(straight :host github
-            :repo "radian-software/straight.el"
-            :files ("straight*.el")
-            :branch ,straight-repository-branch))
+(defun dotemacs-require-packages (packages)
+  "Install PACKAGES."
+  (dolist (package packages)
+    (dotemacs-require-package package)))
 
-(defmacro dotemacs-require-package (package)
-  `(straight-use-package ,package))
-
-(defmacro dotemacs-require-packages (packages-list)
-  `(mapc #'straight-use-package ,packages-list))
-
-(dotemacs-require-package '(use-package :host github :repo "emacs-straight/use-package"))
+(dotemacs-require-package 'use-package)
 
 (provide 'dotemacs-packages)
 ;;; dotemacs-packages.el ends here

@@ -2,8 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'dotemacs-themes)
 (require 'dotemacs-benchmark)
+(require 'dotemacs-keybinds)
+(require 'dotemacs-themes)
 (require 'dotemacs-dired)
 (require 'dotemacs-dashboard)
 (require 'dotemacs-which-key)

@@ -4,7 +4,7 @@
 
 (setq gc-cons-threshold most-positive-fixnum)
 (setq package-enable-at-startup nil)
-(setq load-prefer-newer noninteractive)
+(setq load-prefer-newer t)
 (setq frame-inhibit-implied-resize t)
 
 (push '(fullscreen . maximized) default-frame-alist)

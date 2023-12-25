@@ -371,6 +371,7 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 (defvar text-scale-mode-amount)
 (defvar winum-auto-setup-mode-line)
 
+(declare-function aw-update "ext:ace-window")
 (declare-function compilation-goto-in-progress-buffer "compile")
 (declare-function flymake--diag-type "ext:flymake" t t)
 (declare-function flymake--handle-report "ext:flymake")
@@ -390,9 +391,6 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 (declare-function symbol-overlay-assoc "ext:symbol-overlay")
 (declare-function symbol-overlay-get-list "ext:symbol-overlay")
 (declare-function symbol-overlay-get-symbol "ext:symbol-overlay")
-(declare-function window-numbering-clear-mode-line "ext:window-numbering")
-(declare-function window-numbering-get-number-string "ext:window-numbering")
-(declare-function window-numbering-install-mode-line "ext:window-numbering")
 (declare-function winum--clear-mode-line "ext:winum")
 (declare-function winum--install-mode-line "ext:winum")
 (declare-function winum-get-number-string "ext:winum")
@@ -425,19 +423,18 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
   "The bar regulates the height of the `dotemacs-modeline' in GUI."
   (dotemacs-modeline--bar))
 
-(advice-add #'window-numbering-install-mode-line :override #'ignore)
-(advice-add #'window-numbering-clear-mode-line :override #'ignore)
 (advice-add #'winum--install-mode-line :override #'ignore)
 (advice-add #'winum--clear-mode-line :override #'ignore)
 
 (dotemacs-modeline-def-segment window-number
   "The current window number."
   (let ((num (cond
+              ((boundp 'ace-window-display-mode)
+               (aw-update)
+               (window-parameter (selected-window) 'ace-window-path))
               ((bound-and-true-p winum-mode)
                (setq winum-auto-setup-mode-line nil)
                (winum-get-number-string))
-              ((bound-and-true-p window-numbering-mode)
-               (window-numbering-get-number-string))
               (t ""))))
     (when (length> num 0)
       (propertize (format " %s " num)

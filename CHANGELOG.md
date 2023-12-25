@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.1.2](https://github.com/xuchengpeng/.emacs.d/compare/v2.1.1...v2.1.2) (2023-12-25)
+
+
+### Bug Fixes
+
+* **package:** refactoring ([6007d61](https://github.com/xuchengpeng/.emacs.d/commit/6007d6143ed598fc02021138a22566728f6054f2))
+* **package:** remove straight.el ([759bbd5](https://github.com/xuchengpeng/.emacs.d/commit/759bbd5c99bca21cc47d3689f2abb7d9a2c11817))
+* **tabs:** remove tabs ([58ec4ad](https://github.com/xuchengpeng/.emacs.d/commit/58ec4adcfbca49b93a10444b0ebc912b6b79ea23))
+
 ## [2.1.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.1.0...v2.1.1) (2023-12-22)
 
 

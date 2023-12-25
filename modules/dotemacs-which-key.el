@@ -1,13 +1,8 @@
 ;;; dotemacs-vertico.el --- emacs-which-key. -*- lexical-binding: t; -*-
-
 ;;; Commentary:
-;;
-;; which-key configuration.
-;;
-
 ;;; Code:
 
-(dotemacs-require-packages '(which-key))
+(dotemacs-require-package 'which-key)
 
 (use-package which-key
   :defer 1

@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(diff-hl))
+(dotemacs-require-package 'diff-hl)
 
 (use-package diff-hl
   :hook ((prog-mode after-save) . diff-hl-mode)

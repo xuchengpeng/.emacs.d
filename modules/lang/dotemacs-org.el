@@ -3,7 +3,7 @@
 ;;; Code:
 
 (dotemacs-require-package 'org "9.6.14")
-(dotemacs-require-packages '(htmlize))
+(dotemacs-require-package 'htmlize)
 
 (defcustom dotemacs-org-dir "~/org/"
   "Org directory."

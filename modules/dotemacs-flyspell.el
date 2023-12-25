@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(flyspell-correct))
+(dotemacs-require-package 'flyspell-correct)
 
 (use-package flyspell
   :defer t

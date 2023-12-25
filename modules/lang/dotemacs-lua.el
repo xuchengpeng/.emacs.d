@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(lua-mode))
+(dotemacs-require-package 'lua-mode)
 
 (defvar dotemacs-lua-mode-map (make-keymap)
   "Keymap for Lua commands.")

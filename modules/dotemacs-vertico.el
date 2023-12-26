@@ -5,7 +5,7 @@
 (dotemacs-require-packages '(vertico orderless consult embark embark-consult marginalia))
 
 (use-package vertico
-  :hook (pre-command . vertico-mode)
+  :hook (after-init . vertico-mode)
   :config
   (setq vertico-resize nil
         vertico-count 17
@@ -29,7 +29,7 @@
   "Command line arguments for fd.")
 
 (use-package consult
-  :defer t
+  :after (vertico)
   :init
   (global-set-key [remap apropos]                       'consult-apropos)
   (global-set-key [remap bookmark-jump]                 'consult-bookmark)
@@ -114,7 +114,7 @@ If prefix ARG is set, prompt for a directory to search from."
   (dotemacs-search-cwd 'other))
 
 (use-package embark
-  :defer t
+  :after (vertico)
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   (global-set-key [remap describe-bindings] 'embark-bindings))

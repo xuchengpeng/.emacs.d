@@ -5,7 +5,7 @@
 (dotemacs-require-packages '(avy expand-region multiple-cursors move-text vundo))
 
 (use-package avy
-  :defer t)
+  :commands (avy-goto-line))
 
 (use-package expand-region
   :commands (er/expand-region))
@@ -19,7 +19,9 @@
   :commands (move-text-up move-text-down))
 
 (use-package vundo
-  :bind ("C-x u" . vundo))
+  :commands vundo
+  :init
+  (global-set-key (kbd "C-x u") 'vundo))
 
 (provide 'dotemacs-editing)
 ;;; dotemacs-editing.el ends here

@@ -21,9 +21,10 @@
   (corfu-preview-current nil)
   (corfu-auto-delay 0.2)
   (corfu-popupinfo-delay '(0.4 . 0.2))
-  :bind ("M-/" . completion-at-point)
   :hook ((after-init . global-corfu-mode)
-         (global-corfu-mode . corfu-popupinfo-mode)))
+         (global-corfu-mode . corfu-popupinfo-mode))
+  :init
+  (global-set-key (kbd "M-/") 'complete-at-point))
 
 (use-package cape
   :after corfu

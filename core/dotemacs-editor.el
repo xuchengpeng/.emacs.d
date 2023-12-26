@@ -91,7 +91,7 @@
   :hook (prog-mode . hs-minor-mode))
 
 (use-package server
-  :defer 1
+  :defer 2
   :config
   (setq server-auth-dir (concat dotemacs-dir "server/"))
   (unless (server-running-p)

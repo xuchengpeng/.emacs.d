@@ -5,9 +5,11 @@
 (dotemacs-require-package 'tempel)
 
 (use-package tempel
-  :bind (("M-+" . tempel-complete)
-         ("M-*" . tempel-insert))
+  :commands (tempel-complete tempel-insert)
   :init
+  (global-set-key (kbd "M-+") 'tempel-complete)
+  (global-set-key (kbd "M-*") 'tempel-insert)
+
   (defun tempel-setup-capf ()
     (setq-local completion-at-point-functions
                 (cons #'tempel-expand

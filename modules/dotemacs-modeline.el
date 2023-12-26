@@ -874,8 +874,33 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
         (dotemacs-modeline-set-modeline (cdr x))
         (throw 'found x)))))
 
-(add-hook 'after-change-major-mode-hook #'dotemacs-modeline-auto-set-modeline)
-(add-hook 'after-init-hook (lambda () (dotemacs-modeline-set-main-modeline t)))
+(define-minor-mode dotemacs-modeline-mode
+  "Toggle `dotemacs-modeline' on or off."
+  :group 'dotemacs-modeline
+  :global t
+  :lighter nil
+  :keymap nil
+  (if dotemacs-modeline-mode
+      (progn
+        (dotemacs-modeline-set-main-modeline t)
+
+        ;; Apply to all existing buffers.
+        (dolist (buf (buffer-list))
+          (with-current-buffer buf
+            (unless (dotemacs-modeline-auto-set-modeline)
+              (dotemacs-modeline-set-main-modeline))))
+
+        (add-hook 'after-change-major-mode-hook #'dotemacs-modeline-auto-set-modeline))
+    (progn
+      ;; Restore mode-line
+      (setq-default mode-line-format nil)
+      (dolist (buf (buffer-list))
+       (with-current-buffer buf
+         (setq mode-line-format nil)))
+
+      (remove-hook 'after-change-major-mode-hook #'dotemacs-modeline-auto-set-modeline))))
+
+(add-hook 'after-init-hook #'dotemacs-modeline-mode)
 
 (provide 'dotemacs-modeline)
 ;;; dotemacs-modeline.el ends here

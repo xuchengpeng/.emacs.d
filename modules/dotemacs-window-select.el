@@ -5,6 +5,8 @@
 (dotemacs-require-package 'ace-window)
 
 (use-package ace-window
+  :defer t
+  :hook (dotemacs-modeline-mode . (lambda () (require 'ace-window)))
   :init
   (global-set-key [remap other-window] 'ace-window))
 

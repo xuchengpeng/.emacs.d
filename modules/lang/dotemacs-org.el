@@ -62,10 +62,10 @@
         org-html-head-include-default-style nil
         org-html-head-include-scripts nil)
   (setq org-publish-project-alist
-        '(;; Publish the posts
+        `(;; Publish the posts
           ("site-org"
-            :base-directory (concat dotemacs-org-site-dir "/org")
-            :publishing-directory (concat dotemacs-org-site-dir "/public")
+            :base-directory ,(concat dotemacs-org-site-dir "/org")
+            :publishing-directory ,(concat dotemacs-org-site-dir "/public")
             ;; :preparation-function
             ;; :complete-function
 
@@ -174,23 +174,23 @@
             ;; :style "<link rel=\"stylesheet\" href=\"../other/mystyle.css\" type=\"text/css\" />"
             )
           ("site-js"
-            :base-directory (concat dotemacs-org-site-dir "/js")
+            :base-directory ,(concat dotemacs-org-site-dir "/js")
             :base-extension "js"
-            :publishing-directory (concat dotemacs-org-site-dir "/public/js")
+            :publishing-directory ,(concat dotemacs-org-site-dir "/public/js")
             :recursive t
             :publishing-function org-publish-attachment
             )
           ("site-css"
-            :base-directory (concat dotemacs-org-site-dir "/css")
+            :base-directory ,(concat dotemacs-org-site-dir "/css")
             :base-extension "css"
-            :publishing-directory (concat dotemacs-org-site-dir "/public/css")
+            :publishing-directory ,(concat dotemacs-org-site-dir "/public/css")
             :recursive t
             :publishing-function org-publish-attachment
             )
           ("site-images"
-            :base-directory (concat dotemacs-org-site-dir "/images")
+            :base-directory ,(concat dotemacs-org-site-dir "/images")
             :base-extension "jpg\\|gif\\|png\\|svg\\|gif"
-            :publishing-directory (concat dotemacs-org-site-dir "/public/images")
+            :publishing-directory ,(concat dotemacs-org-site-dir "/public/images")
             :recursive t
             :publishing-function org-publish-attachment
             )

@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.1.3](https://github.com/xuchengpeng/.emacs.d/compare/v2.1.2...v2.1.3) (2023-12-26)
+
+
+### Bug Fixes
+
+* **corfu:** add tempel support ([c0934fc](https://github.com/xuchengpeng/.emacs.d/commit/c0934fcf9d496f02417a9ed38b3df737623ddff1))
+* **modeline:** prefer ace-window insead of winum ([6147570](https://github.com/xuchengpeng/.emacs.d/commit/614757016bc8d9c304fe2ce4ab7dde12baa6e8a9))
+* **modeline:** refactoring ([c3815a7](https://github.com/xuchengpeng/.emacs.d/commit/c3815a7d813da2a6575c99e5ec84359a6da6528c))
+* **symbol-overlay:** add keybinds ([c3171fc](https://github.com/xuchengpeng/.emacs.d/commit/c3171fca95704ec664eedd956b7b11d6833b3f86))
+* **use-package:** avoid using bind ([71fa61d](https://github.com/xuchengpeng/.emacs.d/commit/71fa61da8f8b1af39f637a57d85d49dbfeed0e25))
+
 ## [2.1.2](https://github.com/xuchengpeng/.emacs.d/compare/v2.1.1...v2.1.2) (2023-12-25)
 
 

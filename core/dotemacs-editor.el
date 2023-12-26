@@ -45,6 +45,14 @@
       require-final-newline t
       tabify-regexp "^\t* [ \t]+")
 
+(setq kill-do-not-save-duplicates t)
+
+(nconc
+ auto-mode-alist
+ '(("/LICENSE\\'" . text-mode)
+   ("\\.log\\'" . text-mode)
+   ("rc\\'" . conf-mode)))
+
 (setq bookmark-default-file (concat dotemacs-local-dir "bookmarks"))
 
 (use-package autorevert

@@ -15,5 +15,10 @@
   :type 'alist
   :group 'dotemacs)
 
+(defcustom dotemacs-tempel-path nil
+  "A list of template files."
+  :type '(repeat string)
+  :group 'dotemacs)
+
 (provide 'dotemacs-custom)
 ;;; dotemacs-custom.el ends here

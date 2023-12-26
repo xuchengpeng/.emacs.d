@@ -11,6 +11,7 @@
 (require 'dotemacs-editing)
 (require 'dotemacs-vertico)
 (require 'dotemacs-corfu)
+(require 'dotemacs-tempel)
 (require 'dotemacs-modeline)
 (require 'dotemacs-highlight)
 (require 'dotemacs-eglot)

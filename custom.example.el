@@ -5,3 +5,5 @@
 (setq dotemacs-custom-package-archives
       '(("melpa" . "D:/github/elpa-mirror/melpa/")
         ("gnu"   . "D:/github/elpa-mirror/gnu/")))
+
+(setq dotemacs-tempel-path '("/path/to/templates"))

@@ -75,6 +75,7 @@
             :with-author nil
             :with-priority t
             :with-toc nil
+            :time-stamp-file nil
             :html-doctype "html5"
             :html-head ,dotemacs-org-html-head
             :html-preamble t

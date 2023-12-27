@@ -20,5 +20,20 @@
   :type '(repeat string)
   :group 'dotemacs)
 
+(defcustom dotemacs-org-html-head nil
+  "html-head for ox-publish."
+  :type 'string
+  :group 'dotemacs)
+
+(defcustom dotemacs-org-html-preamble-format nil
+  "html-preamble-format for ox-publish."
+  :type 'alist
+  :group 'dotemacs)
+
+(defcustom dotemacs-org-html-postamble-format nil
+  "html-postamble-format for ox-publish."
+  :type 'alist
+  :group 'dotemacs)
+
 (provide 'dotemacs-custom)
 ;;; dotemacs-custom.el ends here

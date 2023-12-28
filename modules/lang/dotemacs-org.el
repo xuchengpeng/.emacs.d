@@ -5,16 +5,6 @@
 (dotemacs-require-package 'org "9.6.14")
 (dotemacs-require-package 'htmlize)
 
-(defcustom dotemacs-org-dir "~/org/"
-  "Org directory."
-  :type 'string
-  :group 'dotemacs)
-
-(defcustom dotemacs-org-site-dir nil
-  "Org site directory."
-  :type 'string
-  :group 'dotemacs)
-
 (use-package org
   :mode ("\\.org$" . org-mode)
   :init

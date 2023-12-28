@@ -20,17 +20,27 @@
   :type '(repeat string)
   :group 'dotemacs)
 
-(defcustom dotemacs-org-html-head nil
+(defcustom dotemacs-org-dir "~/org/"
+  "Org directory."
+  :type 'string
+  :group 'dotemacs)
+
+(defcustom dotemacs-org-site-dir "~/org-site/"
+  "Org site directory."
+  :type 'string
+  :group 'dotemacs)
+
+(defcustom dotemacs-org-html-head ""
   "html-head for ox-publish."
   :type 'string
   :group 'dotemacs)
 
-(defcustom dotemacs-org-html-preamble-format nil
+(defcustom dotemacs-org-html-preamble-format '(("en" ""))
   "html-preamble-format for ox-publish."
   :type 'alist
   :group 'dotemacs)
 
-(defcustom dotemacs-org-html-postamble-format nil
+(defcustom dotemacs-org-html-postamble-format '(("en" ""))
   "html-postamble-format for ox-publish."
   :type 'alist
   :group 'dotemacs)

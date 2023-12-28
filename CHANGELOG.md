@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.4](https://github.com/xuchengpeng/.emacs.d/compare/v2.1.3...v2.1.4) (2023-12-28)
+
+
+### Bug Fixes
+
+* **org:** add post capture template ([cd4c9fb](https://github.com/xuchengpeng/.emacs.d/commit/cd4c9fb690d90150d7b46e4c9f0a643110720499))
+* **ox-publish:** add custom variables ([7ddce14](https://github.com/xuchengpeng/.emacs.d/commit/7ddce149fdbd4b882332a1f9ee4e9da0795eeea1))
+* **ox-publish:** customize html parameters default values ([4829df5](https://github.com/xuchengpeng/.emacs.d/commit/4829df5c22a52b04e867612ad40dffc45de494df))
+* **ox-publish:** do not export timestamp ([44878cb](https://github.com/xuchengpeng/.emacs.d/commit/44878cb9114ace8b0184aea67162d0e06eb37d41))
+* **ox-publish:** export with toc ([3293ce2](https://github.com/xuchengpeng/.emacs.d/commit/3293ce296b6d65a3940552fcee5376c6e66804a5))
+* **ox-publish:** use backquote to eval site directory ([f6c3a2f](https://github.com/xuchengpeng/.emacs.d/commit/f6c3a2fd849878b08ab306639b02fb036881a9c9))
+* **ox-publish:** use new HTML5 elements ([62e3b85](https://github.com/xuchengpeng/.emacs.d/commit/62e3b853a23bbbc4a4e92b1133c97c9b98de7f62))
+
 ## [2.1.3](https://github.com/xuchengpeng/.emacs.d/compare/v2.1.2...v2.1.3) (2023-12-26)
 
 

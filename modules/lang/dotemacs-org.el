@@ -24,16 +24,24 @@
         org-persist-directory (concat dotemacs-cache-dir "org-persist/")
         org-publish-timestamp-directory (concat dotemacs-cache-dir "org-timestamps/"))
   :config
-  (defvar +org-capture-todo-file (expand-file-name "todo.org" org-directory))
-  (defvar +org-capture-notes-file (expand-file-name "notes.org" org-directory))
-  (setq org-default-notes-file +org-capture-notes-file
+  (defun dotemacs-org-post-file ()
+    (let* ((filename (read-from-minibuffer "New post filename: "))
+           (post-dir (concat dotemacs-org-site-dir "/org/posts/" (format-time-string "%Y"))))
+      (unless (file-exists-p post-dir)
+        (make-directory post-dir t))
+      (find-file (expand-file-name filename post-dir))
+      (tempel-insert 'blog-title)))
+  (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates
-        '(("t" "Todo" entry
-           (file+headline +org-capture-todo-file "Inbox")
-           "* [ ] %?\n%i\n%a" :prepend t :kill-buffer t)
+        `(("t" "Todo" entry
+           (file+headline ,(expand-file-name "todo.org" org-directory) "Inbox")
+           "* [ ] %?\n%i\n%a" :prepend t)
           ("n" "Notes" entry
-           (file+headline +org-capture-notes-file "Inbox")
-           "* %u %?\n%i\n%a" :prepend t :kill-buffer t)))
+           (file+headline ,(expand-file-name "notes.org" org-directory) "Inbox")
+           "* %u %?\n%i\n%a" :prepend t)
+          ("p" "Post" plain
+           (function dotemacs-org-post-file)
+           "" :jump-to-captured t :immediate-finish t)))
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "PROJECT(p)" "|" "DONE(d)" "CANCELLED(c)"))
         org-todo-keyword-faces

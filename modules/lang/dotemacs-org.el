@@ -82,7 +82,7 @@
             :section-numbers nil
             :with-author nil
             :with-priority t
-            :with-toc nil
+            :with-toc t
             :time-stamp-file nil
             :html-doctype "html5"
             :html-html5-fancy t

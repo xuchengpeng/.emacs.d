@@ -77,6 +77,7 @@
             :with-toc nil
             :time-stamp-file nil
             :html-doctype "html5"
+            :html-html5-fancy t
             :html-head ,dotemacs-org-html-head
             :html-preamble t
             :html-preamble-format ,dotemacs-org-html-preamble-format

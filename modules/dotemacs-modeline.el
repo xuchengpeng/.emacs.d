@@ -136,7 +136,7 @@ Also see the face `dotemacs-modeline-unread-number'."
   :group 'dotemacs-modeline-faces)
 
 (defface dotemacs-modeline-bar-inactive
-  `((t (:background ,(face-foreground 'mode-line-inactive))))
+  `((t (:inherit dotemacs-modeline)))
   "The face used for the left-most bar in the mode-line of an inactive window."
   :group 'dotemacs-modeline-faces)
 

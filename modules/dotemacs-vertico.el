@@ -7,6 +7,8 @@
 (use-package vertico
   :hook (after-init . vertico-mode)
   :config
+  (define-key vertico-map (kbd "C-j") 'vertico-next)
+  (define-key vertico-map (kbd "C-k") 'vertico-previous)
   (setq vertico-resize nil
         vertico-count 17
         vertico-cycle t))

@@ -68,23 +68,21 @@ Examples:
 (use-package winner
   :hook (window-configuration-change . winner-mode)
   :config
-  (winner-mode +1)
   (setq winner-boring-buffers (append winner-boring-buffers
         '("*Compile-Log*" "*inferior-lisp*" "*Fuzzy Completions*"
           "*Apropos*" "*Help*" "*cvs*" "*Buffer List*" "*Ibuffer*"
           "*esh command on file*"))))
 
 (use-package hl-line
-  :hook ((prog-mode text-mode conf-mode special-mode dired-mode) . hl-line-mode))
+  :hook (after-init . global-hl-line-mode))
 
 (use-package paren
-  :hook (find-file . show-paren-mode)
+  :hook (after-init . show-paren-mode)
   :config
   (setq show-paren-delay 0.1
         show-paren-highlight-openparen t
         show-paren-when-point-inside-paren t
-        show-paren-when-point-in-periphery t)
-  (show-paren-mode +1))
+        show-paren-when-point-in-periphery t))
 
 (defun dotemacs-set-font()
   "Set english and chinese fonts."

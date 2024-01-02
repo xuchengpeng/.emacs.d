@@ -74,7 +74,7 @@
   (add-hook 'kill-emacs-hook #'recentf-cleanup))
 
 (use-package savehist
-  :hook (post-command . savehist-mode)
+  :hook (after-init . savehist-mode)
   :config
   (setq savehist-file (concat dotemacs-cache-dir "savehist")
         savehist-save-minibuffer-history t
@@ -84,7 +84,7 @@
   (savehist-mode +1))
 
 (use-package saveplace
-  :hook ((find-file dired-initial-position) . save-place-mode)
+  :hook (after-init . save-place-mode)
   :config
   (setq save-place-file (concat dotemacs-cache-dir "saveplace")))
 
@@ -100,7 +100,7 @@
     (server-start)))
 
 (use-package so-long
-  :hook(find-file . global-so-long-mode))
+  :hook(after-init . global-so-long-mode))
 
 (use-package elec-pair
   :ensure nil

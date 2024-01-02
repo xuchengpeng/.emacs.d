@@ -47,6 +47,8 @@
 
 (setq kill-do-not-save-duplicates t)
 
+(add-hook 'text-mode-hook #'visual-line-mode)
+
 (nconc
  auto-mode-alist
  '(("/LICENSE\\'" . text-mode)

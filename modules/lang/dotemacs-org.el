@@ -7,13 +7,14 @@
 
 (use-package org
   :mode ("\\.org$" . org-mode)
-  :init
+  :hook ((org-mode . (lambda () (electric-indent-local-mode -1))))
+  :config
   (setq org-directory dotemacs-org-dir
         org-id-locations-file (expand-file-name ".orgids" org-directory)
         org-agenda-files (list org-directory)
         org-persist-directory (concat dotemacs-cache-dir "org-persist/")
-        org-publish-timestamp-directory (concat dotemacs-cache-dir "org-timestamps/"))
-  :config
+        org-publish-timestamp-directory (concat dotemacs-cache-dir "org-timestamps/")
+        org-startup-indented t)
   (defun dotemacs-org-post-file ()
     (let* ((filename (read-from-minibuffer "New post filename: "))
            (post-dir (concat dotemacs-org-site-dir "/org/posts/" (format-time-string "%Y"))))
@@ -43,9 +44,8 @@
 
 (use-package org-clock
   :commands org-clock-save
-  :init
-  (setq org-clock-persist-file (concat dotemacs-cache-dir "org-clock-save.el"))
   :config
+  (setq org-clock-persist-file (concat dotemacs-cache-dir "org-clock-save.el"))
   (setq org-clock-persist 'history
         org-clock-in-resume t
         org-clock-out-remove-zero-time-clocks t

@@ -29,6 +29,15 @@
   (setq-local display-line-numbers-type nil)
   (setq-local hl-line-mode t))
 
+(defun dotemacs-display-init-time (&optional return-p)
+  (let ((package-count 0))
+    (when (bound-and-true-p package-alist)
+      (setq package-count (length package-activated-list)))
+    (funcall (if return-p #'format #'message)
+             "dotemacs loaded %d packages in %.2fms"
+             package-count
+             (* 1000.0 (float-time (time-subtract after-init-time before-init-time))))))
+
 (defun dotemacs-dashboard--center (len s)
   (concat (make-string (ceiling (max 0 (- len (length s))) 2) ? )
           s))

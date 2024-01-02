@@ -62,14 +62,5 @@ LOAD-DURATION is the time taken in milliseconds to load FEATURE.")
     (tabulated-list-revert)
     (display-buffer (current-buffer))))
 
-(defun dotemacs-display-init-time (&optional return-p)
-  (let ((package-count 0))
-    (when (bound-and-true-p package-alist)
-      (setq package-count (length package-activated-list)))
-    (funcall (if return-p #'format #'message)
-             "dotemacs loaded %d packages in %.2fms"
-             package-count
-             (dotemacs-time-subtract-millis after-init-time before-init-time))))
-
 (provide 'dotemacs-benchmark)
 ;;; dotemacs-benchmark.el ends here

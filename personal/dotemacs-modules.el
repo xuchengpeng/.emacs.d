@@ -2,7 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'dotemacs-benchmark)
+(when init-file-debug
+  (require 'dotemacs-benchmark))
 (require 'dotemacs-keybinds)
 (require 'dotemacs-themes)
 (require 'dotemacs-dired)

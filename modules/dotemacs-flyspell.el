@@ -3,9 +3,8 @@
 ;;; Code:
 
 (use-package flyspell
-  :if (executable-find "aspell")
-  :hook (text-mode . flyspell-mode)
-  :init
+  :defer t
+  :config
   (setq ispell-program-name "aspell"
         ispell-extra-args '("--sug-mode=ultra" "--run-together")
         flyspell-issue-welcome-flag nil

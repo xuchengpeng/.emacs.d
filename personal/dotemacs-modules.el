@@ -16,6 +16,7 @@
 (require 'dotemacs-programming)
 (require 'dotemacs-utils)
 (require 'dotemacs-eshell)
+(require 'dotemacs-org)
 (require 'dotemacs-lang)
 
 (provide 'dotemacs-modules)

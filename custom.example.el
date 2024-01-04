@@ -1,10 +1,10 @@
 (setq dotemacs-font (font-spec :family "BlexMono Nerd Font" :size 16))
-(setq dotemacs-cn-font (font-spec :family "STXihei" :size 16))
+(setq dotemacs-cn-font (font-spec :family "Microsoft YaHei" :size 16))
 
 (setq dotemacs-package-archives 'custom)
-(setq dotemacs-custom-package-archives
-      '(("melpa" . "D:/github/elpa-mirror/melpa/")
-        ("gnu"   . "D:/github/elpa-mirror/gnu/")))
+(setq package-archives
+      '(("gnu"   . "d:/github/elpa-mirror/gnu/")
+        ("melpa" . "d:/github/elpa-mirror/melpa/")))
 
 (setq dotemacs-tempel-path '("/path/to/templates"))
 

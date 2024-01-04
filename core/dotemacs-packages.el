@@ -14,12 +14,11 @@
      ((eq archives 'tuna)
       (setq package-archives `(("gnu"   . ,(format "%s://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/" proto))
                                ("melpa" . ,(format "%s://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/" proto)))))
-     ((eq archives 'custom)
-      (setq package-archives dotemacs-custom-package-archives))
      (t
       (error "Unknown archives: '%s'" archives)))))
 
-(dotemacs-set-package-archives dotemacs-package-archives)
+(unless (eq dotemacs-package-archives 'custom)
+  (dotemacs-set-package-archives dotemacs-package-archives))
 
 (setq load-prefer-newer t
       package-enable-at-startup nil

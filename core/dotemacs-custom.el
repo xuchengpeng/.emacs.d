@@ -10,11 +10,6 @@
           (const :tag "Custom" custom))
   :group 'dotemacs)
 
-(defcustom dotemacs-custom-package-archives nil
-  "Custom package archives."
-  :type 'alist
-  :group 'dotemacs)
-
 (defcustom dotemacs-tempel-path nil
   "A list of template files."
   :type '(repeat string)

@@ -1,8 +1,8 @@
-;;; dotemacs-vertico.el --- Vertico. -*- lexical-binding: t; -*-
+;;; dotemacs-completion.el --- Completion. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(vertico orderless consult embark embark-consult marginalia))
+(dotemacs-require-packages '(vertico orderless consult embark embark-consult marginalia corfu cape tempel))
 
 (use-package vertico
   :hook (after-init . vertico-mode)
@@ -128,5 +128,55 @@ If prefix ARG is set, prompt for a directory to search from."
   :config
   (marginalia-mode))
 
-(provide 'dotemacs-vertico)
-;;; dotemacs-vertico.el ends here
+(use-package emacs
+  :init
+  ;; TAB cycle if there are only few candidates
+  (setq completion-cycle-threshold 3)
+
+  ;; Enable indentation+completion using the TAB key.
+  ;; `completion-at-point' is often bound to M-TAB.
+  (setq tab-always-indent 'complete))
+
+(use-package corfu
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-preview-current nil)
+  (corfu-auto-delay 0.2)
+  (corfu-popupinfo-delay '(0.4 . 0.2))
+  :hook ((after-init . global-corfu-mode)
+         (global-corfu-mode . corfu-popupinfo-mode))
+  :init
+  (global-set-key (kbd "M-/") 'complete-at-point))
+
+(use-package cape
+  :after corfu
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-abbrev)
+
+  (advice-add #'eglot-completion-at-point :around #'cape-wrap-buster))
+
+(use-package tempel
+  :commands (tempel-complete tempel-insert)
+  :init
+  (global-set-key (kbd "M-+") 'tempel-complete)
+  (global-set-key (kbd "M-*") 'tempel-insert)
+
+  (defun tempel-setup-capf ()
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+
+  (add-hook 'conf-mode-hook 'tempel-setup-capf)
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf)
+  :config
+  (setq tempel-path (nconc (ensure-list tempel-path) dotemacs-tempel-path)))
+
+(provide 'dotemacs-completion)
+;;; dotemacs-completion.el ends here

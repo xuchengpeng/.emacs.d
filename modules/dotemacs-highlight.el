@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(symbol-overlay hl-todo))
+(dotemacs-require-packages '(symbol-overlay hl-todo diff-hl))
 
 (use-package symbol-overlay
   :commands symbol-overlay-mode
@@ -26,6 +26,12 @@
           ("NOTE" success bold)
           ("BUG" error bold)
           ("XXX" font-lock-constant-face bold))))
+
+(use-package diff-hl
+  :hook ((after-init . global-diff-hl-mode)
+         (dired-mode . diff-hl-dired-mode))
+  :config
+  (diff-hl-flydiff-mode 1))
 
 (provide 'dotemacs-highlight)
 ;;; dotemacs-highlight.el ends here

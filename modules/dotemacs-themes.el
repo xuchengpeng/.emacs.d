@@ -2,12 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 
+(dotemacs-require-package 'modus-themes)
+
 ;;;###autoload
 (defun dotemacs-init-theme ()
   "Init theme."
-  (load "tokyonight-theme" 'nomessage t)
-  (setq tokyonight-theme-style 'moon)
-  (load-theme 'tokyonight t))
+  (require 'modus-themes)
+  (load-theme 'modus-operandi :no-confirm))
 
 (add-hook 'after-init-hook #'dotemacs-init-theme)
 
@@ -16,13 +17,15 @@
   (interactive)
   (let ((choice (completing-read
                   "Select theme: "
-                  '("tokyonight-storm" "tokyonight-night" "tokyonight-moon" "tokyonight-day")))
+                  '("tokyonight-storm" "tokyonight-night" "tokyonight-moon" "tokyonight-day"
+                    "modus-operandi" "modus-vivendi")))
         (tokyonight-prefix "tokyonight-"))
     (cond ((string-prefix-p tokyonight-prefix choice)
+           (load "tokyonight-theme" 'nomessage t)
            (setq tokyonight-theme-style (intern (substring choice (length tokyonight-prefix))))
-           (load-theme 'tokyonight t))
+           (load-theme 'tokyonight :no-confirm))
           (t
-           (load-theme (intern choice) t)))))
+           (consult-theme (intern choice))))))
 
 (provide 'dotemacs-themes)
 ;;; dotemacs-themes.el ends here

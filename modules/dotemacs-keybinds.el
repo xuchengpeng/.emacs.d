@@ -65,6 +65,7 @@
 (define-key dotemacs-leader-map "tf" '("Flymake" . flymake-mode))
 (define-key dotemacs-leader-map "tl" '("Line numbers" . display-line-numbers-mode))
 (define-key dotemacs-leader-map "ts" '("Spell checker" . flyspell-mode))
+(define-key dotemacs-leader-map "tt" '("Theme" . modus-themes-toggle))
 (define-key dotemacs-leader-map "tv" '("Visible mode" . visible-mode))
 (define-key dotemacs-leader-map "tw" '("Soft line wrapping" . visual-line-mode))
 (define-key dotemacs-leader-map "tz" '("Zen mode" . toggle-frame-fullscreen))

@@ -10,6 +10,18 @@
           (const :tag "Custom" custom))
   :group 'dotemacs)
 
+(defcustom dotemacs-font nil
+  "The default font to use.
+
+Expects either a `font-spec', or a font string.
+
+Examples:
+  (setq dotemacs-font (font-spec :family \"Fira Mono\" :size 12))
+  (setq dotemacs-font \"Terminus (TTF):pixelsize=12:antialias=off\")")
+
+(defcustom dotemacs-cn-font nil
+  "The chinese font to use.")
+
 (defcustom dotemacs-tempel-path nil
   "A list of template files."
   :type '(repeat string)

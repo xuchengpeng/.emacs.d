@@ -1,23 +1,6 @@
-;;; dotemacs-ui.el --- Initialize dotemacs ui configurations. -*- lexical-binding: t; -*-
-
+;;; dotemacs-ui.el --- UI configurations. -*- lexical-binding: t; -*-
 ;;; Commentary:
-;;
-;; UI configuration.
-;;
-
 ;;; Code:
-
-(defvar dotemacs-font nil
-  "The default font to use.
-
-Expects either a `font-spec', or a font string.
-
-Examples:
-  (setq dotemacs-font (font-spec :family \"Fira Mono\" :size 12))
-  (setq dotemacs-font \"Terminus (TTF):pixelsize=12:antialias=off\")")
-
-(defvar dotemacs-cn-font nil
-  "The chinese font to use.")
 
 (setq hscroll-margin 2
       hscroll-step 1
@@ -84,25 +67,16 @@ Examples:
         show-paren-when-point-inside-paren t
         show-paren-when-point-in-periphery t))
 
-(defun dotemacs-set-font()
+(defun dotemacs-init-fonts ()
   "Set english and chinese fonts."
-  (when dotemacs-font
-    (set-face-attribute 'default nil :font dotemacs-font))
-  (when dotemacs-cn-font
-    (dolist (charset '(kana han symbol cjk-misc bopomofo))
-      (set-fontset-font (frame-parameter nil 'font) charset dotemacs-cn-font))))
-
-(defun dotemacs-init-fonts (&optional _)
-  "Set the font."
-  (add-to-list 'after-make-frame-functions
-               (lambda (new-frame)
-                 (select-frame new-frame)
-                 (when (display-graphic-p)
-                   (dotemacs-set-font))))
   (when (display-graphic-p)
-    (dotemacs-set-font)))
+    (when dotemacs-font
+      (set-face-attribute 'default nil :font dotemacs-font))
+    (when dotemacs-cn-font
+      (set-fontset-font t 'han dotemacs-cn-font))))
 
-(add-hook 'window-setup-hook #'dotemacs-init-fonts)
+(add-hook 'after-init-hook #'dotemacs-init-fonts)
+(add-hook 'server-after-make-frame-hook #'dotemacs-init-fonts)
 
 (provide 'dotemacs-ui)
 ;;; dotemacs-ui.el ends here

@@ -235,10 +235,8 @@ Also see the face `dotemacs-modeline-unread-number'."
                      (format "%s modeline segment" name))))
     (cond ((and (symbolp (car body))
                 (not (cdr body)))
-           (add-to-list 'dotemacs-modeline-var-alist (cons name (car body)))
            `(add-to-list 'dotemacs-modeline-var-alist (cons ',name ',(car body))))
           (t
-           (add-to-list 'dotemacs-modeline-fn-alist (cons name sym))
            `(progn
               (defun ,sym () ,docstring ,@body)
               (add-to-list 'dotemacs-modeline-fn-alist (cons ',name ',sym))
@@ -391,6 +389,7 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
 (declare-function symbol-overlay-assoc "ext:symbol-overlay")
 (declare-function symbol-overlay-get-list "ext:symbol-overlay")
 (declare-function symbol-overlay-get-symbol "ext:symbol-overlay")
+(declare-function warning-numeric-level "warnings")
 (declare-function winum--clear-mode-line "ext:winum")
 (declare-function winum--install-mode-line "ext:winum")
 (declare-function winum-get-number-string "ext:winum")
@@ -739,7 +738,7 @@ By default, this shows the information specified by `global-mode-string'."
 (advice-add #'flymake--handle-report :after #'dotemacs-modeline-update-flymake-text)
 
 (dotemacs-modeline-def-segment checker
-  "Displays color-coded flymake error status in the current buffer with pretty icons."
+  "Displays color-coded flymake error status in the current buffer."
   (when (and (bound-and-true-p flymake-mode)
              (bound-and-true-p flymake--state))
     (if dotemacs-modeline--flymake-text

@@ -12,10 +12,20 @@
       mouse-wheel-scroll-amount '(2 ((shift) . 2))
       mouse-wheel-scroll-amount-horizontal 2)
 
-(setq uniquify-buffer-name-style 'forward
-      ;; no beeping or blinking please
-      ring-bell-function #'ignore
-      visible-bell nil)
+(setq uniquify-buffer-name-style 'forward)
+
+;;;###autoload
+(defun dotemacs-ring-bell-fn ()
+  "Blink the mode-line."
+  (let ((buf (current-buffer)))
+    (invert-face 'mode-line)
+    (run-with-timer 0.05 nil
+                    (lambda ()
+                      (with-current-buffer buf
+                        (invert-face 'mode-line))))))
+
+(setq ring-bell-function 'dotemacs-ring-bell-fn
+      visible-bell t)
 
 (blink-cursor-mode -1)
 (setq blink-matching-paren nil)

@@ -1,10 +1,5 @@
 ;;; dotemacs-core.el --- Emacs Core functions. -*- lexical-binding: t; -*-
-
 ;;; Commentary:
-;;
-;; Core configuration.
-;;
-
 ;;; Code:
 
 (defconst IS-MAC      (eq system-type 'darwin))
@@ -35,16 +30,6 @@
 (unless IS-WINDOWS
   (setq selection-coding-system 'utf-8))
 (setq-default buffer-file-coding-system 'utf-8-unix)
-
-(defun dotemacs-call-process (command &rest args)
-  "Execute COMMAND with ARGS synchronously.
-
-Returns (STATUS . OUTPUT) when it is done, where STATUS is the returned error
-code of the process and OUTPUT is its stdout output."
-  (with-temp-buffer
-    (cons (or (apply #'call-process command nil t nil (remq nil args))
-              -1)
-          (string-trim (buffer-string)))))
 
 (provide 'dotemacs-core)
 ;;; dotemacs-core.el ends here

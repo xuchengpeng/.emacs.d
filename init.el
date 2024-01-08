@@ -46,6 +46,7 @@
 
 ;; load core
 (require 'dotemacs-custom)
+(require 'dotemacs-lib)
 (require 'dotemacs-core)
 (require 'dotemacs-packages)
 (require 'dotemacs-ui)

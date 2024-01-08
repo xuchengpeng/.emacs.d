@@ -11,7 +11,7 @@
 (setq dotemacs-org-site-dir "d:/github/org-site/")
 
 (setq dotemacs-org-html-head
-        "<link rel=\"shortcut icon\" href=\"images/rose-red.png\" type=\"image/x-icon\" />
+        "<link rel=\"shortcut icon\" href=\"/images/rose-red.png\" type=\"image/x-icon\" />
          <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\">"
       dotemacs-org-html-preamble-format
         '(("en" "<a href=\"/index.html\" style=\"text-decoration:underline\">Home</a>

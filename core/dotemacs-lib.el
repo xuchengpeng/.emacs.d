@@ -21,5 +21,15 @@ Same as M-x replace-string RET C-q C-m RET RET, or query-replace."
     (while (search-forward "\r" nil :noerror)
       (replace-match ""))))
 
+(defun dotemacs-dos2unix ()
+  "Convert the current buffer to a Unix file encoding."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-unix nil))
+
+(defun dotemacs-unix2dos ()
+  "Convert the current buffer to a DOS file encoding."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-dos nil))
+
 (provide 'dotemacs-lib)
 ;;; dotemacs-lib.el ends here

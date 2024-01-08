@@ -22,10 +22,9 @@
   (define-key dotemacs-leader-map "cR" '("Rename" . eglot-rename))
   (define-key dotemacs-leader-map "cs" '("Workspace Symbols" . consult-eglot-symbols))
   :config
-  (setq xref-search-program (cond
-                             ((executable-find "rg") 'ripgrep)
-                             (t 'grep))
-        xref-show-definitions-function #'xref-show-definitions-completing-read
+  (when (executable-find "rg")
+    (setq xref-search-program 'ripgrep))
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
 (use-package consult-eglot

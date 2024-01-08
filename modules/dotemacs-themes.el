@@ -21,6 +21,7 @@
                     "modus-operandi" "modus-vivendi")))
         (tokyonight-prefix "tokyonight-"))
     (cond ((string-prefix-p tokyonight-prefix choice)
+           (mapc #'disable-theme custom-enabled-themes)
            (load "tokyonight-theme" 'nomessage t)
            (setq tokyonight-theme-style (intern (substring choice (length tokyonight-prefix))))
            (load-theme 'tokyonight :no-confirm))

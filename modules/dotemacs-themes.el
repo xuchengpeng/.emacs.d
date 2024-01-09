@@ -8,7 +8,10 @@
 (defun dotemacs-init-theme ()
   "Init theme."
   (require 'modus-themes)
-  (load-theme 'modus-operandi :no-confirm))
+  (load-theme 'modus-operandi :no-confirm)
+
+  (add-to-list 'load-path (expand-file-name "tokyonight-themes/" dotemacs-modules-dir))
+  (require 'tokyonight-themes))
 
 (add-hook 'after-init-hook #'dotemacs-init-theme)
 
@@ -18,15 +21,8 @@
   (let ((choice (completing-read
                   "Select theme: "
                   '("tokyonight-storm" "tokyonight-night" "tokyonight-moon" "tokyonight-day"
-                    "modus-operandi" "modus-vivendi")))
-        (tokyonight-prefix "tokyonight-"))
-    (cond ((string-prefix-p tokyonight-prefix choice)
-           (mapc #'disable-theme custom-enabled-themes)
-           (load "tokyonight-theme" 'nomessage t)
-           (setq tokyonight-theme-style (intern (substring choice (length tokyonight-prefix))))
-           (load-theme 'tokyonight :no-confirm))
-          (t
-           (consult-theme (intern choice))))))
+                    "modus-operandi" "modus-vivendi"))))
+    (consult-theme (intern choice))))
 
 (provide 'dotemacs-themes)
 ;;; dotemacs-themes.el ends here

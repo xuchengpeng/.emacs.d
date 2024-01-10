@@ -107,5 +107,11 @@
   :hook (after-init . electric-pair-mode)
   :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
+(defun dotemacs-enable-trailing-whitespace ()
+  "Delete trailing whitespace before save."
+  (setq show-trailing-whitespace t)
+  (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
+(add-hook 'prog-mode-hook 'dotemacs-enable-trailing-whitespace)
+
 (provide 'dotemacs-editor)
 ;;; dotemacs-editor.el ends here

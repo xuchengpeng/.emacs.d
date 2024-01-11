@@ -29,8 +29,10 @@
     `(success ((,c :foreground ,green)))
 
     ;; line-number
-    `(line-number ((,c :inherit default :foreground ,dark3)))
-    `(line-number-current-line ((,c :inherit line-number :foreground ,fg)))
+    `(line-number ((,c :inherit default :background unspecified :foreground ,dark3)))
+    `(line-number-current-line ((,c :inherit (bold line-number) :background ,bg-hl :foreground ,fg)))
+    `(line-number-major-tick ((,c :inherit line-number :foreground ,red)))
+    `(line-number-minor-tick ((,c :inherit line-number :foreground ,fg-dark)))
 
     ;; isearch
     `(isearch ((,c :foreground ,orange :background ,bg :inverse-video t)))

@@ -9,7 +9,7 @@
 (defconst tokyonight-themes-faces
   '(
     ;; Basic faces
-    `(cursor ((,c :background ,white)))
+    `(cursor ((,c :background ,fg)))
     `(default ((,c :foreground ,fg :background ,bg)))
     `(fringe ((,c :foreground ,fg-dark :background ,bg-dark)))
     `(link ((,c :foreground ,dark5 :underline t)))

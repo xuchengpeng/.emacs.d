@@ -67,7 +67,9 @@
           "*esh command on file*"))))
 
 (use-package hl-line
-  :hook (after-init . global-hl-line-mode))
+  :hook ((after-init . global-hl-line-mode)
+         ((eshell-mode shell-mode term-mode vterm-mode) .
+          (lambda () (setq-local global-hl-line-mode nil)))))
 
 (use-package paren
   :hook (after-init . show-paren-mode)

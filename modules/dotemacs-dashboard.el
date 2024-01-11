@@ -27,7 +27,7 @@
   (setq-local scroll-preserve-screen-position nil)
   (setq-local auto-hscroll-mode nil)
   (setq-local display-line-numbers-type nil)
-  (setq-local hl-line-mode t))
+  (setq-local global-hl-line-mode nil))
 
 (defun dotemacs-display-init-time (&optional return-p)
   (let ((package-count 0))

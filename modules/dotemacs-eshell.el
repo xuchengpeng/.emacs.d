@@ -14,7 +14,7 @@
     ("l" "ls -lh $*")
     ("ll" "ls -lah $*")
     ("clear" "clear-scrollback"))
-  "An alist of default eshell aliases")
+  "An alist of default eshell aliases.")
 
 (use-package eshell
   :commands eshell

@@ -115,6 +115,11 @@
     `(eshell-ls-symlink ((,c :foreground ,cyan :weight bold)))
     `(eshell-ls-unreadable ((,c :foreground ,fg)))
 
+    ;; flymake
+    `(flymake-error ((,c :underline (:style wave :color ,red))))
+    `(flymake-warning ((,c :underline (:style wave :color ,orange))))
+    `(flymake-note ((,c :underline (:style wave :color ,cyan))))
+
     ;; flyspell
     `(flyspell-duplicate ((,c :underline (:style wave :color ,orange) :inherit unspecified)))
     `(flyspell-incorrect ((,c :underline (:style wave :color ,red) :inherit unspecified)))

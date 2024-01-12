@@ -174,16 +174,36 @@
   )
   "Custom variables for `tokyonight-themes-theme'.")
 
+;;; Theme macros
+
+;;;; Instantiate a Modus theme
+
 ;;;###autoload
 (defmacro tokyonight-themes-theme (name palette &optional overrides)
   "Bind NAME's color PALETTE. Optional OVERRIDES are appended to PALETTE."
   (declare (indent 0))
   `(let* ((c '((class color) (min-colors 256)))
           ,@(mapcar (lambda (cons)
-                     (list (intern (car cons)) (cdr cons)))
+                     (list (car cons) (cdr cons)))
                     (append (symbol-value palette) (symbol-value overrides))))
      (custom-theme-set-faces ',name ,@tokyonight-themes-faces)
      (custom-theme-set-variables ',name ,@tokyonight-themes-custom-variables)))
+
+;;;; Use theme colors
+
+(defmacro tokyonight-themes-with-colors (&rest body)
+  "Evaluate BODY with colors from current palette bound."
+  (declare (indent 0))
+  (let* ((theme (or (car (seq-filter (lambda (th)
+                                      (string-prefix-p "tokyonight-" (symbol-name th)))
+                                     custom-enabled-themes))
+                    (user-error "No enabled tokyonight theme could be found"))))
+    `(let* ((c '((class color) (min-colors 256)))
+            ,@(mapcar (lambda (cons)
+                        (list (car cons) (cdr cons)))
+                      (append (symbol-value (intern (format "%s-palette" theme)))
+                              (symbol-value (intern (format "%s-palette-overrides" theme))))))
+      ,@body)))
 
 ;;;; Add themes from package to path
 

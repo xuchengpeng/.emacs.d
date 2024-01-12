@@ -1,10 +1,5 @@
 ;;; dotemacs-editor.el --- Editor configurations. -*- lexical-binding: t; -*-
-
 ;;; Commentary:
-;;
-;; Editor configuration.
-;;
-
 ;;; Code:
 
 (setq find-file-visit-truename t
@@ -76,12 +71,12 @@
 (use-package savehist
   :hook (after-init . savehist-mode)
   :config
-  (setq savehist-file (concat dotemacs-cache-dir "savehist")
+  (setq history-length 1000
+        savehist-file (concat dotemacs-cache-dir "savehist")
         savehist-save-minibuffer-history t
-        savehist-autosave-interval nil ; save on kill only
+        savehist-autosave-interval 300
         savehist-additional-variables
-        '(kill-ring register-alist mark-ring global-mark-ring search-ring regexp-search-ring))
-  (savehist-mode +1))
+        '(mark-ring global-mark-ring search-ring regexp-search-ring extended-command-history)))
 
 (use-package saveplace
   :hook (after-init . save-place-mode)

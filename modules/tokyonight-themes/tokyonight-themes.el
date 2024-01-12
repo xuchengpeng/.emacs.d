@@ -29,8 +29,8 @@
     `(success ((,c :foreground ,green)))
 
     ;; line-number
-    `(line-number ((,c :inherit default :background unspecified :foreground ,dark3)))
-    `(line-number-current-line ((,c :inherit (bold line-number) :background ,bg-hl :foreground ,fg)))
+    `(line-number ((,c :inherit default :background ,bg-dark :foreground ,fg-dark)))
+    `(line-number-current-line ((,c :inherit (bold line-number) :background ,fg-gutter :foreground ,fg)))
     `(line-number-major-tick ((,c :inherit line-number :foreground ,red)))
     `(line-number-minor-tick ((,c :inherit line-number :foreground ,fg-dark)))
 
@@ -141,6 +141,17 @@
     `(mode-line-highlight ((,c :foreground ,fg-gutter :background ,blue :box nil)))
     `(header-line ((,c :inherit mode-line)))
     `(header-line-highlight ((,c :inherit mode-line-highlight)))
+
+    ;; symbol-overlay
+    `(symbol-overlay-default-face ((,c :background ,blue7)))
+    `(symbol-overlay-face-1 ((,c :background ,blue :foreground "black")))
+    `(symbol-overlay-face-2 ((,c :background ,magenta :foreground "black")))
+    `(symbol-overlay-face-3 ((,c :background ,yellow :foreground "black")))
+    `(symbol-overlay-face-4 ((,c :background ,magenta2 :foreground "black")))
+    `(symbol-overlay-face-5 ((,c :background ,red :foreground "black")))
+    `(symbol-overlay-face-6 ((,c :background ,orange :foreground "black")))
+    `(symbol-overlay-face-7 ((,c :background ,green :foreground "black")))
+    `(symbol-overlay-face-8 ((,c :background ,cyan :foreground "black")))
 
     ;; tab-line / tab-bar
     `(tab-line ((,c :foreground ,fg-dark :background ,bg-dark)))

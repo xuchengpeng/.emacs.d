@@ -844,13 +844,13 @@ By default, this shows the information specified by `global-mode-string'."
   '(bar window-number matches buffer-info-simple buffer-position)
   '(compilation misc-info major-mode process))
 
-(dotemacs-modeline-def-modeline 'project
-  '(bar window-number buffer-default-directory buffer-position)
-  '(compilation misc-info major-mode process))
-
 (dotemacs-modeline-def-modeline 'dashboard
   '(bar window-number buffer-default-directory)
   '(compilation misc-info major-mode process))
+
+(dotemacs-modeline-def-modeline 'shell
+  '(bar window-number matches buffer-info-simple)
+  '(major-mode))
 
 (defun dotemacs-modeline-set-main-modeline (&optional default)
   "Set main mode-line.
@@ -859,10 +859,8 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
 
 (defvar dotemacs-modeline-mode-alist
   '((message-mode . special)
-    (circe-mode . special)
-    (erc-mode . special)
-    (rcirc-mode . special)
-    (Info-mode .  special))
+    (Info-mode .  special)
+    (eshell-mode . shell))
   "Alist of major modes and mode-lines.")
 
 (defun dotemacs-modeline-auto-set-modeline ()

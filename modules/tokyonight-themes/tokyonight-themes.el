@@ -12,15 +12,18 @@
     `(cursor ((,c :background ,fg)))
     `(default ((,c :foreground ,fg :background ,bg)))
     `(fringe ((,c :foreground ,fg-dark :background ,bg-dark)))
+    `(menu ((,c :background ,bg-dark :foreground ,fg)))
+    `(scroll-bar ((,c :background ,bg-dark :foreground ,fg-dark)))
+    `(tool-bar ((,c :background ,bg-dark :foreground ,fg)))
     `(link ((,c :foreground ,dark5 :underline t)))
     `(link-visited ((,c :foreground ,dark5 :underline t)))
     `(match ((,c :foreground ,orange :background ,bg :inverse-video t)))
     `(shadow ((,c :foreground ,dark5)))
     `(minibuffer-prompt ((,c :foreground ,magenta :background unspecified)))
-    `(region ((,c :background ,dark3 :extend t)))
+    `(region ((,c :background ,dark3 :foreground ,fg :extend t)))
     `(secondary-selection ((,c :background ,bg-hl :foreground unspecified)))
     `(trailing-whitespace ((,c :foreground ,white :background ,red)))
-    `(border ((,c :background ,bg :foreground ,bg-hl)))
+    `(border ((,c :background ,bg :foreground ,fg-gutter)))
     `(vertical-border ((,c :foreground ,fg-gutter)))
     `(tooltip ((,c :background ,bg-hl :foreground ,fg)))
     `(highlight ((,c :background ,bg-hl)))
@@ -77,7 +80,7 @@
 
     ;; corfu
     `(corfu-default ((,c :foreground ,fg :background ,bg-dark)))
-    `(corfu-current ((,c :foreground ,fg :background ,bg-hl)))
+    `(corfu-current ((,c :foreground ,fg :background ,bg-hl :weight bold)))
     `(corfu-bar ((,c :foreground ,fg :background ,dark3)))
     `(corfu-border ((,c :foreground ,fg :background ,dark5)))
 
@@ -121,8 +124,8 @@
     `(flymake-note ((,c :underline (:style wave :color ,cyan))))
 
     ;; flyspell
-    `(flyspell-duplicate ((,c :underline (:style wave :color ,orange) :inherit unspecified)))
-    `(flyspell-incorrect ((,c :underline (:style wave :color ,red) :inherit unspecified)))
+    `(flyspell-duplicate ((,c :underline (:style wave :color ,orange))))
+    `(flyspell-incorrect ((,c :underline (:style wave :color ,red))))
 
     ;; hl-line
     `(hl-line ((,c :background ,bg-hl :extend t)))
@@ -141,6 +144,11 @@
     `(mode-line-highlight ((,c :foreground ,fg-gutter :background ,blue :box nil)))
     `(header-line ((,c :inherit mode-line)))
     `(header-line-highlight ((,c :inherit mode-line-highlight)))
+
+    ;; multiple-cursors
+    `(mc/cursor-bar-face ((,c :foreground ,fg :background ,bg :height 1)))
+    `(mc/cursor-face ((,c :inverse-video t)))
+    `(mc/region-face ((,c :inherit region)))
 
     ;; symbol-overlay
     `(symbol-overlay-default-face ((,c :background ,blue7)))
@@ -164,7 +172,7 @@
     `(tab-bar-tab-inactive ((,c :foreground ,fg-dark :background ,bg-dark)))
 
     ;; vertico
-    `(vertico-current ((,c :background ,bg-hl :extend t)))
+    `(vertico-current ((,c :background ,bg-hl :weight bold)))
   )
   "Face specs for use with `tokyonight-themes-theme'.")
 

@@ -92,15 +92,31 @@
     ;; Custom
     `(custom-state ((,c :foreground ,green)))
 
-    ;; Diff
-    `(diff-changed ((,c :foreground ,blue :background unspecified)))
-    `(diff-removed ((,c :foreground ,red :background unspecified)))
-    `(diff-added ((,c :foreground ,green :background unspecified)))
+    ;; diff
+    `(diff-added ((,c :foreground ,green :background ,bg-hl)))
+    `(diff-changed ((,c :foreground ,yellow :background ,bg-hl)))
+    `(diff-changed-unspecified ((,c :inherit diff-changed)))
+    `(diff-removed ((,c :foreground ,red :background ,bg-hl)))
+    `(diff-indicator-added ((,c :inherit diff-added)))
+    `(diff-indicator-changed ((,c :inherit diff-changed)))
+    `(diff-indicator-removed ((,c :inherit diff-removed)))
+    `(diff-refine-added ((,c :inherit diff-added :inverse-video t)))
+    `(diff-refine-changed ((,c :inherit diff-changed :inverse-video t)))
+    `(diff-refine-removed ((,c :inherit diff-removed :inverse-video t)))
+    `(diff-context (()))
+    `(diff-error ((,c :inherit error)))
+    `(diff-file-header ((,c :inherit bold)))
+    `(diff-function ((,c :background ,dark3)))
+    `(diff-header (()))
+    `(diff-hunk-header ((,c :inherit bold :background ,dark3)))
+    `(diff-index ((,c :slant italic)))
+    `(diff-nonexistent ((,c :inherit bold)))
 
     ;; diff-hl
-    `(diff-hl-change ((,c :foreground ,bg :background ,blue)))
+    `(diff-hl-change ((,c :foreground ,bg :background ,yellow)))
     `(diff-hl-delete ((,c :foreground ,bg :background ,red)))
     `(diff-hl-insert ((,c :foreground ,bg :background ,green)))
+    `(diff-hl-reverted-hunk-highlight ((,c :foreground ,bg :background ,fg)))
 
     ;; Dired
     `(dired-directory ((,c :foreground ,magenta)))

@@ -15,8 +15,9 @@
     `(menu ((,c :background ,bg-dark :foreground ,fg)))
     `(scroll-bar ((,c :background ,bg-dark :foreground ,fg-dark)))
     `(tool-bar ((,c :background ,bg-dark :foreground ,fg)))
-    `(link ((,c :foreground ,dark5 :underline t)))
-    `(link-visited ((,c :foreground ,dark5 :underline t)))
+    `(button ((,c :background ,bg :foreground ,blue1 :underline ,blue1)))
+    `(link ((,c :inherit button)))
+    `(link-visited ((,c :background ,bg :foreground ,magenta :underline ,magenta)))
     `(match ((,c :foreground ,blue :background ,bg :inverse-video t)))
     `(shadow ((,c :foreground ,dark5)))
     `(minibuffer-prompt ((,c :foreground ,magenta :background unspecified)))
@@ -118,9 +119,17 @@
     `(diff-hl-insert ((,c :foreground ,bg :background ,green)))
     `(diff-hl-reverted-hunk-highlight ((,c :foreground ,bg :background ,fg)))
 
-    ;; Dired
-    `(dired-directory ((,c :foreground ,magenta)))
-    `(dired-ignored ((,c :foreground ,blue7 :inherit unspecified)))
+    ;; dired
+    `(dired-broken-symlink ((,c :inherit button :foreground ,red)))
+    `(dired-directory ((,c :foreground ,blue1)))
+    `(dired-flagged ((,c :foreground ,red :weight bold :inverse-video t)))
+    `(dired-header ((,c :inherit bold)))
+    `(dired-ignored ((,c :inherit shadow)))
+    `(dired-mark ((,c :inherit bold)))
+    `(dired-marked ((,c :foreground ,cyan :weight bold :inverse-video t)))
+    `(dired-perm-write ((,c :inherit shadow)))
+    `(dired-symlink ((,c :foreground ,cyan :background ,bg :underline ,cyan)))
+    `(dired-warning ((,c :inherit warning)))
 
     ;; eldoc-box
     `(eldoc-box-body ((,c :inherit tooltip)))

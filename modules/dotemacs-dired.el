@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(diredfl dired-rsync))
+(dotemacs-require-package 'dired-rsync)
 
 (use-package dired
   :commands (dired dired-jump)
@@ -42,9 +42,6 @@
   :config
   (setq dired-create-destination-dirs 'ask
         dired-vc-rename-file t))
-
-(use-package diredfl
-  :hook (dired-mode . diredfl-mode))
 
 (use-package dired-rsync
   :after (dired)

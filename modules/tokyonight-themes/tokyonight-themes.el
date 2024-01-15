@@ -17,7 +17,7 @@
     `(tool-bar ((,c :background ,bg-dark :foreground ,fg)))
     `(link ((,c :foreground ,dark5 :underline t)))
     `(link-visited ((,c :foreground ,dark5 :underline t)))
-    `(match ((,c :foreground ,orange :background ,bg :inverse-video t)))
+    `(match ((,c :foreground ,blue :background ,bg :inverse-video t)))
     `(shadow ((,c :foreground ,dark5)))
     `(minibuffer-prompt ((,c :foreground ,magenta :background unspecified)))
     `(region ((,c :background ,dark3 :foreground ,fg :extend t)))
@@ -38,8 +38,10 @@
     `(line-number-minor-tick ((,c :inherit line-number :foreground ,fg-dark)))
 
     ;; isearch
-    `(isearch ((,c :foreground ,orange :background ,bg :inverse-video t)))
-    `(isearch-fail ((,c :foreground ,orange :background ,red1 :inverse-video t)))
+    `(isearch ((,c :foreground ,yellow :background ,bg :inverse-video t)))
+    `(isearch-fail ((,c :foreground ,red :background ,bg :inverse-video t)))
+    `(isearch-group-1 ((,c :foreground ,blue1 :background ,bg :inverse-video t)))
+    `(isearch-group-2 ((,c :foreground ,green1 :background ,bg :inverse-video t)))
     `(lazy-highlight ((,c :foreground ,cyan :background ,bg :inverse-video t)))
 
     `(font-lock-bracket-face ((,c :foreground ,blue1)))

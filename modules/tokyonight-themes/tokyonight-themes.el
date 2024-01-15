@@ -176,6 +176,12 @@
 
     ;; vertico
     `(vertico-current ((,c :background ,bg-hl :weight bold)))
+
+    ;; vundo
+    `(vundo-default ((,c :inherit shadow)))
+    `(vundo-highlight ((,c :inherit (bold vundo-node) :foreground ,red)))
+    `(vundo-last-saved ((,c :inherit (bold vundo-node) :foreground ,blue)))
+    `(vundo-saved ((,c :inherit vundo-mode :foreground ,blue5)))
   )
   "Face specs for use with `tokyonight-themes-theme'.")
 

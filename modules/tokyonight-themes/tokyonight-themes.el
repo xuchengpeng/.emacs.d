@@ -163,10 +163,13 @@
     ;; hl-todo
     `(hl-todo ((,c :inherit (bold font-lock-comment-face) :foreground ,red)))
 
-    ;; Add ido support
-    `(ido-first-match ((,c :foreground ,yellow :bold nil)))
-    `(ido-only-match ((,c :foreground ,orange)))
-    `(ido-subdir ((,c :foreground ,green)))
+    ;; ido
+    `(ido-first-match ((,c :foreground ,blue1 :weight bold)))
+    `(ido-incomplete-regexp ((,c :inherit error :weight bold)))
+    `(ido-indicator ((,c :inherit bold)))
+    `(ido-only-match ((,c :inherit ido-first-match)))
+    `(ido-subdir ((,c :foreground ,blue1)))
+    `(ido-virtual ((,c :foreground ,purple)))
 
     ;; message
     `(message-cited-text-1 ((,c :foreground ,blue)))

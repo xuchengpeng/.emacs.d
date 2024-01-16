@@ -2,8 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-package 'org "9.6.14")
-(dotemacs-require-package 'htmlize)
+(dotemacs-require-packages '(org htmlize))
 
 (use-package org
   :mode ("\\.org$" . org-mode)

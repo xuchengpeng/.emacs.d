@@ -183,6 +183,12 @@
     `(mc/cursor-face ((,c :inverse-video t)))
     `(mc/region-face ((,c :inherit region)))
 
+    ;; orderless
+    `(orderless-match-face-0 ((,c :foreground ,blue1)))
+    `(orderless-match-face-1 ((,c :foreground ,purple)))
+    `(orderless-match-face-2 ((,c :foreground ,cyan)))
+    `(orderless-match-face-3 ((,c :foreground ,yellow)))
+
     ;; regexp-builder
     `(reb-match-0 ((,c :foreground ,blue1 :background ,bg :inverse-video t)))
     `(reb-match-1 ((,c :foreground ,green1 :background ,bg :inverse-video t)))

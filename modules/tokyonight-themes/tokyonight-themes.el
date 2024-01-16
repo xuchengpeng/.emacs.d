@@ -23,7 +23,7 @@
     `(minibuffer-prompt ((,c :foreground ,magenta :background unspecified)))
     `(region ((,c :background ,dark3 :foreground ,fg :extend t)))
     `(secondary-selection ((,c :background ,bg-hl :foreground unspecified)))
-    `(trailing-whitespace ((,c :foreground ,white :background ,red)))
+    `(trailing-whitespace ((,c :foreground ,fg :background ,red1)))
     `(border ((,c :background ,bg :foreground ,fg-gutter)))
     `(vertical-border ((,c :foreground ,fg-gutter)))
     `(tooltip ((,c :background ,bg-hl :foreground ,fg)))
@@ -183,6 +183,44 @@
     `(mc/cursor-face ((,c :inverse-video t)))
     `(mc/region-face ((,c :inherit region)))
 
+    ;; regexp-builder
+    `(reb-match-0 ((,c :foreground ,blue1 :background ,bg :inverse-video t)))
+    `(reb-match-1 ((,c :foreground ,green1 :background ,bg :inverse-video t)))
+    `(reb-match-2 ((,c :foreground ,red1 :background ,bg :inverse-video t)))
+    `(reb-match-3 ((,c :foreground ,magenta2 :background ,bg :inverse-video t)))
+    `(reb-regexp-grouping-backslash ((,c :inherit font-lock-regexp-grouping-backslash)))
+    `(reb-regexp-grouping-construct ((,c :inherit font-lock-regexp-grouping-construct)))
+
+    ;; ruler-mode
+    `(ruler-mode-column-number ((,c :inherit ruler-mode-default)))
+    `(ruler-mode-comment-column ((,c :inherit ruler-mode-default :foreground ,red)))
+    `(ruler-mode-current-column ((,c :inherit ruler-mode-default :background ,bg-dark :foreground ,fg)))
+    `(ruler-mode-default ((,c :inherit default :background ,bg-dark :foreground ,fg-dark)))
+    `(ruler-mode-fill-column ((,c :inherit ruler-mode-default :foreground ,green)))
+    `(ruler-mode-fringes ((,c :inherit ruler-mode-default :foreground ,cyan)))
+    `(ruler-mode-goal-column ((,c :inherit ruler-mode-default :foreground ,blue)))
+    `(ruler-mode-margins ((,c :inherit ruler-mode-default :foreground ,dark3)))
+    `(ruler-mode-pad ((,c :inherit ruler-mode-default :background ,bg :foreground ,dark5)))
+    `(ruler-mode-tab-stop ((,c :inherit ruler-mode-default :foreground ,yellow)))
+
+    ;; shell
+    `(sh-heredoc ((,c :inherit font-lock-string-face)))
+    `(sh-quoted-exec ((,c :inherit font-lock-builtin-face)))
+
+    ;; show-paren-mode
+    `(show-paren-match ((,c :background ,blue :foreground ,bg)))
+    `(show-paren-match-expression ((,c :background ,magenta :foreground ,bg)))
+    `(show-paren-mismatch ((,c :background ,red :foreground ,bg)))
+
+    ;; speedbar
+    `(speedbar-button-face ((,c :inherit button)))
+    `(speedbar-directory-face ((,c :inherit bold :foreground ,blue2)))
+    `(speedbar-file-face ((,c :foreground ,fg)))
+    `(speedbar-highlight-face ((,c :inherit highlight)))
+    `(speedbar-selected-face ((,c :foreground ,cyan :weight bold :inverse-video t)))
+    `(speedbar-separator-face ((,c :background ,dark3 :foreground ,fg)))
+    `(speedbar-tag-face ((,c :foreground ,magenta2)))
+
     ;; symbol-overlay
     `(symbol-overlay-default-face ((,c :background ,blue7)))
     `(symbol-overlay-face-1 ((,c :background ,blue :foreground "black")))
@@ -212,6 +250,35 @@
     `(vundo-highlight ((,c :inherit (bold vundo-node) :foreground ,red)))
     `(vundo-last-saved ((,c :inherit (bold vundo-node) :foreground ,blue)))
     `(vundo-saved ((,c :inherit vundo-mode :foreground ,blue5)))
+
+    ;; which-func-mode
+    `(which-func ((,c :inherit bold :foreground ,blue)))
+
+    ;; whitespace-mode
+    `(whitespace-big-indent ((,c :background ,red1)))
+    `(whitespace-empty ((,c :background unspecified)))
+    `(whitespace-hspace ((,c :background unspecified :foreground ,fg-dark)))
+    `(whitespace-indentation ((,c :background unspecified :foreground ,fg-dark)))
+    `(whitespace-line ((,c :background unspecified :foreground ,orange)))
+    `(whitespace-newline ((,c :background unspecified :foreground ,fg-dark)))
+    `(whitespace-space ((,c :background unspecified :foreground ,fg-dark)))
+    `(whitespace-space-after-tab ((,c :inherit warning :background unspecified)))
+    `(whitespace-space-before-tab ((,c :inherit warning :background unspecified)))
+    `(whitespace-tab ((,c :background unspecified :foreground ,fg-dark)))
+    `(whitespace-trailing ((,c :background ,red1)))
+
+    ;; widget
+    `(widget-button ((,c :inherit bold :foreground ,blue1)))
+    `(widget-button-pressed ((,c :inherit widget-button :foreground ,magenta)))
+    `(widget-documentation ((,c :inherit font-lock-doc-face)))
+    `(widget-field ((,c :background ,dark3 :foreground ,fg :extend nil)))
+    `(widget-inactive ((,c :background ,bg-dark :foreground ,fg-dark)))
+    `(widget-single-line-field ((,c :inherit widget-field)))
+
+    ;; window-divider-mode
+    `(window-divider ((,c :foreground ,fg-dark)))
+    `(window-divider-first-pixel ((,c :foreground ,dark3)))
+    `(window-divider-last-pixel ((,c :foreground ,dark3)))
   )
   "Face specs for use with `tokyonight-themes-theme'.")
 

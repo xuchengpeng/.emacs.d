@@ -160,6 +160,9 @@
     ;; hl-line
     `(hl-line ((,c :background ,bg-hl :extend t)))
 
+    ;; hl-todo
+    `(hl-todo ((,c :inherit (bold font-lock-comment-face) :foreground ,red)))
+
     ;; Add ido support
     `(ido-first-match ((,c :foreground ,yellow :bold nil)))
     `(ido-only-match ((,c :foreground ,orange)))
@@ -214,13 +217,35 @@
 
 (defconst tokyonight-themes-custom-variables
   '(
+    ;;;; ansi-colors
     `(ansi-color-names-vector [,bg ,red ,green ,yellow ,blue ,magenta ,cyan ,fg])
+
+    ;;;; hl-todo
+    `(hl-todo-keyword-faces
+      '(("HOLD" . ,yellow)
+        ("TODO" . ,red)
+        ("NEXT" . ,fg-dark)
+        ("THEM" . ,fg-dark)
+        ("PROG" . ,cyan)
+        ("OKAY" . ,cyan)
+        ("DONT" . ,yellow)
+        ("FAIL" . ,red)
+        ("BUG" . ,red)
+        ("DONE" . ,cyan)
+        ("NOTE" . ,yellow)
+        ("KLUDGE" . ,yellow)
+        ("HACK" . ,yellow)
+        ("TEMP" . ,yellow)
+        ("FIXME" . ,red)
+        ("XXX+" . ,red)
+        ("REVIEW" . ,cyan)
+        ("DEPRECATED" . ,cyan)))
   )
   "Custom variables for `tokyonight-themes-theme'.")
 
 ;;; Theme macros
 
-;;;; Instantiate a Modus theme
+;;;; Instantiate a tokyonight theme
 
 ;;;###autoload
 (defmacro tokyonight-themes-theme (name palette &optional overrides)

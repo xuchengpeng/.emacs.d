@@ -15,7 +15,7 @@
     `(menu ((,c :background ,bg-dark :foreground ,fg)))
     `(scroll-bar ((,c :background ,bg-dark :foreground ,fg-dark)))
     `(tool-bar ((,c :background ,bg-dark :foreground ,fg)))
-    `(button ((,c :background ,bg :foreground ,blue1 :underline ,blue1)))
+    `(button ((,c :background unspecified :foreground ,blue1 :underline ,blue1)))
     `(link ((,c :inherit button)))
     `(link-visited ((,c :background ,bg :foreground ,magenta :underline ,magenta)))
     `(match ((,c :foreground ,blue :background ,bg :inverse-video t)))
@@ -77,12 +77,9 @@
     `(compilation-mode-line-run ((,c :foreground ,orange :weight bold)))
 
     ;; completions
-    `(completions-annotations ((,c :foreground ,comment :background unspecified :slant italic)))
-    `(completions-common-part ((,c :foreground ,blue6 :background unspecified)))
-    `(completions-first-difference ((,c :foreground ,orange :background unspecified :weight bold)))
-    `(completions-highlight ((,c :foreground ,fg :background ,bg-hl)))
-    `(completions-group-title ((,c :foreground ,dark5 :background unspecified :slant italic)))
-    `(completions-group-separator ((,c :foreground ,dark5 :background unspecified :strike-through t)))
+    `(completions-annotations ((,c :foreground ,green2 :background unspecified :slant italic)))
+    `(completions-common-part ((,c :foreground ,blue1 :background unspecified)))
+    `(completions-first-difference ((,c :foreground ,purple :background unspecified :weight bold)))
 
     ;; corfu
     `(corfu-default ((,c :foreground ,fg :background ,bg-dark)))
@@ -90,8 +87,24 @@
     `(corfu-bar ((,c :foreground ,fg :background ,dark3)))
     `(corfu-border ((,c :foreground ,fg :background ,dark5)))
 
-    ;; Custom
-    `(custom-state ((,c :foreground ,green)))
+    ;; custom (M-x customize)
+    `(custom-button ((,c :background ,dark3 :foreground ,fg :box(:line-width 1 :color ,dark5 :style release-button))))
+    `(custom-button-mouse ((,c :inherit (highlight custom-button))))
+    `(custom-button-pressed ((,c :inherit (secondary-selection custom-button))))
+    `(custom-changed ((,c :background ,dark3)))
+    `(custom-comment ((,c :inherit shadow)))
+    `(custom-comment-tag ((,c :inherit (bold shadow))))
+    `(custom-invalid ((,c :inherit error :strike-through t)))
+    `(custom-modified ((,c :inherit custom-changed)))
+    `(custom-rogue ((,c :inherit custom-invalid)))
+    `(custom-set ((,c :inherit success)))
+    `(custom-state ((,c :foreground ,orange)))
+    `(custom-themed ((,c :inherit custom-changed)))
+    `(custom-variable-obsolete ((,c :inherit shadow)))
+    `(custom-face-tag ((,c :inherit bold :foreground ,blue)))
+    `(custom-group-tag ((,c :inherit bold :foreground ,magenta)))
+    `(custom-group-tag-1 ((,c :inherit bold :foreground ,orange)))
+    `(custom-variable-tag ((,c :inherit bold :foreground ,blue2)))
 
     ;; diff
     `(diff-added ((,c :foreground ,green :background ,bg-hl)))

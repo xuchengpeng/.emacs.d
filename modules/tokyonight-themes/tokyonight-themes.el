@@ -163,6 +163,10 @@
     ;; hl-todo
     `(hl-todo ((,c :inherit (bold font-lock-comment-face) :foreground ,red)))
 
+    ;; icomplete
+    `(icomplete-first-match ((,c :foreground ,blue1 :weight bold)))
+    `(icomplete-selected-match ((,c :background ,bg-hl :weight bold)))
+
     ;; ido
     `(ido-first-match ((,c :foreground ,blue1 :weight bold)))
     `(ido-incomplete-regexp ((,c :inherit error :weight bold)))

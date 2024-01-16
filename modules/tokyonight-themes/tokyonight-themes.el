@@ -168,6 +168,21 @@
     `(ido-only-match ((,c :foreground ,orange)))
     `(ido-subdir ((,c :foreground ,green)))
 
+    ;; message
+    `(message-cited-text-1 ((,c :foreground ,blue)))
+    `(message-cited-text-2 ((,c :foreground ,yellow)))
+    `(message-cited-text-3 ((,c :foreground ,cyan)))
+    `(message-cited-text-4 ((,c :foreground ,red)))
+    `(message-header-name ((,c :inherit bold)))
+    `(message-header-newsgroups ((,c :inherit message-header-other)))
+    `(message-header-to ((,c :inherit bold :foreground ,magenta)))
+    `(message-header-cc ((,c :foreground ,magenta)))
+    `(message-header-subject ((,c :inherit bold :foreground ,magenta2)))
+    `(message-header-xheader ((,c :inherit message-header-other)))
+    `(message-header-other ((,c :foreground ,purple)))
+    `(message-mml ((,c :foreground ,blue1)))
+    `(message-separator ((,c :background ,dark3)))
+
     ;; mode-line / header-line
     `(mode-line ((,c :foreground ,fg :background ,bg-dark :weight normal :box (:line-width 1 :color ,bg-dark))))
     `(mode-line-buffer-id ((,c :foreground ,fg :background unspecified)))

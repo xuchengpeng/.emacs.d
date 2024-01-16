@@ -63,7 +63,14 @@
     `(font-lock-variable-name-face ((,c :foreground ,blue2)))
     `(font-lock-warning-face ((,c :foreground ,yellow)))
 
-    ;; Calendar
+    ;; calendar and diary
+    `(calendar-month-header ((,c :inherit bold)))
+    `(calendar-today ((,c :inherit bold :underline t)))
+    `(calendar-weekday-header ((,c :foreground ,cyan)))
+    `(calendar-weekend-header ((,c :foreground ,red1)))
+    `(diary ((,c :foreground ,cyan)))
+    `(diary-anniversary ((,c :foreground ,red1)))
+    `(diary-time ((,c :foreground ,cyan)))
     `(holiday-face ((,c :foreground ,red1)))
 
     ;; Compilation

@@ -8,9 +8,13 @@
 
 (defconst tokyonight-themes-faces
   '(
-    ;; Basic faces
-    `(cursor ((,c :background ,fg)))
+    ;; basic faces
     `(default ((,c :foreground ,fg :background ,bg)))
+    `(bold ((,c :weight bold)))
+    `(italic ((,c :slant italic)))
+    `(bold-italic ((,c :inherit (bold italic))))
+    `(underline ((,c :underline t)))
+    `(cursor ((,c :background ,fg)))
     `(fringe ((,c :foreground ,fg-dark :background ,bg-dark)))
     `(menu ((,c :background ,bg-dark :foreground ,fg)))
     `(scroll-bar ((,c :background ,bg-dark :foreground ,fg-dark)))
@@ -32,6 +36,7 @@
     `(warning ((,c :foreground ,orange)))
     `(success ((,c :foreground ,green)))
 
+    ;; font-lock
     `(font-lock-bracket-face ((,c :foreground ,blue1)))
     `(font-lock-builtin-face ((,c :foreground ,purple)))
     `(font-lock-comment-face ((,c :foreground ,comment)))
@@ -41,12 +46,12 @@
     `(font-lock-function-name-face ((,c :foreground ,blue)))
     `(font-lock-keyword-face ((,c :foreground ,magenta)))
     `(font-lock-negation-char-face ((,c :inherit error)))
-    `(font-lock-operator-face ((,c :foreground ,magenta)))
-    `(font-lock-preprocessor-face ((,c :foreground ,purple)))
+    `(font-lock-operator-face ((,c :foreground ,blue5)))
+    `(font-lock-preprocessor-face ((,c :foreground ,cyan)))
     `(font-lock-regexp-grouping-backslash ((,c :foreground ,yellow)))
     `(font-lock-regexp-grouping-construct ((,c :foreground ,magenta)))
-    `(font-lock-string-face ((,c :foreground ,green1)))
-    `(font-lock-type-face ((,c :foreground ,blue)))
+    `(font-lock-string-face ((,c :foreground ,green)))
+    `(font-lock-type-face ((,c :foreground ,blue1)))
     `(font-lock-variable-name-face ((,c :foreground ,blue2)))
     `(font-lock-warning-face ((,c :foreground ,yellow)))
 
@@ -83,7 +88,7 @@
     `(diary-time ((,c :foreground ,cyan)))
     `(holiday-face ((,c :foreground ,red1)))
 
-    ;; Compilation
+    ;; compilation
     `(compilation-info ((,c :foreground ,green :weight bold)))
     `(compilation-warning ((,c :foreground ,orange :weight bold)))
     `(compilation-error ((,c :foreground ,red :weight bold)))

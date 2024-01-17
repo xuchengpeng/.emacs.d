@@ -63,6 +63,10 @@
     `(font-lock-variable-name-face ((,c :foreground ,blue2)))
     `(font-lock-warning-face ((,c :foreground ,yellow)))
 
+    ;; bookmark
+    `(bookmark-face ((,c :inherit success)))
+    `(bookmark-menu-bookmark ((,c :inherit bold)))
+
     ;; calendar and diary
     `(calendar-month-header ((,c :inherit bold)))
     `(calendar-today ((,c :inherit bold :underline t)))

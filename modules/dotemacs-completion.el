@@ -143,8 +143,6 @@ If prefix ARG is set, prompt for a directory to search from."
   (corfu-auto t)
   (corfu-auto-prefix 2)
   (corfu-preview-current nil)
-  (corfu-auto-delay 0.2)
-  (corfu-popupinfo-delay '(0.4 . 0.2))
   :hook ((after-init . global-corfu-mode)
          (global-corfu-mode . corfu-popupinfo-mode))
   :init

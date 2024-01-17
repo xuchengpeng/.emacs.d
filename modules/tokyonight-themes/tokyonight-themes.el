@@ -32,19 +32,6 @@
     `(warning ((,c :foreground ,orange)))
     `(success ((,c :foreground ,green)))
 
-    ;; line-number
-    `(line-number ((,c :inherit default :background ,bg-dark :foreground ,fg-dark)))
-    `(line-number-current-line ((,c :inherit (bold line-number) :background ,fg-gutter :foreground ,fg)))
-    `(line-number-major-tick ((,c :inherit line-number :foreground ,red)))
-    `(line-number-minor-tick ((,c :inherit line-number :foreground ,fg-dark)))
-
-    ;; isearch
-    `(isearch ((,c :foreground ,yellow :background ,bg :inverse-video t)))
-    `(isearch-fail ((,c :foreground ,red :background ,bg :inverse-video t)))
-    `(isearch-group-1 ((,c :foreground ,blue1 :background ,bg :inverse-video t)))
-    `(isearch-group-2 ((,c :foreground ,green1 :background ,bg :inverse-video t)))
-    `(lazy-highlight ((,c :foreground ,cyan :background ,bg :inverse-video t)))
-
     `(font-lock-bracket-face ((,c :foreground ,blue1)))
     `(font-lock-builtin-face ((,c :foreground ,purple)))
     `(font-lock-comment-face ((,c :foreground ,comment)))
@@ -62,6 +49,25 @@
     `(font-lock-type-face ((,c :foreground ,blue)))
     `(font-lock-variable-name-face ((,c :foreground ,blue2)))
     `(font-lock-warning-face ((,c :foreground ,yellow)))
+
+    ;; ansi-color
+    `(ansi-color-black ((,c :background "black" :foreground "black")))
+    `(ansi-color-blue ((,c :background ,blue :foreground ,blue)))
+    `(ansi-color-bold ((,c :inherit bold)))
+    `(ansi-color-cyan ((,c :background ,cyan :foreground ,cyan)))
+    `(ansi-color-green ((,c :background ,green :foreground ,green)))
+    `(ansi-color-magenta ((,c :background ,magenta :foreground ,magenta)))
+    `(ansi-color-red ((,c :background ,red1 :foreground ,red1)))
+    `(ansi-color-white ((,c :background "gray65" :foreground "gray65")))
+    `(ansi-color-yellow ((,c :background ,orange :foreground ,orange)))
+    `(ansi-color-bright-black ((,c :background "gray35" :foreground "gray35")))
+    `(ansi-color-bright-blue ((,c :background ,blue1 :foreground ,blue1)))
+    `(ansi-color-bright-cyan ((,c :background ,blue6 :foreground ,blue6)))
+    `(ansi-color-bright-green ((,c :background ,green1 :foreground ,green1)))
+    `(ansi-color-bright-magenta ((,c :background ,magenta2 :foreground ,magenta2)))
+    `(ansi-color-bright-red ((,c :background ,red :foreground ,red)))
+    `(ansi-color-bright-white ((,c :background "white" :foreground "white")))
+    `(ansi-color-bright-yellow ((,c :background ,yellow :foreground ,yellow)))
 
     ;; bookmark
     `(bookmark-face ((,c :inherit success)))
@@ -88,7 +94,7 @@
     `(compilation-mode-line-run ((,c :foreground ,orange :weight bold)))
 
     ;; completions
-    `(completions-annotations ((,c :foreground ,green2 :background unspecified :slant italic)))
+    `(completions-annotations ((,c :foreground ,comment :background unspecified :slant italic)))
     `(completions-common-part ((,c :foreground ,blue1 :background unspecified)))
     `(completions-first-difference ((,c :foreground ,purple :background unspecified :weight bold)))
 
@@ -198,6 +204,19 @@
     `(ido-only-match ((,c :inherit ido-first-match)))
     `(ido-subdir ((,c :foreground ,blue1)))
     `(ido-virtual ((,c :foreground ,purple)))
+
+    ;; isearch
+    `(isearch ((,c :foreground ,yellow :background ,bg :inverse-video t)))
+    `(isearch-fail ((,c :foreground ,red :background ,bg :inverse-video t)))
+    `(isearch-group-1 ((,c :foreground ,blue1 :background ,bg :inverse-video t)))
+    `(isearch-group-2 ((,c :foreground ,green1 :background ,bg :inverse-video t)))
+    `(lazy-highlight ((,c :foreground ,cyan :background ,bg :inverse-video t)))
+
+    ;; line-number
+    `(line-number ((,c :inherit default :background ,bg-dark :foreground ,fg-dark)))
+    `(line-number-current-line ((,c :inherit (bold line-number) :background ,fg-gutter :foreground ,fg)))
+    `(line-number-major-tick ((,c :inherit line-number :foreground ,red)))
+    `(line-number-minor-tick ((,c :inherit line-number :foreground ,fg-dark)))
 
     ;; message
     `(message-cited-text-1 ((,c :foreground ,blue)))

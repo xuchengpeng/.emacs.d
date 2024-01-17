@@ -239,12 +239,12 @@
     `(message-separator ((,c :background ,dark3)))
 
     ;; mode-line / header-line
-    `(mode-line ((,c :foreground ,fg :background ,bg-dark :weight normal :box (:line-width 1 :color ,bg-dark))))
-    `(mode-line-buffer-id ((,c :foreground ,fg :background unspecified)))
+    `(mode-line ((,c :foreground ,fg :background ,fg-gutter :weight normal :box (:line-width 1 :color ,fg-gutter))))
+    `(mode-line-buffer-id ((,c :inherit bold)))
     `(mode-line-active ((,c :inherit mode-line)))
-    `(mode-line-inactive ((,c :inherit mode-line :foreground ,dark5 :background ,bg :weight normal)))
+    `(mode-line-inactive ((,c :foreground ,dark5 :background ,bg-dark :weight normal :box (:line-width 1 :color ,bg-dark))))
     `(mode-line-emphasis ((,c :foreground ,blue)))
-    `(mode-line-highlight ((,c :foreground ,fg-gutter :background ,blue :box nil)))
+    `(mode-line-highlight ((,c :foreground ,bg :background ,blue :box nil)))
     `(header-line ((,c :inherit mode-line)))
     `(header-line-highlight ((,c :inherit mode-line-highlight)))
 

@@ -20,7 +20,12 @@
   (define-key dotemacs-lua-mode-map "f" 'lua-send-defun)
   (define-key dotemacs-lua-mode-map "p" 'lua-send-proc)
   (define-key dotemacs-lua-mode-map "r" 'lua-send-region)
-  (define-key dotemacs-lua-mode-map "z" 'lua-show-process-buffer))
+  (define-key dotemacs-lua-mode-map "z" 'lua-show-process-buffer)
+
+  (when (dotemacs-treesit-available-p)
+    (add-hook 'lua-mode-hook (lambda ()
+                               (when (treesit-ready-p 'lua)
+                                 (treesit-parser-create 'lua))))))
 
 (provide 'dotemacs-lua)
 ;;; dotemacs-lua.el ends here

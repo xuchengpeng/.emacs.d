@@ -6,3 +6,4 @@ server/
 *.elc
 *~
 /projects
+tree-sitter/

@@ -86,7 +86,7 @@
     `(diary ((,c :foreground ,cyan)))
     `(diary-anniversary ((,c :foreground ,red1)))
     `(diary-time ((,c :foreground ,cyan)))
-    `(holiday-face ((,c :foreground ,red1)))
+    `(holiday ((,c :foreground ,red1)))
 
     ;; compilation
     `(compilation-info ((,c :foreground ,green :weight bold)))

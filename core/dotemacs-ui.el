@@ -53,6 +53,11 @@
 (advice-add #'display-startup-echo-area-message :override #'ignore)
 (advice-add #'display-startup-screen :override #'ignore)
 
+(add-hook 'after-init-hook
+          (lambda ()
+            (when (fboundp 'pixel-scroll-precision-mode)
+              (pixel-scroll-precision-mode t))))
+
 (use-package display-line-numbers
   :hook ((prog-mode text-mode conf-mode) . display-line-numbers-mode)
   :config

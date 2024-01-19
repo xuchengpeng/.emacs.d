@@ -14,7 +14,7 @@ code of the process and OUTPUT is its stdout output."
 
 (defun dotemacs-delete-carrage-returns ()
   "Delete ^M of current buffer.
-Same as M-x replace-string RET C-q C-m RET RET, or query-replace."
+Same as `replace-string' RET `C-q' `C-m' RET RET, or `query-replace'."
   (interactive)
   (save-excursion
     (goto-char 0)

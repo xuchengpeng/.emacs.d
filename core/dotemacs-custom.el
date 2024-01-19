@@ -17,10 +17,14 @@ Expects either a `font-spec', or a font string.
 
 Examples:
   (setq dotemacs-font (font-spec :family \"Fira Mono\" :size 12))
-  (setq dotemacs-font \"Terminus (TTF):pixelsize=12:antialias=off\")")
+  (setq dotemacs-font \"Terminus (TTF):pixelsize=12:antialias=off\")"
+  :type 'sexp
+  :group 'dotemacs)
 
 (defcustom dotemacs-cn-font nil
-  "The chinese font to use.")
+  "The chinese font to use."
+  :type 'sexp
+  :group 'dotemacs)
 
 (defcustom dotemacs-tempel-path nil
   "A list of template files."
@@ -38,17 +42,17 @@ Examples:
   :group 'dotemacs)
 
 (defcustom dotemacs-org-html-head ""
-  "html-head for ox-publish."
+  "Org html-head for ox-publish."
   :type 'string
   :group 'dotemacs)
 
 (defcustom dotemacs-org-html-preamble-format '(("en" ""))
-  "html-preamble-format for ox-publish."
+  "Org html-preamble-format for ox-publish."
   :type 'alist
   :group 'dotemacs)
 
 (defcustom dotemacs-org-html-postamble-format '(("en" ""))
-  "html-postamble-format for ox-publish."
+  "Org html-postamble-format for ox-publish."
   :type 'alist
   :group 'dotemacs)
 

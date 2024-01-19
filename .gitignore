@@ -6,4 +6,5 @@ server/
 *.elc
 *~
 /projects
+/tramp
 tree-sitter/

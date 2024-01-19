@@ -24,7 +24,7 @@
 
   (when (dotemacs-treesit-available-p)
     (add-hook 'lua-mode-hook (lambda ()
-                               (when (treesit-ready-p 'lua)
+                               (when (treesit-language-available-p 'lua)
                                  (treesit-parser-create 'lua))))))
 
 (provide 'dotemacs-lua)

@@ -38,7 +38,7 @@
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
   (add-hook 'emacs-lisp-mode-hook (lambda ()
-                                    (when (treesit-ready-p 'elisp)
+                                    (when (treesit-language-available-p 'elisp)
                                       (treesit-parser-create 'elisp)))))
 
 (provide 'dotemacs-programming)

@@ -56,7 +56,10 @@
 (add-hook 'after-init-hook
           (lambda ()
             (when (fboundp 'pixel-scroll-precision-mode)
-              (pixel-scroll-precision-mode t))))
+              (pixel-scroll-precision-mode t))
+
+            (require 'windmove)
+            (windmove-default-keybindings)))
 
 (use-package display-line-numbers
   :hook ((prog-mode text-mode conf-mode) . display-line-numbers-mode)

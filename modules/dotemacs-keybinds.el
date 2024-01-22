@@ -70,16 +70,8 @@
 (define-key dotemacs-leader-map "tw" '("Soft line wrapping" . visual-line-mode))
 (define-key dotemacs-leader-map "tz" '("Zen mode" . toggle-frame-fullscreen))
 
-(global-set-key (kbd "C-r") 'consult-line)
-(global-set-key (kbd "C-s") 'consult-line)
 (global-set-key (kbd "C-.") 'set-mark-command)
 (global-set-key (kbd "C-x C-.") 'pop-global-mark)
-(global-set-key (kbd "C-=") 'er/expand-region)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-(global-set-key [M-up] 'move-text-up)
-(global-set-key [M-down] 'move-text-down)
 
 (provide 'dotemacs-keybinds)
 ;;; dotemacs-keybinds.el ends here

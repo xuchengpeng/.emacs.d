@@ -47,6 +47,8 @@
   (global-set-key [remap switch-to-buffer-other-window] 'consult-buffer-other-window)
   (global-set-key [remap switch-to-buffer-other-frame]  'consult-buffer-other-frame)
   (global-set-key [remap yank-pop]                      'consult-yank-pop)
+  (global-set-key (kbd "C-r") 'consult-line)
+  (global-set-key (kbd "C-s") 'consult-line)
   (unless consult-fd-args
     (setq consult-fd-args (concat "fd --color=never -i -H -E .git --regex"
                             (if IS-WINDOWS " --path-separator=/" ""))))

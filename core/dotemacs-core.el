@@ -12,7 +12,7 @@
 (setq idle-update-delay 1.0)  ; default is 0.5
 (setq auto-mode-case-fold nil)
 (setq inhibit-compacting-font-caches t)
-(setq read-process-output-max (* 64 1024))  ; 64kb
+(setq read-process-output-max (* 4 1024 1024))  ; 4MB
 (setq ffap-machine-p-known 'reject)
 (setq redisplay-skip-fontification-on-input t)
 

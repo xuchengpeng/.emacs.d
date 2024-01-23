@@ -30,11 +30,14 @@
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates
         `(("t" "Todo" entry
-           (file+headline ,(expand-file-name "todo.org" org-directory) "Inbox")
-           "* [ ] %?\n%i\n%a" :prepend t)
+           (file ,(expand-file-name "todo.org" org-directory))
+           "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
           ("n" "Notes" entry
-           (file+headline ,(expand-file-name "notes.org" org-directory) "Inbox")
-           "* %u %?\n%i\n%a" :prepend t)
+           (file ,(expand-file-name "notes.org" org-directory))
+           "* :NOTE: %?\n%U\n%a\n" :clock-in t :clock-resume t)
+          ("j" "Journal" entry
+           (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
+           "* %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
           ("p" "Post" plain
            (function dotemacs-org-post-file)
            "" :jump-to-captured t :immediate-finish t)))

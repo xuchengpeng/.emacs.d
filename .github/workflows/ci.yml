@@ -20,7 +20,9 @@ jobs:
       - name: Show emacs version
         run: emacs --version
       - name: Set up test
-        run: emacs --debug-init --batch -l init.el
+        run: |
+          ln -s $(pwd) $HOME/.emacs.d
+          emacs --debug-init --batch -l init.el
   release:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs:

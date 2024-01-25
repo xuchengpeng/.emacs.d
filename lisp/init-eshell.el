@@ -1,4 +1,4 @@
-;;; dotemacs-eshell.el --- eshell. -*- lexical-binding: t; -*-
+;;; init-eshell.el --- eshell. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -36,5 +36,5 @@
     (with-eval-after-load 'em-alias
       (setq eshell-command-aliases-list (append eshell-command-aliases-list dotemacs-eshell-aliases))))
 
-(provide 'dotemacs-eshell)
-;;; dotemacs-eshell.el ends here
+(provide 'init-eshell)
+;;; init-eshell.el ends here

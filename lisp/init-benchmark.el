@@ -1,4 +1,4 @@
-;;; dotemacs-benchmark.el --- benchmark. -*- lexical-binding: t; -*-
+;;; init-benchmark.el --- benchmark. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -62,5 +62,5 @@ LOAD-DURATION is the time taken in milliseconds to load FEATURE.")
     (tabulated-list-revert)
     (display-buffer (current-buffer))))
 
-(provide 'dotemacs-benchmark)
-;;; dotemacs-benchmark.el ends here
+(provide 'init-benchmark)
+;;; init-benchmark.el ends here

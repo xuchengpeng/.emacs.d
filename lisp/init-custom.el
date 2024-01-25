@@ -1,4 +1,4 @@
-;;; dotemacs-custom.el --- Custom. -*- lexical-binding: t; -*-
+;;; init-custom.el --- Custom. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -56,5 +56,5 @@ Examples:
   :type 'alist
   :group 'dotemacs)
 
-(provide 'dotemacs-custom)
-;;; dotemacs-custom.el ends here
+(provide 'init-custom)
+;;; init-custom.el ends here

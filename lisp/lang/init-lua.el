@@ -1,4 +1,4 @@
-;;; dotemacs-lua.el --- lua-mode. -*- lexical-binding: t; -*-
+;;; init-lua.el --- lua-mode. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -27,5 +27,5 @@
                                (when (treesit-language-available-p 'lua)
                                  (treesit-parser-create 'lua))))))
 
-(provide 'dotemacs-lua)
-;;; dotemacs-lua.el ends here
+(provide 'init-lua)
+;;; init-lua.el ends here

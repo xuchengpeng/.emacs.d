@@ -1,5 +1,5 @@
-(setq dotemacs-font (font-spec :family "BlexMono Nerd Font" :size 16))
-(setq dotemacs-cn-font (font-spec :family "Microsoft YaHei" :size 16))
+(setq dotemacs-font (font-spec :family "BlexMono Nerd Font" :size 17))
+(setq dotemacs-cn-font (font-spec :family "Microsoft Yahei" :size 16))
 
 (setq dotemacs-package-archives 'custom)
 (setq package-archives
@@ -11,8 +11,9 @@
 (setq dotemacs-org-site-dir "d:/github/org-site/")
 
 (setq dotemacs-org-html-head
-        "<link rel=\"shortcut icon\" href=\"/images/rose-red.png\" type=\"image/x-icon\" />
-         <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\">"
+        "<link rel=\"shortcut icon\" href=\"/images/rose-red.png\" type=\"image/x-icon\">
+         <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\">
+         <script src=\"/js/copycode.js\"></script>"
       dotemacs-org-html-preamble-format
         '(("en" "<a href=\"/index.html\" style=\"text-decoration:underline\">Home</a>
                  <a href=\"/posts/index.html\" style=\"text-decoration:underline\">Posts</a>

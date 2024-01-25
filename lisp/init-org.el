@@ -1,8 +1,8 @@
-;;; dotemacs-org.el --- org-mode. -*- lexical-binding: t; -*-
+;;; init-org.el --- org-mode. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(org htmlize))
+(dotemacs-require-package 'htmlize)
 
 (use-package org
   :mode ("\\.org$" . org-mode)
@@ -113,5 +113,5 @@
             )
           ("site" :components ("site-org" "site-js" "site-css" "site-images")))))
 
-(provide 'dotemacs-org)
-;;; dotemacs-org.el ends here
+(provide 'init-org)
+;;; init-org.el ends here

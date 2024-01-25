@@ -1,4 +1,4 @@
-;;; dotemacs-dired.el --- Dired. -*- lexical-binding: t; -*-
+;;; init-dired.el --- Dired. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -38,7 +38,7 @@
                 "\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")))
 
 (use-package dired-aux
-  :defer t
+  :after (dired)
   :config
   (setq dired-create-destination-dirs 'ask
         dired-vc-rename-file t))
@@ -48,5 +48,5 @@
   :config
   (define-key dired-mode-map (kbd "C-c C-r") #'dired-rsync))
 
-(provide 'dotemacs-dired)
-;;; dotemacs-dired.el ends here
+(provide 'init-dired)
+;;; init-dired.el ends here

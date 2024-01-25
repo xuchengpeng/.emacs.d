@@ -1,4 +1,4 @@
-;;; dotemacs-completion.el --- Completion. -*- lexical-binding: t; -*-
+;;; init-completion.el --- Completion. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -178,5 +178,5 @@ If prefix ARG is set, prompt for a directory to search from."
   :config
   (setq tempel-path (nconc (ensure-list tempel-path) dotemacs-tempel-path)))
 
-(provide 'dotemacs-completion)
-;;; dotemacs-completion.el ends here
+(provide 'init-completion)
+;;; init-completion.el ends here

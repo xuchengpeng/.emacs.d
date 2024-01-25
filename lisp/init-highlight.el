@@ -1,4 +1,4 @@
-;;; dotemacs-highlight.el --- Highlight. -*- lexical-binding: t; -*-
+;;; init-highlight.el --- Highlight. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -24,5 +24,5 @@
   :config
   (diff-hl-flydiff-mode 1))
 
-(provide 'dotemacs-highlight)
-;;; dotemacs-highlight.el ends here
+(provide 'init-highlight)
+;;; init-highlight.el ends here

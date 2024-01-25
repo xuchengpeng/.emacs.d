@@ -1,4 +1,4 @@
-;;; dotemacs-keybinds.el --- dotemacs keybindings. -*- lexical-binding: t; -*-
+;;; init-keybinds.el --- dotemacs keybindings. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -29,6 +29,15 @@
 (define-key dotemacs-leader-map "bs" '("Save buffer" . save-buffer))
 (define-key dotemacs-leader-map "bS" '("Save all buffer" . save-some-buffers))
 (define-key dotemacs-leader-map "bw" '("Write buffer" . write-file))
+
+(define-key dotemacs-leader-map "c"  '("Code" . (keymap)))
+(define-key dotemacs-leader-map "ca" '("Code Action" . eglot-code-actions))
+(define-key dotemacs-leader-map "cd" '("Find Definition" . xref-find-definitions))
+(define-key dotemacs-leader-map "cf" '("Format" . eglot-format))
+(define-key dotemacs-leader-map "ci" '("Find Implementation" . eglot-find-implementation))
+(define-key dotemacs-leader-map "cr" '("Find References" . xref-find-references))
+(define-key dotemacs-leader-map "cR" '("Rename" . eglot-rename))
+(define-key dotemacs-leader-map "cs" '("Workspace Symbols" . consult-eglot-symbols))
 
 (define-key dotemacs-leader-map "f"  '("Files" . (keymap)))
 (define-key dotemacs-leader-map "fd" '("Find directory" . dired))
@@ -73,5 +82,5 @@
 (global-set-key (kbd "C-.") 'set-mark-command)
 (global-set-key (kbd "C-x C-.") 'pop-global-mark)
 
-(provide 'dotemacs-keybinds)
-;;; dotemacs-keybinds.el ends here
+(provide 'init-keybinds)
+;;; init-keybinds.el ends here

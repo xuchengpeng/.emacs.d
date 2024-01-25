@@ -1,4 +1,4 @@
-;;; dotemacs-markdown.el --- markdown-mode. -*- lexical-binding: t; -*-
+;;; init-markdown.el --- markdown-mode. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -55,5 +55,5 @@ The generated and indented TOC will be inserted at point."
     (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "--mathjax" "--highlight-style=pygments")))
   (define-key markdown-mode-command-map "i" markdown-mode-style-map))
 
-(provide 'dotemacs-markdown)
-;;; dotemacs-markdown.el ends here
+(provide 'init-markdown)
+;;; init-markdown.el ends here

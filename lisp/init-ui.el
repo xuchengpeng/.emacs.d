@@ -1,6 +1,8 @@
-;;; dotemacs-ui.el --- UI configurations. -*- lexical-binding: t; -*-
+;;; init-ui.el --- UI configurations. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
+
+(dotemacs-require-packages '(modus-themes which-key ace-window))
 
 (setq hscroll-margin 2
       hscroll-step 1
@@ -98,5 +100,38 @@
 (add-hook 'after-init-hook #'dotemacs-init-fonts)
 (add-hook 'server-after-make-frame-hook #'dotemacs-init-fonts)
 
-(provide 'dotemacs-ui)
-;;; dotemacs-ui.el ends here
+;;;###autoload
+(defun dotemacs-init-theme ()
+  "Init theme."
+  (require 'modus-themes)
+  (load-theme 'modus-operandi :no-confirm)
+
+  (push (expand-file-name "lisp/tokyonight-themes/" dotemacs-dir) load-path)
+  (require 'tokyonight-themes))
+
+(defun dotemacs-load-theme ()
+  "Load theme."
+  (interactive)
+  (let ((choice (completing-read
+                  "Select theme: "
+                  '("tokyonight-storm" "tokyonight-night" "tokyonight-moon" "tokyonight-day"
+                    "modus-operandi" "modus-vivendi"))))
+    (consult-theme (intern choice))))
+
+(use-package which-key
+  :hook (after-init . which-key-mode)
+  :config
+  (setq which-key-add-column-padding 1))
+
+(use-package ace-window
+  :commands ace-window
+  :init
+  (global-set-key [remap other-window] 'ace-window))
+
+(add-hook 'after-init-hook (lambda ()
+                            (dotemacs-init-theme)
+                            (require 'ace-window)
+                            (dotemacs-modeline-mode)))
+
+(provide 'init-ui)
+;;; init-ui.el ends here

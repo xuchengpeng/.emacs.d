@@ -1,6 +1,31 @@
-;;; dotemacs-lib.el --- Libraries. -*- lexical-binding: t; -*-
+;;; init-utils.el --- utils. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
+
+(defconst IS-MAC      (eq system-type 'darwin))
+(defconst IS-LINUX    (memq system-type '(gnu gnu/linux gnu/kfreebsd berkeley-unix)))
+(defconst IS-WINDOWS  (memq system-type '(cygwin windows-nt ms-dos)))
+(defconst IS-BSD      (memq system-type '(darwin berkeley-unix gnu/kfreebsd)))
+
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
+(setq idle-update-delay 1.0)  ; default is 0.5
+(setq auto-mode-case-fold nil)
+(setq inhibit-compacting-font-caches t)
+(setq read-process-output-max (* 4 1024 1024))  ; 4MB
+(setq ffap-machine-p-known 'reject)
+(setq redisplay-skip-fontification-on-input t)
+
+(setq menu-bar-mode nil
+      tool-bar-mode nil
+      scroll-bar-mode nil)
+
+(set-language-environment "UTF-8")
+(setq default-input-method nil)
+(setq system-time-locale "C")
+(when IS-WINDOWS
+  (setq selection-coding-system 'utf-8))
+(setq-default buffer-file-coding-system 'utf-8-unix)
 
 (defun dotemacs-call-process (command &rest args)
   "Execute COMMAND with ARGS synchronously.
@@ -36,5 +61,5 @@ Same as `replace-string' RET `C-q' `C-m' RET RET, or `query-replace'."
   (and (fboundp 'treesit-available-p)
        (treesit-available-p)))
 
-(provide 'dotemacs-lib)
-;;; dotemacs-lib.el ends here
+(provide 'init-utils)
+;;; init-utils.el ends here

@@ -1,4 +1,4 @@
-;;; dotemacs-packages.el --- Packages configurations. -*- lexical-binding: t; -*-
+;;; init-packages.el --- Packages configurations. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -41,5 +41,5 @@
 
 (dotemacs-require-package 'use-package)
 
-(provide 'dotemacs-packages)
-;;; dotemacs-packages.el ends here
+(provide 'init-packages)
+;;; init-packages.el ends here

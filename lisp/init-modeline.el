@@ -1,4 +1,4 @@
-;;; ui/modeline/dotemacs-modeline.el --- modeline. -*- lexical-binding: t; -*-
+;;; init-modeline.el --- modeline. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -897,7 +897,5 @@ If DEFAULT is non-nil, set the default mode-line for all buffers."
 
       (remove-hook 'after-change-major-mode-hook #'dotemacs-modeline-auto-set-modeline))))
 
-(add-hook 'after-init-hook #'dotemacs-modeline-mode)
-
-(provide 'dotemacs-modeline)
-;;; dotemacs-modeline.el ends here
+(provide 'init-modeline)
+;;; init-modeline.el ends here

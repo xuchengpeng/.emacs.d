@@ -1,4 +1,4 @@
-;;; dotemacs-dashboard.el --- dashboard. -*- lexical-binding: t; -*-
+;;; init-dashboard.el --- dashboard. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -125,5 +125,5 @@
 
 (add-hook 'window-setup-hook #'dotemacs-dashboard--init)
 
-(provide 'dotemacs-dashboard)
-;;; dotemacs-dashboard.el ends here
+(provide 'init-dashboard)
+;;; init-dashboard.el ends here

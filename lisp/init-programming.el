@@ -20,7 +20,7 @@
 (use-package eglot
   :commands (eglot eglot-ensure)
   :hook (prog-mode . (lambda ()
-                       (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode)
+                       (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'lisp-data-mode 'makefile-mode 'snippet-mode)
                          (eglot-ensure))))
   :init
   (setq eglot-autoshutdown t

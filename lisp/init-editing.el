@@ -52,7 +52,8 @@
    ("\\.log\\'" . text-mode)
    ("rc\\'" . conf-mode)))
 
-(setq bookmark-default-file (concat dotemacs-local-dir "bookmarks"))
+(setq bookmark-default-file (concat dotemacs-cache-dir "bookmarks")
+      project-list-file (concat dotemacs-cache-dir "projects"))
 
 (use-package autorevert
   :hook (after-init . global-auto-revert-mode)

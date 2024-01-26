@@ -21,7 +21,7 @@
         image-dired-temp-rotate-image-file (concat image-dired-dir "temp-rotate-image")
         image-dired-thumb-size 150)
   :config
-  (define-key dired-mode-map (kbd "C-c C-e") #'wdired-change-to-wdired-mode)
+  (keymap-set dired-mode-map "C-c C-e" #'wdired-change-to-wdired-mode)
   (put 'dired-find-alternate-file 'disabled nil))
 
 (use-package dired-x
@@ -46,7 +46,7 @@
 (use-package dired-rsync
   :after (dired)
   :config
-  (define-key dired-mode-map (kbd "C-c C-r") #'dired-rsync))
+  (keymap-set dired-mode-map "C-c C-r" #'dired-rsync))
 
 (provide 'init-dired)
 ;;; init-dired.el ends here

@@ -731,9 +731,9 @@ By default, this shows the information specified by `global-mode-string'."
                                     .error .warning .note)))
              'mouse-face 'dotemacs-modeline-highlight
              'local-map (let ((map (make-sparse-keymap)))
-                          (define-key map [mode-line mouse-1] #'flymake-goto-next-error)
-                          (define-key map [mode-line mouse-2] #'flymake-show-buffer-diagnostics)
-                          (define-key map [mode-line mouse-3] #'flymake-goto-prev-error)
+                          (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)
+                          (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
+                          (keymap-set map "<mode-line> <mouse-3>" #'flymake-goto-prev-error)
                           map))))))
 (advice-add #'flymake--handle-report :after #'dotemacs-modeline-update-flymake-text)
 

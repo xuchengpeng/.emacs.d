@@ -7,8 +7,8 @@
 (use-package vertico
   :hook (after-init . vertico-mode)
   :config
-  (define-key vertico-map (kbd "C-j") 'vertico-next)
-  (define-key vertico-map (kbd "C-k") 'vertico-previous)
+  (keymap-set vertico-map "C-j" 'vertico-next)
+  (keymap-set vertico-map "C-k" 'vertico-previous)
   (setq vertico-resize nil
         vertico-count 17
         vertico-cycle t))
@@ -33,22 +33,22 @@
 (use-package consult
   :after (vertico)
   :init
-  (global-set-key [remap apropos]                       'consult-apropos)
-  (global-set-key [remap bookmark-jump]                 'consult-bookmark)
-  (global-set-key [remap evil-show-marks]               'consult-mark)
-  (global-set-key [remap evil-show-registers]           'consult-register)
-  (global-set-key [remap goto-line]                     'consult-goto-line)
-  (global-set-key [remap imenu]                         'consult-imenu)
-  (global-set-key [remap locate]                        'consult-locate)
-  (global-set-key [remap load-theme]                    'consult-theme)
-  (global-set-key [remap man]                           'consult-man)
-  (global-set-key [remap recentf-open-files]            'consult-recent-file)
-  (global-set-key [remap switch-to-buffer]              'consult-buffer)
-  (global-set-key [remap switch-to-buffer-other-window] 'consult-buffer-other-window)
-  (global-set-key [remap switch-to-buffer-other-frame]  'consult-buffer-other-frame)
-  (global-set-key [remap yank-pop]                      'consult-yank-pop)
-  (global-set-key (kbd "C-r") 'consult-line)
-  (global-set-key (kbd "C-s") 'consult-line)
+  (keymap-global-set "<remap> <apropos>"                       'consult-apropos)
+  (keymap-global-set "<remap> <bookmark-jump>"                 'consult-bookmark)
+  (keymap-global-set "<remap> <evil-show-marks>"               'consult-mark)
+  (keymap-global-set "<remap> <evil-show-registers>"           'consult-register)
+  (keymap-global-set "<remap> <goto-line>"                     'consult-goto-line)
+  (keymap-global-set "<remap> <imenu>"                         'consult-imenu)
+  (keymap-global-set "<remap> <locate>"                        'consult-locate)
+  (keymap-global-set "<remap> <load-theme>"                    'consult-theme)
+  (keymap-global-set "<remap> <man>"                           'consult-man)
+  (keymap-global-set "<remap> <recentf-open-files>"            'consult-recent-file)
+  (keymap-global-set "<remap> <switch-to-buffer>"              'consult-buffer)
+  (keymap-global-set "<remap> <switch-to-buffer-other-window>" 'consult-buffer-other-window)
+  (keymap-global-set "<remap> <switch-to-buffer-other-frame>"  'consult-buffer-other-frame)
+  (keymap-global-set "<remap> <yank-pop>"                      'consult-yank-pop)
+  (keymap-global-set "C-r" 'consult-line)
+  (keymap-global-set "C-s" 'consult-line)
   (unless consult-fd-args
     (setq consult-fd-args (concat "fd --color=never -i -H -E .git --regex"
                             (if IS-WINDOWS " --path-separator=/" ""))))
@@ -121,12 +121,12 @@ If prefix ARG is set, prompt for a directory to search from."
   :after (vertico)
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
-  (global-set-key [remap describe-bindings] 'embark-bindings))
+  (keymap-global-set "<remap> <describe-bindings>" 'embark-bindings))
 
 (use-package marginalia
   :after (vertico)
   :init
-  (define-key minibuffer-local-map (kbd "M-A") 'marginalia-cycle)
+  (keymap-set minibuffer-local-map "M-A" 'marginalia-cycle)
   :config
   (marginalia-mode))
 
@@ -148,7 +148,7 @@ If prefix ARG is set, prompt for a directory to search from."
   :hook ((after-init . global-corfu-mode)
          (global-corfu-mode . corfu-popupinfo-mode))
   :init
-  (global-set-key (kbd "M-/") 'complete-at-point))
+  (keymap-global-set "M-/" 'complete-at-point))
 
 (use-package cape
   :after corfu
@@ -164,8 +164,8 @@ If prefix ARG is set, prompt for a directory to search from."
 (use-package tempel
   :commands (tempel-complete tempel-insert)
   :init
-  (global-set-key (kbd "M-+") 'tempel-complete)
-  (global-set-key (kbd "M-*") 'tempel-insert)
+  (keymap-global-set "M-+" 'tempel-complete)
+  (keymap-global-set "M-*" 'tempel-insert)
 
   (defun tempel-setup-capf ()
     (setq-local completion-at-point-functions

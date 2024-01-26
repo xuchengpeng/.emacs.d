@@ -4,28 +4,26 @@
 
 (dotemacs-require-package 'lua-mode)
 
-(defvar dotemacs-lua-mode-map (make-keymap)
-  "Keymap for Lua commands.")
-
 (use-package lua-mode
-  :defer t
   :mode ("\\.lua\\'" . lua-mode)
-  :init
-  (add-to-list 'dotemacs-major-mode-map-alist '(lua-mode . dotemacs-lua-mode-map))
   :config
   (setq lua-indent-level 2)
 
-  (define-key dotemacs-lua-mode-map "b" 'lua-send-buffer)
-  (define-key dotemacs-lua-mode-map "l" 'lua-send-current-line)
-  (define-key dotemacs-lua-mode-map "f" 'lua-send-defun)
-  (define-key dotemacs-lua-mode-map "p" 'lua-send-proc)
-  (define-key dotemacs-lua-mode-map "r" 'lua-send-region)
-  (define-key dotemacs-lua-mode-map "z" 'lua-show-process-buffer)
+  (defvar-keymap dotemacs-lua-mode-map
+    :name "Lua-Mode"
+    "b" 'lua-send-buffer
+    "l" 'lua-send-current-line
+    "f" 'lua-send-defun
+    "p" 'lua-send-proc
+    "r" 'lua-send-region
+    "z" 'lua-show-process-buffer)
 
-  (when (dotemacs-treesit-available-p)
-    (add-hook 'lua-mode-hook (lambda ()
-                               (when (treesit-language-available-p 'lua)
-                                 (treesit-parser-create 'lua))))))
+  (add-hook 'lua-mode-hook
+            (lambda ()
+              (keymap-local-set dotemacs-localleader-key dotemacs-lua-mode-map)
+              (when (and (dotemacs-treesit-available-p)
+                         (treesit-language-available-p 'lua))
+                (treesit-parser-create 'lua)))))
 
 (provide 'init-lua)
 ;;; init-lua.el ends here

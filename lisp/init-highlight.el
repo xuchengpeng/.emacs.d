@@ -8,10 +8,10 @@
   :commands symbol-overlay-mode
   :hook (prog-mode . symbol-overlay-mode)
   :init
-  (global-set-key (kbd "M-i") 'symbol-overlay-put)
-  (global-set-key (kbd "M-n") 'symbol-overlay-jump-next)
-  (global-set-key (kbd "M-p") 'symbol-overlay-jump-prev)
-  (global-set-key (kbd "M-C") 'symbol-overlay-remove-all))
+  (keymap-global-set "M-i" 'symbol-overlay-put)
+  (keymap-global-set "M-n" 'symbol-overlay-jump-next)
+  (keymap-global-set "M-p" 'symbol-overlay-jump-prev)
+  (keymap-global-set "M-C" 'symbol-overlay-remove-all))
 
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode)

@@ -8,12 +8,12 @@
   :mode ("\\.org$" . org-mode)
   :hook ((org-mode . (lambda () (electric-indent-local-mode -1))))
   :init
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c c") 'org-capture)
+  (keymap-global-set "C-c a" 'org-agenda)
+  (keymap-global-set "C-c c" 'org-capture)
   :config
-  (define-key org-mode-map (kbd "C-c t") '("Toggle" . (keymap)))
-  (define-key org-mode-map (kbd "C-c ti") 'org-toggle-inline-images)
-  (define-key org-mode-map (kbd "C-c tl") 'org-toggle-link-display)
+  (keymap-set org-mode-map "C-c t" '("Toggle" . (keymap)))
+  (keymap-set org-mode-map "C-c t i" 'org-toggle-inline-images)
+  (keymap-set org-mode-map "C-c t l" 'org-toggle-link-display)
   (setq org-directory dotemacs-org-dir
         org-id-locations-file (expand-file-name ".orgids" org-directory)
         org-agenda-files (list org-directory)

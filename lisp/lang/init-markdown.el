@@ -30,8 +30,8 @@ The generated and indented TOC will be inserted at point."
 
 (use-package markdown-mode
   :mode ("/README\\(?:\\.md\\)?\\'" . gfm-mode)
-  :init
-  (add-to-list 'dotemacs-major-mode-map-alist '(markdown-mode . markdown-mode-command-map))
+  :hook (markdown-mode . (lambda ()
+                           (keymap-local-set dotemacs-localleader-key markdown-mode-command-map)))
   :config
   (setq markdown-enable-math t
         markdown-enable-wiki-links t
@@ -53,7 +53,7 @@ The generated and indented TOC will be inserted at point."
                 "<script>document.addEventListener('DOMContentLoaded', () => { document.body.classList.add('markdown-body'); document.querySelectorAll('pre[lang] > code').forEach((code) => { code.classList.add(code.parentElement.lang); }); document.querySelectorAll('pre > code').forEach((code) => { hljs.highlightBlock(code); }); });</script>"))
   (when (executable-find "pandoc")
     (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "--mathjax" "--highlight-style=pygments")))
-  (define-key markdown-mode-command-map "i" markdown-mode-style-map))
+  (keymap-set markdown-mode-command-map "i" markdown-mode-style-map))
 
 (provide 'init-markdown)
 ;;; init-markdown.el ends here

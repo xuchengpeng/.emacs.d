@@ -116,26 +116,26 @@
 (use-package expand-region
   :commands (er/expand-region)
   :init
-  (global-set-key (kbd "C-=") 'er/expand-region))
+  (keymap-global-set "C-=" 'er/expand-region))
 
 (use-package multiple-cursors
   :commands (mc/mark-all-like-this mc/mark-next-like-this mc/mark-previous-like-this)
   :init
   (setq mc/list-file (concat dotemacs-cache-dir "mc-lists.el"))
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+  (keymap-global-set "C->" 'mc/mark-next-like-this)
+  (keymap-global-set "C-<" 'mc/mark-previous-like-this)
+  (keymap-global-set "C-c C-<" 'mc/mark-all-like-this))
 
 (use-package move-text
   :commands (move-text-up move-text-down)
   :init
-  (global-set-key [M-up] 'move-text-up)
-  (global-set-key [M-down] 'move-text-down))
+  (keymap-global-set "M-<up>" 'move-text-up)
+  (keymap-global-set "M-<down>" 'move-text-down))
 
 (use-package vundo
   :commands vundo
   :init
-  (global-set-key (kbd "C-x u") 'vundo))
+  (keymap-global-set "C-x u" 'vundo))
 
 (provide 'init-editing)
 ;;; init-editing.el ends here

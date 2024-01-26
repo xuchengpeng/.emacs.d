@@ -126,7 +126,7 @@
 (use-package ace-window
   :commands ace-window
   :init
-  (global-set-key [remap other-window] 'ace-window))
+  (keymap-global-set "<remap> <other-window>" 'ace-window))
 
 (add-hook 'after-init-hook (lambda ()
                             (dotemacs-init-theme)

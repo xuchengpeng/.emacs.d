@@ -32,7 +32,7 @@
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
         xref-show-xrefs-function #'xref-show-definitions-completing-read)
   (require 'consult-eglot)
-  (define-key eglot-mode-map [remap xref-find-apropos] 'consult-eglot-symbols))
+  (keymap-set eglot-mode-map "<remap> <xref-find-apropos>" 'consult-eglot-symbols))
 
 (use-package eldoc-box
   :hook ((eglot-managed-mode . eldoc-box-hover-at-point-mode)))

@@ -22,7 +22,7 @@
         org-startup-indented t)
   (defun dotemacs-org-post-file ()
     (let* ((filename (read-from-minibuffer "New post filename: "))
-           (post-dir (concat dotemacs-org-site-dir "/org/posts/" (format-time-string "%Y"))))
+           (post-dir (concat dotemacs-org-site-dir "/org/posts/" (format-time-string "%Y/%m"))))
       (unless (file-exists-p post-dir)
         (make-directory post-dir t))
       (find-file (expand-file-name filename post-dir))

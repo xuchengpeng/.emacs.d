@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(defvar eshell-directory-name (concat dotemacs-cache-dir "eshell"))
+(defvar eshell-directory-name (expand-file-name "eshell" dotemacs-cache-dir))
 (defvar eshell-aliases-file (expand-file-name "eshell/aliases" dotemacs-local-dir))
 (defvar eshell-rc-script    (expand-file-name "eshell/profile" dotemacs-local-dir))
 (defvar eshell-login-script (expand-file-name "eshell/login" dotemacs-local-dir))

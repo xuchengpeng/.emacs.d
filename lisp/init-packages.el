@@ -22,7 +22,7 @@
 
 (setq load-prefer-newer t
       package-enable-at-startup nil
-      package-user-dir (concat dotemacs-local-dir "elpa/")
+      package-user-dir (expand-file-name "elpa" dotemacs-local-dir)
       package-gnupghome-dir (expand-file-name "gnupg" package-user-dir))
 
 (package-initialize)

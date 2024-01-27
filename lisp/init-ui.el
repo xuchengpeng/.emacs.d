@@ -55,14 +55,6 @@
 (advice-add #'display-startup-echo-area-message :override #'ignore)
 (advice-add #'display-startup-screen :override #'ignore)
 
-(add-hook 'after-init-hook
-          (lambda ()
-            (when (fboundp 'pixel-scroll-precision-mode)
-              (pixel-scroll-precision-mode t))
-
-            (require 'windmove)
-            (windmove-default-keybindings)))
-
 (use-package display-line-numbers
   :hook ((prog-mode text-mode conf-mode) . display-line-numbers-mode)
   :config
@@ -106,7 +98,7 @@
   (require 'modus-themes)
   (load-theme 'modus-operandi :no-confirm)
 
-  (push (expand-file-name "lisp/tokyonight-themes/" dotemacs-dir) load-path)
+  (push (expand-file-name "lisp/tokyonight-themes" dotemacs-dir) load-path)
   (require 'tokyonight-themes))
 
 (defun dotemacs-load-theme ()
@@ -129,9 +121,15 @@
   (keymap-global-set "<remap> <other-window>" 'ace-window))
 
 (add-hook 'after-init-hook (lambda ()
-                            (dotemacs-init-theme)
-                            (require 'ace-window)
-                            (dotemacs-modeline-mode)))
+                             (when (fboundp 'pixel-scroll-precision-mode)
+                               (pixel-scroll-precision-mode t))
+
+                             (require 'windmove)
+                             (windmove-default-keybindings)
+
+                             (dotemacs-init-theme)
+                             (require 'ace-window)
+                             (dotemacs-modeline-mode)))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

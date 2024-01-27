@@ -15,13 +15,13 @@
       delete-old-versions t ; clean up after itself
       kept-old-versions 5
       kept-new-versions 5
-      backup-directory-alist (list (cons "." (concat dotemacs-cache-dir "backup/")))
+      backup-directory-alist (list (cons "." (expand-file-name "backup" dotemacs-cache-dir)))
       tramp-backup-directory-alist backup-directory-alist)
 
 (setq auto-save-default nil
       auto-save-include-big-deletions t
-      auto-save-list-file-prefix (concat dotemacs-cache-dir "autosave/")
-      tramp-auto-save-directory  (concat dotemacs-cache-dir "tramp-autosave/")
+      auto-save-list-file-prefix (expand-file-name "autosave" dotemacs-cache-dir)
+      tramp-auto-save-directory  (expand-file-name "tramp-autosave" dotemacs-cache-dir)
       auto-save-file-name-transforms
       (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
                   ;; Prefix tramp autosaves to prevent conflicts with local ones
@@ -52,8 +52,8 @@
    ("\\.log\\'" . text-mode)
    ("rc\\'" . conf-mode)))
 
-(setq bookmark-default-file (concat dotemacs-cache-dir "bookmarks")
-      project-list-file (concat dotemacs-cache-dir "projects"))
+(setq bookmark-default-file (expand-file-name "bookmarks" dotemacs-cache-dir)
+      project-list-file (expand-file-name "projects" dotemacs-cache-dir))
 
 (use-package autorevert
   :hook (after-init . global-auto-revert-mode)
@@ -66,7 +66,7 @@
   :hook (after-init . recentf-mode)
   :commands recentf-open-files
   :config
-  (setq recentf-save-file (concat dotemacs-cache-dir "recentf")
+  (setq recentf-save-file (expand-file-name "recentf" dotemacs-cache-dir)
         recentf-max-saved-items 200
         recentf-auto-cleanup nil)
   (add-hook 'kill-emacs-hook #'recentf-cleanup))
@@ -75,7 +75,7 @@
   :hook (after-init . savehist-mode)
   :config
   (setq history-length 1000
-        savehist-file (concat dotemacs-cache-dir "savehist")
+        savehist-file (expand-file-name "savehist" dotemacs-cache-dir)
         savehist-save-minibuffer-history t
         savehist-autosave-interval 300
         savehist-additional-variables
@@ -84,7 +84,7 @@
 (use-package saveplace
   :hook (after-init . save-place-mode)
   :config
-  (setq save-place-file (concat dotemacs-cache-dir "saveplace")))
+  (setq save-place-file (expand-file-name "saveplace" dotemacs-cache-dir)))
 
 (use-package hideshow
   :commands (hs-toggle-hiding)
@@ -93,7 +93,7 @@
 (use-package server
   :defer 2
   :config
-  (setq server-auth-dir (concat dotemacs-dir "server/"))
+  (setq server-auth-dir (expand-file-name "server" dotemacs-dir))
   (unless (server-running-p)
     (server-start)))
 
@@ -103,7 +103,8 @@
 (use-package elec-pair
   :ensure nil
   :hook (after-init . electric-pair-mode)
-  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
+  :init
+  (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
 (defun dotemacs-enable-trailing-whitespace ()
   "Delete trailing whitespace before save."
@@ -122,7 +123,7 @@
 (use-package multiple-cursors
   :commands (mc/mark-all-like-this mc/mark-next-like-this mc/mark-previous-like-this)
   :init
-  (setq mc/list-file (concat dotemacs-cache-dir "mc-lists.el"))
+  (setq mc/list-file (expand-file-name "mc-lists.el" dotemacs-cache-dir))
   (keymap-global-set "C->" 'mc/mark-next-like-this)
   (keymap-global-set "C-<" 'mc/mark-previous-like-this)
   (keymap-global-set "C-c C-<" 'mc/mark-all-like-this))

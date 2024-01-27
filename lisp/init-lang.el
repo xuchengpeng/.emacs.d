@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(push (expand-file-name "lisp/lang/" dotemacs-dir) load-path)
+(push (expand-file-name "lisp/lang" dotemacs-dir) load-path)
 
 (require 'init-markdown)
 (require 'init-lua)

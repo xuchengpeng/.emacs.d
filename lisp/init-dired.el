@@ -14,11 +14,11 @@
         dired-recursive-deletes 'top
         dired-create-destination-dirs 'ask
         dired-listing-switches "-alh --group-directories-first"
-        image-dired-dir (concat dotemacs-cache-dir "image-dired/")
-        image-dired-db-file (concat image-dired-dir "db.el")
-        image-dired-gallery-dir (concat image-dired-dir "gallery/")
-        image-dired-temp-image-file (concat image-dired-dir "temp-image")
-        image-dired-temp-rotate-image-file (concat image-dired-dir "temp-rotate-image")
+        image-dired-dir (expand-file-name "image-dired" dotemacs-cache-dir)
+        image-dired-db-file (expand-file-name "db.el" image-dired-dir)
+        image-dired-gallery-dir (expand-file-name "gallery" image-dired-dir)
+        image-dired-temp-image-file (expand-file-name "temp-image" image-dired-dir)
+        image-dired-temp-rotate-image-file (expand-file-name "temp-rotate-image" image-dired-dir)
         image-dired-thumb-size 150)
   :config
   (keymap-set dired-mode-map "C-c C-e" #'wdired-change-to-wdired-mode)

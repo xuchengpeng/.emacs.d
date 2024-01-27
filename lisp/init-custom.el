@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+(defgroup dotemacs nil
+  "Emacs framework."
+  :group 'convenience)
+
 (defcustom dotemacs-package-archives 'melpa
   "Set package archives from which to fetch."
   :type '(choice
@@ -55,6 +59,10 @@ Examples:
   "Org html-postamble-format for ox-publish."
   :type 'alist
   :group 'dotemacs)
+
+(setq custom-file (expand-file-name "custom.el" dotemacs-local-dir))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 (provide 'init-custom)
 ;;; init-custom.el ends here

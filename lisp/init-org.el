@@ -17,12 +17,12 @@
   (setq org-directory dotemacs-org-dir
         org-id-locations-file (expand-file-name ".orgids" org-directory)
         org-agenda-files (list org-directory)
-        org-persist-directory (concat dotemacs-cache-dir "org-persist/")
-        org-publish-timestamp-directory (concat dotemacs-cache-dir "org-timestamps/")
+        org-persist-directory (expand-file-name "org-persist" dotemacs-cache-dir)
+        org-publish-timestamp-directory (expand-file-name "org-timestamps/" dotemacs-cache-dir)
         org-startup-indented t)
   (defun dotemacs-org-post-file ()
     (let* ((filename (read-from-minibuffer "New post filename: "))
-           (post-dir (concat dotemacs-org-site-dir "/org/posts/" (format-time-string "%Y/%m"))))
+           (post-dir (expand-file-name (format "org/posts/%s" (format-time-string "%Y/%m")) dotemacs-org-site-dir)))
       (unless (file-exists-p post-dir)
         (make-directory post-dir t))
       (find-file (expand-file-name filename post-dir))
@@ -53,7 +53,7 @@
 (use-package org-clock
   :commands org-clock-save
   :config
-  (setq org-clock-persist-file (concat dotemacs-cache-dir "org-clock-save.el"))
+  (setq org-clock-persist-file (expand-file-name "org-clock-save.el" dotemacs-cache-dir))
   (setq org-clock-persist 'history
         org-clock-in-resume t
         org-clock-out-remove-zero-time-clocks t
@@ -71,8 +71,8 @@
   (setq org-publish-project-alist
         `(;; Publish the posts
           ("site-org"
-            :base-directory ,(concat dotemacs-org-site-dir "/org")
-            :publishing-directory ,(concat dotemacs-org-site-dir "/public")
+            :base-directory ,(expand-file-name "org" dotemacs-org-site-dir)
+            :publishing-directory ,(expand-file-name "public" dotemacs-org-site-dir)
             :base-extension "org"
             :recursive t
             :publishing-function org-html-publish-to-html
@@ -91,23 +91,23 @@
             :html-postamble-format ,dotemacs-org-html-postamble-format
             )
           ("site-js"
-            :base-directory ,(concat dotemacs-org-site-dir "/js")
+            :base-directory ,(expand-file-name "js" dotemacs-org-site-dir)
             :base-extension "js"
-            :publishing-directory ,(concat dotemacs-org-site-dir "/public/js")
+            :publishing-directory ,(expand-file-name "public/js" dotemacs-org-site-dir)
             :recursive t
             :publishing-function org-publish-attachment
             )
           ("site-css"
-            :base-directory ,(concat dotemacs-org-site-dir "/css")
+            :base-directory ,(expand-file-name "css" dotemacs-org-site-dir)
             :base-extension "css"
-            :publishing-directory ,(concat dotemacs-org-site-dir "/public/css")
+            :publishing-directory ,(expand-file-name "public/css" dotemacs-org-site-dir)
             :recursive t
             :publishing-function org-publish-attachment
             )
           ("site-images"
-            :base-directory ,(concat dotemacs-org-site-dir "/images")
+            :base-directory ,(expand-file-name "images" dotemacs-org-site-dir)
             :base-extension "jpg\\|gif\\|png\\|svg\\|gif"
-            :publishing-directory ,(concat dotemacs-org-site-dir "/public/images")
+            :publishing-directory ,(expand-file-name "public/images" dotemacs-org-site-dir)
             :recursive t
             :publishing-function org-publish-attachment
             )

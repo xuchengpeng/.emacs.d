@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(avy expand-region multiple-cursors move-text vundo))
+(dotemacs-require-packages '(avy expreg multiple-cursors move-text vundo))
 
 (setq find-file-visit-truename t
       vc-follow-symlinks t
@@ -114,10 +114,10 @@
 (use-package avy
   :commands (avy-goto-line))
 
-(use-package expand-region
-  :commands (er/expand-region)
+(use-package expreg
+  :commands (expreg-expand)
   :init
-  (keymap-global-set "C-=" 'er/expand-region))
+  (keymap-global-set "C-=" 'expreg-expand))
 
 (use-package multiple-cursors
   :commands (mc/mark-all-like-this mc/mark-next-like-this mc/mark-previous-like-this)

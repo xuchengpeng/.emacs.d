@@ -27,9 +27,6 @@
         completion-category-overrides '((file (styles basic partial-completion)))
         orderless-component-separator #'orderless-escapable-split-on-space))
 
-(defvar consult-fd-args nil
-  "Command line arguments for fd.")
-
 (use-package consult
   :after (vertico)
   :init
@@ -49,9 +46,6 @@
   (keymap-global-set "<remap> <yank-pop>"                      'consult-yank-pop)
   (keymap-global-set "C-r" 'consult-line)
   (keymap-global-set "C-s" 'consult-line)
-  (unless consult-fd-args
-    (setq consult-fd-args (concat "fd --color=never -i -H -E .git --regex"
-                            (if IS-WINDOWS " --path-separator=/" ""))))
   :config
   (setq consult-narrow-key "<"
         consult-line-numbers-widen t
@@ -62,30 +56,6 @@
         consult-find-args (if IS-WINDOWS
                               "find . -not ( -wholename \\*/.\\* -prune )"
                             consult-find-args)))
-
-;;;###autoload
-(defun consult--fd-make-builder ()
-  "Consult fd command builder."
-  (let ((cmd (split-string-and-unquote consult-fd-args)))
-    (lambda (input)
-      (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
-                   (`(,re . ,hl) (funcall consult--regexp-compiler
-                                          arg 'extended t)))
-        (when re
-          (cons (append cmd
-                        (list (consult--join-regexps re 'extended))
-                        opts)
-                hl))))))
-
-(autoload #'consult--directory-prompt "consult")
-;;;###autoload
-(defun consult-fd (&optional dir initial)
-  "Search for files in DIR matching input regexp given INITIAL input."
-  (interactive "P")
-  (pcase-let* ((`(,prompt ,paths ,dir) (consult--directory-prompt "Fd" dir))
-                (default-directory dir)
-                (builder (consult--fd-make-builder paths)))
-    (find-file (consult--find prompt builder initial))))
 
 (defun dotemacs-find-file (&optional dir initial)
   "Search for files in DIR matching input regexp given INITIAL input."

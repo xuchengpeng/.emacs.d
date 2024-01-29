@@ -1,7 +1,8 @@
 # Emacs Configuration
 
-[![Releases](https://img.shields.io/github/v/release/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/releases/latest)
-[![Last commit](https://img.shields.io/github/last-commit/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/pulse)
-[![License](https://img.shields.io/github/license/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/blob/main/LICENSE)
-[![Repo size](https://img.shields.io/github/repo-size/xuchengpeng/.emacs.d?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/xuchengpeng/.emacs.d/ci.yml?style=for-the-badge)](https://github.com/xuchengpeng/.emacs.d/actions)
+[![Releases](https://img.shields.io/github/v/release/xuchengpeng/.emacs.d?style=flat-square)](https://github.com/xuchengpeng/.emacs.d/releases/latest)
+[![Last commit](https://img.shields.io/github/last-commit/xuchengpeng/.emacs.d?style=flat-square)](https://github.com/xuchengpeng/.emacs.d/pulse)
+[![License](https://img.shields.io/github/license/xuchengpeng/.emacs.d?style=flat-square)](https://github.com/xuchengpeng/.emacs.d/blob/main/LICENSE)
+[![Repo size](https://img.shields.io/github/repo-size/xuchengpeng/.emacs.d?style=flat-square)](https://github.com/xuchengpeng/.emacs.d)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/xuchengpeng/.emacs.d/ci.yml?style=flat-square)](https://github.com/xuchengpeng/.emacs.d/actions)
+[![Made for Emacs 29.1+](https://img.shields.io/badge/Made_for-Emacs_29.1+-blueviolet.svg?style=flat-square)](https://www.gnu.org/software/emacs/)

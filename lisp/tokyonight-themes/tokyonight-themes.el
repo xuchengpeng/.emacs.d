@@ -74,6 +74,13 @@
     `(ansi-color-bright-white ((,c :background "white" :foreground "white")))
     `(ansi-color-bright-yellow ((,c :background ,yellow :foreground ,yellow)))
 
+    ;; ace-window
+    `(aw-background-face ((,c :foreground "gray50")))
+    `(aw-key-face ((,c :inherit font-lock-builtin-face)))
+    `(aw-leading-char-face ((,c :inherit bold :height 1.5 :foreground ,red)))
+    `(aw-minibuffer-leading-char-face ((,c :inherit aw-key-face)))
+    `(aw-mode-line-face ((,c :inherit bold)))
+
     ;; bookmark
     `(bookmark-face ((,c :inherit success)))
     `(bookmark-menu-bookmark ((,c :inherit bold)))
@@ -239,7 +246,7 @@
     `(message-separator ((,c :background ,dark3)))
 
     ;; mode-line / header-line
-    `(mode-line ((,c :foreground ,fg :background ,fg-gutter :weight normal :box (:line-width 1 :color ,fg-gutter))))
+    `(mode-line ((,c :foreground ,fg :background ,bg-dark :weight normal :box (:line-width 1 :color ,bg-dark))))
     `(mode-line-buffer-id ((,c :inherit bold)))
     `(mode-line-active ((,c :inherit mode-line)))
     `(mode-line-inactive ((,c :foreground ,dark5 :background ,bg-dark :weight normal :box (:line-width 1 :color ,bg-dark))))

@@ -50,8 +50,7 @@ If the actual char height is larger, it respects the actual char height."
 (defgroup dotemacs-modeline-faces nil
   "The faces of `dotemacs-modeline'."
   :group 'dotemacs-modeline
-  :group 'faces
-  :link '(url-link :tag "Homepage" "https://github.com/seagle0128/dotemacs-modeline"))
+  :group 'faces)
 
 (defface dotemacs-modeline
   '((t ()))
@@ -182,15 +181,16 @@ Also see the face `dotemacs-modeline-unread-number'."
 (add-hook 'pre-redisplay-functions #'dotemacs-modeline-set-selected-window)
 
 ;; Ensure modeline is inactive when Emacs is unfocused
-(defvar dotemacs-modeline--remap-faces '(mode-line
-                                     mode-line-active
-                                     mode-line-emphasis
-                                     mode-line-highlight
-                                     mode-line-buffer-id
-                                     dotemacs-modeline
-                                     solaire-mode-line-face
-                                     solaire-mode-line-active-face
-                                     paradox-mode-line-face))
+(defvar dotemacs-modeline--remap-faces
+  '(mode-line
+    mode-line-active
+    mode-line-emphasis
+    mode-line-highlight
+    mode-line-buffer-id
+    dotemacs-modeline
+    solaire-mode-line-face
+    solaire-mode-line-active-face
+    paradox-mode-line-face))
 
 (defvar dotemacs-modeline--remap-face-cookie-alist nil)
 (defun dotemacs-modeline-focus ()

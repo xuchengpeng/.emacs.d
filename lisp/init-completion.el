@@ -116,9 +116,18 @@ If prefix ARG is set, prompt for a directory to search from."
   (corfu-auto-prefix 2)
   (corfu-preview-current nil)
   :hook ((after-init . global-corfu-mode)
-         (global-corfu-mode . corfu-popupinfo-mode))
+         (global-corfu-mode . corfu-popupinfo-mode)))
+
+(use-package dabbrev
+  :after corfu
   :init
-  (keymap-global-set "M-/" 'complete-at-point))
+  ;; Swap M-/ and C-M-/
+  (keymap-global-set "M-/" 'dabbrev-completion)
+  (keymap-global-set "C-M-/" 'dabbrev-expand)
+  :config
+  (add-to-list 'dabbrev-ignored-buffer-regexps "\\` ")
+  (add-to-list 'dabbrev-ignored-buffer-modes 'doc-view-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'pdf-view-mode))
 
 (use-package cape
   :after corfu

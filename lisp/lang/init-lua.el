@@ -10,7 +10,7 @@
   (setq lua-indent-level 2)
 
   (defvar-keymap dotemacs-lua-mode-map
-    :name "Lua-Mode"
+    :doc "Keymap for lua-mode."
     "b" 'lua-send-buffer
     "l" 'lua-send-current-line
     "f" 'lua-send-defun

@@ -9,7 +9,7 @@
   "The localleader prefix key, for major-mode specific commands.")
 
 (defvar-keymap dotemacs-leader-map
-  :name "<leader>"
+  :doc "Keymap for `dotemacs-leader-key'."
   "b"   '("Buffers" . (keymap))
   "b b" '("Switch buffer" . switch-to-buffer)
   "b k" '("Kill buffer" . kill-this-buffer)

@@ -41,6 +41,7 @@
   "o"   '("Open" . (keymap))
   "o a" '("Org agenda" . org-agenda)
   "o c" '("Org capture" . org-capture)
+  "o f" '("Flymake diagnostic" . consult-flymake)
   "o p" '("Org publish project" . org-publish-project)
   "o d" '("Dired" . dired-jump)
   "o t" '("Terminal" . eshell)

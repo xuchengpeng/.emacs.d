@@ -124,9 +124,6 @@
                              (when (fboundp 'pixel-scroll-precision-mode)
                                (pixel-scroll-precision-mode t))
 
-                             (require 'windmove)
-                             (windmove-default-keybindings)
-
                              (dotemacs-init-theme)
                              (require 'ace-window)
                              (dotemacs-modeline-mode)))

@@ -120,6 +120,16 @@
   :init
   (keymap-global-set "<remap> <other-window>" 'ace-window))
 
+(defun dotemacs-adjust-transparency (frame incr)
+  "Adjust the background transparency of FRAME by increment INCR."
+  (let* ((oldalpha (or (frame-parameter frame 'alpha-background) 100))
+         (newalpha (+ incr oldalpha)))
+    (when (and (<= 0 newalpha) (>= 100 newalpha))
+      (set-frame-parameter frame 'alpha-background newalpha))))
+(keymap-global-set "C-M-8" (lambda () (interactive) (dotemacs-adjust-transparency nil -2)))
+(keymap-global-set "C-M-9" (lambda () (interactive) (dotemacs-adjust-transparency nil 2)))
+(keymap-global-set "C-M-0" (lambda () (interactive) (set-frame-parameter nil 'alpha-background 100)))
+
 (add-hook 'after-init-hook (lambda ()
                              (when (fboundp 'pixel-scroll-precision-mode)
                                (pixel-scroll-precision-mode t))

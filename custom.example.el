@@ -1,16 +1,18 @@
-(setq dotemacs-font (font-spec :family "BlexMono Nerd Font" :size 17))
-(setq dotemacs-cn-font (font-spec :family "Microsoft Yahei" :size 16))
+(setq user-full-name "Chuck"
+      user-mail-address "330476629@qq.com")
+
+(setq dotemacs-font (font-spec :family "BlexMono Nerd Font" :size 17)
+      dotemacs-cn-font (font-spec :family "Microsoft Yahei"))
 
 (setq dotemacs-package-archives 'custom)
 (setq package-archives
       '(("gnu"   . "d:/github/elpa-mirror/gnu/")
         ("melpa" . "d:/github/elpa-mirror/melpa/")))
 
-(setq dotemacs-tempel-path '("/path/to/templates"))
+(setq dotemacs-tempel-path '("d:/github/dotfiles/tempel/templates"))
 
-(setq dotemacs-org-site-dir "d:/github/org-site/")
-
-(setq dotemacs-org-html-head
+(setq dotemacs-org-site-dir "d:/github/org-site/"
+      dotemacs-org-html-head
         "<link rel=\"shortcut icon\" href=\"/images/rose-red.png\" type=\"image/x-icon\">
          <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\">
          <script src=\"/js/copycode.js\"></script>"

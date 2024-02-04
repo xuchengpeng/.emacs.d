@@ -11,7 +11,8 @@
   (keymap-global-set "M-i" 'symbol-overlay-put)
   (keymap-global-set "M-n" 'symbol-overlay-jump-next)
   (keymap-global-set "M-p" 'symbol-overlay-jump-prev)
-  (keymap-global-set "M-C" 'symbol-overlay-remove-all))
+  (keymap-global-set "M-C" 'symbol-overlay-remove-all)
+  (setq symbol-overlay-inhibit-map t))
 
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode)

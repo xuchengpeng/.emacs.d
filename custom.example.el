@@ -13,16 +13,18 @@
 
 (setq dotemacs-org-site-dir "d:/github/org-site/"
       dotemacs-org-html-head
-        "<link rel=\"shortcut icon\" href=\"/images/rose-red.png\" type=\"image/x-icon\">
-         <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\">
-         <script src=\"/js/copycode.js\"></script>"
+      "<link rel=\"shortcut icon\" href=\"/images/rose-red.png\" type=\"image/x-icon\">
+       <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\">
+       <script src=\"/js/copycode.js\"></script>"
       dotemacs-org-html-preamble-format
-        '(("en" "<a href=\"/index.html\" style=\"text-decoration:underline\">Home</a>
-                 <a href=\"/posts/index.html\" style=\"text-decoration:underline\">Posts</a>
-                 <a href=\"/about.html\" style=\"text-decoration:underline\">About</a>"))
+      '(("en" "<div class=\"nav-bar\">
+               <a class=\"nav-link\" href=\"/index.html\">Home</a>
+               <a class=\"nav-link\" href=\"/posts/index.html\">Posts</a>
+               <a class=\"nav-link\" href=\"/about.html\">About</a>
+               </div>"))
       dotemacs-org-html-postamble-format
-        '(("en" "<div class=\"nav-btn\"><a href=\"/index.html\">Home</a></div>
-                 <div class=\"top-btn\"><a href=\"#top\">Top</a></div>
-                 <footer>
-                  <p>&copy xuchengpeng <a href=\"http://www.gnu.org/software/emacs/\">Emacs</a> 29.x  (<a href=\"https://orgmode.org\">Org</a> mode 9.x)</p>
-                 </footer>")))
+      '(("en" "<div class=\"nav-btn\"><a href=\"/index.html\">Home</a></div>
+               <div class=\"top-btn\"><a href=\"#top\">Top</a></div>
+               <footer>
+                <p>&copy xuchengpeng <a href=\"http://www.gnu.org/software/emacs/\">Emacs</a> 29.2  (<a href=\"https://orgmode.org\">Org</a> mode 9.6.15)</p>
+               </footer>")))

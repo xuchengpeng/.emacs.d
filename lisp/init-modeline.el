@@ -439,6 +439,17 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
       (propertize (format " %s " num)
                   'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-major-mode)))))
 
+(dotemacs-modeline-def-segment workspace-name
+  "The current tab name."
+  (when (and (fboundp 'tab-bar-mode)
+             (length> (frame-parameter nil 'tabs) 1))
+    (let* ((current-tab (tab-bar--current-tab))
+           (tab-index (tab-bar--current-tab-index))
+           (explicit-name (alist-get 'explicit-name current-tab))
+           (tab-name (alist-get 'name current-tab)))
+      (propertize (format " [%s] " (if explicit-name tab-name (+ 1 tab-index)))
+                  'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-major-mode)))))
+
 (defsubst dotemacs-modeline--buffer-simple-name ()
   "The buffer simple name."
   (propertize "%b"
@@ -837,7 +848,7 @@ By default, this shows the information specified by `global-mode-string'."
 ;;
 
 (dotemacs-modeline-def-modeline 'main
-  '(bar window-number matches buffer-info buffer-position word-count selection-info)
+  '(bar window-number workspace-name matches buffer-info buffer-position word-count selection-info)
   '(compilation misc-info minor-modes buffer-encoding major-mode process vcs checker))
 
 (dotemacs-modeline-def-modeline 'special

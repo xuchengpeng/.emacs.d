@@ -69,7 +69,20 @@
   "t t" '("Theme" . dotemacs-load-theme)
   "t v" '("Visible mode" . visible-mode)
   "t w" '("Soft line wrapping" . visual-line-mode)
-  "t z" '("Zen mode" . toggle-frame-fullscreen))
+  "t z" '("Zen mode" . toggle-frame-fullscreen)
+
+  "w"   '("Workspaces" . (keymap))
+  "w [" 'tab-previous
+  "w ]" 'tab-next
+  "w b" 'switch-to-buffer-other-tab
+  "w c" 'tab-close
+  "w d" 'dired-other-tab
+  "w f" 'find-file-other-tab
+  "w g" 'tab-group
+  "w n" 'tab-new
+  "w p" 'project-other-tab-command
+  "w r" 'tab-rename
+  "w s" 'tab-switch)
 
 (keymap-global-set dotemacs-leader-key dotemacs-leader-map)
 

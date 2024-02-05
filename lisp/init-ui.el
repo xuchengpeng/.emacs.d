@@ -136,6 +136,8 @@
 
                              (dotemacs-init-theme)
                              (require 'ace-window)
+                             ;; show tab-name in mode-line
+                             (setq tab-bar-show nil)
                              (dotemacs-modeline-mode)))
 
 (provide 'init-ui)

@@ -440,7 +440,7 @@ Use FACE for the bar, WIDTH and HEIGHT are the image size in pixels."
                   'face (dotemacs-modeline-face 'dotemacs-modeline-buffer-major-mode)))))
 
 (dotemacs-modeline-def-segment workspace-name
-  "The current tab name."
+  "The current workspace name."
   (when (and (fboundp 'tab-bar-mode)
              (length> (frame-parameter nil 'tabs) 1))
     (let* ((current-tab (tab-bar--current-tab))

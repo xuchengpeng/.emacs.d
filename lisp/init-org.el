@@ -71,46 +71,42 @@
   (setq org-publish-project-alist
         `(;; Publish the posts
           ("site-org"
-            :base-directory ,(expand-file-name "org" dotemacs-org-site-dir)
-            :publishing-directory ,(expand-file-name "public" dotemacs-org-site-dir)
-            :base-extension "org"
-            :recursive t
-            :publishing-function org-html-publish-to-html
-            :auto-sitemap nil
-            :section-numbers nil
-            :with-author nil
-            :with-priority t
-            :with-toc t
-            :time-stamp-file nil
-            :html-doctype "html5"
-            :html-html5-fancy t
-            :html-head ,dotemacs-org-html-head
-            :html-preamble t
-            :html-preamble-format ,dotemacs-org-html-preamble-format
-            :html-postamble t
-            :html-postamble-format ,dotemacs-org-html-postamble-format
-            )
+           :base-directory ,(expand-file-name "org" dotemacs-org-site-dir)
+           :publishing-directory ,(expand-file-name "public" dotemacs-org-site-dir)
+           :base-extension "org"
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :auto-sitemap nil
+           :section-numbers nil
+           :with-author nil
+           :with-priority t
+           :with-toc t
+           :time-stamp-file nil
+           :html-doctype "html5"
+           :html-html5-fancy t
+           :html-head ,dotemacs-org-html-head
+           :html-preamble t
+           :html-preamble-format ,dotemacs-org-html-preamble-format
+           :html-postamble t
+           :html-postamble-format ,dotemacs-org-html-postamble-format)
           ("site-js"
-            :base-directory ,(expand-file-name "js" dotemacs-org-site-dir)
-            :base-extension "js"
-            :publishing-directory ,(expand-file-name "public/js" dotemacs-org-site-dir)
-            :recursive t
-            :publishing-function org-publish-attachment
-            )
+           :base-directory ,(expand-file-name "js" dotemacs-org-site-dir)
+           :base-extension "js"
+           :publishing-directory ,(expand-file-name "public/js" dotemacs-org-site-dir)
+           :recursive t
+           :publishing-function org-publish-attachment)
           ("site-css"
-            :base-directory ,(expand-file-name "css" dotemacs-org-site-dir)
-            :base-extension "css"
-            :publishing-directory ,(expand-file-name "public/css" dotemacs-org-site-dir)
-            :recursive t
-            :publishing-function org-publish-attachment
-            )
+           :base-directory ,(expand-file-name "css" dotemacs-org-site-dir)
+           :base-extension "css"
+           :publishing-directory ,(expand-file-name "public/css" dotemacs-org-site-dir)
+           :recursive t
+           :publishing-function org-publish-attachment)
           ("site-images"
-            :base-directory ,(expand-file-name "images" dotemacs-org-site-dir)
-            :base-extension "jpg\\|gif\\|png\\|svg\\|gif"
-            :publishing-directory ,(expand-file-name "public/images" dotemacs-org-site-dir)
-            :recursive t
-            :publishing-function org-publish-attachment
-            )
+           :base-directory ,(expand-file-name "images" dotemacs-org-site-dir)
+           :base-extension "jpg\\|gif\\|png\\|svg\\|gif"
+           :publishing-directory ,(expand-file-name "public/images" dotemacs-org-site-dir)
+           :recursive t
+           :publishing-function org-publish-attachment)
           ("site" :components ("site-org" "site-js" "site-css" "site-images")))))
 
 (provide 'init-org)

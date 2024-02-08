@@ -17,14 +17,21 @@
        <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/style.css\">
        <script src=\"/js/copycode.js\"></script>"
       dotemacs-org-html-preamble-format
-      '(("en" "<div class=\"nav-bar\">
-               <a class=\"nav-link\" href=\"/index.html\">Home</a>
-               <a class=\"nav-link\" href=\"/posts/index.html\">Posts</a>
-               <a class=\"nav-link\" href=\"/about.html\">About</a>
+      '(("en" "<div class=\"header-wrapper\">
+               <div class=\"site-header\">
+               <a class=\"site-title\" href=\"/\">Chuck</a>
+               <div class=\"site-nav\">
+                 <a class=\"nav-link\" href=\"/posts/index.html\">Posts</a>
+                 <a class=\"nav-link\" href=\"/search.html\">Search</a>
+                 <a class=\"nav-link\" href=\"/about.html\">About</a>
+               </div>
+               </div>
                </div>"))
       dotemacs-org-html-postamble-format
-      '(("en" "<div class=\"nav-btn\"><a href=\"/index.html\">Home</a></div>
+      '(("en" "<div class=\"nav-btn\"><a href=\"/\">Home</a></div>
                <div class=\"top-btn\"><a href=\"#top\">Top</a></div>
-               <footer>
-                <p>&copy xuchengpeng <a href=\"http://www.gnu.org/software/emacs/\">Emacs</a> 29.2  (<a href=\"https://orgmode.org\">Org</a> mode 9.6.15)</p>
-               </footer>")))
+               <div class=\"footer-wrapper\">
+               <div class=\"site-footer\">
+                &copy xuchengpeng. <a href=\"/feed.xml\">RSS Feed</a>
+               </div>
+               </div>")))

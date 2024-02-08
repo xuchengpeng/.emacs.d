@@ -117,6 +117,7 @@
     `(completions-annotations ((,c :foreground ,comment :background unspecified :slant italic)))
     `(completions-common-part ((,c :foreground ,blue1 :background unspecified)))
     `(completions-first-difference ((,c :foreground ,purple :background unspecified :weight bold)))
+    `(completions-highlight ((,c :background ,bg-hl :weight bold)))
 
     ;; corfu
     `(corfu-default ((,c :foreground ,fg :background ,bg-dark)))

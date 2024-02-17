@@ -72,17 +72,18 @@
   "t z" '("Zen mode" . toggle-frame-fullscreen)
 
   "w"   '("Workspaces" . (keymap))
-  "w [" 'tab-previous
-  "w ]" 'tab-next
-  "w b" 'switch-to-buffer-other-tab
-  "w c" 'tab-close
-  "w d" 'dired-other-tab
-  "w f" 'find-file-other-tab
-  "w g" 'tab-group
-  "w n" 'tab-new
-  "w p" 'project-other-tab-command
-  "w r" 'tab-rename
-  "w s" 'tab-switch)
+  "w [" '("Previous" . tab-previous)
+  "w ]" '("Next" . tab-next)
+  "w b" '("Switch Buffer Other Tab" . switch-to-buffer-other-tab)
+  "w c" '("Close" . tab-close)
+  "w C" '("Close Other" . tab-close-other)
+  "w d" '("Dired Other Tab" . dired-other-tab)
+  "w f" '("Find File Other Tab" . find-file-other-tab)
+  "w g" '("Group" . tab-group)
+  "w n" '("New" . tab-new)
+  "w p" '("Project Other Tab" . project-other-tab-command)
+  "w r" '("Rename" . tab-rename)
+  "w s" '("Switch" . tab-switch))
 
 (keymap-global-set dotemacs-leader-key dotemacs-leader-map)
 

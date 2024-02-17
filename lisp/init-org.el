@@ -20,6 +20,7 @@
         org-persist-directory (expand-file-name "org-persist" dotemacs-cache-dir)
         org-publish-timestamp-directory (expand-file-name "org-timestamps/" dotemacs-cache-dir)
         org-startup-indented t)
+
   (defun dotemacs-org-post-file ()
     (let* ((filename (read-from-minibuffer "New post filename: "))
            (post-dir (expand-file-name (format "org/posts/%s" (format-time-string "%Y/%m")) dotemacs-org-site-dir)))
@@ -41,6 +42,7 @@
           ("p" "Post" plain
            (function dotemacs-org-post-file)
            "" :jump-to-captured t :immediate-finish t)))
+
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "PROJECT(p)" "|" "DONE(d)" "CANCELLED(c)"))
         org-todo-keyword-faces
@@ -48,7 +50,18 @@
           ("HOLD" . warning)
           ("WAIT" . warning)
           ("CANCELLED" . error)
-          ("PROJECT" . font-lock-doc-face))))
+          ("PROJECT" . font-lock-doc-face)))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((C . t)
+     (emacs-lisp . t)
+     (python . t)
+     (js . t)
+     (css . t)
+     (sass . t)
+     (shell . t)
+     (plantuml . t))))
 
 (use-package org-clock
   :commands org-clock-save

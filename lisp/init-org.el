@@ -116,7 +116,7 @@
            :publishing-function org-publish-attachment)
           ("site-images"
            :base-directory ,(expand-file-name "images" dotemacs-org-site-dir)
-           :base-extension "jpg\\|gif\\|png\\|svg\\|gif"
+           :base-extension "jpg\\|gif\\|png\\|svg\\|gif\\|ico"
            :publishing-directory ,(expand-file-name "public/images" dotemacs-org-site-dir)
            :recursive t
            :publishing-function org-publish-attachment)

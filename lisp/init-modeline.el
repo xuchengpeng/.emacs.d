@@ -754,7 +754,7 @@ By default, this shows the information specified by `global-mode-string'."
              (bound-and-true-p flymake--state))
     (if dotemacs-modeline--flymake-text
         (concat (dotemacs-modeline-spc)
-                dotemacs-modeline--flymake-text
+                (dotemacs-modeline-display-text dotemacs-modeline--flymake-text)
                 (dotemacs-modeline-spc))
       "")))
 

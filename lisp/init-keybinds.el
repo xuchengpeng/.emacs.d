@@ -21,15 +21,6 @@
   "b S" '("Save all buffer" . save-some-buffers)
   "b w" '("Write buffer" . write-file)
 
-  "c"   '("Code" . (keymap))
-  "c a" '("Code Action" . eglot-code-actions)
-  "c d" '("Find Definition" . xref-find-definitions)
-  "c f" '("Format" . eglot-format)
-  "c i" '("Find Implementation" . eglot-find-implementation)
-  "c r" '("Find References" . xref-find-references)
-  "c R" '("Rename" . eglot-rename)
-  "c s" '("Workspace Symbols" . consult-eglot-symbols)
-
   "f"   '("Files" . (keymap))
   "f d" '("Find directory" . dired)
   "f f" '("Find file" . dotemacs-find-file)
@@ -37,6 +28,16 @@
   "f r" '("Recent files" . recentf-open-files)
   "f s" '("Save file" . save-buffer)
   "f w" '("Write file" . write-file)
+
+  "l"   '("LSP" . (keymap))
+  "l a" '("Code Action" . eglot-code-actions)
+  "l d" '("Find Definition" . xref-find-definitions)
+  "l f" '("Format" . eglot-format)
+  "l i" '("Find Implementation" . eglot-find-implementation)
+  "l r" '("Find References" . xref-find-references)
+  "l R" '("Rename" . eglot-rename)
+  "l s" '("Workspace Symbols" . consult-eglot-symbols)
+  "l x" '("Diagnostic" . flymake-show-buffer-diagnostics)
 
   "o"   '("Open" . (keymap))
   "o a" '("Org agenda" . org-agenda)

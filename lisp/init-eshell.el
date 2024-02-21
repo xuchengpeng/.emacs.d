@@ -31,10 +31,14 @@
         eshell-hist-ignoredups t
         eshell-glob-case-insensitive t
         eshell-error-if-no-glob t)
-    (add-hook 'eshell-mode-hook (lambda ()
-                                  (setq-local hscroll-margin 0)))
-    (with-eval-after-load 'em-alias
-      (setq eshell-command-aliases-list (append eshell-command-aliases-list dotemacs-eshell-aliases))))
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (setq-local hscroll-margin 0
+                          dotemacs-modeline-left '(dotemacs-modeline--window-number
+                                                   dotemacs-modeline--buffer-default-directory)
+                          dotemacs-modeline-right '(dotemacs-modeline--major-mode))))
+  (with-eval-after-load 'em-alias
+    (setq eshell-command-aliases-list (append eshell-command-aliases-list dotemacs-eshell-aliases))))
 
 (provide 'init-eshell)
 ;;; init-eshell.el ends here

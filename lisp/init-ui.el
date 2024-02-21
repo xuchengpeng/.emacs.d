@@ -130,15 +130,24 @@
 (keymap-global-set "C-M-9" (lambda () (interactive) (dotemacs-adjust-transparency nil 2)))
 (keymap-global-set "C-M-0" (lambda () (interactive) (set-frame-parameter nil 'alpha-background 100)))
 
-(add-hook 'after-init-hook (lambda ()
-                             (when (fboundp 'pixel-scroll-precision-mode)
-                               (pixel-scroll-precision-mode t))
+(add-hook
+ 'after-init-hook
+ (lambda ()
+   (when (fboundp 'pixel-scroll-precision-mode)
+     (pixel-scroll-precision-mode t))
 
-                             (dotemacs-init-theme)
-                             (require 'ace-window)
-                             ;; show tab-name in mode-line
-                             (setq tab-bar-show nil)
-                             (dotemacs-modeline-mode)))
+   (dotemacs-init-theme)
+   (require 'ace-window)
+   ;; show tab-name in mode-line
+   (setq tab-bar-show nil)
+   (require 'init-modeline)
+   (dotemacs-modeline-mode)))
+
+(add-hook
+ 'window-setup-hook
+ (lambda ()
+   (require 'init-dashboard)
+   (dotemacs-dashboard-init)))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

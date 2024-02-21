@@ -27,9 +27,13 @@
   (setq-local scroll-preserve-screen-position nil)
   (setq-local auto-hscroll-mode nil)
   (setq-local display-line-numbers-type nil)
-  (setq-local global-hl-line-mode nil))
+  (setq-local global-hl-line-mode nil)
+  (setq-local dotemacs-modeline-left '(dotemacs-modeline--window-number
+                                       dotemacs-modeline--buffer-default-directory)
+              dotemacs-modeline-right '(dotemacs-modeline--major-mode)))
 
 (defun dotemacs-display-init-time (&optional return-p)
+  "Display init time with RETURN-P."
   (let ((package-count 0))
     (when (bound-and-true-p package-alist)
       (setq package-count (length package-activated-list)))
@@ -39,10 +43,12 @@
              (* 1000.0 (float-time (time-subtract after-init-time before-init-time))))))
 
 (defun dotemacs-dashboard--center (len s)
+  "Center S with LEN."
   (concat (make-string (ceiling (max 0 (- len (length s))) 2) ? )
           s))
 
 (defun dotemacs-dashboard--widget-banner ()
+  "Widget banner."
   (let* ((banner
           '("███████╗███╗   ███╗ █████╗  ██████╗███████╗"
             "██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝"
@@ -64,6 +70,7 @@
       'face 'font-lock-keyword-face)))
 
 (defun dotemacs-dashboard--widget-menu ()
+  "Widget menu."
   (keymap-set dotemacs-dashboard-mode-map "f" 'find-file)
   (keymap-set dotemacs-dashboard-mode-map "r" 'recentf-open-files)
   (keymap-set dotemacs-dashboard-mode-map "g" 'dotemacs-search-cwd)
@@ -86,6 +93,7 @@
               "\n\n"))))
 
 (defun dotemacs-dashboard--widget-loaded ()
+  "Show packages loaded time."
   (insert
     "\n\n"
     (propertize
@@ -94,6 +102,7 @@
     "\n"))
 
 (defun dotemacs-dashboard--reload ()
+  "Reload dashboard."
   (when (or (not (eq dotemacs-dashboard--width (window-width)))
             (not (buffer-live-p (get-buffer dotemacs-dashboard--buffer-name))))
     (setq dotemacs-dashboard--width (window-width))
@@ -109,6 +118,7 @@
       (current-buffer))))
 
 (defun dotemacs-dashboard--resize (&optional _)
+  "Resize dashboard."
   (let ((space-win (get-buffer-window dotemacs-dashboard--buffer-name))
         (frame-win (frame-selected-window)))
     (when (and space-win
@@ -116,14 +126,11 @@
       (with-selected-window space-win
         (dotemacs-dashboard--reload)))))
 
-(defun dotemacs-dashboard--init (&optional _)
-  "Initializes dashboard."
-  (add-to-list 'dotemacs-modeline-mode-alist '(dotemacs-dashboard-mode . dashboard))
+(defun dotemacs-dashboard-init ()
+  "Initialize dashboard."
   (when (equal (buffer-name) "*scratch*")
     (dotemacs-dashboard--reload))
   (add-hook 'window-size-change-functions #'dotemacs-dashboard--resize))
-
-(add-hook 'window-setup-hook #'dotemacs-dashboard--init)
 
 (provide 'init-dashboard)
 ;;; init-dashboard.el ends here

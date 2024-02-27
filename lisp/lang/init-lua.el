@@ -21,8 +21,7 @@
   (add-hook 'lua-mode-hook
             (lambda ()
               (keymap-local-set dotemacs-localleader-key dotemacs-lua-mode-map)
-              (when (and (dotemacs-treesit-available-p)
-                         (treesit-language-available-p 'lua))
+              (when (treesit-language-available-p 'lua)
                 (treesit-parser-create 'lua)))))
 
 (provide 'init-lua)

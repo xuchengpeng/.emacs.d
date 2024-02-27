@@ -56,10 +56,5 @@ Same as `replace-string' RET `C-q' `C-m' RET RET, or `query-replace'."
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
 
-(defun dotemacs-treesit-available-p ()
-  "Treesit available."
-  (and (fboundp 'treesit-available-p)
-       (treesit-available-p)))
-
 (provide 'init-utils)
 ;;; init-utils.el ends here

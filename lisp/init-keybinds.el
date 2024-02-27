@@ -2,6 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
+(with-eval-after-load 'transient
+  (setq transient-levels-file (expand-file-name "transient/levels.el" dotemacs-cache-dir)
+        transient-values-file (expand-file-name "transient/values.el" dotemacs-cache-dir)
+        transient-history-file (expand-file-name "transient/history.el" dotemacs-cache-dir)))
+
 (defvar dotemacs-leader-key "M-SPC"
   "The leader prefix key.")
 

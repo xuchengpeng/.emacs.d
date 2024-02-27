@@ -129,24 +129,18 @@
            (after (symbol-overlay-get-list 1 symbol))
            (count (length before)))
       (when (symbol-overlay-assoc symbol)
-        (concat
-         " "
-         (propertize
-          (format (concat "%s: %d/%d" (and (cadr keyword) " in scope"))
-                  symbol
-                  (+ count 1)
-                  (+ count (length after)))
-          'face 'dotemacs-modeline-panel)
-         " ")))))
+        (propertize
+         (format (concat " %d/%d " (and (cadr keyword) "in scope "))
+                 (+ count 1)
+                 (+ count (length after)))
+         'face 'dotemacs-modeline-panel)))))
 
 (defun dotemacs-modeline--multiple-cursors ()
   "Show the number of multiple cursors."
   (when (bound-and-true-p multiple-cursors-mode)
     (when-let ((count (mc/num-cursors)))
-      (concat " "
-              (propertize (format "MC:%d" count)
-                          'face 'dotemacs-modeline-panel)
-              " "))))
+      (propertize (format " MC:%d " count)
+                  'face 'dotemacs-modeline-panel))))
 
 (defun dotemacs-modeline--matches ()
   "Matches in mode-line."

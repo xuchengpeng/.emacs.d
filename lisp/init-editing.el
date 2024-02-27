@@ -55,6 +55,9 @@
 (setq bookmark-default-file (expand-file-name "bookmarks" dotemacs-cache-dir)
       project-list-file (expand-file-name "projects" dotemacs-cache-dir))
 
+(with-eval-after-load 'multisession
+  (setq multisession-directory (expand-file-name "multisession" dotemacs-cache-dir)))
+
 (use-package autorevert
   :hook (after-init . global-auto-revert-mode)
   :config

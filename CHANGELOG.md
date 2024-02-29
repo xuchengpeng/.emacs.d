@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.2.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.0...v2.2.1) (2024-02-29)
+
+
+### Bug Fixes
+
+* **custom:** custom.el example ([70407ff](https://github.com/xuchengpeng/.emacs.d/commit/70407ff361d6da1b37e5be2041dedec5f39fe9fb))
+* **custom:** update example for ox-publish ([98d8f1f](https://github.com/xuchengpeng/.emacs.d/commit/98d8f1f56d20f2010db45b7f349e6cbeb383e307))
+* **custom:** update example for ox-publish ([03f6079](https://github.com/xuchengpeng/.emacs.d/commit/03f60791639f50bafdfcc2ddbe7ed24c000ac652))
+* **keybinds:** add LSP keymaps ([08394df](https://github.com/xuchengpeng/.emacs.d/commit/08394dff64c2bcc9acc8d9004b16ec28b0540903))
+* **modeline:** add workspace-name via tab-bar ([132160c](https://github.com/xuchengpeng/.emacs.d/commit/132160ca43f33209bce28737b3286ad374fdf934))
+* **modeline:** display flymake correctly ([0445710](https://github.com/xuchengpeng/.emacs.d/commit/0445710b3d297eac70cabe0e403b1f9bceebb5b5))
+* **modeline:** refactoring ([c2643f2](https://github.com/xuchengpeng/.emacs.d/commit/c2643f26267b6cfa13b93e5fbcf161b1fe7e4d33))
+* **modeline:** shorter matches info ([e512f35](https://github.com/xuchengpeng/.emacs.d/commit/e512f359e7f671241bc84c0b7d1a4772d660f2af))
+* **multisession:** store files in cache directory ([3593a26](https://github.com/xuchengpeng/.emacs.d/commit/3593a2652c96bca849344a2048fc8bccc0993fde))
+* **org:** add some languages for babel ([9c6d1a0](https://github.com/xuchengpeng/.emacs.d/commit/9c6d1a0e12c0693cb9fb46ff9e383cc11488d00b))
+* **org:** publish ico files ([4462c6b](https://github.com/xuchengpeng/.emacs.d/commit/4462c6b260c479abd1d4cf8a091f06c72fcb5498))
+* **ox-publish:** better indention ([6536d4c](https://github.com/xuchengpeng/.emacs.d/commit/6536d4c56ad26edad58c9edac86e57386e08f64a))
+* **symbol-overlay:** inhibit symbol-overlay-map ([68273fb](https://github.com/xuchengpeng/.emacs.d/commit/68273fbb833b242ec8c1f47bfd53f31a39f48d55))
+* **tokyonight-themes:** add support for 'completions-highlight' face ([1052ac7](https://github.com/xuchengpeng/.emacs.d/commit/1052ac785f57e9fc9b830912cfa7696f232acce8))
+* **tokyonight-themes:** add which-key support ([5356fd4](https://github.com/xuchengpeng/.emacs.d/commit/5356fd46dba909086ac0dc9bf4c85a5c8f4cd655))
+* **transient:** store files in cache directory ([15c6c02](https://github.com/xuchengpeng/.emacs.d/commit/15c6c02abb6d9ffb764d79b50e51731e12ffd4db))
+* **treesit:** remove useless function ([332067f](https://github.com/xuchengpeng/.emacs.d/commit/332067f35f06ba4e31eb2aee3b1a9cced71a665f))
+* **ui:** adjust background transparency ([5394f3f](https://github.com/xuchengpeng/.emacs.d/commit/5394f3f66866fa9974cee4f6a3efdac0f6817c92))
+* **which-key:** customize display style ([5b2cc37](https://github.com/xuchengpeng/.emacs.d/commit/5b2cc3732a530b717dd6f2f8d175872adb6c65e5))
+* **windmove:** drop windmove default keybindings ([ba15fc4](https://github.com/xuchengpeng/.emacs.d/commit/ba15fc467e0a2db8b71fb8828924e290768cd4ac))
+* **workspaces:** add menu item name ([b33a6b8](https://github.com/xuchengpeng/.emacs.d/commit/b33a6b8aa6194101bea9442a9f70a014900970d8))
+* **workspaces:** manage workspaces via tab-bar-mode ([7efcec9](https://github.com/xuchengpeng/.emacs.d/commit/7efcec9e5927039c86ad25e87a2dfd6ed494b54c))
+
 ## [2.2.0](https://github.com/xuchengpeng/.emacs.d/compare/v2.1.4...v2.2.0) (2024-01-31)
 
 

@@ -346,6 +346,16 @@
     ;; which-func-mode
     `(which-func ((,c :inherit bold :foreground ,blue)))
 
+    ;; which-key
+    `(which-key-command-description-face ((,c :foreground ,fg)))
+    `(which-key-group-description-face ((,c :inherit font-lock-keyword-face)))
+    `(which-key-highlighted-command-face ((,c :inherit warning :underline t)))
+    `(which-key-key-face ((,c :inherit font-lock-type-face :weight bold)))
+    `(which-key-local-map-description-face ((,c :foreground ,fg)))
+    `(which-key-note-face ((,c :inherit shadow)))
+    `(which-key-separator-face ((,c :inherit shadow)))
+    `(which-key-special-key-face ((,c :inherit error :weight bold)))
+
     ;; whitespace-mode
     `(whitespace-big-indent ((,c :background ,red1)))
     `(whitespace-empty ((,c :background unspecified)))

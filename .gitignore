@@ -3,6 +3,7 @@
 eln-cache/
 org/*.*
 server/
+*.data
 *.elc
 *~
 /projects

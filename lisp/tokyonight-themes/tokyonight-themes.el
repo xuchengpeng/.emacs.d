@@ -348,9 +348,9 @@
 
     ;; which-key
     `(which-key-command-description-face ((,c :foreground ,fg)))
-    `(which-key-group-description-face ((,c :inherit font-lock-keyword-face)))
+    `(which-key-group-description-face ((,c :foreground ,cyan)))
     `(which-key-highlighted-command-face ((,c :inherit warning :underline t)))
-    `(which-key-key-face ((,c :inherit font-lock-type-face :weight bold)))
+    `(which-key-key-face ((,c :foreground ,blue1 :weight bold)))
     `(which-key-local-map-description-face ((,c :foreground ,fg)))
     `(which-key-note-face ((,c :inherit shadow)))
     `(which-key-separator-face ((,c :inherit shadow)))

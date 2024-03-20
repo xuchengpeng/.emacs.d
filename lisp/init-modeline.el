@@ -90,10 +90,10 @@
 (defun dotemacs-modeline--face (&optional face)
   "Display FACE in the selected window."
   (if (mode-line-window-selected-p)
-      (or (and (facep face) face)
-          'mode-line-active)
-    (or (and (facep face) `(:inherit (mode-line-inactive ,face)))
-        'mode-line-inactive)))
+      (or (and (facep face) `(:inherit (dotemacs-modeline ,face)))
+          '(:inherit (dotemacs-modeline mode-line-active)))
+    (or (and (facep face) `(:inherit (dotemacs-modeline mode-line-inactive ,face)))
+        '(:inherit (dotemacs-modeline mode-line-inactive)))))
 
 (defun dotemacs-modeline--window-number ()
   "Window number in mode-line."

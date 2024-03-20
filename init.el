@@ -30,7 +30,7 @@
 (require 'init-completion)
 (require 'init-highlight)
 (require 'init-programming)
-(require 'init-eshell)
+(require 'init-shell)
 (require 'init-org)
 (require 'init-lang)
 

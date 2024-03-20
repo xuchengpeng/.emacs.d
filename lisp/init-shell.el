@@ -6,7 +6,14 @@
     (require 'init-eshell)
   (dotemacs-require-package 'vterm)
   (use-package vterm
-    :commands (vterm vterm-other-window)))
+    :commands (vterm vterm-other-window)
+    :config
+    (add-hook
+     'vterm-mode-hook
+     (lambda ()
+       (setq-local dotemacs-modeline-left '(dotemacs-modeline--window-number
+                                            dotemacs-modeline--buffer-info)
+                   dotemacs-modeline-right '(dotemacs-modeline--major-mode))))))
 
 (defun dotemacs-shell ()
   "Launch shell."

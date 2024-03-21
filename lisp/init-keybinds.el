@@ -42,7 +42,7 @@
   "l i" '("Find Implementation" . eglot-find-implementation)
   "l r" '("Find References" . xref-find-references)
   "l R" '("Rename" . eglot-rename)
-  "l s" '("Workspace Symbols" . consult-eglot-symbols)
+  "l s" '("Workspace Symbols" . xref-find-apropos)
   "l x" '("Diagnostic" . flymake-show-buffer-diagnostics)
 
   "o"   '("Open" . (keymap))

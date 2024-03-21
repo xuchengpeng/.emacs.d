@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(consult-eglot eldoc-box))
+(dotemacs-require-package 'eldoc-box)
 
 (use-package flymake
   :hook (prog-mode . flymake-mode)
@@ -30,9 +30,7 @@
   (when (executable-find "rg")
     (setq xref-search-program 'ripgrep))
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
-        xref-show-xrefs-function #'xref-show-definitions-completing-read)
-  (require 'consult-eglot)
-  (keymap-set eglot-mode-map "<remap> <xref-find-apropos>" 'consult-eglot-symbols))
+        xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
 (use-package eldoc-box
   :hook ((eglot-managed-mode . eldoc-box-hover-at-point-mode)))

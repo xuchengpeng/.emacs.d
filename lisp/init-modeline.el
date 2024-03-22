@@ -158,60 +158,20 @@
            'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
           " "))
 
-(defun dotemacs-modeline--buffer-simple-name ()
-  "Buffer simple name in mode-line."
-  (propertize
-   "%b"
-   'face (if (buffer-modified-p)
-             (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
-           (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))))
-
-(defun dotemacs-modeline--project-root ()
-  "Get project root directory."
-  (when-let ((project (project-current)))
-    (expand-file-name
-      (if (fboundp 'project-root)
-          (project-root project)
-        (car (with-no-warnings
-               (project-roots project)))))))
-
-(defun dotemacs-modeline--project-directory ()
-  "Get the path to the root of your project.
-Return `default-directory' if no project was found."
-  (abbreviate-file-name
-   (or (dotemacs-modeline--project-root) default-directory)))
-
-(defun dotemacs-modeline--buffer-name ()
-  "Buffer name in mode-line."
-  (let* ((root-path (file-local-name (dotemacs-modeline--project-directory)))
-         (file-path (file-local-name (or (buffer-file-name (buffer-base-buffer)) ""))))
-    (concat
-     ;; Project directory
-     (propertize (concat (file-name-nondirectory (directory-file-name root-path)) "/")
-                 'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
-     ;; Relative path
-     (propertize
-      (when-let (relative-path (file-relative-name
-                                (or (file-name-directory file-path) "./")
-                                root-path))
-        (if (string= relative-path "./")
-            ""
-          relative-path))
-      'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
-     ;; File name
-     (propertize
-      (file-name-nondirectory file-path)
-      'face (if (buffer-modified-p)
-                (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
-              (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))))))
-
 (defun dotemacs-modeline--buffer-info ()
   "Buffer info in mode-line."
   (concat
    " "
-   (if buffer-file-name
-       (dotemacs-modeline--buffer-name)
-     (dotemacs-modeline--buffer-simple-name))
+   (propertize
+    "%b"
+    'face (if (buffer-modified-p)
+              (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
+            (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))
+    'help-echo (format "%s
+mouse-1: Previous buffer
+mouse-3: Next buffer" (or buffer-file-name (format-mode-line "%b")))
+    'mouse-face 'dotemacs-modeline-highlight
+    'local-map mode-line-buffer-identification-keymap)
    " %I "))
 
 (defun dotemacs-modeline--position ()

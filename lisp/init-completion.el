@@ -93,6 +93,9 @@ If prefix ARG is set, prompt for a directory to search from."
   (setq prefix-help-command #'embark-prefix-help-command)
   (keymap-global-set "<remap> <describe-bindings>" 'embark-bindings))
 
+(use-package embark-consult
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package marginalia
   :after (vertico)
   :init

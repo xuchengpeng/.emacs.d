@@ -64,9 +64,10 @@
   "s d" '("Current Directory" . dotemacs-search-cwd)
   "s D" '("Other Directory" . dotemacs-search-other-cwd)
   "s f" '("Locate" . locate)
+  "s g" '("Grep" . consult-grep)
   "s i" '("Imenu" . imenu)
   "s m" '("Bookmark" . bookmark-jump)
-  "s p" '("Project" . consult-ripgrep)
+  "s r" '("Ripgrep" . consult-ripgrep)
   "s s" '("Symbol" . dotemacs-search-symbol-at-point)
 
   "t"   '("Toggle" . (keymap))

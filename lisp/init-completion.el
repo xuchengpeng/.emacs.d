@@ -29,6 +29,7 @@
 
 (use-package consult
   :after (vertico)
+  :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
   (keymap-global-set "<remap> <apropos>"                       'consult-apropos)
   (keymap-global-set "<remap> <bookmark-jump>"                 'consult-bookmark)
@@ -47,15 +48,15 @@
   (keymap-global-set "C-r" 'consult-line)
   (keymap-global-set "C-s" 'consult-line)
   :config
-  (setq consult-narrow-key "<"
-        consult-line-numbers-widen t
-        consult-async-min-input 2
-        consult-async-refresh-delay  0.15
-        consult-async-input-throttle 0.2
-        consult-async-input-debounce 0.1
-        consult-find-args (if IS-WINDOWS
-                              "find . -not ( -wholename \\*/.\\* -prune )"
-                            consult-find-args)))
+  (setq consult-narrow-key "<")
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
+  (advice-add #'register-preview :override #'consult-register-window)
+  (with-eval-after-load 'xref
+    (when (executable-find "rg")
+      (setq xref-search-program 'ripgrep))
+    (setq xref-show-xrefs-function #'consult-xref
+          xref-show-definitions-function #'consult-xref)))
 
 (defun dotemacs-find-file (&optional dir initial)
   "Search for files in DIR matching input regexp given INITIAL input."

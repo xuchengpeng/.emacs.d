@@ -52,6 +52,10 @@
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
+  ;; search symbol at point by default
+  (consult-customize
+   consult-line consult-grep consult-ripgrep consult-git-grep
+   :initial (thing-at-point 'symbol))
   (with-eval-after-load 'xref
     (when (executable-find "rg")
       (setq xref-search-program 'ripgrep))
@@ -68,20 +72,15 @@
     (consult-find dir initial))
    (find-file dir initial)))
 
-(defun dotemacs-search-symbol-at-point ()
-  "Search symbol at point."
-  (interactive)
-  (consult-line (thing-at-point 'symbol)))
-
-(defun dotemacs-search-cwd (&optional arg)
+(defun dotemacs-search-cwd (&optional other)
   "Conduct a text search in files under the current folder.
-If prefix ARG is set, prompt for a directory to search from."
+If prefix OTHER is set, prompt for a directory to search from."
   (interactive "P")
   (let ((default-directory
-          (if arg
+          (if other
               (read-directory-name "Search directory: ")
             default-directory)))
-    (consult-ripgrep default-directory)))
+    (consult-ripgrep default-directory (thing-at-point 'symbol))))
 
 (defun dotemacs-search-other-cwd ()
   "Conduct a text search in another directory."

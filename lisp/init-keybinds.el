@@ -29,8 +29,6 @@
   "f"   '("Files" . (keymap))
   "f d" '("Find Directory" . dired)
   "f f" '("Find File" . dotemacs-find-file)
-  "f g" '("Grep Current Directory" . dotemacs-search-cwd)
-  "f G" '("Grep Other Directory" . dotemacs-search-other-cwd)
   "f r" '("Recent Files" . recentf-open-files)
   "f s" '("Save Buffer" . save-buffer)
   "f w" '("Write File" . write-file)
@@ -68,7 +66,6 @@
   "s i" '("Imenu" . imenu)
   "s m" '("Bookmark" . bookmark-jump)
   "s r" '("Ripgrep" . consult-ripgrep)
-  "s s" '("Symbol" . dotemacs-search-symbol-at-point)
 
   "t"   '("Toggle" . (keymap))
   "t f" '("Flymake" . flymake-mode)

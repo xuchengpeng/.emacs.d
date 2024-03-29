@@ -41,7 +41,7 @@
   "l r" '("Find References" . xref-find-references)
   "l R" '("Rename" . eglot-rename)
   "l s" '("Workspace Symbols" . xref-find-apropos)
-  "l x" '("Diagnostic" . flymake-show-buffer-diagnostics)
+  "l x" '("Diagnostic" . consult-flymake)
 
   "o"   '("Open" . (keymap))
   "o a" '("Org Agenda" . org-agenda)

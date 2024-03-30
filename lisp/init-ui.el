@@ -16,18 +16,8 @@
 
 (setq uniquify-buffer-name-style 'forward)
 
-;;;###autoload
-(defun dotemacs-ring-bell-fn ()
-  "Blink the mode-line."
-  (let ((buf (current-buffer)))
-    (invert-face 'mode-line)
-    (run-with-timer 0.05 nil
-                    (lambda ()
-                      (with-current-buffer buf
-                        (invert-face 'mode-line))))))
-
-(setq ring-bell-function 'dotemacs-ring-bell-fn
-      visible-bell t)
+(setq ring-bell-function #'ignore
+      visible-bell nil)
 
 (blink-cursor-mode -1)
 (setq blink-matching-paren nil)

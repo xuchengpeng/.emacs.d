@@ -1,5 +1,28 @@
 # Changelog
 
+## [2.2.2](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.1...v2.2.2) (2024-03-30)
+
+
+### Bug Fixes
+
+* **ci:** add emacs 29.3 to the CI matrix ([289c380](https://github.com/xuchengpeng/.emacs.d/commit/289c380a972a2eb00c2f0b53fcaf01a80de6dfdc))
+* **consult:** better configuration ([ac34b87](https://github.com/xuchengpeng/.emacs.d/commit/ac34b873128b5698a849a2e40c28a2c168bbfb2c))
+* **consult:** search symbol at point by default ([76eeea3](https://github.com/xuchengpeng/.emacs.d/commit/76eeea3a2d57cae5abf81aadcd8676cf62db9a29))
+* **eglot:** remove consult-eglot ([fff1527](https://github.com/xuchengpeng/.emacs.d/commit/fff1527da7e6c5aa68d3fea6d0b9faa0d5976888))
+* **embark:** load embark-consult ([eb184a2](https://github.com/xuchengpeng/.emacs.d/commit/eb184a2e284078a7e72ef4ce31133301549b0bdb))
+* **gitignore:** ignore data files ([0a0ca15](https://github.com/xuchengpeng/.emacs.d/commit/0a0ca1514354673d3b27d4883d7aa81cb8f7a3b7))
+* **keybinds:** bind grep commands ([e14ee6c](https://github.com/xuchengpeng/.emacs.d/commit/e14ee6c8f87566a44dc5ad12d39d8dc5266dd30f))
+* **keybinds:** open diagnostic with consult-flymake ([7972954](https://github.com/xuchengpeng/.emacs.d/commit/797295436058bd17c7b491700f5908d2dbf6be25))
+* **keybinds:** simply descriptions ([16443b6](https://github.com/xuchengpeng/.emacs.d/commit/16443b6319601b42fa4eb701e99bfd843ad32392))
+* **modeline:** faces inherit from dotemacs-modeline ([c4ee8a7](https://github.com/xuchengpeng/.emacs.d/commit/c4ee8a737d110bb31dfb10eef949408810c252b8))
+* **modeline:** simple buffer info ([8fcdc2c](https://github.com/xuchengpeng/.emacs.d/commit/8fcdc2c76ada608d40262c9ea78da272b79752b3))
+* **shell:** use vterm with non-windows systems ([94d9592](https://github.com/xuchengpeng/.emacs.d/commit/94d9592450a386fb8172793fdf2ffdeff7371242))
+* **tokyonight-themes:** proper which-key group description and key face ([67b8819](https://github.com/xuchengpeng/.emacs.d/commit/67b8819ccdfdc7189791367657d26b59c782945b))
+* **treesit:** check if treesit available ([659b729](https://github.com/xuchengpeng/.emacs.d/commit/659b7293d7b3bd4ed503c7c2788ea317ff519e4c))
+* **ui:** don't ring the bell ([84f68fe](https://github.com/xuchengpeng/.emacs.d/commit/84f68feac39af17be138797a356fc1f9099260a5))
+* **vterm:** customize modeline style ([34001d8](https://github.com/xuchengpeng/.emacs.d/commit/34001d893f96e8fa2e97ce849496eceacd096def))
+* **vterm:** show default directory in modeline ([c139c44](https://github.com/xuchengpeng/.emacs.d/commit/c139c44b99ea2d70ed3da33e903fb675f442f416))
+
 ## [2.2.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.0...v2.2.1) (2024-02-29)
 
 

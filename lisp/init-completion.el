@@ -110,7 +110,13 @@ If prefix OTHER is set, prompt for a directory to search from."
 
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
-  (setq tab-always-indent 'complete))
+  (setq tab-always-indent 'complete)
+
+  ;; Emacs 30 and newer: Disable Ispell completion function.
+  (setq text-mode-ispell-word-completion nil)
+
+  ;; Hide commands in M-x which do not apply to the current mode.
+  (setq read-extended-command-predicate #'command-completion-default-include-p))
 
 (use-package corfu
   :custom

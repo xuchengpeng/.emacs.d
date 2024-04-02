@@ -24,8 +24,7 @@
                          (eglot-ensure))))
   :init
   (setq eglot-autoshutdown t
-        eglot-send-changes-idle-time 0.5
-        eglot-events-buffer-size 0))
+        eglot-send-changes-idle-time 0.5))
 
 (use-package eldoc-box
   :hook ((eglot-managed-mode . eldoc-box-hover-at-point-mode)))

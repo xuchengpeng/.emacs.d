@@ -27,7 +27,7 @@
         eglot-send-changes-idle-time 0.5))
 
 (use-package eldoc-box
-  :hook ((eglot-managed-mode . eldoc-box-hover-at-point-mode)))
+  :commands (eldoc-box-help-at-point))
 
 ;; treesit support
 (when (dotemacs-treesit-available-p)

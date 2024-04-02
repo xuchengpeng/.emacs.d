@@ -5,7 +5,16 @@
 (dotemacs-require-packages '(vertico orderless consult embark embark-consult marginalia corfu cape tempel))
 
 (use-package vertico
-  :hook (after-init . vertico-mode))
+  :hook (after-init . vertico-mode)
+  :config
+  (setq vertico-resize nil
+        vertico-cycle t)
+  (setq-default completion-in-region-function
+                (lambda (&rest args)
+                  (apply (if vertico-mode
+                             #'consult-completion-in-region
+                           #'completion--in-region)
+                         args))))
 
 (use-package orderless
   :after (vertico)

@@ -70,6 +70,8 @@
   :group 'dotemacs-modeline-faces)
 
 (defvar flymake--state)
+(defvar text-scale-mode-amount)
+(defvar text-scale-mode-lighter)
 
 (declare-function aw-update "ext:ace-window")
 (declare-function flymake--diag-type "ext:flymake" t t)
@@ -234,11 +236,15 @@ mouse-1: Display Line and Column Mode Menu"
 
 (defun dotemacs-modeline--text-scale ()
   "Text-Scale info in mode-line."
-  (when (and (boundp 'text-scale-mode-amount) (/= text-scale-mode-amount 0))
-    (format (if (> text-scale-mode-amount 0)
-                " (%+d) "
-              " (%-d) ")
-            text-scale-mode-amount)))
+  (when (and (boundp 'text-scale-mode-lighter) (/= text-scale-mode-amount 0))
+    (concat
+     " "
+     (propertize
+      (format "(%s)"
+              text-scale-mode-lighter)
+      'mouse-face 'dotemacs-modeline-highlight
+      'help-echo (concat "Text scale " text-scale-mode-lighter))
+     " ")))
 
 (defun dotemacs-modeline--major-mode ()
   "Major mode in mode-line."
@@ -331,7 +337,7 @@ mouse-3: Previous error"
     dotemacs-modeline--word-count
     dotemacs-modeline--selection-info)
   "List of items on the left of mode-line."
-  :type 'list
+  :type '(list function)
   :group 'dotemacs-modeline)
 
 (defcustom dotemacs-modeline-right
@@ -342,7 +348,7 @@ mouse-3: Previous error"
     dotemacs-modeline--vc-info
     dotemacs-modeline--flymake)
   "List of items on the right of mode-line."
-  :type 'list
+  :type '(list function)
   :group 'dotemacs-modeline)
 
 (defun dotemacs-modeline--format-segments (segments)

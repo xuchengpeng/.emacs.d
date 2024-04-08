@@ -59,20 +59,14 @@
   (setq multisession-directory (expand-file-name "multisession" dotemacs-cache-dir)))
 
 (use-package autorevert
-  :hook (after-init . global-auto-revert-mode)
-  :config
-  (setq auto-revert-verbose t
-        auto-revert-use-notify nil
-        auto-revert-stop-on-user-input nil))
+  :hook (after-init . global-auto-revert-mode))
 
 (use-package recentf
   :hook (after-init . recentf-mode)
   :commands recentf-open-files
-  :config
-  (setq recentf-save-file (expand-file-name "recentf" dotemacs-cache-dir)
-        recentf-max-saved-items 200
-        recentf-auto-cleanup nil)
-  (add-hook 'kill-emacs-hook #'recentf-cleanup))
+  :custom
+  (recentf-save-file (expand-file-name "recentf" dotemacs-cache-dir))
+  (recentf-max-saved-items 200))
 
 (use-package savehist
   :hook (after-init . savehist-mode)
@@ -86,8 +80,8 @@
 
 (use-package saveplace
   :hook (after-init . save-place-mode)
-  :config
-  (setq save-place-file (expand-file-name "saveplace" dotemacs-cache-dir)))
+  :custom
+  (save-place-file (expand-file-name "saveplace" dotemacs-cache-dir)))
 
 (use-package hideshow
   :commands (hs-toggle-hiding)

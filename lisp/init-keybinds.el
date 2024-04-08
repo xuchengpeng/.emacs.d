@@ -93,8 +93,5 @@
 
 (keymap-global-set dotemacs-leader-key dotemacs-leader-map)
 
-(keymap-global-set "C-." 'set-mark-command)
-(keymap-global-set "C-x C-." 'pop-global-mark)
-
 (provide 'init-keybinds)
 ;;; init-keybinds.el ends here

@@ -87,8 +87,10 @@ If prefix OTHER is set, prompt for a directory to search from."
 (use-package embark
   :after (vertico)
   :init
-  (setq prefix-help-command #'embark-prefix-help-command)
-  (keymap-global-set "<remap> <describe-bindings>" 'embark-bindings))
+  (keymap-global-set "C-." 'embark-act)
+  (keymap-global-set "C-;" 'embark-dwim)
+  (keymap-global-set "C-h B" 'embark-bindings)
+  (setq prefix-help-command #'embark-prefix-help-command))
 
 (use-package embark-consult
   :hook (embark-collect-mode . consult-preview-at-point-mode))

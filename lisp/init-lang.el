@@ -12,6 +12,7 @@
     (setq c-ts-mode-indent-offset 4)))
 
 (require 'init-markdown)
+(require 'init-python)
 (require 'init-lua)
 
 (provide 'init-lang)

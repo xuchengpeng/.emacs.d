@@ -23,14 +23,10 @@
               (keymap-local-set dotemacs-localleader-key dotemacs-lua-mode-map)
               (when (and (dotemacs-treesit-available-p)
                          (treesit-language-available-p 'lua))
-                (treesit-parser-create 'lua)))))
+                (treesit-parser-create 'lua))))
 
-(defun dotemacs-lua-format ()
-  "Format current buffer with `stylua'."
-  (interactive)
-  (unless (executable-find "stylua")
-    (error "`stylua' not found"))
-  (dotemacs-format-buffer "stylua"))
+  (reformatter-define lua-format
+    :program "stylua"))
 
 (provide 'init-lua)
 ;;; init-lua.el ends here

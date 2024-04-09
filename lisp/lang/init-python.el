@@ -7,15 +7,7 @@
   (interactive)
   (unless (executable-find "black")
     (error "`black' not found"))
-  (if buffer-file-name
-      (progn
-        (save-buffer)
-        (shell-command
-         (format "black -q %s" buffer-file-name)))
-    (shell-command-on-region
-     (point-min)
-     (point-max)
-     "black - -q")))
+  (dotemacs-format-buffer "black" "-q"))
 
 (provide 'init-python)
 ;;; init-python.el ends here

@@ -11,6 +11,18 @@
   (with-eval-after-load 'c-ts-mode
     (setq c-ts-mode-indent-offset 4)))
 
+(defun dotemacs-format-buffer (command &optional args)
+  "Format current buffer with COMMAND and ARGS."
+  (let ((command
+         (if args
+             (format "%s %s" command args)
+           command)))
+    (unless buffer-file-name
+      (error "Save buffer before formatting"))
+    (save-buffer)
+    (shell-command
+     (format "%s %s" command buffer-file-name))))
+
 (require 'init-markdown)
 (require 'init-python)
 (require 'init-lua)

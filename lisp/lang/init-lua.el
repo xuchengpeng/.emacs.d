@@ -25,5 +25,12 @@
                          (treesit-language-available-p 'lua))
                 (treesit-parser-create 'lua)))))
 
+(defun dotemacs-lua-format ()
+  "Format current buffer with `stylua'."
+  (interactive)
+  (unless (executable-find "stylua")
+    (error "`stylua' not found"))
+  (dotemacs-format-buffer "stylua"))
+
 (provide 'init-lua)
 ;;; init-lua.el ends here

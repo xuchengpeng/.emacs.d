@@ -22,7 +22,8 @@
 
 (with-eval-after-load 'sh-script
   (reformatter-define shfmt
-    :program "shfmt"))
+    :program "shfmt"
+    :args `("-i" ,(number-to-string sh-basic-offset))))
 
 (provide 'init-lang)
 ;;; init-lang.el ends here

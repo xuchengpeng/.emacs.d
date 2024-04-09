@@ -19,14 +19,8 @@
       tramp-backup-directory-alist backup-directory-alist)
 
 (setq auto-save-default nil
-      auto-save-include-big-deletions t
       auto-save-list-file-prefix (expand-file-name "autosave" dotemacs-cache-dir)
-      tramp-auto-save-directory  (expand-file-name "tramp-autosave" dotemacs-cache-dir)
-      auto-save-file-name-transforms
-      (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
-                  ;; Prefix tramp autosaves to prevent conflicts with local ones
-                  (concat auto-save-list-file-prefix "tramp-\\2") t)
-            (list ".*" auto-save-list-file-prefix t)))
+      tramp-auto-save-directory  (expand-file-name "tramp-autosave" dotemacs-cache-dir))
 
 ;; Indentation
 (setq-default tab-width 4

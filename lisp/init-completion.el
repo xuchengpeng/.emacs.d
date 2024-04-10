@@ -135,7 +135,8 @@ If prefix OTHER is set, prompt for a directory to search from."
   :config
   (add-to-list 'dabbrev-ignored-buffer-regexps "\\` ")
   (add-to-list 'dabbrev-ignored-buffer-modes 'doc-view-mode)
-  (add-to-list 'dabbrev-ignored-buffer-modes 'pdf-view-mode))
+  (add-to-list 'dabbrev-ignored-buffer-modes 'pdf-view-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
 
 (use-package cape
   :after corfu

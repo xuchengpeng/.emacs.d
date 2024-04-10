@@ -2,10 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(defconst dotemacs-dashboard--buffer-name "*dashboard*"
+(defvar dotemacs-dashboard--buffer-name "*dashboard*"
   "Dashboard's buffer name.")
 
-(defconst dotemacs-dashboard--width 80
+(defvar dotemacs-dashboard--width 80
   "Current width of the home buffer.")
 
 (defvar dotemacs-dashboard--functions
@@ -18,8 +18,8 @@
   "Major mode for the dashboard buffer."
   :syntax-table nil
   :abbrev-table nil
-  (setq buffer-read-only t)
-  (setq truncate-lines t)
+  (setq-local buffer-read-only t)
+  (setq-local truncate-lines t)
   (setq-local whitespace-style nil)
   (setq-local show-trailing-whitespace nil)
   (setq-local hscroll-margin 0)
@@ -31,16 +31,6 @@
   (setq-local dotemacs-modeline-left '(dotemacs-modeline--window-number
                                        dotemacs-modeline--buffer-default-directory)
               dotemacs-modeline-right '(dotemacs-modeline--major-mode)))
-
-(defun dotemacs-display-init-time (&optional return-p)
-  "Display init time with RETURN-P."
-  (let ((package-count 0))
-    (when (bound-and-true-p package-alist)
-      (setq package-count (length package-activated-list)))
-    (funcall (if return-p #'format #'message)
-             "dotemacs loaded %d packages in %.2fms"
-             package-count
-             (* 1000.0 (float-time (time-subtract after-init-time before-init-time))))))
 
 (defun dotemacs-dashboard--center (len s)
   "Center S with LEN."
@@ -73,7 +63,7 @@
   "Widget menu."
   (keymap-set dotemacs-dashboard-mode-map "f" 'find-file)
   (keymap-set dotemacs-dashboard-mode-map "r" 'recentf-open-files)
-  (keymap-set dotemacs-dashboard-mode-map "g" 'dotemacs-search-cwd)
+  (keymap-set dotemacs-dashboard-mode-map "g" 'consult-ripgrep)
   (keymap-set dotemacs-dashboard-mode-map "p" 'project-switch-project)
   (keymap-set dotemacs-dashboard-mode-map "b" 'bookmark-jump)
   (let* ((menu
@@ -95,11 +85,15 @@
 (defun dotemacs-dashboard--widget-loaded ()
   "Show packages loaded time."
   (insert
-    "\n\n"
-    (propertize
-      (dotemacs-dashboard--center dotemacs-dashboard--width (dotemacs-display-init-time 'return))
-      'face 'font-lock-comment-face)
-    "\n"))
+   "\n\n"
+   (propertize
+    (dotemacs-dashboard--center
+     dotemacs-dashboard--width
+     (format "dotemacs loaded %d packages in %.2fms"
+             (length package-activated-list)
+             (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
+    'face 'font-lock-comment-face)
+   "\n"))
 
 (defun dotemacs-dashboard--reload ()
   "Reload dashboard."
@@ -130,6 +124,7 @@
   "Initialize dashboard."
   (when (equal (buffer-name) "*scratch*")
     (dotemacs-dashboard--reload))
+  (add-hook 'window-configuration-change-hook #'dotemacs-dashboard--resize)
   (add-hook 'window-size-change-functions #'dotemacs-dashboard--resize))
 
 (provide 'init-dashboard)

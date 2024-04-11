@@ -26,7 +26,8 @@
                 (treesit-parser-create 'lua))))
 
   (reformatter-define lua-format
-    :program "stylua"))
+    :program "stylua"
+    :args '("-")))
 
 (provide 'init-lua)
 ;;; init-lua.el ends here

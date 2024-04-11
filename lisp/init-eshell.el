@@ -36,7 +36,8 @@
               (setq-local hscroll-margin 0
                           dotemacs-modeline-left '(dotemacs-modeline--window-number
                                                    dotemacs-modeline--buffer-default-directory)
-                          dotemacs-modeline-right '(dotemacs-modeline--major-mode))))
+                          dotemacs-modeline-right '(dotemacs-modeline--major-mode))
+              (visual-line-mode)))
   (with-eval-after-load 'em-alias
     (setq eshell-command-aliases-list (append eshell-command-aliases-list dotemacs-eshell-aliases))))
 

@@ -53,7 +53,11 @@ The generated and indented TOC will be inserted at point."
                 "<script>document.addEventListener('DOMContentLoaded', () => { document.body.classList.add('markdown-body'); document.querySelectorAll('pre[lang] > code').forEach((code) => { code.classList.add(code.parentElement.lang); }); document.querySelectorAll('pre > code').forEach((code) => { hljs.highlightBlock(code); }); });</script>"))
   (when (executable-find "pandoc")
     (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "--mathjax" "--highlight-style=pygments")))
-  (keymap-set markdown-mode-command-map "i" markdown-mode-style-map))
+  (keymap-set markdown-mode-command-map "i" markdown-mode-style-map)
+
+  (reformatter-define markdown-format
+    :program "prettier"
+    :args '("--parser" "markdown")))
 
 (provide 'init-markdown)
 ;;; init-markdown.el ends here

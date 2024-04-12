@@ -25,5 +25,10 @@
     :program "shfmt"
     :args `("-i" ,(number-to-string sh-basic-offset) "-")))
 
+(with-eval-after-load 'yaml-ts-mode
+  (reformatter-define yaml-format
+    :program "prettier"
+    :args '("--parser" "yaml")))
+
 (provide 'init-lang)
 ;;; init-lang.el ends here

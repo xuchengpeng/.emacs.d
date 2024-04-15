@@ -4,30 +4,6 @@
 
 (dotemacs-require-package 'markdown-mode)
 
-(defun dotemacs-markdown-toc ()
-  "Extract headings from the current Markdown buffer.
-The generated and indented TOC will be inserted at point."
-  (interactive)
-  (let (toc-list markdown-toc)
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward "^\\(#+\\)\\s-+\\(.*\\)" nil t)
-        (let* ((level (length (match-string 1)))
-               (heading-text (match-string 2))
-               (heading-id (downcase (replace-regexp-in-string "[[:space:]]+" "-" heading-text))))
-          ;; Remove commas, parentheses from the heading-id
-          (setq heading-id (replace-regexp-in-string "[,()]" "" heading-id))
-          (push (cons level (cons heading-text heading-id)) toc-list))))
-    (setq toc-list (reverse toc-list))
-    (dolist (item toc-list)
-      (let* ((level (car item))
-             (heading-text (cadr item))
-             (heading-id (cddr item))
-             (indentation (make-string (* 2 (1- level)) ?\ ))
-             (line (format "- [%s](#%s)\n" heading-text heading-id)))
-        (setq markdown-toc (concat markdown-toc (concat indentation line)))))
-    (insert markdown-toc)))
-
 (use-package markdown-mode
   :mode ("/README\\(?:\\.md\\)?\\'" . gfm-mode)
   :hook (markdown-mode . (lambda ()

@@ -361,7 +361,8 @@ mouse-3: Toggle minor modes"
                 (propertize
                  text
                  'help-echo
-                 (format "error:%d, warning:%d, info:%d
+                 (format "Flymake
+error:%d, warning:%d, info:%d
 mouse-1: Next error
 mouse-2: Show all errors
 mouse-3: Previous error"

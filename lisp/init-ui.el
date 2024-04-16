@@ -26,7 +26,11 @@
 ;; middle-click paste at point, not at click
 (setq mouse-yank-at-point t)
 
-(setq frame-title-format '("%b – Emacs")
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))
+        " - Emacs")
       icon-title-format frame-title-format)
 
 (setq window-resize-pixelwise nil

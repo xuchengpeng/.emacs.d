@@ -49,11 +49,6 @@
   "Face used for the major-mode segment in the mode-line."
   :group 'dotemacs-modeline-faces)
 
-(defface dotemacs-modeline-panel
-  '((t (:inherit dotemacs-modeline-highlight)))
-  "Face for \\='X out of Y\\=' segments."
-  :group 'dotemacs-modeline-faces)
-
 (defface dotemacs-modeline-info
   '((t (:inherit (dotemacs-modeline success))))
   "Face for info-level messages in the mode-line."
@@ -246,15 +241,15 @@ mouse-1: Display Line and Column Mode Menu"
            (count (length before)))
       (when (symbol-overlay-assoc symbol)
         (propertize
-         (format " %d/%d " (+ count 1) (+ count (length after)))
-         'face 'dotemacs-modeline-panel)))))
+         (format " %s:%d/%d " symbol (+ count 1) (+ count (length after)))
+         'face 'dotemacs-modeline-emphasis)))))
 
 (defun dotemacs-modeline--multiple-cursors ()
   "Show the number of multiple cursors."
   (when (bound-and-true-p multiple-cursors-mode)
     (when-let ((count (mc/num-cursors)))
       (propertize (format " MC:%d " count)
-                  'face 'dotemacs-modeline-panel))))
+                  'face 'dotemacs-modeline-emphasis))))
 
 (defun dotemacs-modeline--matches ()
   "Matches in mode-line."

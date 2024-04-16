@@ -121,37 +121,6 @@
        (format " [%s] " (if explicit-name tab-name (+ 1 tab-index)))
        'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode)))))
 
-(defun dotemacs-modeline--symbol-overlay ()
-  "Show the number of matches for symbol overlay."
-  (when (and (bound-and-true-p symbol-overlay-keywords-alist)
-             (not (bound-and-true-p symbol-overlay-temp-symbol)))
-    (let* ((keyword (symbol-overlay-assoc (symbol-overlay-get-symbol t)))
-           (symbol (car keyword))
-           (before (symbol-overlay-get-list -1 symbol))
-           (after (symbol-overlay-get-list 1 symbol))
-           (count (length before)))
-      (when (symbol-overlay-assoc symbol)
-        (propertize
-         (format (concat " %d/%d " (and (cadr keyword) "in scope "))
-                 (+ count 1)
-                 (+ count (length after)))
-         'face 'dotemacs-modeline-panel)))))
-
-(defun dotemacs-modeline--multiple-cursors ()
-  "Show the number of multiple cursors."
-  (when (bound-and-true-p multiple-cursors-mode)
-    (when-let ((count (mc/num-cursors)))
-      (propertize (format " MC:%d " count)
-                  'face 'dotemacs-modeline-panel))))
-
-(defun dotemacs-modeline--matches ()
-  "Matches in mode-line."
-  (when (mode-line-window-selected-p)
-    (let ((meta (concat (dotemacs-modeline--symbol-overlay)
-                        (dotemacs-modeline--multiple-cursors))))
-      (unless (string-empty-p meta)
-        meta))))
-
 (defun dotemacs-modeline--buffer-default-directory ()
   "Display `default-directory'."
   (concat " "
@@ -265,6 +234,35 @@ mouse-1: Display Line and Column Mode Menu"
         (format " %dW" (count-words beg end))
         " ")
        'face 'dotemacs-modeline-emphasis))))
+
+(defun dotemacs-modeline--symbol-overlay ()
+  "Show the number of matches for symbol overlay."
+  (when (and (bound-and-true-p symbol-overlay-keywords-alist)
+             (not (bound-and-true-p symbol-overlay-temp-symbol)))
+    (let* ((keyword (symbol-overlay-assoc (symbol-overlay-get-symbol t)))
+           (symbol (car keyword))
+           (before (symbol-overlay-get-list -1 symbol))
+           (after (symbol-overlay-get-list 1 symbol))
+           (count (length before)))
+      (when (symbol-overlay-assoc symbol)
+        (propertize
+         (format " %d/%d " (+ count 1) (+ count (length after)))
+         'face 'dotemacs-modeline-panel)))))
+
+(defun dotemacs-modeline--multiple-cursors ()
+  "Show the number of multiple cursors."
+  (when (bound-and-true-p multiple-cursors-mode)
+    (when-let ((count (mc/num-cursors)))
+      (propertize (format " MC:%d " count)
+                  'face 'dotemacs-modeline-panel))))
+
+(defun dotemacs-modeline--matches ()
+  "Matches in mode-line."
+  (when (mode-line-window-selected-p)
+    (let ((meta (concat (dotemacs-modeline--symbol-overlay)
+                        (dotemacs-modeline--multiple-cursors))))
+      (unless (string-empty-p meta)
+        meta))))
 
 (defun dotemacs-modeline--misc-info ()
   "Misc info in mode-line."
@@ -384,11 +382,11 @@ mouse-3: Previous error"
 (defcustom dotemacs-modeline-left
   '(dotemacs-modeline--window-number
     dotemacs-modeline--workspace-name
-    dotemacs-modeline--matches
     dotemacs-modeline--buffer-info
     dotemacs-modeline--position
     dotemacs-modeline--word-count
-    dotemacs-modeline--selection-info)
+    dotemacs-modeline--selection-info
+    dotemacs-modeline--matches)
   "List of items on the left of mode-line."
   :type '(list function)
   :group 'dotemacs-modeline)

@@ -417,9 +417,11 @@ mouse-3: Previous error"
          (right-str (dotemacs-modeline--format-segments right-segments)))
     (concat
      left-str
-     (propertize " "
-                 'display `(space :align-to (- (+ right right-fringe right-margin scroll-bar)
-                                               ,(* (string-width right-str) 1.0))))
+     (propertize
+      " "
+      'display
+      `(space :align-to (- (+ right right-fringe right-margin scroll-bar)
+                           ,(/ (string-pixel-width right-str) (frame-char-width)))))
      right-str)))
 
 (defun dotemacs-modeline--enable ()

@@ -198,10 +198,8 @@ Return `default-directory' if no project was found."
   (concat
    " "
    (propertize "%l:%c %p%%"
-               'help-echo "Buffer position\n\
-mouse-1: Display Line and Column Mode Menu"
-               'mouse-face 'dotemacs-modeline-highlight
-               'local-map mode-line-column-line-number-mode-map)
+               'help-echo "Buffer position"
+               'mouse-face 'dotemacs-modeline-highlight)
    " "))
 
 (defun dotemacs-modeline--word-count ()

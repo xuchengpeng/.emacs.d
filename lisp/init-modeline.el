@@ -49,6 +49,11 @@
   "Face used for the major-mode segment in the mode-line."
   :group 'dotemacs-modeline-faces)
 
+(defface dotemacs-modeline-panel
+  '((t (:inherit dotemacs-modeline-highlight)))
+  "Face for \\='X out of Y\\=' segments."
+  :group 'dotemacs-modeline-faces)
+
 (defface dotemacs-modeline-info
   '((t (:inherit (dotemacs-modeline success))))
   "Face for info-level messages in the mode-line."
@@ -239,15 +244,15 @@ Return `default-directory' if no project was found."
            (count (length before)))
       (when (symbol-overlay-assoc symbol)
         (propertize
-         (format " %s:%d/%d " symbol (+ count 1) (+ count (length after)))
-         'face 'dotemacs-modeline-emphasis)))))
+         (format " %d/%d " (+ count 1) (+ count (length after)))
+         'face 'dotemacs-modeline-panel)))))
 
 (defun dotemacs-modeline--multiple-cursors ()
   "Show the number of multiple cursors."
   (when (bound-and-true-p multiple-cursors-mode)
     (when-let ((count (mc/num-cursors)))
       (propertize (format " MC:%d " count)
-                  'face 'dotemacs-modeline-emphasis))))
+                  'face 'dotemacs-modeline-panel))))
 
 (defun dotemacs-modeline--matches ()
   "Matches in mode-line."
@@ -376,11 +381,11 @@ mouse-3: Previous error"
 (defcustom dotemacs-modeline-left
   '(dotemacs-modeline--window-number
     dotemacs-modeline--workspace-name
+    dotemacs-modeline--matches
     dotemacs-modeline--buffer-info
     dotemacs-modeline--position
     dotemacs-modeline--word-count
-    dotemacs-modeline--selection-info
-    dotemacs-modeline--matches)
+    dotemacs-modeline--selection-info)
   "List of items on the left of mode-line."
   :type '(list function)
   :group 'dotemacs-modeline)

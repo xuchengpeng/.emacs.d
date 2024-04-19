@@ -17,11 +17,10 @@ jobs:
           version: ${{ matrix.emacs_version }}
       - name: Check out .emacs.d
         uses: actions/checkout@v4
-      - name: Show emacs version
-        run: emacs --version
       - name: Set up test
         run: |
           ln -s $(pwd) $HOME/.emacs.d
+          emacs --version
           emacs --debug-init --batch -l init.el
   release:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -33,14 +32,3 @@ jobs:
         id: release
         with:
           release-type: simple
-      - uses: actions/checkout@v4
-      - name: tag stable versions
-        if: ${{ steps.release.outputs.release_created }}
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
-          git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/google-github-actions/release-please-action.git"
-          git tag -d stable || true
-          git push origin :stable || true
-          git tag -a stable -m "Last Stable Release"
-          git push origin stable

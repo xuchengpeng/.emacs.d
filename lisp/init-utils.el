@@ -2,11 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(defconst IS-MAC      (eq system-type 'darwin))
-(defconst IS-LINUX    (memq system-type '(gnu gnu/linux gnu/kfreebsd berkeley-unix)))
-(defconst IS-WINDOWS  (memq system-type '(cygwin windows-nt ms-dos)))
-(defconst IS-BSD      (memq system-type '(darwin berkeley-unix gnu/kfreebsd)))
-
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 (setq idle-update-delay 1.0)  ; default is 0.5
@@ -23,7 +18,7 @@
 (set-language-environment "UTF-8")
 (setq default-input-method nil)
 (setq system-time-locale "C")
-(when IS-WINDOWS
+(when (eq system-type 'windows-nt)
   (setq selection-coding-system 'utf-8))
 (setq-default buffer-file-coding-system 'utf-8-unix)
 

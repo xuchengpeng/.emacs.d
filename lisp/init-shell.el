@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(if IS-WINDOWS
+(if (eq system-type 'windows-nt)
     (require 'init-eshell)
   (dotemacs-require-package 'vterm)
   (use-package vterm
@@ -18,7 +18,7 @@
 (defun dotemacs-shell ()
   "Launch shell."
   (interactive)
-  (if IS-WINDOWS
+  (if (eq system-type 'windows-nt)
       (eshell)
     (vterm)))
 

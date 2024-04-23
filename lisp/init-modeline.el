@@ -105,9 +105,12 @@
                (window-parameter (selected-window) 'ace-window-path))
               (t ""))))
     (when (length> num 0)
-      (propertize
-       (format " %s " num)
-       'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode)))))
+      (concat
+       " "
+       (propertize
+        num
+        'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode))
+       " "))))
 
 (defun dotemacs-modeline--workspace-name ()
   "Workspace name in mode-line."
@@ -117,17 +120,21 @@
            (tab-index (tab-bar--current-tab-index))
            (explicit-name (alist-get 'explicit-name current-tab))
            (tab-name (alist-get 'name current-tab)))
-      (propertize
-       (format " [%s] " (if explicit-name tab-name (+ 1 tab-index)))
-       'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode)))))
+      (concat
+       " "
+       (propertize
+        (format "[%s]" (if explicit-name tab-name (+ 1 tab-index)))
+        'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode))
+       " "))))
 
 (defun dotemacs-modeline--buffer-default-directory ()
   "Display `default-directory'."
-  (concat " "
-          (propertize
-           (abbreviate-file-name default-directory)
-           'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
-          " "))
+  (concat
+   " "
+   (propertize
+    (abbreviate-file-name default-directory)
+    'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
+   " "))
 
 (defun dotemacs-modeline--buffer-simple-name ()
   "Buffer simple name in mode-line."
@@ -264,17 +271,18 @@ Return `default-directory' if no project was found."
 
 (defun dotemacs-modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
-  (concat " "
-          (pcase (coding-system-eol-type buffer-file-coding-system)
-            (0 "LF ")
-            (1 "CRLF ")
-            (2 "CR ")
-            (_ ""))
-          (let ((sys (coding-system-plist buffer-file-coding-system)))
-            (cond ((memq (plist-get sys :category) '(coding-category-undecided coding-category-utf-8))
-                   "UTF-8")
-                  (t (upcase (symbol-name (plist-get sys :name))))))
-          " "))
+  (concat
+   " "
+   (pcase (coding-system-eol-type buffer-file-coding-system)
+     (0 "LF ")
+     (1 "CRLF ")
+     (2 "CR ")
+     (_ ""))
+   (let ((sys (coding-system-plist buffer-file-coding-system)))
+     (cond ((memq (plist-get sys :category) '(coding-category-undecided coding-category-utf-8))
+            "UTF-8")
+           (t (upcase (symbol-name (plist-get sys :name))))))
+   " "))
 
 (defun dotemacs-modeline--text-scale ()
   "Text-Scale info in mode-line."
@@ -282,35 +290,34 @@ Return `default-directory' if no project was found."
     (concat
      " "
      (propertize
-      (format "(%s)"
-              text-scale-mode-lighter)
+      (format "(%s)" text-scale-mode-lighter)
       'mouse-face 'dotemacs-modeline-highlight
       'help-echo (concat "Text scale " text-scale-mode-lighter))
      " ")))
 
 (defun dotemacs-modeline--major-mode ()
   "Major mode in mode-line."
-  (propertize
-   (concat
-    " "
-    (propertize (format-mode-line mode-name)
-                'help-echo "Major mode\n\
-mouse-1: Display major mode menu\n\
-mouse-2: Show help for major mode\n\
+  (concat
+   " "
+   (propertize
+    (format-mode-line mode-name)
+    'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode)
+    'help-echo "Major mode
+mouse-1: Display major mode menu
+mouse-2: Show help for major mode
 mouse-3: Toggle minor modes"
-                'mouse-face 'dotemacs-modeline-highlight
-                'local-map mode-line-major-mode-keymap)
-    " ")
-   'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode)))
+    'mouse-face 'dotemacs-modeline-highlight
+    'local-map mode-line-major-mode-keymap)
+   " "))
 
 (defun dotemacs-modeline--vc-info ()
   "Version control info in mode-line."
-  (when-let ((meta (string-trim (format-mode-line '(vc-mode vc-mode))))
-             (face (dotemacs-modeline--face 'dotemacs-modeline-info)))
+  (let ((meta (string-trim (format-mode-line '(vc-mode vc-mode)))))
     (unless (string-empty-p meta)
-      (concat " "
-              (propertize meta 'face `(:inherit (,face bold)))
-              " "))))
+      (concat
+       " "
+       (propertize meta 'face `(:inherit (,(dotemacs-modeline--face 'dotemacs-modeline-info) bold)))
+       " "))))
 
 (defun dotemacs-modeline--flymake ()
   "Flymake in mode-line."
@@ -353,23 +360,24 @@ mouse-3: Toggle minor modes"
                                   (propertize
                                    (number-to-string .info)
                                    'face (dotemacs-modeline--face 'dotemacs-modeline-info)))))))))
-        (concat " "
-                (propertize
-                 text
-                 'help-echo
-                 (format "Flymake
+        (concat
+         " "
+         (propertize
+          text
+          'help-echo
+          (format "Flymake
 error:%d, warning:%d, info:%d
 mouse-1: Next error
 mouse-2: Show all errors
 mouse-3: Previous error"
-                         .error .warning .info)
-                 'mouse-face 'dotemacs-modeline-highlight
-                 'local-map (let ((map (make-sparse-keymap)))
-                              (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)
-                              (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
-                              (keymap-set map "<mode-line> <mouse-3>" #'flymake-goto-prev-error)
-                              map))
-                " ")))))
+                  .error .warning .info)
+          'mouse-face 'dotemacs-modeline-highlight
+          'local-map (let ((map (make-sparse-keymap)))
+                       (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)
+                       (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
+                       (keymap-set map "<mode-line> <mouse-3>" #'flymake-goto-prev-error)
+                       map))
+         " ")))))
 
 (defcustom dotemacs-modeline-left
   '(dotemacs-modeline--window-number

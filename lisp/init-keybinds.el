@@ -72,7 +72,7 @@
   "t f" '("Flymake" . flymake-mode)
   "t l" '("Line Numbers" . display-line-numbers-mode)
   "t s" '("Flyspell" . flyspell-mode)
-  "t t" '("Theme" . dotemacs-load-theme)
+  "t t" '("Theme" . modus-themes-toggle)
   "t v" '("Visible Mode" . visible-mode)
   "t w" '("Visual Line Mode" . visual-line-mode)
   "t z" '("Zen Mode" . toggle-frame-fullscreen)

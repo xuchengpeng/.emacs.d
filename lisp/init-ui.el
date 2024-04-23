@@ -86,24 +86,6 @@
 (add-hook 'after-init-hook #'dotemacs-init-fonts)
 (add-hook 'server-after-make-frame-hook #'dotemacs-init-fonts)
 
-;;;###autoload
-(defun dotemacs-init-theme ()
-  "Init theme."
-  (require 'modus-themes)
-  (load-theme 'modus-operandi :no-confirm)
-
-  (push (expand-file-name "lisp/tokyonight-themes" dotemacs-dir) load-path)
-  (require 'tokyonight-themes))
-
-(defun dotemacs-load-theme ()
-  "Load theme."
-  (interactive)
-  (let ((choice (completing-read
-                  "Select theme: "
-                  '("tokyonight-storm" "tokyonight-night" "tokyonight-moon" "tokyonight-day"
-                    "modus-operandi" "modus-vivendi"))))
-    (consult-theme (intern choice))))
-
 (use-package which-key
   :hook (after-init . which-key-mode)
   :config
@@ -134,7 +116,9 @@
    (when (fboundp 'pixel-scroll-precision-mode)
      (pixel-scroll-precision-mode t))
 
-   (dotemacs-init-theme)
+   (require 'modus-themes)
+   (load-theme 'modus-operandi :no-confirm)
+
    (require 'ace-window)
    ;; show tab-name in mode-line
    (setq tab-bar-show nil)
@@ -142,7 +126,7 @@
    (dotemacs-modeline-mode)))
 
 (add-hook
- 'window-setup-hook
+ 'emacs-startup-hook
  (lambda ()
    (require 'init-dashboard)
    (dotemacs-dashboard-init)))

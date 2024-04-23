@@ -262,13 +262,6 @@ Return `default-directory' if no project was found."
       (unless (string-empty-p meta)
         meta))))
 
-(defun dotemacs-modeline--misc-info ()
-  "Misc info in mode-line."
-  (when (mode-line-window-selected-p)
-    (let ((meta (format-mode-line mode-line-misc-info)))
-      (unless (string-empty-p meta)
-        (format " %s " meta)))))
-
 (defun dotemacs-modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
   (concat " "
@@ -391,8 +384,7 @@ mouse-3: Previous error"
   :group 'dotemacs-modeline)
 
 (defcustom dotemacs-modeline-right
-  '(dotemacs-modeline--misc-info
-    dotemacs-modeline--text-scale
+  '(dotemacs-modeline--text-scale
     dotemacs-modeline--buffer-encoding
     dotemacs-modeline--major-mode
     dotemacs-modeline--vc-info

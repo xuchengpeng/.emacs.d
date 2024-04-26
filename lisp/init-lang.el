@@ -6,14 +6,21 @@
 
 (push (expand-file-name "lisp/lang" dotemacs-dir) load-path)
 (require 'init-markdown)
-(require 'init-lua)
 
 (with-eval-after-load 'cc-mode
   (setq-default c-basic-offset 4))
 
 (when (dotemacs-treesit-available-p)
   (with-eval-after-load 'c-ts-mode
-    (setq c-ts-mode-indent-offset 4)))
+    (setq c-ts-mode-indent-offset 4))
+
+  (when (fboundp 'lua-ts-mode)
+    (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
+    (with-eval-after-load 'lua-ts-mode
+      (setq lua-ts-indent-offset 2)
+      (reformatter-define lua-format
+        :program "stylua"
+        :args '("-")))))
 
 (with-eval-after-load 'python
   (reformatter-define python-format

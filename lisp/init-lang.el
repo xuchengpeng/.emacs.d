@@ -17,25 +17,23 @@
   (when (fboundp 'lua-ts-mode)
     (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
     (with-eval-after-load 'lua-ts-mode
-      (setq lua-ts-indent-offset 2)
-      (reformatter-define lua-format
-        :program "stylua"
-        :args '("-")))))
+      (setq lua-ts-indent-offset 2))))
 
-(with-eval-after-load 'python
-  (reformatter-define python-format
-    :program "black"
-    :args '("-q" "-")))
+(reformatter-define lua-format
+  :program "stylua"
+  :args '("-"))
 
-(with-eval-after-load 'sh-script
-  (reformatter-define shfmt
-    :program "shfmt"
-    :args `("-i" ,(number-to-string sh-basic-offset) "-")))
+(reformatter-define python-format
+  :program "black"
+  :args '("-q" "-"))
 
-(with-eval-after-load 'yaml-ts-mode
-  (reformatter-define yaml-format
-    :program "prettier"
-    :args '("--parser" "yaml")))
+(reformatter-define sh-format
+  :program "shfmt"
+  :args `("-i" ,(number-to-string sh-basic-offset) "-"))
+
+(reformatter-define yaml-format
+  :program "prettier"
+  :args '("--parser" "yaml"))
 
 (provide 'init-lang)
 ;;; init-lang.el ends here

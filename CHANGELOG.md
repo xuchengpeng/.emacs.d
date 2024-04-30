@@ -1,5 +1,48 @@
 # Changelog
 
+## [2.2.3](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.2...v2.2.3) (2024-04-30)
+
+
+### Bug Fixes
+
+* **auto-save:** remove useless settings ([50ca4e3](https://github.com/xuchengpeng/.emacs.d/commit/50ca4e3cd7aa48c78c44312231d71e2ae89f044d))
+* **ci:** no longer tag stable ([32ea583](https://github.com/xuchengpeng/.emacs.d/commit/32ea583a7d161032ffa6c04e90f85c205f22ab61))
+* **completion:** disable Ispell completion function ([696ae08](https://github.com/xuchengpeng/.emacs.d/commit/696ae08f8195ea22cff473f23ddd52e11c4a6a85))
+* **custom:** don't print message while loading ([4a02603](https://github.com/xuchengpeng/.emacs.d/commit/4a026031162979e30f86a36029c28d9cd9d099e0))
+* **dabbrev:** ignore tags-table-mode ([a05b9e0](https://github.com/xuchengpeng/.emacs.d/commit/a05b9e00cd1422d87cfb2f5a33fa14cece5cb17c))
+* **dashboard:** grep with consult-ripgrep ([65f3fa1](https://github.com/xuchengpeng/.emacs.d/commit/65f3fa1cb5dab519c7c00ffc6d587b59d9af4783))
+* **eglot:** hover with eldoc-box ([c392112](https://github.com/xuchengpeng/.emacs.d/commit/c3921121af229fe8a46bc678738ab690c2de9950))
+* **eglot:** remove obsolete variable ([ff102b6](https://github.com/xuchengpeng/.emacs.d/commit/ff102b603506f693a1e9b47da6af955914b6495d))
+* **embark:** binding embark commands ([57af01f](https://github.com/xuchengpeng/.emacs.d/commit/57af01facde02bebab1ece2572cbda6e4e8344da))
+* **eshell:** enable visual-line-mode ([b7b1f17](https://github.com/xuchengpeng/.emacs.d/commit/b7b1f170fc8ccef76949b3fcad1bedefb13bd781))
+* **indent:** C/C++ mode indent with 4 ([63c7f7e](https://github.com/xuchengpeng/.emacs.d/commit/63c7f7e7c4254372fd39b7732ea46c10dd290751))
+* **lang:** formatting with reformatter ([02dcd92](https://github.com/xuchengpeng/.emacs.d/commit/02dcd920a511bca030a1081fb2a3a1021d337b64))
+* **lua:** define lua-format without treesit support checking ([6d718c0](https://github.com/xuchengpeng/.emacs.d/commit/6d718c0f2800deccb13b64c3818a9eb117177e88))
+* **lua:** enable lus-ts-mode if available ([74bfd27](https://github.com/xuchengpeng/.emacs.d/commit/74bfd27b434d4a97e822f28de80822af5575fa12))
+* **lua:** format buffer with stylua ([4f503a4](https://github.com/xuchengpeng/.emacs.d/commit/4f503a424c034c810c11d348dce36e18099605df))
+* **markdown:** formatting with prettier ([d9cf134](https://github.com/xuchengpeng/.emacs.d/commit/d9cf134f06766aa2eadcb25ab8e112ee6fc81694))
+* **markdown:** remove dotemacs-markdown-toc ([a2a12bd](https://github.com/xuchengpeng/.emacs.d/commit/a2a12bd868d2cb44d41461c5bbec38fd23a2c5fa))
+* **modeline:** calculate string in pixel size ([5a2b2ad](https://github.com/xuchengpeng/.emacs.d/commit/5a2b2ad491e954f898bcbe2e5079cb903b035c57))
+* **modeline:** change face of matches ([f81f01b](https://github.com/xuchengpeng/.emacs.d/commit/f81f01bc2042410dc6869edafcad05b763ecae37))
+* **modeline:** change help-echo of flymake ([e45dd33](https://github.com/xuchengpeng/.emacs.d/commit/e45dd33d31c191d44569f901b149b0a8b9f7bed5))
+* **modeline:** minor refactoring ([9985823](https://github.com/xuchengpeng/.emacs.d/commit/998582315a69567922bf477786426ff42fde9f9c))
+* **modeline:** remove misc info ([b060c9a](https://github.com/xuchengpeng/.emacs.d/commit/b060c9a2d5bdd4e68e735cb3dfde62c7f5b4206f))
+* **modeline:** remove position mouse map ([31b18c7](https://github.com/xuchengpeng/.emacs.d/commit/31b18c78aaa781475b313b591aedafadcc1214f2))
+* **modeline:** show matches at end of left segments ([94834b0](https://github.com/xuchengpeng/.emacs.d/commit/94834b0f187c2915e10a12a2fe3b0639f8bd5e35))
+* **modeline:** show matches with panel face ([7a89643](https://github.com/xuchengpeng/.emacs.d/commit/7a8964332e9be7f495f3f3ca35402f0c16628cf7))
+* **modeline:** shrink relative path if too long ([ed37d28](https://github.com/xuchengpeng/.emacs.d/commit/ed37d28694c7621547414fed4e1ec567886eeb4a))
+* **modeline:** simply text-scale ([8e0b831](https://github.com/xuchengpeng/.emacs.d/commit/8e0b831af007b1decfa09786b1870db885445cc5))
+* **python:** format buffer with black ([96d4655](https://github.com/xuchengpeng/.emacs.d/commit/96d4655382e67efe33415ea683e7f1ef14ae3907))
+* **reformatter:** add '-' argument ([c81c0f9](https://github.com/xuchengpeng/.emacs.d/commit/c81c0f95b6ec35cd0af2c47c21722ab45a17fd82))
+* **saveplace:** custom save-place-file ealier ([2996f3e](https://github.com/xuchengpeng/.emacs.d/commit/2996f3eaf6893188e9452dff1920a6315dc1bd1c))
+* **shfmt:** format with indent offset ([4e4338f](https://github.com/xuchengpeng/.emacs.d/commit/4e4338fa8c09a96bfaca887a776afecff7c38536))
+* **symbol-overlay:** remove all with M-I ([c400b3c](https://github.com/xuchengpeng/.emacs.d/commit/c400b3c520c9dcd1a8873aa3eebfc177ea307e59))
+* **ui:** remove tokyonight-themes ([13e7320](https://github.com/xuchengpeng/.emacs.d/commit/13e73209c617f9843adba742d99d8eed00a17650))
+* **ui:** show buffer file name in frame title ([1677c78](https://github.com/xuchengpeng/.emacs.d/commit/1677c78346415335e2471dbad77e0704e8657cdc))
+* **utils:** remove IS-XXX ([567b012](https://github.com/xuchengpeng/.emacs.d/commit/567b012742a4030935a961d0f6a548e35cace7a8))
+* **vertico:** use default settings ([39aad84](https://github.com/xuchengpeng/.emacs.d/commit/39aad842c956057e5747eaa1fed7257514405244))
+* **yaml:** formatting with prettier ([e3adfa1](https://github.com/xuchengpeng/.emacs.d/commit/e3adfa11ddc864c7b5eb68b9022e32897db863ed))
+
 ## [2.2.2](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.1...v2.2.2) (2024-03-30)
 
 

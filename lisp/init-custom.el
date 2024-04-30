@@ -62,7 +62,7 @@ Examples:
 
 (setq custom-file (expand-file-name "custom.el" dotemacs-local-dir))
 (when (file-exists-p custom-file)
-  (load custom-file))
+  (load custom-file nil 'nomessage))
 
 (provide 'init-custom)
 ;;; init-custom.el ends here

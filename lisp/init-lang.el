@@ -12,12 +12,7 @@
 
 (when (dotemacs-treesit-available-p)
   (with-eval-after-load 'c-ts-mode
-    (setq c-ts-mode-indent-offset 4))
-
-  (when (fboundp 'lua-ts-mode)
-    (add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
-    (with-eval-after-load 'lua-ts-mode
-      (setq lua-ts-indent-offset 2))))
+    (setq c-ts-mode-indent-offset 4)))
 
 (reformatter-define lua-format
   :program "stylua"

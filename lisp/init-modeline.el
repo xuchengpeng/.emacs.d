@@ -418,7 +418,7 @@ mouse-3: Previous error"
       " "
       'display
       `(space :align-to (- (+ right right-fringe right-margin scroll-bar)
-                           ,(/ (string-pixel-width right-str) (frame-char-width)))))
+                           ,(* (string-width right-str) 1.0))))
      right-str)))
 
 (defun dotemacs-modeline--enable ()

@@ -2,9 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(symbol-overlay hl-todo diff-hl))
-
 (use-package symbol-overlay
+  :ensure t
   :commands symbol-overlay-mode
   :hook (prog-mode . symbol-overlay-mode)
   :config
@@ -14,11 +13,13 @@
   (keymap-set symbol-overlay-mode-map "M-p" 'symbol-overlay-jump-prev))
 
 (use-package hl-todo
+  :ensure t
   :hook (prog-mode . hl-todo-mode)
   :config
   (setq hl-todo-highlight-punctuation ":"))
 
 (use-package diff-hl
+  :ensure t
   :hook ((after-init . global-diff-hl-mode)
          (dired-mode . diff-hl-dired-mode))
   :config

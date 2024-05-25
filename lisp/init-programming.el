@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-package 'eldoc-box)
-
 (use-package flymake
   :hook (prog-mode . flymake-mode)
   :config
@@ -27,6 +25,7 @@
         eglot-send-changes-idle-time 0.5))
 
 (use-package eldoc-box
+  :ensure t
   :commands (eldoc-box-help-at-point))
 
 ;; treesit support

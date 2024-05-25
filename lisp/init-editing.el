@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(avy expreg multiple-cursors move-text vundo))
-
 (setq find-file-visit-truename t
       vc-follow-symlinks t
       find-file-suppress-same-file-warnings t)
@@ -104,6 +102,7 @@
 (add-hook 'prog-mode-hook 'dotemacs-enable-trailing-whitespace)
 
 (use-package avy
+  :ensure t
   :commands (avy-goto-char avy-goto-line avy-goto-word-1)
   :init
   (keymap-global-set "M-g c" 'avy-goto-char)
@@ -115,11 +114,13 @@
         avy-background t))
 
 (use-package expreg
+  :ensure t
   :commands (expreg-expand)
   :init
   (keymap-global-set "C-=" 'expreg-expand))
 
 (use-package multiple-cursors
+  :ensure t
   :commands (mc/mark-all-like-this mc/mark-next-like-this mc/mark-previous-like-this)
   :init
   (setq mc/list-file (expand-file-name "mc-lists.el" dotemacs-cache-dir))
@@ -128,12 +129,14 @@
   (keymap-global-set "C-c C-<" 'mc/mark-all-like-this))
 
 (use-package move-text
+  :ensure t
   :commands (move-text-up move-text-down)
   :init
   (keymap-global-set "M-<up>" 'move-text-up)
   (keymap-global-set "M-<down>" 'move-text-down))
 
 (use-package vundo
+  :ensure t
   :commands vundo
   :init
   (keymap-global-set "C-x u" 'vundo))

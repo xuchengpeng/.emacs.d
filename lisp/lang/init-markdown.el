@@ -2,9 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-package 'markdown-mode)
-
 (use-package markdown-mode
+  :ensure t
   :mode ("/README\\(?:\\.md\\)?\\'" . gfm-mode)
   :hook (markdown-mode . (lambda ()
                            (keymap-local-set dotemacs-localleader-key markdown-mode-command-map)))

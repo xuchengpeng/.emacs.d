@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-package 'htmlize)
-
 (use-package org
   :mode ("\\.org$" . org-mode)
   :hook ((org-mode . (lambda () (electric-indent-local-mode -1))))
@@ -72,6 +70,9 @@
         org-clock-out-remove-zero-time-clocks t
         org-clock-history-length 20)
   (add-hook 'kill-emacs-hook #'org-clock-save))
+
+(use-package htmlize
+  :ensure t)
 
 (use-package ox-publish
   :commands org-publish-project

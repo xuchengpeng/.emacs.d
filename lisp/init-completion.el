@@ -2,9 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(vertico orderless consult embark embark-consult marginalia corfu cape tempel))
-
 (use-package vertico
+  :ensure t
   :hook (after-init . vertico-mode)
   :config
   (setq vertico-resize nil
@@ -17,6 +16,7 @@
                          args))))
 
 (use-package orderless
+  :ensure t
   :after (vertico)
   :config
   (setq completion-styles '(orderless basic)
@@ -25,6 +25,7 @@
         orderless-component-separator #'orderless-escapable-split-on-space))
 
 (use-package consult
+  :ensure t
   :after (vertico)
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
@@ -85,6 +86,7 @@ If prefix OTHER is set, prompt for a directory to search from."
   (dotemacs-search-cwd 'other))
 
 (use-package embark
+  :ensure t
   :after (vertico)
   :init
   (keymap-global-set "C-." 'embark-act)
@@ -93,9 +95,11 @@ If prefix OTHER is set, prompt for a directory to search from."
   (setq prefix-help-command #'embark-prefix-help-command))
 
 (use-package embark-consult
+  :ensure t
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package marginalia
+  :ensure t
   :after (vertico)
   :init
   (keymap-set minibuffer-local-map "M-A" 'marginalia-cycle)
@@ -103,6 +107,7 @@ If prefix OTHER is set, prompt for a directory to search from."
   (marginalia-mode))
 
 (use-package emacs
+  :ensure nil
   :init
   ;; TAB cycle if there are only few candidates
   (setq completion-cycle-threshold 3)
@@ -118,6 +123,7 @@ If prefix OTHER is set, prompt for a directory to search from."
   (setq read-extended-command-predicate #'command-completion-default-include-p))
 
 (use-package corfu
+  :ensure t
   :custom
   (corfu-cycle t)
   (corfu-auto t)
@@ -127,6 +133,7 @@ If prefix OTHER is set, prompt for a directory to search from."
          (global-corfu-mode . corfu-popupinfo-mode)))
 
 (use-package dabbrev
+  :ensure nil
   :after corfu
   :init
   ;; Swap M-/ and C-M-/
@@ -139,6 +146,7 @@ If prefix OTHER is set, prompt for a directory to search from."
   (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
 
 (use-package cape
+  :ensure t
   :after corfu
   :init
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
@@ -150,6 +158,7 @@ If prefix OTHER is set, prompt for a directory to search from."
   (advice-add #'eglot-completion-at-point :around #'cape-wrap-buster))
 
 (use-package tempel
+  :ensure t
   :commands (tempel-complete tempel-insert)
   :init
   (keymap-global-set "M-+" 'tempel-complete)

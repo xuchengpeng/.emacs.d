@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-packages '(modus-themes which-key ace-window))
-
 (setq hscroll-margin 2
       hscroll-step 1
       scroll-conservatively 101
@@ -87,15 +85,17 @@
 (add-hook 'server-after-make-frame-hook #'dotemacs-init-fonts)
 
 (use-package which-key
+  :ensure t
   :hook (after-init . which-key-mode)
-  :config
-  (setq which-key-sort-order #'which-key-key-order-alpha
-        which-key-sort-uppercase-first nil
-        which-key-add-column-padding 1
-        which-key-max-display-columns nil
-        which-key-min-display-lines 4))
+  :custom
+  (which-key-sort-order #'which-key-key-order-alpha)
+  (which-key-sort-uppercase-first nil)
+  (which-key-add-column-padding 1)
+  (which-key-max-display-columns nil)
+  (which-key-min-display-lines 4))
 
 (use-package ace-window
+  :ensure t
   :commands ace-window
   :init
   (keymap-global-set "<remap> <other-window>" 'ace-window))
@@ -116,6 +116,7 @@
    (when (fboundp 'pixel-scroll-precision-mode)
      (pixel-scroll-precision-mode t))
 
+   (dotemacs-require-package 'modus-themes)
    (require 'modus-themes)
    (load-theme 'modus-operandi :no-confirm)
 

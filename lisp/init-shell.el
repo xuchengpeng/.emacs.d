@@ -4,8 +4,8 @@
 
 (if (eq system-type 'windows-nt)
     (require 'init-eshell)
-  (dotemacs-require-package 'vterm)
   (use-package vterm
+    :ensure t
     :commands (vterm vterm-other-window)
     :config
     (add-hook

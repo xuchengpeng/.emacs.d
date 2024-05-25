@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-package 'dired-rsync)
-
 (use-package dired
   :commands (dired dired-jump)
   :init
@@ -44,6 +42,7 @@
         dired-vc-rename-file t))
 
 (use-package dired-rsync
+  :ensure t
   :after (dired)
   :config
   (keymap-set dired-mode-map "C-c C-r" #'dired-rsync))

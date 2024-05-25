@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(dotemacs-require-package 'reformatter)
-
 (push (expand-file-name "lisp/lang" dotemacs-dir) load-path)
 (require 'init-markdown)
 
@@ -13,6 +11,9 @@
 (when (dotemacs-treesit-available-p)
   (with-eval-after-load 'c-ts-mode
     (setq c-ts-mode-indent-offset 4)))
+
+(use-package reformatter
+  :ensure t)
 
 (reformatter-define lua-format
   :program "stylua"

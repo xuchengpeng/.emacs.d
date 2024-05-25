@@ -39,7 +39,5 @@
   "Install PACKAGES."
   (mapc #'dotemacs-require-package packages))
 
-(dotemacs-require-package 'use-package)
-
 (provide 'init-packages)
 ;;; init-packages.el ends here

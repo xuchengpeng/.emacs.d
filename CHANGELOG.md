@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.4](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.3...v2.2.4) (2024-05-25)
+
+
+### Bug Fixes
+
+* **ci:** remove deprecated release please action ([4940a1d](https://github.com/xuchengpeng/.emacs.d/commit/4940a1d652ddadbdb6c472e5561060f93a920188))
+* **keybinds:** kill current buffer properly ([80710af](https://github.com/xuchengpeng/.emacs.d/commit/80710af6f06b5ad2d0daea4d3f02f12db6171ac4))
+* **lua:** remove lua-ts-mode configuration ([6a0ac80](https://github.com/xuchengpeng/.emacs.d/commit/6a0ac80ce75052acf1dbfbd3b478e8fbd23b390b))
+* **modeline:** fix right align size ([d1f93c9](https://github.com/xuchengpeng/.emacs.d/commit/d1f93c9fcea1e896addbf2a307f5413a1c2b0435))
+* **symbol-overlay:** add keybinds in mode map ([850ef28](https://github.com/xuchengpeng/.emacs.d/commit/850ef28aeb4ac421354c48fd947c05aa13ed780d))
+* **use-package:** ensure packages which need to be installed ([f2e424d](https://github.com/xuchengpeng/.emacs.d/commit/f2e424dc9673594f66b947d199604d5b3b0b6de8))
+
 ## [2.2.3](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.2...v2.2.3) (2024-04-30)
 
 

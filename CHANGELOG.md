@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.5](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.4...v2.2.5) (2024-07-01)
+
+
+### Bug Fixes
+
+* **ci:** add emacs 29.4 to the CI matrix ([1589ef4](https://github.com/xuchengpeng/.emacs.d/commit/1589ef4681c33d5420b9c7e30b29a5877ced5bad))
+
 ## [2.2.4](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.3...v2.2.4) (2024-05-25)
 
 

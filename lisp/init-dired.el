@@ -41,11 +41,5 @@
   (setq dired-create-destination-dirs 'ask
         dired-vc-rename-file t))
 
-(use-package dired-rsync
-  :ensure t
-  :after (dired)
-  :config
-  (keymap-set dired-mode-map "C-c C-r" #'dired-rsync))
-
 (provide 'init-dired)
 ;;; init-dired.el ends here

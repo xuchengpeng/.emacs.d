@@ -1,6 +1,7 @@
 .cache/
 .local/
 eln-cache/
+elpa/
 org/*.*
 server/
 *.data

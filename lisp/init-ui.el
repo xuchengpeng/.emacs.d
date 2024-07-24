@@ -110,6 +110,26 @@
 (keymap-global-set "C-M-9" (lambda () (interactive) (dotemacs-adjust-transparency nil 2)))
 (keymap-global-set "C-M-0" (lambda () (interactive) (set-frame-parameter nil 'alpha-background 100)))
 
+(defun dotemacs-tab-bar-tab-name-format (tab i)
+  "Format a TAB name of tab index I."
+  (propertize
+   (concat
+    " "
+    (when tab-bar-tab-hints
+      (format "%d " i))
+    (alist-get 'name tab)
+    " ")
+   'face (funcall tab-bar-tab-face-function tab)))
+
+(defun dotemacs-tab-bar-init ()
+  "Tab bar initialize."
+  (setq tab-bar-separator "\u200B"
+        tab-bar-tab-hints nil
+        tab-bar-close-button-show nil
+        tab-bar-auto-width nil
+        tab-bar-format '(tab-bar-format-tabs tab-bar-separator)
+        tab-bar-tab-name-format-function #'dotemacs-tab-bar-tab-name-format))
+
 (add-hook
  'after-init-hook
  (lambda ()
@@ -121,10 +141,10 @@
    (load-theme 'modus-operandi :no-confirm)
 
    (require 'ace-window)
-   ;; show tab-name in mode-line
-   (setq tab-bar-show nil)
    (require 'init-modeline)
-   (dotemacs-modeline-mode)))
+   (dotemacs-modeline-mode)
+
+   (dotemacs-tab-bar-init)))
 
 (add-hook
  'emacs-startup-hook

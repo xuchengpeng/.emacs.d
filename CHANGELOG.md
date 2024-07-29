@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.2.5](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.4...v2.2.5) (2024-07-29)
+
+
+### Bug Fixes
+
+* **ci:** add emacs 29.4 to the CI matrix ([1589ef4](https://github.com/xuchengpeng/.emacs.d/commit/1589ef4681c33d5420b9c7e30b29a5877ced5bad))
+* **dired:** remove dired-rsync ([96f8069](https://github.com/xuchengpeng/.emacs.d/commit/96f806907910eb54dd3091de0796d5fd3349cfb0))
+* **embark:** bind set-mark-command with general map ([f5011ee](https://github.com/xuchengpeng/.emacs.d/commit/f5011eeda0bc0c612099f33940c797a17890197a))
+* **encoding:** don't set selection coding system on windows-nt ([e108d46](https://github.com/xuchengpeng/.emacs.d/commit/e108d46592aa09ba67473df6e9b5ac44a8214fe3))
+* **flymake:** put margin indicator on the right ([6ce86f7](https://github.com/xuchengpeng/.emacs.d/commit/6ce86f78f99775c1b5f0ec0e654168504c0cd759))
+* **git:** ignore elpa ([d731166](https://github.com/xuchengpeng/.emacs.d/commit/d731166e35438ec383783ebb0f46a64a33d84805))
+* **ui:** enable tab-bar ([9c34dcf](https://github.com/xuchengpeng/.emacs.d/commit/9c34dcf268fde87d7ead24e470180b07cf679036))
+
 ## [2.2.4](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.3...v2.2.4) (2024-05-25)
 
 

@@ -5,7 +5,8 @@
 (use-package flymake
   :hook (prog-mode . flymake-mode)
   :config
-  (setq flymake-fringe-indicator-position 'right-fringe))
+  (setq flymake-fringe-indicator-position 'right-fringe
+        flymake-margin-indicator-position 'right-margin))
 
 (use-package flyspell
   :defer t

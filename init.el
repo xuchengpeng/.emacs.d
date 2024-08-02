@@ -26,12 +26,10 @@
 (require 'init-keybinds)
 (require 'init-ui)
 (require 'init-editing)
-(require 'init-dired)
 (require 'init-completion)
-(require 'init-highlight)
-(require 'init-programming)
 (require 'init-shell)
 (require 'init-org)
+(require 'init-programming)
 (require 'init-lang)
 
 ;;; init.el ends here

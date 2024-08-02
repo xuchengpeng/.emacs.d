@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.6](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.5...v2.2.6) (2024-08-02)
+
+
+### Bug Fixes
+
+* **.emacs.d:** refactoring ([a96e447](https://github.com/xuchengpeng/.emacs.d/commit/a96e4479f0044f8ecb1babae74a887f50e42db02))
+
 ## [2.2.5](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.4...v2.2.5) (2024-07-29)
 
 

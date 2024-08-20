@@ -91,7 +91,13 @@
         image-dired-thumb-size 150)
   :config
   (keymap-set dired-mode-map "C-c C-e" #'wdired-change-to-wdired-mode)
-  (put 'dired-find-alternate-file 'disabled nil))
+  (put 'dired-find-alternate-file 'disabled nil)
+  (add-hook
+   'dired-mode-hook
+   (lambda ()
+     (setq-local dotemacs-modeline-left '(dotemacs-modeline--window-number
+                                          dotemacs-modeline--buffer-default-directory)
+                 dotemacs-modeline-right '(dotemacs-modeline--major-mode)))))
 
 (use-package dired-x
   :hook (dired-mode . dired-omit-mode)

@@ -181,8 +181,6 @@
    (when (fboundp 'pixel-scroll-precision-mode)
      (pixel-scroll-precision-mode t))
 
-   (dotemacs-require-package 'modus-themes)
-   (require 'modus-themes)
    (load-theme 'modus-operandi :no-confirm)
 
    (require 'ace-window)

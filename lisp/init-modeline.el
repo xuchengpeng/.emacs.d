@@ -69,6 +69,7 @@
   "Face for errors in the mode-line."
   :group 'dotemacs-modeline-faces)
 
+(defvar eglot--mode-line-format)
 (defvar flymake--state)
 (defvar text-scale-mode-amount)
 (defvar text-scale-mode-lighter)
@@ -295,6 +296,11 @@ Return `default-directory' if no project was found."
       'help-echo (concat "Text scale " text-scale-mode-lighter))
      " ")))
 
+(defun dotemacs-modeline--eglot ()
+  "Eglot in mode-line."
+  (when (bound-and-true-p eglot--managed-mode)
+    (concat " " (format-mode-line eglot--mode-line-format) " ")))
+
 (defun dotemacs-modeline--major-mode ()
   "Major mode in mode-line."
   (concat
@@ -394,6 +400,7 @@ mouse-3: Previous error"
 (defcustom dotemacs-modeline-right
   '(dotemacs-modeline--text-scale
     dotemacs-modeline--buffer-encoding
+    dotemacs-modeline--eglot
     dotemacs-modeline--major-mode
     dotemacs-modeline--vc-info
     dotemacs-modeline--flymake)

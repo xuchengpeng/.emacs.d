@@ -299,7 +299,12 @@ Return `default-directory' if no project was found."
 (defun dotemacs-modeline--eglot ()
   "Eglot in mode-line."
   (when (bound-and-true-p eglot--managed-mode)
-    (concat " " (format-mode-line eglot--mode-line-format) " ")))
+    (concat
+     " "
+     (propertize
+      (format-mode-line eglot--mode-line-format)
+      'face (dotemacs-modeline--face 'eglot-mode-line))
+     " ")))
 
 (defun dotemacs-modeline--major-mode ()
   "Major mode in mode-line."

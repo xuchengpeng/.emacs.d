@@ -70,6 +70,9 @@
   :group 'dotemacs-modeline-faces)
 
 (defvar eglot--mode-line-format)
+(defvar eglot-menu)
+(defvar eglot-menu-string)
+(defvar eglot-server-menu)
 (defvar flymake--state)
 (defvar text-scale-mode-amount)
 (defvar text-scale-mode-lighter)
@@ -302,8 +305,16 @@ Return `default-directory' if no project was found."
     (concat
      " "
      (propertize
-      (format-mode-line eglot--mode-line-format)
-      'face (dotemacs-modeline--face 'eglot-mode-line))
+      eglot-menu-string
+      'face (dotemacs-modeline--face 'eglot-mode-line)
+      'help-echo "Eglot
+mouse-1: Eglot Menu
+mouse-3: Eglot Server Menu"
+      'mouse-face 'dotemacs-modeline-highlight
+      'local-map (let ((map (make-sparse-keymap)))
+                   (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
+                   (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
+                   map))
      " ")))
 
 (defun dotemacs-modeline--major-mode ()

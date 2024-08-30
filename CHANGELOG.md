@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.2.6](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.5...v2.2.6) (2024-08-30)
+
+
+### Bug Fixes
+
+* **.emacs.d:** refactoring ([a96e447](https://github.com/xuchengpeng/.emacs.d/commit/a96e4479f0044f8ecb1babae74a887f50e42db02))
+* **dired:** customize modeline style ([375f38e](https://github.com/xuchengpeng/.emacs.d/commit/375f38e01a2a8532fb57dfdbbe6d8ea68673b076))
+* **modeline:** add eglot segments ([3eb86ba](https://github.com/xuchengpeng/.emacs.d/commit/3eb86ba049b13de4f09e11b4911825fdeaa04c2e))
+* **modeline:** customize eglot menu string ([77bcaf1](https://github.com/xuchengpeng/.emacs.d/commit/77bcaf1d960900ecd762ce3dca3748d19e52fc08))
+* **modeline:** customize face of eglot ([ca53e52](https://github.com/xuchengpeng/.emacs.d/commit/ca53e52d256a17043e46f373f8453acae9e11eb3))
+* **modeline:** simply calculate length of string ([d1bcea5](https://github.com/xuchengpeng/.emacs.d/commit/d1bcea54afd7f9528a1c5c79d8ce9b7c845dec5d))
+* **themes:** use built-in modus-themes ([5ef4e6e](https://github.com/xuchengpeng/.emacs.d/commit/5ef4e6e38f01cfb49b47daf017213caa76314ab8))
+
 ## [2.2.5](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.4...v2.2.5) (2024-07-29)
 
 

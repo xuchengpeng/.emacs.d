@@ -2,14 +2,17 @@
 ;;; Commentary:
 ;;; Code:
 
-(setq-default cursor-in-non-selected-windows nil)
-(setq highlight-nonselected-windows nil)
-(setq idle-update-delay 1.0)  ; default is 0.5
-(setq auto-mode-case-fold nil)
-(setq inhibit-compacting-font-caches t)
-(setq read-process-output-max (* 4 1024 1024))  ; 4MB
-(setq ffap-machine-p-known 'reject)
-(setq redisplay-skip-fontification-on-input t)
+(setq-default cursor-in-non-selected-windows nil
+              bidi-display-reordering nil
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t
+      highlight-nonselected-windows nil
+      idle-update-delay 1.0  ; default is 0.5
+      auto-mode-case-fold nil
+      inhibit-compacting-font-caches t
+      read-process-output-max (* 4 1024 1024)  ; 4MB
+      ffap-machine-p-known 'reject
+      redisplay-skip-fontification-on-input t)
 
 (setq menu-bar-mode nil
       tool-bar-mode nil

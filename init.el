@@ -21,7 +21,7 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 (require 'init-custom)
-(require 'init-utils)
+(require 'init-base)
 (require 'init-packages)
 (require 'init-keybinds)
 (require 'init-ui)

@@ -1,4 +1,4 @@
-;;; init-utils.el --- utils. -*- lexical-binding: t; -*-
+;;; init-base.el --- Base configurations. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -11,8 +11,14 @@
       auto-mode-case-fold nil
       inhibit-compacting-font-caches t
       read-process-output-max (* 4 1024 1024)  ; 4MB
+      fast-but-imprecise-scrolling t
       ffap-machine-p-known 'reject
       redisplay-skip-fontification-on-input t)
+
+(when (boundp 'w32-get-true-file-attributes)
+  (setq w32-get-true-file-attributes nil    ; decrease file IO workload
+        w32-pipe-read-delay 0               ; faster IPC
+        w32-pipe-buffer-size (* 64 1024)))  ; read more at a time (was 4K)
 
 (setq menu-bar-mode nil
       tool-bar-mode nil
@@ -59,5 +65,5 @@ Same as `replace-string' RET `C-q' `C-m' RET RET, or `query-replace'."
   (and (fboundp 'treesit-available-p)
        (treesit-available-p)))
 
-(provide 'init-utils)
-;;; init-utils.el ends here
+(provide 'init-base)
+;;; init-base.el ends here

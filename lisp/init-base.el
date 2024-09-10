@@ -7,12 +7,10 @@
               bidi-paragraph-direction 'left-to-right)
 (setq bidi-inhibit-bpa t
       highlight-nonselected-windows nil
-      idle-update-delay 1.0  ; default is 0.5
       auto-mode-case-fold nil
       inhibit-compacting-font-caches t
       read-process-output-max (* 4 1024 1024)  ; 4MB
       fast-but-imprecise-scrolling t
-      ffap-machine-p-known 'reject
       redisplay-skip-fontification-on-input t)
 
 (when (boundp 'w32-get-true-file-attributes)

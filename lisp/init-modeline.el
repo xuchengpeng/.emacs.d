@@ -178,7 +178,7 @@ Return `default-directory' if no project was found."
                                 root-path))
         (if (string= relative-path "./")
             ""
-          (if (<= (length relative-path) 15)
+          (if (<= (length relative-path) 30)
               relative-path
             ;; Shrink path
             (let ((split (string-split relative-path "/" 'omit-nulls)))

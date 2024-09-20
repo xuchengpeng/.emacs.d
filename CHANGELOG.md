@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.2.7](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.6...v2.2.7) (2024-09-20)
+
+
+### Bug Fixes
+
+* **keybinds:** bind kill-buffer ([f90d6e6](https://github.com/xuchengpeng/.emacs.d/commit/f90d6e6f4ca0328cc8ef46cfa7e05caa7eed83ce))
+* **modeline:** shrink relative-path when length&gt;30 ([fe81ddf](https://github.com/xuchengpeng/.emacs.d/commit/fe81ddf554c81b703d867f147040d766fade9cea))
+* **perf:** improve performance on Windows ([82c4a61](https://github.com/xuchengpeng/.emacs.d/commit/82c4a612f7525cfa3e78d7993520bfeffbb8d6f3))
+* **perf:** redisplay faster ([d0efabe](https://github.com/xuchengpeng/.emacs.d/commit/d0efabee5bcf2e98b99cd768fbefe4fc520df307))
+* **refactor:** remove useless configuration ([dacc0b5](https://github.com/xuchengpeng/.emacs.d/commit/dacc0b5f55b05e98a8e322821372a0cef80e5081))
+
 ## [2.2.6](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.5...v2.2.6) (2024-08-30)
 
 

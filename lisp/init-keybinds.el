@@ -17,8 +17,8 @@
   :doc "Keymap for `dotemacs-leader-key'."
   "b"   '("Buffers" . (keymap))
   "b b" '("Switch" . switch-to-buffer)
-  "b k" '("Kill" . kill-buffer)
-  "b K" '("Kill Current" . kill-current-buffer)
+  "b k" '("Kill Current" . kill-current-buffer)
+  "b K" '("Kill" . kill-buffer)
   "b n" '("Next" . next-buffer)
   "b p" '("Previous" . previous-buffer)
   "b r" '("Revert" . revert-buffer)

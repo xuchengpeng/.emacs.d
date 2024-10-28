@@ -150,7 +150,7 @@
 
 (defun dotemacs-modeline--project-root ()
   "Get project root directory."
-  (when-let ((project (project-current)))
+  (when-let* ((project (project-current)))
     (expand-file-name
      (if (fboundp 'project-root)
          (project-root project)
@@ -173,9 +173,9 @@ Return `default-directory' if no project was found."
                  'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
      ;; Relative path
      (propertize
-      (when-let (relative-path (file-relative-name
-                                (or (file-name-directory file-path) "./")
-                                root-path))
+      (when-let* ((relative-path (file-relative-name
+                                  (or (file-name-directory file-path) "./")
+                                  root-path)))
         (if (string= relative-path "./")
             ""
           (if (<= (length relative-path) 30)
@@ -261,7 +261,7 @@ Return `default-directory' if no project was found."
 (defun dotemacs-modeline--multiple-cursors ()
   "Show the number of multiple cursors."
   (when (bound-and-true-p multiple-cursors-mode)
-    (when-let ((count (mc/num-cursors)))
+    (when-let* ((count (mc/num-cursors)))
       (propertize (format " MC:%d " count)
                   'face 'dotemacs-modeline-panel))))
 
@@ -365,23 +365,23 @@ mouse-3: Toggle minor modes"
                           ((> severity debug-level) (cl-incf .warning))
                           (t (cl-incf .info))))))
                flymake--state)
-      (when-let ((text
-                  (cond
-                   (some-waiting nil)
-                   ((null known) nil)
-                   (all-disabled nil)
-                   (t (let ((num (+ .error .warning .info)))
-                        (when (> num 0)
-                          (format "%s/%s/%s"
-                                  (propertize
-                                   (number-to-string .error)
-                                   'face (dotemacs-modeline--face 'dotemacs-modeline-error))
-                                  (propertize
-                                   (number-to-string .warning)
-                                   'face (dotemacs-modeline--face 'dotemacs-modeline-warning))
-                                  (propertize
-                                   (number-to-string .info)
-                                   'face (dotemacs-modeline--face 'dotemacs-modeline-info)))))))))
+      (when-let* ((text
+                   (cond
+                    (some-waiting nil)
+                    ((null known) nil)
+                    (all-disabled nil)
+                    (t (let ((num (+ .error .warning .info)))
+                         (when (> num 0)
+                           (format "%s/%s/%s"
+                                   (propertize
+                                    (number-to-string .error)
+                                    'face (dotemacs-modeline--face 'dotemacs-modeline-error))
+                                   (propertize
+                                    (number-to-string .warning)
+                                    'face (dotemacs-modeline--face 'dotemacs-modeline-warning))
+                                   (propertize
+                                    (number-to-string .info)
+                                    'face (dotemacs-modeline--face 'dotemacs-modeline-info)))))))))
         (concat
          " "
          (propertize

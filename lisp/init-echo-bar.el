@@ -6,7 +6,7 @@
   "Display text at end of the echo area."
   :group 'applications)
 
-(defcustom echo-bar-format
+(defcustom echo-bar-modules
   '(echo-bar--time)
   "List of items displayed in the echo bar."
   :group 'echo-bar
@@ -71,7 +71,8 @@
 
 (defun echo-bar-update ()
   "Udpate the text in the echo bar."
-  (echo-bar-set-text (mapconcat #'(lambda (seg) (funcall seg)) echo-bar-format " ")))
+  (echo-bar-set-text
+   (mapconcat #'(lambda (seg) (ignore-errors (funcall seg))) echo-bar-modules " ")))
 
 (defun echo-bar-enable ()
   "Enable echo-bar."

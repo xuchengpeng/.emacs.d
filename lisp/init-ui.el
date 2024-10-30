@@ -186,6 +186,8 @@
    (require 'ace-window)
    (require 'init-modeline)
    (dotemacs-modeline-mode)
+   (require 'init-echo-bar)
+   (echo-bar-mode)
 
    (dotemacs-tab-bar-init)))
 

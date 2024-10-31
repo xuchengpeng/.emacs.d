@@ -49,11 +49,6 @@
   "Face used for the major-mode segment in the mode-line."
   :group 'dotemacs-modeline-faces)
 
-(defface dotemacs-modeline-panel
-  '((t (:inherit dotemacs-modeline-highlight)))
-  "Face for \\='X out of Y\\=' segments."
-  :group 'dotemacs-modeline-faces)
-
 (defface dotemacs-modeline-info
   '((t (:inherit (dotemacs-modeline success))))
   "Face for info-level messages in the mode-line."
@@ -69,7 +64,6 @@
   "Face for errors in the mode-line."
   :group 'dotemacs-modeline-faces)
 
-(defvar eglot--mode-line-format)
 (defvar eglot-menu)
 (defvar eglot-menu-string)
 (defvar eglot-server-menu)
@@ -87,10 +81,6 @@
 (declare-function flymake-reporting-backends "ext:flymake")
 (declare-function flymake-running-backends "ext:flymake")
 (declare-function flymake-show-buffer-diagnostics "ext:flymake")
-(declare-function mc/num-cursors "ext:multiple-cursors-core")
-(declare-function symbol-overlay-assoc "ext:symbol-overlay")
-(declare-function symbol-overlay-get-list "ext:symbol-overlay")
-(declare-function symbol-overlay-get-symbol "ext:symbol-overlay")
 (declare-function warning-numeric-level "warnings")
 
 (defun dotemacs-modeline--face (&optional face)
@@ -169,58 +159,10 @@
 
 (defun dotemacs-modeline--word-count ()
   "Word count in mode-line."
-  (when (member major-mode '(markdown-mode gfm-mode org-mode))
-    (format " %dW " (count-words (point-min) (point-max)))))
-
-(defun dotemacs-modeline--selection-info ()
-  "Selection info in mode-line."
-  (when (and mark-active (mode-line-window-selected-p))
-    (let* ((beg (region-beginning))
-           (end (region-end))
-           (lines (count-lines beg (min end (point-max)))))
-      (propertize
-       (concat
-        " "
-        (cond ((bound-and-true-p rectangle-mark-mode)
-               (let ((cols (abs (- (save-excursion (goto-char end) (current-column))
-                                   (save-excursion (goto-char beg) (current-column))))))
-                 (format "%dx%dB" lines cols)))
-              ((> lines 1)
-               (format "%dC %dL" (- end beg) lines))
-              (t
-               (format "%dC" (- end beg))))
-        (format " %dW" (count-words beg end))
-        " ")
-       'face 'dotemacs-modeline-emphasis))))
-
-(defun dotemacs-modeline--symbol-overlay ()
-  "Show the number of matches for symbol overlay."
-  (when (and (bound-and-true-p symbol-overlay-keywords-alist)
-             (not (bound-and-true-p symbol-overlay-temp-symbol)))
-    (let* ((keyword (symbol-overlay-assoc (symbol-overlay-get-symbol t)))
-           (symbol (car keyword))
-           (before (symbol-overlay-get-list -1 symbol))
-           (after (symbol-overlay-get-list 1 symbol))
-           (count (length before)))
-      (when (symbol-overlay-assoc symbol)
-        (propertize
-         (format " %d/%d " (+ count 1) (+ count (length after)))
-         'face 'dotemacs-modeline-panel)))))
-
-(defun dotemacs-modeline--multiple-cursors ()
-  "Show the number of multiple cursors."
-  (when (bound-and-true-p multiple-cursors-mode)
-    (when-let* ((count (mc/num-cursors)))
-      (propertize (format " MC:%d " count)
-                  'face 'dotemacs-modeline-panel))))
-
-(defun dotemacs-modeline--matches ()
-  "Matches in mode-line."
-  (when (mode-line-window-selected-p)
-    (let ((meta (concat (dotemacs-modeline--symbol-overlay)
-                        (dotemacs-modeline--multiple-cursors))))
-      (unless (string-empty-p meta)
-        meta))))
+  (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
+    (propertize
+     (format " %dW " (count-words (point-min) (point-max)))
+     'face (dotemacs-modeline--face))))
 
 (defun dotemacs-modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
@@ -357,11 +299,9 @@ mouse-3: Previous error"
 (defcustom dotemacs-modeline-left
   '(dotemacs-modeline--window-number
     dotemacs-modeline--workspace-name
-    dotemacs-modeline--matches
     dotemacs-modeline--buffer-info
     dotemacs-modeline--position
-    dotemacs-modeline--word-count
-    dotemacs-modeline--selection-info)
+    dotemacs-modeline--word-count)
   "List of items on the left of mode-line."
   :type '(list function)
   :group 'dotemacs-modeline)

@@ -11,7 +11,10 @@
   :group 'applications)
 
 (defcustom echo-bar-modules
-  '(echo-bar--time)
+  '(echo-bar--selection-info
+    echo-bar--symbol-overlay
+    echo-bar--multiple-cursors
+    echo-bar--time)
   "List of items displayed in the echo bar."
   :group 'echo-bar
   :type '(list function))
@@ -20,6 +23,63 @@
   "Number of columns between the text and right margin."
   :group 'echo-bar
   :type 'number)
+
+(defcustom echo-bar-minibuffer t
+  "If non-nil, also display the echo bar when in the minibuffer."
+  :group 'echo-bar
+  :type 'boolean)
+
+(defcustom echo-bar-update-interval 1
+  "Interval in seconds between updating the echo bar contents.
+
+If nil, don't update the echo bar automatically."
+  :group 'echo-bar
+  :type 'number)
+
+(defcustom echo-bar-separator " "
+  "Default string for the separator between modules."
+  :group 'echo-bar
+  :type 'string)
+
+(declare-function mc/num-cursors "ext:multiple-cursors-core")
+(declare-function symbol-overlay-assoc "ext:symbol-overlay")
+(declare-function symbol-overlay-get-list "ext:symbol-overlay")
+(declare-function symbol-overlay-get-symbol "ext:symbol-overlay")
+
+(defun echo-bar--selection-info ()
+  "Display selection info."
+  (when mark-active
+    (let* ((beg (region-beginning))
+           (end (region-end))
+           (lines (count-lines beg (min end (point-max)))))
+      (concat
+       (cond ((bound-and-true-p rectangle-mark-mode)
+              (let ((cols (abs (- (save-excursion (goto-char end) (current-column))
+                                  (save-excursion (goto-char beg) (current-column))))))
+                (format "%dx%dB" lines cols)))
+             ((> lines 1)
+              (format "%dC %dL" (- end beg) lines))
+             (t
+              (format "%dC" (- end beg))))
+       (format " %dW" (count-words beg end))))))
+
+(defun echo-bar--symbol-overlay ()
+  "Display the number of matches for symbol overlay."
+  (when (and (bound-and-true-p symbol-overlay-keywords-alist)
+             (not (bound-and-true-p symbol-overlay-temp-symbol)))
+    (let* ((keyword (symbol-overlay-assoc (symbol-overlay-get-symbol t)))
+           (symbol (car keyword))
+           (before (symbol-overlay-get-list -1 symbol))
+           (after (symbol-overlay-get-list 1 symbol))
+           (count (length before)))
+      (when (symbol-overlay-assoc symbol)
+        (format "%s:%d/%d" symbol (+ count 1) (+ count (length after)))))))
+
+(defun echo-bar--multiple-cursors ()
+  "Display the number of multiple cursors."
+  (when (bound-and-true-p multiple-cursors-mode)
+    (when-let* ((count (mc/num-cursors)))
+      (format "mc:%d" count))))
 
 (defun echo-bar--time ()
   "Display time."
@@ -33,9 +93,10 @@
 
 (defun echo-bar--minibuffer-setup ()
   "Setup the echo bar in the minibuffer."
-  (push (make-overlay (point-max) (point-max) nil t t) echo-bar-overlays)
-  (overlay-put (car echo-bar-overlays) 'priority 1)
-  (echo-bar-update))
+  (when echo-bar-minibuffer
+    (push (make-overlay (point-max) (point-max) nil t t) echo-bar-overlays)
+    (overlay-put (car echo-bar-overlays) 'priority 1)
+    (echo-bar-update)))
 
 (defun echo-bar--str-len (str)
   "Calculate STR in pixel width."
@@ -81,7 +142,7 @@
     (cl-remove-if
      #'(lambda (n) (eq (length n) 0))
      (mapcar #'(lambda (mod) (ignore-errors (funcall mod))) echo-bar-modules))
-    " ")))
+    echo-bar-separator)))
 
 (defun echo-bar-enable ()
   "Enable echo-bar."
@@ -95,7 +156,9 @@
             echo-bar-overlays)))
 
   ;; Start the timer to automatically update
-  (run-with-timer 0 1 'echo-bar-update)
+  (when echo-bar-update-interval
+    (run-with-timer 0 echo-bar-update-interval 'echo-bar-update))
+
   ;; Add the setup function to the minibuffer hook
   (add-hook 'minibuffer-setup-hook #'echo-bar--minibuffer-setup))
 

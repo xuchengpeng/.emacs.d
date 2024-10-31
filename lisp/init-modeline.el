@@ -101,6 +101,10 @@
     (or (and (facep face) `(:inherit (dotemacs-modeline mode-line-inactive ,face)))
         '(:inherit (dotemacs-modeline mode-line-inactive)))))
 
+(defsubst dotemacs-modeline--spc ()
+  "Whitespace."
+  (propertize " " 'face (dotemacs-modeline--face)))
+
 (defun dotemacs-modeline--window-number ()
   "Window number in mode-line."
   (let ((num (cond
@@ -110,11 +114,11 @@
               (t ""))))
     (when (length> num 0)
       (concat
-       " "
+       (dotemacs-modeline--spc)
        (propertize
         num
         'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode))
-       " "))))
+       (dotemacs-modeline--spc)))))
 
 (defun dotemacs-modeline--workspace-name ()
   "Workspace name in mode-line."
@@ -125,98 +129,43 @@
            (explicit-name (alist-get 'explicit-name current-tab))
            (tab-name (alist-get 'name current-tab)))
       (concat
-       " "
+       (dotemacs-modeline--spc)
        (propertize
         (format "[%s]" (if explicit-name tab-name (+ 1 tab-index)))
         'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode))
-       " "))))
+       (dotemacs-modeline--spc)))))
 
 (defun dotemacs-modeline--buffer-default-directory ()
   "Display `default-directory'."
   (concat
-   " "
+   (dotemacs-modeline--spc)
    (propertize
     (abbreviate-file-name default-directory)
     'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
-   " "))
-
-(defun dotemacs-modeline--buffer-simple-name ()
-  "Buffer simple name in mode-line."
-  (propertize
-   "%b"
-   'face (if (buffer-modified-p)
-             (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
-           (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))))
-
-(defun dotemacs-modeline--project-root ()
-  "Get project root directory."
-  (when-let* ((project (project-current)))
-    (expand-file-name
-     (if (fboundp 'project-root)
-         (project-root project)
-       (car (with-no-warnings
-              (project-roots project)))))))
-
-(defun dotemacs-modeline--project-directory ()
-  "Get the path to the root of your project.
-Return `default-directory' if no project was found."
-  (abbreviate-file-name
-   (or (dotemacs-modeline--project-root) default-directory)))
-
-(defun dotemacs-modeline--buffer-name ()
-  "Buffer name in mode-line."
-  (let* ((root-path (file-local-name (dotemacs-modeline--project-directory)))
-         (file-path (file-local-name (or (buffer-file-name (buffer-base-buffer)) ""))))
-    (concat
-     ;; Project directory
-     (propertize (concat (file-name-nondirectory (directory-file-name root-path)) "/")
-                 'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
-     ;; Relative path
-     (propertize
-      (when-let* ((relative-path (file-relative-name
-                                  (or (file-name-directory file-path) "./")
-                                  root-path)))
-        (if (string= relative-path "./")
-            ""
-          (if (<= (length relative-path) 30)
-              relative-path
-            ;; Shrink path
-            (let ((split (string-split relative-path "/" 'omit-nulls)))
-              (concat
-               (mapconcat
-                (lambda (str)
-                  ;; Return first character or first two characters if hidden
-                  (substring str 0 (if (string-prefix-p "." str) 2 1)))
-                split
-                "/")
-               "/")))))
-      'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
-     ;; File name
-     (propertize
-      (file-name-nondirectory file-path)
-      'face (if (buffer-modified-p)
-                (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
-              (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))
-      'help-echo (format "Buffer name\n%s" file-path)
-      'mouse-face 'dotemacs-modeline-highlight))))
+   (dotemacs-modeline--spc)))
 
 (defun dotemacs-modeline--buffer-info ()
   "Buffer info in mode-line."
   (concat
-   " "
-   (if buffer-file-name
-       (dotemacs-modeline--buffer-name)
-     (dotemacs-modeline--buffer-simple-name))
-   " %I "))
+   (dotemacs-modeline--spc)
+   (propertize
+   "%b"
+   'face (if (buffer-modified-p)
+             (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
+           (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))
+   'help-echo (format "Buffer name\n%s" (or buffer-file-name ""))
+   'mouse-face 'dotemacs-modeline-highlight)
+   (propertize " %I " 'face (dotemacs-modeline--face))))
 
 (defun dotemacs-modeline--position ()
   "Position in mode-line."
   (concat
-   " "
+   (dotemacs-modeline--spc)
    (propertize "%l:%c %p%%"
+               'face (dotemacs-modeline--face)
                'help-echo "Buffer position"
                'mouse-face 'dotemacs-modeline-highlight)
-   " "))
+   (dotemacs-modeline--spc)))
 
 (defun dotemacs-modeline--word-count ()
   "Word count in mode-line."
@@ -275,35 +224,38 @@ Return `default-directory' if no project was found."
 
 (defun dotemacs-modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
-  (concat
-   " "
-   (pcase (coding-system-eol-type buffer-file-coding-system)
-     (0 "LF ")
-     (1 "CRLF ")
-     (2 "CR ")
-     (_ ""))
-   (let ((sys (coding-system-plist buffer-file-coding-system)))
-     (cond ((memq (plist-get sys :category) '(coding-category-undecided coding-category-utf-8))
-            "UTF-8")
-           (t (upcase (symbol-name (plist-get sys :name))))))
-   " "))
+  (propertize
+   (concat
+    " "
+    (pcase (coding-system-eol-type buffer-file-coding-system)
+      (0 "LF ")
+      (1 "CRLF ")
+      (2 "CR ")
+      (_ ""))
+    (let ((sys (coding-system-plist buffer-file-coding-system)))
+      (cond ((memq (plist-get sys :category) '(coding-category-undecided coding-category-utf-8))
+             "UTF-8")
+            (t (upcase (symbol-name (plist-get sys :name))))))
+    " ")
+   'face (dotemacs-modeline--face)))
 
 (defun dotemacs-modeline--text-scale ()
   "Text-Scale info in mode-line."
   (when (and (boundp 'text-scale-mode-lighter) (/= text-scale-mode-amount 0))
     (concat
-     " "
+     (dotemacs-modeline--spc)
      (propertize
       (format "(%s)" text-scale-mode-lighter)
+      'face (dotemacs-modeline--face)
       'mouse-face 'dotemacs-modeline-highlight
       'help-echo (concat "Text scale " text-scale-mode-lighter))
-     " ")))
+     (dotemacs-modeline--spc))))
 
 (defun dotemacs-modeline--eglot ()
   "Eglot in mode-line."
   (when (bound-and-true-p eglot--managed-mode)
     (concat
-     " "
+     (dotemacs-modeline--spc)
      (propertize
       eglot-menu-string
       'face (dotemacs-modeline--face 'eglot-mode-line)
@@ -315,12 +267,12 @@ mouse-3: Eglot Server Menu"
                    (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
                    (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
                    map))
-     " ")))
+     (dotemacs-modeline--spc))))
 
 (defun dotemacs-modeline--major-mode ()
   "Major mode in mode-line."
   (concat
-   " "
+   (dotemacs-modeline--spc)
    (propertize
     (format-mode-line mode-name)
     'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode)
@@ -330,16 +282,16 @@ mouse-2: Show help for major mode
 mouse-3: Toggle minor modes"
     'mouse-face 'dotemacs-modeline-highlight
     'local-map mode-line-major-mode-keymap)
-   " "))
+   (dotemacs-modeline--spc)))
 
 (defun dotemacs-modeline--vc-info ()
   "Version control info in mode-line."
   (let ((meta (string-trim (format-mode-line '(vc-mode vc-mode)))))
     (unless (string-empty-p meta)
       (concat
-       " "
+       (dotemacs-modeline--spc)
        (propertize meta 'face `(:inherit (,(dotemacs-modeline--face 'dotemacs-modeline-info) bold)))
-       " "))))
+       (dotemacs-modeline--spc)))))
 
 (defun dotemacs-modeline--flymake ()
   "Flymake in mode-line."
@@ -372,18 +324,19 @@ mouse-3: Toggle minor modes"
                     (all-disabled nil)
                     (t (let ((num (+ .error .warning .info)))
                          (when (> num 0)
-                           (format "%s/%s/%s"
-                                   (propertize
+                           (concat (propertize
                                     (number-to-string .error)
                                     'face (dotemacs-modeline--face 'dotemacs-modeline-error))
+                                   (propertize "/" 'face (dotemacs-modeline--face))
                                    (propertize
                                     (number-to-string .warning)
                                     'face (dotemacs-modeline--face 'dotemacs-modeline-warning))
+                                   (propertize "/" 'face (dotemacs-modeline--face))
                                    (propertize
                                     (number-to-string .info)
                                     'face (dotemacs-modeline--face 'dotemacs-modeline-info)))))))))
         (concat
-         " "
+         (dotemacs-modeline--spc)
          (propertize
           text
           'help-echo
@@ -399,7 +352,7 @@ mouse-3: Previous error"
                        (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
                        (keymap-set map "<mode-line> <mouse-3>" #'flymake-goto-prev-error)
                        map))
-         " ")))))
+         (dotemacs-modeline--spc))))))
 
 (defcustom dotemacs-modeline-left
   '(dotemacs-modeline--window-number
@@ -434,14 +387,22 @@ mouse-3: Previous error"
 (defun dotemacs-modeline--format (left-segments right-segments)
   "Return a string from LEFT-SEGMENTS and RIGHT-SEGMENTS."
   (let* ((left-str (dotemacs-modeline--format-segments left-segments))
-         (right-str (dotemacs-modeline--format-segments right-segments)))
+         (right-str (dotemacs-modeline--format-segments right-segments))
+         (right-width (progn
+                        (add-face-text-property 0 (length right-str) 'mode-line t right-str)
+                        (string-pixel-width right-str))))
     (concat
      left-str
      (propertize
       " "
+      'face (dotemacs-modeline--face)
       'display
-      `(space :align-to (- (+ right right-fringe right-margin scroll-bar)
-                           ,(string-width right-str))))
+      `(space :align-to (,(- (window-pixel-width)
+                             (window-scroll-bar-width)
+                             (window-right-divider-width)
+                             (* (or (cdr (window-margins)) 1)
+                                (frame-char-width))
+                             right-width))))
      right-str)))
 
 (defun dotemacs-modeline--enable ()

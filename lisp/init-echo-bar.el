@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'cl-lib)
+(require 'subr-x)
+(require 'timer)
+
 (defgroup echo-bar nil
   "Display text at end of the echo area."
   :group 'applications)
@@ -72,7 +76,12 @@
 (defun echo-bar-update ()
   "Udpate the text in the echo bar."
   (echo-bar-set-text
-   (mapconcat #'(lambda (seg) (ignore-errors (funcall seg))) echo-bar-modules " ")))
+   (mapconcat
+    'identity
+    (cl-remove-if
+     #'(lambda (n) (eq (length n) 0))
+     (mapcar #'(lambda (mod) (ignore-errors (funcall mod))) echo-bar-modules))
+    " ")))
 
 (defun echo-bar-enable ()
   "Enable echo-bar."

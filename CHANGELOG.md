@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.3.0](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.7...v2.3.0) (2024-11-01)
+
+
+### Features
+
+* **echo-bar:** display text at end of the echo area ([8a05e82](https://github.com/xuchengpeng/.emacs.d/commit/8a05e8208b7ebb776c296ca8c0fdb17a9de5f4e4))
+
+
+### Bug Fixes
+
+* **echo-bar:** display match and select info in echo-bar instead of modeline ([6046dd1](https://github.com/xuchengpeng/.emacs.d/commit/6046dd135ead7d1c405ac3b92d90bc226b420b99))
+* **echo-bar:** ignore errors when updating ([695bbbd](https://github.com/xuchengpeng/.emacs.d/commit/695bbbdcde4b7adc22ffde010f05ca5b49e8376a))
+* **echo-bar:** remove empty modules ([ebfa628](https://github.com/xuchengpeng/.emacs.d/commit/ebfa628615e984c16a5b569c95c76b371e6aedd6))
+* **keybinds:** switch kill-buffer and kill-current-buffer ([78b34cd](https://github.com/xuchengpeng/.emacs.d/commit/78b34cd78319d70526ca2ff5d28c8be9a90d806d))
+* **minibuffer:** enable recursive minibuffers ([c2534d3](https://github.com/xuchengpeng/.emacs.d/commit/c2534d3dcc7f017d7c2641aed7f23dae9abdb605))
+* **modeline:** better right align ([2250e4c](https://github.com/xuchengpeng/.emacs.d/commit/2250e4c03f0d16d5425ef0dc58b213d1624debc2))
+* **modeline:** replace use of obsolete if-let and when-let ([a62a0be](https://github.com/xuchengpeng/.emacs.d/commit/a62a0bee959b1d7538d7c14c45b6c10d42b7c79d))
+
 ## [2.2.7](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.6...v2.2.7) (2024-09-20)
 
 

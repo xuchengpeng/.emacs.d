@@ -34,9 +34,9 @@
 (setq window-resize-pixelwise nil
       frame-resize-pixelwise t)
 
-(if (boundp 'use-short-answers)
-    (setq use-short-answers t)
-  (fset 'yes-or-no-p 'y-or-n-p))
+(setq use-short-answers t)
+
+(setq enable-recursive-minibuffers t)
 
 (setq-default major-mode 'fundamental-mode)
 (setq inhibit-startup-message t

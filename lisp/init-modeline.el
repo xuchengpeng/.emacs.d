@@ -139,12 +139,12 @@
   (concat
    (dotemacs-modeline--spc)
    (propertize
-   "%b"
-   'face (if (buffer-modified-p)
-             (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
-           (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))
-   'help-echo (format "Buffer name\n%s" (or buffer-file-name ""))
-   'mouse-face 'dotemacs-modeline-highlight)
+    "%b"
+    'face (if (and (buffer-modified-p) (not buffer-read-only))
+              (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
+            (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))
+    'help-echo (format "Buffer name\n%s" (or buffer-file-name ""))
+    'mouse-face 'dotemacs-modeline-highlight)
    (propertize " %I " 'face (dotemacs-modeline--face))))
 
 (defun dotemacs-modeline--position ()

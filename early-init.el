@@ -3,6 +3,7 @@
 ;;; Code:
 
 (setq gc-cons-threshold most-positive-fixnum)
+(setq native-comp-jit-compilation nil)
 (setq package-enable-at-startup nil)
 (setq load-prefer-newer t)
 (setq frame-inhibit-implied-resize t)

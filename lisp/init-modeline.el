@@ -143,9 +143,11 @@
     'face (if (and (buffer-modified-p) (not buffer-read-only))
               (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
             (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))
-    'help-echo (format "Buffer name\n%s" (or buffer-file-name ""))
+    'help-echo (format "Buffer name\n%s" (or (buffer-file-name) (buffer-name)))
     'mouse-face 'dotemacs-modeline-highlight)
-   (propertize " %I " 'face (dotemacs-modeline--face))))
+   (dotemacs-modeline--spc)
+   (propertize "%I" 'face (dotemacs-modeline--face))
+   (dotemacs-modeline--spc)))
 
 (defun dotemacs-modeline--position ()
   "Position in mode-line."

@@ -50,10 +50,6 @@
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
-  ;; search symbol at point by default
-  (consult-customize
-   consult-line consult-grep consult-ripgrep consult-git-grep
-   :initial (thing-at-point 'symbol))
   (with-eval-after-load 'xref
     (when (executable-find "rg")
       (setq xref-search-program 'ripgrep))

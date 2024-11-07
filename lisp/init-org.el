@@ -19,13 +19,14 @@
         org-publish-timestamp-directory (expand-file-name "org-timestamps/" dotemacs-cache-dir)
         org-startup-indented t)
 
-  (defun dotemacs-org-post-file ()
+  (defun +org-capture-org-blog-post ()
     (let* ((filename (read-from-minibuffer "New post filename: "))
            (post-dir (expand-file-name (format "org/posts/%s" (format-time-string "%Y/%m")) dotemacs-org-site-dir)))
       (unless (file-exists-p post-dir)
         (make-directory post-dir t))
       (find-file (expand-file-name filename post-dir))
-      (tempel-insert 'blog-title)))
+      (insert "#+TITLE: \n" "#+DATE: " (format-time-string "<%Y-%m-%d %a %H:%M>") "\n")))
+
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates
         `(("t" "Todo" entry
@@ -37,8 +38,8 @@
           ("j" "Journal" entry
            (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
            "* %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
-          ("p" "Post" plain
-           (function dotemacs-org-post-file)
+          ("o" "Org Blog Post" plain
+           (function +org-capture-org-blog-post)
            "" :jump-to-captured t :immediate-finish t)))
 
   (setq org-todo-keywords

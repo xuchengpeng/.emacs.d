@@ -68,6 +68,7 @@
   "s i" '("Imenu" . imenu)
   "s m" '("Bookmark" . bookmark-jump)
   "s r" '("Ripgrep" . consult-ripgrep)
+  "s s" '("Symbol" . (lambda () (interactive) (consult-ripgrep nil (thing-at-point 'symbol))))
 
   "t"   '("Toggle" . (keymap))
   "t f" '("Flymake" . flymake-mode)

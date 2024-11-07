@@ -39,29 +39,5 @@ code of the process and OUTPUT is its stdout output."
               -1)
           (string-trim (buffer-string)))))
 
-(defun dotemacs-delete-carrage-returns ()
-  "Delete ^M of current buffer.
-Same as `replace-string' RET `C-q' `C-m' RET RET, or `query-replace'."
-  (interactive)
-  (save-excursion
-    (goto-char 0)
-    (while (search-forward "\r" nil :noerror)
-      (replace-match ""))))
-
-(defun dotemacs-dos2unix ()
-  "Convert the current buffer to a Unix file encoding."
-  (interactive)
-  (set-buffer-file-coding-system 'undecided-unix nil))
-
-(defun dotemacs-unix2dos ()
-  "Convert the current buffer to a DOS file encoding."
-  (interactive)
-  (set-buffer-file-coding-system 'undecided-dos nil))
-
-(defun dotemacs-treesit-available-p ()
-  "Check if treesit available."
-  (and (fboundp 'treesit-available-p)
-       (treesit-available-p)))
-
 (provide 'init-base)
 ;;; init-base.el ends here

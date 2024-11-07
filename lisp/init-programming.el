@@ -53,7 +53,8 @@
   :commands (eldoc-box-help-at-point))
 
 ;; treesit support
-(when (dotemacs-treesit-available-p)
+(when (and (fboundp 'treesit-available-p)
+           (treesit-available-p))
   (setq major-mode-remap-alist
         '((c-mode . c-ts-mode)
           (c++-mode . c++-ts-mode)

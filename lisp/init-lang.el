@@ -3,11 +3,8 @@
 ;;; Code:
 
 (with-eval-after-load 'cc-mode
-  (setq-default c-basic-offset 4))
-
-(when (dotemacs-treesit-available-p)
-  (with-eval-after-load 'c-ts-mode
-    (setq c-ts-mode-indent-offset 4)))
+  (setq-default c-basic-offset 4)
+  (setq c-ts-mode-indent-offset 4))
 
 (use-package reformatter
   :ensure t)

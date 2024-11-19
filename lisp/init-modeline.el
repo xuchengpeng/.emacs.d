@@ -64,6 +64,11 @@
   "Face for errors in the mode-line."
   :group 'dotemacs-modeline-faces)
 
+(defface dotemacs-modeline-vc-info
+  '((t (:inherit (dotemacs-modeline success bold))))
+  "Face for vc-info in the mode-line."
+  :group 'dotemacs-modeline-faces)
+
 (defvar eglot-menu)
 (defvar eglot-menu-string)
 (defvar eglot-server-menu)
@@ -234,7 +239,7 @@ mouse-3: Toggle minor modes"
     (unless (string-empty-p meta)
       (concat
        (dotemacs-modeline--spc)
-       (propertize meta 'face `(:inherit (,(dotemacs-modeline--face 'dotemacs-modeline-info) bold)))
+       (propertize meta 'face (dotemacs-modeline--face 'dotemacs-modeline-vc-info))
        (dotemacs-modeline--spc)))))
 
 (defun dotemacs-modeline--flymake ()

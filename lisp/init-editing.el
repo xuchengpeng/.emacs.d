@@ -128,12 +128,42 @@
   (keymap-global-set "C-<" 'mc/mark-previous-like-this)
   (keymap-global-set "C-c C-<" 'mc/mark-all-like-this))
 
-(use-package move-text
-  :ensure t
-  :commands (move-text-up move-text-down)
-  :init
-  (keymap-global-set "M-<up>" 'move-text-up)
-  (keymap-global-set "M-<down>" 'move-text-down))
+(defun move-text-internal (arg)
+  "Move text past ARG lines."
+  (cond
+   ((and mark-active transient-mark-mode)
+    (if (> (point) (mark))
+        (exchange-point-and-mark))
+    (let ((column (current-column))
+          (text (delete-and-extract-region (point) (mark))))
+      (forward-line arg)
+      (move-to-column column t)
+      (set-mark (point))
+      (insert text)
+      (exchange-point-and-mark)
+      (setq deactivate-mark nil)))
+   (t
+    (let ((column (current-column)))
+      (beginning-of-line)
+      (when (or (> arg 0) (not (bobp)))
+        (forward-line)
+        (when (or (< arg 0) (not (eobp)))
+          (transpose-lines arg))
+        (forward-line -1))
+      (move-to-column column t)))))
+
+(defun move-text-down (arg)
+  "Move text down ARG lines."
+  (interactive "*p")
+  (move-text-internal arg))
+
+(defun move-text-up (arg)
+  "Move text up ARG lines."
+  (interactive "*p")
+  (move-text-internal (- arg)))
+
+(keymap-global-set "M-<up>" 'move-text-up)
+(keymap-global-set "M-<down>" 'move-text-down)
 
 (use-package vundo
   :ensure t

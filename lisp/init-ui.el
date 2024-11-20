@@ -39,7 +39,9 @@
 (setq enable-recursive-minibuffers t)
 
 (setq-default major-mode 'fundamental-mode)
-(setq inhibit-startup-message t
+(setq use-file-dialog nil
+      use-dialog-box nil
+      inhibit-startup-screen t
       inhibit-startup-echo-area-message user-login-name
       inhibit-default-init t
       initial-major-mode 'fundamental-mode

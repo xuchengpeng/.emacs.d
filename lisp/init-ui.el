@@ -9,8 +9,8 @@
       scroll-preserve-screen-position t
       auto-window-vscroll nil
       ;; mouse
-      mouse-wheel-scroll-amount '(2 ((shift) . 2))
-      mouse-wheel-scroll-amount-horizontal 2)
+      mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
+      mouse-wheel-scroll-amount-horizontal 1)
 
 (setq uniquify-buffer-name-style 'forward)
 

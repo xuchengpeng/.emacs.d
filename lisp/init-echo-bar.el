@@ -14,6 +14,7 @@
   '(echo-bar--selection-info
     echo-bar--symbol-overlay
     echo-bar--multiple-cursors
+    echo-bar--hostname
     echo-bar--time)
   "List of items displayed in the echo bar."
   :group 'echo-bar
@@ -80,6 +81,12 @@ If nil, don't update the echo bar automatically."
   (when (bound-and-true-p multiple-cursors-mode)
     (when-let* ((count (mc/num-cursors)))
       (format "mc:%d" count))))
+
+(defun echo-bar--hostname ()
+  "Display remote hostname."
+  (when buffer-file-name
+    (when-let* ((host (file-remote-p buffer-file-name 'host)))
+      (concat "@" host))))
 
 (defun echo-bar--time ()
   "Display time."

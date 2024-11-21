@@ -58,10 +58,10 @@ If nil, don't update the echo bar automatically."
                                   (save-excursion (goto-char beg) (current-column))))))
                 (format "%dx%dB" lines cols)))
              ((> lines 1)
-              (format "%dC %dL" (- end beg) lines))
+              (format "%dC-%dL" (- end beg) lines))
              (t
               (format "%dC" (- end beg))))
-       (format " %dW" (count-words beg end))))))
+       (format "-%dW" (count-words beg end))))))
 
 (defun echo-bar--symbol-overlay ()
   "Display the number of matches for symbol overlay."
@@ -83,7 +83,7 @@ If nil, don't update the echo bar automatically."
 
 (defun echo-bar--time ()
   "Display time."
-  (format-time-string "[%Y/%m/%d %H:%M %a]"))
+  (format-time-string "[%Y-%m-%d %H:%M %a]"))
 
 (defvar echo-bar-text nil
   "The text currently displayed in the echo bar.")

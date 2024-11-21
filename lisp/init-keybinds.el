@@ -38,7 +38,6 @@
   "l a" '("Code Action" . eglot-code-actions)
   "l d" '("Find Definition" . xref-find-definitions)
   "l f" '("Format" . eglot-format)
-  "l h" '("Hover" . eldoc-box-help-at-point)
   "l i" '("Find Implementation" . eglot-find-implementation)
   "l r" '("Find References" . xref-find-references)
   "l R" '("Rename" . eglot-rename)

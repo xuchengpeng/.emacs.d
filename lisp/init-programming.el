@@ -48,10 +48,6 @@
   (setq eglot-autoshutdown t
         eglot-send-changes-idle-time 0.5))
 
-(use-package eldoc-box
-  :ensure t
-  :commands (eldoc-box-help-at-point))
-
 ;; treesit support
 (when (and (fboundp 'treesit-available-p)
            (treesit-available-p))

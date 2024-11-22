@@ -126,7 +126,16 @@ If nil, don't update the echo bar automatically."
            (spc (propertize " " 'cursor 1 'display
                             `(space :align-to (- right-fringe ,wid)))))
 
-      (setq echo-bar-text (concat spc text))
+      (setq echo-bar-text
+            (concat
+             ;; Wrap the text to the next line if the last line of echo bar is too long
+             (when (>
+                    (echo-bar--str-len
+                     (car (last (string-split (substring-no-properties (or (current-message) "")) "\n"))))
+                    (- (frame-width) wid))
+               "\n")
+             spc
+             text))
 
       ;; Remove all dead overlays from the list
       (setq echo-bar-overlays (seq-filter 'overlay-buffer echo-bar-overlays))
@@ -134,11 +143,7 @@ If nil, don't update the echo bar automatically."
       ;; Add the correct text to each echo-bar overlay
       (dolist (o echo-bar-overlays)
         (when (overlay-buffer o)
-          (with-current-buffer (overlay-buffer o)
-            ;; Wrap the text to the next line if the echo bar text is too long
-            (if (> (point-max) (- (frame-width) wid))
-                (overlay-put o 'after-string (concat "\n" echo-bar-text))
-              (overlay-put o 'after-string echo-bar-text)))))
+          (overlay-put o 'after-string echo-bar-text)))
 
       ;; Display the text in Minibuf-0
       (with-current-buffer " *Minibuf-0*"

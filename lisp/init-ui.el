@@ -190,14 +190,16 @@
    (dotemacs-modeline-mode)
    (require 'init-echo-bar)
    (echo-bar-mode)
+   (require 'init-dashboard)
+   (add-hook
+    'dashboard-mode-hook
+    (lambda ()
+      (setq-local dotemacs-modeline-left '(dotemacs-modeline--window-number
+                                           dotemacs-modeline--buffer-default-directory)
+                  dotemacs-modeline-right '(dotemacs-modeline--major-mode))))
+   (dashboard-initialize)
 
    (dotemacs-tab-bar-init)))
-
-(add-hook
- 'emacs-startup-hook
- (lambda ()
-   (require 'init-dashboard)
-   (dotemacs-dashboard-init)))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

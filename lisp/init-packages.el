@@ -4,7 +4,7 @@
 
 (require 'package)
 
-(defun dotemacs-set-package-archives (archives)
+(defun +set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
   (let ((proto (if (gnutls-available-p) "https" "http")))
     (cond
@@ -18,7 +18,7 @@
       (error "Unknown archives: '%s'" archives)))))
 
 (unless (eq dotemacs-package-archives 'custom)
-  (dotemacs-set-package-archives dotemacs-package-archives))
+  (+set-package-archives dotemacs-package-archives))
 
 (setq load-prefer-newer t
       package-enable-at-startup nil
@@ -26,18 +26,6 @@
       package-gnupghome-dir (expand-file-name "gnupg" package-user-dir))
 
 (package-initialize)
-
-(defun dotemacs-require-package (package)
-  "Install PACKAGE unless already installed."
-  (unless (package-installed-p package)
-    (if (assoc package package-archive-contents)
-        (package-install package)
-      (package-refresh-contents)
-      (package-install package))))
-
-(defun dotemacs-require-packages (packages)
-  "Install PACKAGES."
-  (mapc #'dotemacs-require-package packages))
 
 (provide 'init-packages)
 ;;; init-packages.el ends here

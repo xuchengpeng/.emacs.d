@@ -49,9 +49,9 @@
   "Face used for the major-mode segment in the mode-line."
   :group 'dotemacs-modeline-faces)
 
-(defface dotemacs-modeline-info
+(defface dotemacs-modeline-debug
   '((t (:inherit (dotemacs-modeline success))))
-  "Face for info-level messages in the mode-line."
+  "Face for debug-level messages in the mode-line."
   :group 'dotemacs-modeline-faces)
 
 (defface dotemacs-modeline-warning
@@ -239,7 +239,7 @@ mouse-3: Toggle minor modes"
     (unless (string-empty-p meta)
       (concat
        (dotemacs-modeline--spc)
-       (propertize meta 'face (dotemacs-modeline--face 'dotemacs-modeline-vc-info))
+       (propertize (concat "@" meta) 'face (dotemacs-modeline--face 'dotemacs-modeline-vc-info))
        (dotemacs-modeline--spc)))))
 
 (defun dotemacs-modeline--flymake ()
@@ -255,7 +255,7 @@ mouse-3: Toggle minor modes"
            (debug-level (warning-numeric-level :debug))
            (.error 0)
            (.warning 0)
-           (.info 0))
+           (.debug 0))
       (maphash (lambda (_b state)
                  (cl-loop
                   with diags = (flymake--state-diags state)
@@ -264,37 +264,45 @@ mouse-3: Toggle minor modes"
                                                                  (warning-numeric-level :error))))
                     (cond ((> severity warning-level) (cl-incf .error))
                           ((> severity debug-level) (cl-incf .warning))
-                          (t (cl-incf .info))))))
+                          (t (cl-incf .debug))))))
                flymake--state)
       (when-let* ((text
                    (cond
                     (some-waiting nil)
                     ((null known) nil)
                     (all-disabled nil)
-                    (t (let ((num (+ .error .warning .info)))
-                         (when (> num 0)
-                           (concat (propertize
-                                    (number-to-string .error)
-                                    'face (dotemacs-modeline--face 'dotemacs-modeline-error))
-                                   (propertize "/" 'face (dotemacs-modeline--face))
-                                   (propertize
-                                    (number-to-string .warning)
-                                    'face (dotemacs-modeline--face 'dotemacs-modeline-warning))
-                                   (propertize "/" 'face (dotemacs-modeline--face))
-                                   (propertize
-                                    (number-to-string .info)
-                                    'face (dotemacs-modeline--face 'dotemacs-modeline-info)))))))))
+                    (t (when (> (+ .error .warning .debug) 0)
+                         (concat
+                          (propertize
+                           (number-to-string .error)
+                           'face (dotemacs-modeline--face 'dotemacs-modeline-error))
+                          (propertize "/" 'face (dotemacs-modeline--face))
+                          (propertize
+                           (number-to-string .warning)
+                           'face (dotemacs-modeline--face 'dotemacs-modeline-warning))
+                          (propertize "/" 'face (dotemacs-modeline--face))
+                          (propertize
+                           (number-to-string .debug)
+                           'face (dotemacs-modeline--face 'dotemacs-modeline-debug))))))))
         (concat
          (dotemacs-modeline--spc)
+         (propertize
+          "!"
+          'face
+          (if (> .error 0)
+              (dotemacs-modeline--face 'dotemacs-modeline-error)
+            (if (> .warning 0)
+                (dotemacs-modeline--face 'dotemacs-modeline-warning)
+              (dotemacs-modeline--face 'dotemacs-modeline-debug))))
          (propertize
           text
           'help-echo
           (format "Flymake
-error:%d, warning:%d, info:%d
+error:%d, warning:%d, debug:%d
 mouse-1: Next error
 mouse-2: Show all errors
 mouse-3: Previous error"
-                  .error .warning .info)
+                  .error .warning .debug)
           'mouse-face 'dotemacs-modeline-highlight
           'local-map (let ((map (make-sparse-keymap)))
                        (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)

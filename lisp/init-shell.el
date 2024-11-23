@@ -8,7 +8,7 @@
   (defvar eshell-rc-script    (expand-file-name "eshell/profile" dotemacs-local-dir))
   (defvar eshell-login-script (expand-file-name "eshell/login" dotemacs-local-dir))
 
-  (defvar dotemacs-eshell-aliases
+  (defvar +eshell-aliases
     '(("q" "exit")
       ("f" "find-file $1")
       ("d" "dired $1")
@@ -32,15 +32,15 @@
           eshell-hist-ignoredups t
           eshell-glob-case-insensitive t
           eshell-error-if-no-glob t)
-    (add-hook 'eshell-mode-hook
-              (lambda ()
-                (setq-local hscroll-margin 0
-                            dotemacs-modeline-left '(dotemacs-modeline--window-number
-                                                     dotemacs-modeline--buffer-default-directory)
-                            dotemacs-modeline-right '(dotemacs-modeline--major-mode))
-                (visual-line-mode)))
+    (add-hook
+     'eshell-mode-hook
+     (lambda ()
+       (setq-local hscroll-margin 0
+                   +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+                   +modeline-right '(+modeline--major-mode))
+       (visual-line-mode)))
     (with-eval-after-load 'em-alias
-      (setq eshell-command-aliases-list (append eshell-command-aliases-list dotemacs-eshell-aliases)))))
+      (setq eshell-command-aliases-list (append eshell-command-aliases-list +eshell-aliases)))))
 
 (unless (eq system-type 'windows-nt)
   (use-package vterm
@@ -50,11 +50,10 @@
     (add-hook
      'vterm-mode-hook
      (lambda ()
-       (setq-local dotemacs-modeline-left '(dotemacs-modeline--window-number
-                                            dotemacs-modeline--buffer-default-directory)
-                   dotemacs-modeline-right '(dotemacs-modeline--major-mode))))))
+       (setq-local +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+                   +modeline-right '(+modeline--major-mode))))))
 
-(defun dotemacs-shell ()
+(defun +shell ()
   "Launch shell."
   (interactive)
   (if (eq system-type 'windows-nt)

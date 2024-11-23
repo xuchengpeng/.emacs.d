@@ -50,7 +50,7 @@
   "o f" '("Flymake Diagnostic" . consult-flymake)
   "o p" '("Org Publish Project" . org-publish-project)
   "o d" '("Dired" . dired-jump)
-  "o t" '("Terminal" . dotemacs-shell)
+  "o t" '("Terminal" . +shell)
 
   "q"   '("Quit" . (keymap))
   "q q" '("Quit Emacs" . kill-emacs)

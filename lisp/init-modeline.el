@@ -5,69 +5,69 @@
 (require 'cl-lib)
 (require 'subr-x)
 
-(defgroup dotemacs-modeline nil
+(defgroup +modeline nil
   "A minimal and modern mode-line."
   :group 'mode-line)
 
-(defgroup dotemacs-modeline-faces nil
-  "The faces of `dotemacs-modeline'."
-  :group 'dotemacs-modeline
+(defgroup +modeline-faces nil
+  "The faces of `+modeline'."
+  :group '+modeline
   :group 'faces)
 
-(defface dotemacs-modeline
+(defface +modeline
   '((t ()))
   "Default face."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-emphasis
-  '((t (:inherit (dotemacs-modeline mode-line-emphasis))))
+(defface +modeline-emphasis
+  '((t (:inherit (+modeline mode-line-emphasis))))
   "Face used for emphasis."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-highlight
-  '((t (:inherit (dotemacs-modeline mode-line-highlight))))
+(defface +modeline-highlight
+  '((t (:inherit (+modeline mode-line-highlight))))
   "Face used for highlighting."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-buffer-path
-  '((t (:inherit (dotemacs-modeline-emphasis bold))))
+(defface +modeline-buffer-path
+  '((t (:inherit (+modeline-emphasis bold))))
   "Face used for the dirname part of the buffer path."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-buffer-file
-  '((t (:inherit (dotemacs-modeline mode-line-buffer-id bold))))
+(defface +modeline-buffer-file
+  '((t (:inherit (+modeline mode-line-buffer-id bold))))
   "Face used for the filename part of the mode-line buffer path."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-buffer-modified
-  '((t (:inherit (dotemacs-modeline warning bold) :background unspecified)))
+(defface +modeline-buffer-modified
+  '((t (:inherit (+modeline warning bold) :background unspecified)))
   "Face used for the \\='unsaved\\=' symbol in the mode-line."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-buffer-major-mode
-  '((t (:inherit (dotemacs-modeline-emphasis bold))))
+(defface +modeline-buffer-major-mode
+  '((t (:inherit (+modeline-emphasis bold))))
   "Face used for the major-mode segment in the mode-line."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-debug
-  '((t (:inherit (dotemacs-modeline success))))
+(defface +modeline-debug
+  '((t (:inherit (+modeline success))))
   "Face for debug-level messages in the mode-line."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-warning
-  '((t (:inherit (dotemacs-modeline warning))))
+(defface +modeline-warning
+  '((t (:inherit (+modeline warning))))
   "Face for warnings in the mode-line."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-error
-  '((t (:inherit (dotemacs-modeline error))))
+(defface +modeline-error
+  '((t (:inherit (+modeline error))))
   "Face for errors in the mode-line."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
-(defface dotemacs-modeline-vc-info
-  '((t (:inherit (dotemacs-modeline success bold))))
+(defface +modeline-vc-info
+  '((t (:inherit (+modeline success bold))))
   "Face for vc-info in the mode-line."
-  :group 'dotemacs-modeline-faces)
+  :group '+modeline-faces)
 
 (defvar eglot-menu)
 (defvar eglot-menu-string)
@@ -88,19 +88,19 @@
 (declare-function flymake-show-buffer-diagnostics "ext:flymake")
 (declare-function warning-numeric-level "warnings")
 
-(defun dotemacs-modeline--face (&optional face)
+(defun +modeline--face (&optional face)
   "Display FACE in the selected window."
   (if (mode-line-window-selected-p)
-      (or (and (facep face) `(:inherit (dotemacs-modeline ,face)))
-          '(:inherit (dotemacs-modeline mode-line-active)))
-    (or (and (facep face) `(:inherit (dotemacs-modeline mode-line-inactive ,face)))
-        '(:inherit (dotemacs-modeline mode-line-inactive)))))
+      (or (and (facep face) `(:inherit (+modeline ,face)))
+          '(:inherit (+modeline mode-line-active)))
+    (or (and (facep face) `(:inherit (+modeline mode-line-inactive ,face)))
+        '(:inherit (+modeline mode-line-inactive)))))
 
-(defsubst dotemacs-modeline--spc ()
+(defsubst +modeline--spc ()
   "Whitespace."
-  (propertize " " 'face (dotemacs-modeline--face)))
+  (propertize " " 'face (+modeline--face)))
 
-(defun dotemacs-modeline--window-number ()
+(defun +modeline--window-number ()
   "Window number in mode-line."
   (let ((num (cond
               ((boundp 'ace-window-display-mode)
@@ -109,13 +109,13 @@
               (t ""))))
     (when (length> num 0)
       (concat
-       (dotemacs-modeline--spc)
+       (+modeline--spc)
        (propertize
         num
-        'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode))
-       (dotemacs-modeline--spc)))))
+        'face (+modeline--face '+modeline-buffer-major-mode))
+       (+modeline--spc)))))
 
-(defun dotemacs-modeline--workspace-name ()
+(defun +modeline--workspace-name ()
   "Workspace name in mode-line."
   (when (and (fboundp 'tab-bar-mode)
              (length> (frame-parameter nil 'tabs) 1))
@@ -124,54 +124,54 @@
            (explicit-name (alist-get 'explicit-name current-tab))
            (tab-name (alist-get 'name current-tab)))
       (concat
-       (dotemacs-modeline--spc)
+       (+modeline--spc)
        (propertize
         (format "[%s]" (if explicit-name tab-name (+ 1 tab-index)))
-        'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode))
-       (dotemacs-modeline--spc)))))
+        'face (+modeline--face '+modeline-buffer-major-mode))
+       (+modeline--spc)))))
 
-(defun dotemacs-modeline--buffer-default-directory ()
+(defun +modeline--buffer-default-directory ()
   "Display `default-directory'."
   (concat
-   (dotemacs-modeline--spc)
+   (+modeline--spc)
    (propertize
     (abbreviate-file-name default-directory)
-    'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-path))
-   (dotemacs-modeline--spc)))
+    'face (+modeline--face '+modeline-buffer-path))
+   (+modeline--spc)))
 
-(defun dotemacs-modeline--buffer-info ()
+(defun +modeline--buffer-info ()
   "Buffer info in mode-line."
   (concat
-   (dotemacs-modeline--spc)
+   (+modeline--spc)
    (propertize
     "%b"
     'face (if (and (buffer-modified-p) (not buffer-read-only))
-              (dotemacs-modeline--face 'dotemacs-modeline-buffer-modified)
-            (dotemacs-modeline--face 'dotemacs-modeline-buffer-file))
+              (+modeline--face '+modeline-buffer-modified)
+            (+modeline--face '+modeline-buffer-file))
     'help-echo (format "Buffer name\n%s" (or (buffer-file-name) (buffer-name)))
-    'mouse-face 'dotemacs-modeline-highlight)
-   (dotemacs-modeline--spc)
-   (propertize "%I" 'face (dotemacs-modeline--face))
-   (dotemacs-modeline--spc)))
+    'mouse-face '+modeline-highlight)
+   (+modeline--spc)
+   (propertize "%I" 'face (+modeline--face))
+   (+modeline--spc)))
 
-(defun dotemacs-modeline--position ()
+(defun +modeline--position ()
   "Position in mode-line."
   (concat
-   (dotemacs-modeline--spc)
+   (+modeline--spc)
    (propertize "%l:%c %p%%"
-               'face (dotemacs-modeline--face)
+               'face (+modeline--face)
                'help-echo "Buffer position"
-               'mouse-face 'dotemacs-modeline-highlight)
-   (dotemacs-modeline--spc)))
+               'mouse-face '+modeline-highlight)
+   (+modeline--spc)))
 
-(defun dotemacs-modeline--word-count ()
+(defun +modeline--word-count ()
   "Word count in mode-line."
   (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
     (propertize
      (format " %dW " (count-words (point-min) (point-max)))
-     'face (dotemacs-modeline--face))))
+     'face (+modeline--face))))
 
-(defun dotemacs-modeline--buffer-encoding ()
+(defun +modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
   (propertize
    (concat
@@ -186,63 +186,63 @@
              "UTF-8")
             (t (upcase (symbol-name (plist-get sys :name))))))
     " ")
-   'face (dotemacs-modeline--face)))
+   'face (+modeline--face)))
 
-(defun dotemacs-modeline--text-scale ()
+(defun +modeline--text-scale ()
   "Text-Scale info in mode-line."
   (when (and (boundp 'text-scale-mode-lighter) (/= text-scale-mode-amount 0))
     (concat
-     (dotemacs-modeline--spc)
+     (+modeline--spc)
      (propertize
       (format "(%s)" text-scale-mode-lighter)
-      'face (dotemacs-modeline--face)
-      'mouse-face 'dotemacs-modeline-highlight
+      'face (+modeline--face)
+      'mouse-face '+modeline-highlight
       'help-echo (concat "Text scale " text-scale-mode-lighter))
-     (dotemacs-modeline--spc))))
+     (+modeline--spc))))
 
-(defun dotemacs-modeline--eglot ()
+(defun +modeline--eglot ()
   "Eglot in mode-line."
   (when (bound-and-true-p eglot--managed-mode)
     (concat
-     (dotemacs-modeline--spc)
+     (+modeline--spc)
      (propertize
       eglot-menu-string
-      'face (dotemacs-modeline--face 'eglot-mode-line)
+      'face (+modeline--face 'eglot-mode-line)
       'help-echo "Eglot
 mouse-1: Eglot Menu
 mouse-3: Eglot Server Menu"
-      'mouse-face 'dotemacs-modeline-highlight
+      'mouse-face '+modeline-highlight
       'local-map (let ((map (make-sparse-keymap)))
                    (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
                    (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
                    map))
-     (dotemacs-modeline--spc))))
+     (+modeline--spc))))
 
-(defun dotemacs-modeline--major-mode ()
+(defun +modeline--major-mode ()
   "Major mode in mode-line."
   (concat
-   (dotemacs-modeline--spc)
+   (+modeline--spc)
    (propertize
     (format-mode-line mode-name)
-    'face (dotemacs-modeline--face 'dotemacs-modeline-buffer-major-mode)
+    'face (+modeline--face '+modeline-buffer-major-mode)
     'help-echo "Major mode
 mouse-1: Display major mode menu
 mouse-2: Show help for major mode
 mouse-3: Toggle minor modes"
-    'mouse-face 'dotemacs-modeline-highlight
+    'mouse-face '+modeline-highlight
     'local-map mode-line-major-mode-keymap)
-   (dotemacs-modeline--spc)))
+   (+modeline--spc)))
 
-(defun dotemacs-modeline--vc-info ()
+(defun +modeline--vc-info ()
   "Version control info in mode-line."
   (let ((meta (string-trim (format-mode-line '(vc-mode vc-mode)))))
     (unless (string-empty-p meta)
       (concat
-       (dotemacs-modeline--spc)
-       (propertize (concat "@" meta) 'face (dotemacs-modeline--face 'dotemacs-modeline-vc-info))
-       (dotemacs-modeline--spc)))))
+       (+modeline--spc)
+       (propertize (concat "@" meta) 'face (+modeline--face '+modeline-vc-info))
+       (+modeline--spc)))))
 
-(defun dotemacs-modeline--flymake ()
+(defun +modeline--flymake ()
   "Flymake in mode-line."
   (when (bound-and-true-p flymake-mode)
     (let* ((known (hash-table-keys flymake--state))
@@ -275,25 +275,25 @@ mouse-3: Toggle minor modes"
                          (concat
                           (propertize
                            (number-to-string .error)
-                           'face (dotemacs-modeline--face 'dotemacs-modeline-error))
-                          (propertize "/" 'face (dotemacs-modeline--face))
+                           'face (+modeline--face '+modeline-error))
+                          (propertize "/" 'face (+modeline--face))
                           (propertize
                            (number-to-string .warning)
-                           'face (dotemacs-modeline--face 'dotemacs-modeline-warning))
-                          (propertize "/" 'face (dotemacs-modeline--face))
+                           'face (+modeline--face '+modeline-warning))
+                          (propertize "/" 'face (+modeline--face))
                           (propertize
                            (number-to-string .debug)
-                           'face (dotemacs-modeline--face 'dotemacs-modeline-debug))))))))
+                           'face (+modeline--face '+modeline-debug))))))))
         (concat
-         (dotemacs-modeline--spc)
+         (+modeline--spc)
          (propertize
           "!"
           'face
           (if (> .error 0)
-              (dotemacs-modeline--face 'dotemacs-modeline-error)
+              (+modeline--face '+modeline-error)
             (if (> .warning 0)
-                (dotemacs-modeline--face 'dotemacs-modeline-warning)
-              (dotemacs-modeline--face 'dotemacs-modeline-debug))))
+                (+modeline--face '+modeline-warning)
+              (+modeline--face '+modeline-debug))))
          (propertize
           text
           'help-echo
@@ -303,46 +303,46 @@ mouse-1: Next error
 mouse-2: Show all errors
 mouse-3: Previous error"
                   .error .warning .debug)
-          'mouse-face 'dotemacs-modeline-highlight
+          'mouse-face '+modeline-highlight
           'local-map (let ((map (make-sparse-keymap)))
                        (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)
                        (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
                        (keymap-set map "<mode-line> <mouse-3>" #'flymake-goto-prev-error)
                        map))
-         (dotemacs-modeline--spc))))))
+         (+modeline--spc))))))
 
-(defcustom dotemacs-modeline-left
-  '(dotemacs-modeline--window-number
-    dotemacs-modeline--workspace-name
-    dotemacs-modeline--buffer-info
-    dotemacs-modeline--position
-    dotemacs-modeline--word-count)
+(defcustom +modeline-left
+  '(+modeline--window-number
+    +modeline--workspace-name
+    +modeline--buffer-info
+    +modeline--position
+    +modeline--word-count)
   "List of items on the left of mode-line."
   :type '(list function)
-  :group 'dotemacs-modeline)
+  :group '+modeline)
 
-(defcustom dotemacs-modeline-right
-  '(dotemacs-modeline--text-scale
-    dotemacs-modeline--buffer-encoding
-    dotemacs-modeline--eglot
-    dotemacs-modeline--major-mode
-    dotemacs-modeline--vc-info
-    dotemacs-modeline--flymake)
+(defcustom +modeline-right
+  '(+modeline--text-scale
+    +modeline--buffer-encoding
+    +modeline--eglot
+    +modeline--major-mode
+    +modeline--vc-info
+    +modeline--flymake)
   "List of items on the right of mode-line."
   :type '(list function)
-  :group 'dotemacs-modeline)
+  :group '+modeline)
 
-(defun dotemacs-modeline--format-segments (segments)
+(defun +modeline--format-segments (segments)
   "Return a string from a list of SEGMENTS."
   (format-mode-line (mapcar
                      (lambda (segment)
                        `(:eval (,segment)))
                      segments)))
 
-(defun dotemacs-modeline--format (left-segments right-segments)
+(defun +modeline--format (left-segments right-segments)
   "Return a string from LEFT-SEGMENTS and RIGHT-SEGMENTS."
-  (let* ((left-str (dotemacs-modeline--format-segments left-segments))
-         (right-str (dotemacs-modeline--format-segments right-segments))
+  (let* ((left-str (+modeline--format-segments left-segments))
+         (right-str (+modeline--format-segments right-segments))
          (right-width (progn
                         (add-face-text-property 0 (length right-str) 'mode-line t right-str)
                         (string-pixel-width right-str))))
@@ -350,7 +350,7 @@ mouse-3: Previous error"
      left-str
      (propertize
       " "
-      'face (dotemacs-modeline--face)
+      'face (+modeline--face)
       'display
       `(space :align-to (,(- (window-pixel-width)
                              (window-scroll-bar-width)
@@ -360,26 +360,26 @@ mouse-3: Previous error"
                              right-width))))
      right-str)))
 
-(defun dotemacs-modeline--enable ()
-  "Enable dotemacs-modeline."
+(defun +modeline--enable ()
+  "Enable +modeline."
   (setq-default mode-line-format
-                '((:eval (dotemacs-modeline--format
-                          dotemacs-modeline-left
-                          dotemacs-modeline-right)))))
+                '((:eval (+modeline--format
+                          +modeline-left
+                          +modeline-right)))))
 
-(defun dotemacs-modeline--disable ()
-  "Disable dotemacs-modeline."
+(defun +modeline--disable ()
+  "Disable +modeline."
   (setq-default mode-line-format nil))
 
-(define-minor-mode dotemacs-modeline-mode
-  "Toggle `dotemacs-modeline' on or off."
-  :group 'dotemacs-modeline
+(define-minor-mode +modeline-mode
+  "Toggle `+modeline' on or off."
+  :group '+modeline
   :global t
   :lighter nil
   :keymap nil
-  (if dotemacs-modeline-mode
-      (dotemacs-modeline--enable)
-    (dotemacs-modeline--disable)))
+  (if +modeline-mode
+      (+modeline--enable)
+    (+modeline--disable)))
 
 (provide 'init-modeline)
 ;;; init-modeline.el ends here

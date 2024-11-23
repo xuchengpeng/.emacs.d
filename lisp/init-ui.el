@@ -97,9 +97,8 @@
   (add-hook
    'dired-mode-hook
    (lambda ()
-     (setq-local dotemacs-modeline-left '(dotemacs-modeline--window-number
-                                          dotemacs-modeline--buffer-default-directory)
-                 dotemacs-modeline-right '(dotemacs-modeline--major-mode)))))
+     (setq-local +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+                 +modeline-right '(+modeline--major-mode)))))
 
 (use-package dired-x
   :hook (dired-mode . dired-omit-mode)
@@ -120,7 +119,7 @@
   (setq dired-create-destination-dirs 'ask
         dired-vc-rename-file t))
 
-(defun dotemacs-init-fonts ()
+(defun +init-fonts ()
   "Set english and chinese fonts."
   (when (display-graphic-p)
     (when dotemacs-font
@@ -128,8 +127,8 @@
     (when dotemacs-cn-font
       (set-fontset-font t 'han dotemacs-cn-font))))
 
-(add-hook 'after-init-hook #'dotemacs-init-fonts)
-(add-hook 'server-after-make-frame-hook #'dotemacs-init-fonts)
+(add-hook 'after-init-hook #'+init-fonts)
+(add-hook 'server-after-make-frame-hook #'+init-fonts)
 
 (use-package which-key
   :ensure t
@@ -147,17 +146,17 @@
   :init
   (keymap-global-set "<remap> <other-window>" 'ace-window))
 
-(defun dotemacs-adjust-transparency (frame incr)
+(defun +adjust-transparency (frame incr)
   "Adjust the background transparency of FRAME by increment INCR."
   (let* ((oldalpha (or (frame-parameter frame 'alpha-background) 100))
          (newalpha (+ incr oldalpha)))
     (when (and (<= 0 newalpha) (>= 100 newalpha))
       (set-frame-parameter frame 'alpha-background newalpha))))
-(keymap-global-set "C-M-8" (lambda () (interactive) (dotemacs-adjust-transparency nil -2)))
-(keymap-global-set "C-M-9" (lambda () (interactive) (dotemacs-adjust-transparency nil 2)))
+(keymap-global-set "C-M-8" (lambda () (interactive) (+adjust-transparency nil -2)))
+(keymap-global-set "C-M-9" (lambda () (interactive) (+adjust-transparency nil 2)))
 (keymap-global-set "C-M-0" (lambda () (interactive) (set-frame-parameter nil 'alpha-background 100)))
 
-(defun dotemacs-tab-bar-tab-name-format (tab i)
+(defun +tab-bar-tab-name-format (tab i)
   "Format a TAB name of tab index I."
   (propertize
    (concat
@@ -168,14 +167,14 @@
     " ")
    'face (funcall tab-bar-tab-face-function tab)))
 
-(defun dotemacs-tab-bar-init ()
+(defun +tab-bar-init ()
   "Tab bar initialize."
   (setq tab-bar-separator "\u200B"
         tab-bar-tab-hints nil
         tab-bar-close-button-show nil
         tab-bar-auto-width nil
         tab-bar-format '(tab-bar-format-tabs tab-bar-separator)
-        tab-bar-tab-name-format-function #'dotemacs-tab-bar-tab-name-format))
+        tab-bar-tab-name-format-function #'+tab-bar-tab-name-format))
 
 (add-hook
  'after-init-hook
@@ -187,19 +186,18 @@
 
    (require 'ace-window)
    (require 'init-modeline)
-   (dotemacs-modeline-mode)
+   (+modeline-mode)
    (require 'init-echo-bar)
    (echo-bar-mode)
    (require 'init-dashboard)
    (add-hook
     'dashboard-mode-hook
     (lambda ()
-      (setq-local dotemacs-modeline-left '(dotemacs-modeline--window-number
-                                           dotemacs-modeline--buffer-default-directory)
-                  dotemacs-modeline-right '(dotemacs-modeline--major-mode))))
+      (setq-local +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+                  +modeline-right '(+modeline--major-mode))))
    (dashboard-initialize)
 
-   (dotemacs-tab-bar-init)))
+   (+tab-bar-init)))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

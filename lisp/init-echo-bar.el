@@ -101,8 +101,11 @@ If nil, don't update the echo bar automatically."
 (defun echo-bar--minibuffer-setup ()
   "Setup the echo bar in the minibuffer."
   (when echo-bar-minibuffer
-    (push (make-overlay (point-max) (point-max) nil t t) echo-bar-overlays)
-    (overlay-put (car echo-bar-overlays) 'priority 1)
+    ;; Remove all dead overlays from the list
+    (setq echo-bar-overlays (seq-filter 'overlay-buffer echo-bar-overlays))
+    (let ((new-overlay (make-overlay (point-max) (point-max) nil t t)))
+      (overlay-put new-overlay 'priority 1)
+      (push new-overlay echo-bar-overlays))
     (echo-bar-update)))
 
 (defun echo-bar--str-len (str)
@@ -137,9 +140,6 @@ If nil, don't update the echo bar automatically."
              spc
              text))
 
-      ;; Remove all dead overlays from the list
-      (setq echo-bar-overlays (seq-filter 'overlay-buffer echo-bar-overlays))
-
       ;; Add the correct text to each echo-bar overlay
       (dolist (o echo-bar-overlays)
         (when (overlay-buffer o)
@@ -168,8 +168,9 @@ If nil, don't update the echo bar automatically."
   (dolist (buf '(" *Echo Area 0*" " *Echo Area 1*"))
     (with-current-buffer (get-buffer-create buf)
       (remove-overlays (point-min) (point-max))
-      (push (make-overlay (point-min) (point-max) nil nil t)
-            echo-bar-overlays)))
+      (let ((new-overlay (make-overlay (point-max) (point-max) nil t t)))
+        (overlay-put new-overlay 'priority 1)
+        (push new-overlay echo-bar-overlays))))
 
   ;; Start the timer to automatically update
   (when echo-bar-update-interval

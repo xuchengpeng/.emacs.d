@@ -95,11 +95,11 @@
   :init
   (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
-(defun dotemacs-enable-trailing-whitespace ()
+(defun +delete-trailing-whitespace ()
   "Delete trailing whitespace before save."
   (setq show-trailing-whitespace t)
   (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
-(add-hook 'prog-mode-hook 'dotemacs-enable-trailing-whitespace)
+(add-hook 'prog-mode-hook #'+delete-trailing-whitespace)
 
 (use-package avy
   :ensure t

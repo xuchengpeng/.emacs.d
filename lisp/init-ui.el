@@ -196,6 +196,9 @@
                  +modeline-right '(+modeline--major-mode))))
   (dashboard-initialize)
 
+  (when (get-buffer "*scratch*")
+    (kill-buffer "*scratch*"))
+
   (+tab-bar-init))
 
 (add-hook 'after-init-hook #'+init-ui)

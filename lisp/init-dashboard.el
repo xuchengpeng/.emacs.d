@@ -119,8 +119,7 @@
 
 (defun dashboard-initialize ()
   "Initialize dashboard."
-  (when (equal (buffer-name) "*scratch*")
-    (dashboard--reload))
+  (dashboard--reload)
   (add-hook 'window-configuration-change-hook #'dashboard--resize)
   (add-hook 'window-size-change-functions #'dashboard--resize))
 

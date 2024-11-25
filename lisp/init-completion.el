@@ -56,7 +56,7 @@
     (setq xref-show-xrefs-function #'consult-xref
           xref-show-definitions-function #'consult-xref)))
 
-(defun dotemacs-find-file (&optional dir initial)
+(defun +find-file (&optional dir initial)
   "Search for files in DIR matching input regexp given INITIAL input."
   (interactive "P")
   (cond
@@ -66,7 +66,7 @@
     (consult-find dir initial))
    (find-file dir initial)))
 
-(defun dotemacs-search-cwd (&optional other)
+(defun +search-cwd (&optional other)
   "Conduct a text search in files under the current folder.
 If prefix OTHER is set, prompt for a directory to search from."
   (interactive "P")
@@ -76,10 +76,10 @@ If prefix OTHER is set, prompt for a directory to search from."
             default-directory)))
     (consult-ripgrep default-directory (thing-at-point 'symbol))))
 
-(defun dotemacs-search-other-cwd ()
+(defun +search-other-cwd ()
   "Conduct a text search in another directory."
   (interactive)
-  (dotemacs-search-cwd 'other))
+  (+search-cwd 'other))
 
 (use-package embark
   :ensure t

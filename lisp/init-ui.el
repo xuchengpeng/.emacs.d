@@ -176,28 +176,29 @@
         tab-bar-format '(tab-bar-format-tabs tab-bar-separator)
         tab-bar-tab-name-format-function #'+tab-bar-tab-name-format))
 
-(add-hook
- 'after-init-hook
- (lambda ()
-   (when (fboundp 'pixel-scroll-precision-mode)
-     (pixel-scroll-precision-mode t))
+(defun +init-ui ()
+  "Initialize UI."
+  (when (fboundp 'pixel-scroll-precision-mode)
+    (pixel-scroll-precision-mode t))
 
-   (load-theme 'modus-operandi :no-confirm)
+  (load-theme 'modus-operandi :no-confirm)
 
-   (require 'ace-window)
-   (require 'init-modeline)
-   (+modeline-mode)
-   (require 'init-echo-bar)
-   (echo-bar-mode)
-   (require 'init-dashboard)
-   (add-hook
-    'dashboard-mode-hook
-    (lambda ()
-      (setq-local +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
-                  +modeline-right '(+modeline--major-mode))))
-   (dashboard-initialize)
+  (require 'ace-window)
+  (require 'init-modeline)
+  (+modeline-mode)
+  (require 'init-echo-bar)
+  (echo-bar-mode)
+  (require 'init-dashboard)
+  (add-hook
+   'dashboard-mode-hook
+   (lambda ()
+     (setq-local +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+                 +modeline-right '(+modeline--major-mode))))
+  (dashboard-initialize)
 
-   (+tab-bar-init)))
+  (+tab-bar-init))
+
+(add-hook 'after-init-hook #'+init-ui)
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

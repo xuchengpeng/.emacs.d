@@ -115,21 +115,6 @@
         'face (+modeline--face '+modeline-buffer-major-mode))
        (+modeline--spc)))))
 
-(defun +modeline--workspace-name ()
-  "Workspace name in mode-line."
-  (when (and (fboundp 'tab-bar-mode)
-             (length> (frame-parameter nil 'tabs) 1))
-    (let* ((current-tab (tab-bar--current-tab))
-           (tab-index (tab-bar--current-tab-index))
-           (explicit-name (alist-get 'explicit-name current-tab))
-           (tab-name (alist-get 'name current-tab)))
-      (concat
-       (+modeline--spc)
-       (propertize
-        (format "[%s]" (if explicit-name tab-name (+ 1 tab-index)))
-        'face (+modeline--face '+modeline-buffer-major-mode))
-       (+modeline--spc)))))
-
 (defun +modeline--buffer-default-directory ()
   "Display `default-directory'."
   (concat
@@ -313,7 +298,6 @@ mouse-3: Previous error"
 
 (defcustom +modeline-left
   '(+modeline--window-number
-    +modeline--workspace-name
     +modeline--buffer-info
     +modeline--position
     +modeline--word-count)

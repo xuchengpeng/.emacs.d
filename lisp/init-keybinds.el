@@ -76,21 +76,7 @@
   "t t" '("Theme" . modus-themes-toggle)
   "t v" '("Visible Mode" . visible-mode)
   "t w" '("Visual Line Mode" . visual-line-mode)
-  "t z" '("Zen Mode" . toggle-frame-fullscreen)
-
-  "w"   '("Workspaces" . (keymap))
-  "w [" '("Previous" . tab-previous)
-  "w ]" '("Next" . tab-next)
-  "w b" '("Switch Buffer Other Tab" . switch-to-buffer-other-tab)
-  "w c" '("Close" . tab-close)
-  "w C" '("Close Other" . tab-close-other)
-  "w d" '("Dired Other Tab" . dired-other-tab)
-  "w f" '("Find File Other Tab" . find-file-other-tab)
-  "w g" '("Group" . tab-group)
-  "w n" '("New" . tab-new)
-  "w p" '("Project Other Tab" . project-other-tab-command)
-  "w r" '("Rename" . tab-rename)
-  "w s" '("Switch" . tab-switch))
+  "t z" '("Zen Mode" . toggle-frame-fullscreen))
 
 (keymap-global-set dotemacs-leader-key dotemacs-leader-map)
 

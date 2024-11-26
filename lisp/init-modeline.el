@@ -193,14 +193,12 @@
      (propertize
       eglot-menu-string
       'face (+modeline--face 'eglot-mode-line)
-      'help-echo "Eglot
-mouse-1: Eglot Menu
-mouse-3: Eglot Server Menu"
       'mouse-face '+modeline-highlight
-      'local-map (let ((map (make-sparse-keymap)))
-                   (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
-                   (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
-                   map))
+      'help-echo "Eglot: Emacs LSP client\nmouse-1: Eglot menu\nmouse-3: LSP server control menu"
+      'keymap (let ((map (make-sparse-keymap)))
+                (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
+                (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
+                map))
      (+modeline--spc))))
 
 (defun +modeline--major-mode ()

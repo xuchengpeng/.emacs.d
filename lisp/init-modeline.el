@@ -14,58 +14,58 @@
   :group '+modeline
   :group 'faces)
 
-(defface +modeline
+(defface +modeline-default-face
   '((t ()))
   "Default face."
   :group '+modeline-faces)
 
-(defface +modeline-emphasis
-  '((t (:inherit (+modeline mode-line-emphasis))))
+(defface +modeline-emphasis-face
+  '((t (:inherit (+modeline-default-face mode-line-emphasis))))
   "Face used for emphasis."
   :group '+modeline-faces)
 
-(defface +modeline-highlight
-  '((t (:inherit (+modeline mode-line-highlight))))
+(defface +modeline-highlight-face
+  '((t (:inherit (+modeline-default-face mode-line-highlight))))
   "Face used for highlighting."
   :group '+modeline-faces)
 
-(defface +modeline-buffer-path
-  '((t (:inherit (+modeline-emphasis bold))))
+(defface +modeline-buffer-path-face
+  '((t (:inherit (+modeline-emphasis-face bold))))
   "Face used for the dirname part of the buffer path."
   :group '+modeline-faces)
 
-(defface +modeline-buffer-file
-  '((t (:inherit (+modeline mode-line-buffer-id bold))))
+(defface +modeline-buffer-file-face
+  '((t (:inherit (+modeline-default-face mode-line-buffer-id bold))))
   "Face used for the filename part of the mode-line buffer path."
   :group '+modeline-faces)
 
-(defface +modeline-buffer-modified
-  '((t (:inherit (+modeline warning bold) :background unspecified)))
+(defface +modeline-buffer-modified-face
+  '((t (:inherit (+modeline-default-face warning bold) :background unspecified)))
   "Face used for the \\='unsaved\\=' symbol in the mode-line."
   :group '+modeline-faces)
 
-(defface +modeline-buffer-major-mode
-  '((t (:inherit (+modeline-emphasis bold))))
+(defface +modeline-buffer-major-mode-face
+  '((t (:inherit (+modeline-emphasis-face bold))))
   "Face used for the major-mode segment in the mode-line."
   :group '+modeline-faces)
 
-(defface +modeline-debug
-  '((t (:inherit (+modeline success))))
+(defface +modeline-debug-face
+  '((t (:inherit (+modeline-default-face success))))
   "Face for debug-level messages in the mode-line."
   :group '+modeline-faces)
 
-(defface +modeline-warning
-  '((t (:inherit (+modeline warning))))
+(defface +modeline-warning-face
+  '((t (:inherit (+modeline-default-face warning))))
   "Face for warnings in the mode-line."
   :group '+modeline-faces)
 
-(defface +modeline-error
-  '((t (:inherit (+modeline error))))
+(defface +modeline-error-face
+  '((t (:inherit (+modeline-default-face error))))
   "Face for errors in the mode-line."
   :group '+modeline-faces)
 
-(defface +modeline-vc-info
-  '((t (:inherit (+modeline success bold))))
+(defface +modeline-vc-info-face
+  '((t (:inherit (+modeline-default-face success bold))))
   "Face for vc-info in the mode-line."
   :group '+modeline-faces)
 
@@ -88,17 +88,17 @@
 (declare-function flymake-show-buffer-diagnostics "ext:flymake")
 (declare-function warning-numeric-level "warnings")
 
-(defun +modeline--face (&optional face)
+(defun +modeline-face (&optional face)
   "Display FACE in the selected window."
   (if (mode-line-window-selected-p)
-      (or (and (facep face) `(:inherit (+modeline ,face)))
-          '(:inherit (+modeline mode-line-active)))
-    (or (and (facep face) `(:inherit (+modeline mode-line-inactive ,face)))
-        '(:inherit (+modeline mode-line-inactive)))))
+      (or (and (facep face) `(:inherit (+modeline-default-face ,face)))
+          '(:inherit (+modeline-default-face mode-line-active)))
+    (or (and (facep face) `(:inherit (+modeline-default-face mode-line-inactive ,face)))
+        '(:inherit (+modeline-default-face mode-line-inactive)))))
 
 (defsubst +modeline--spc ()
   "Whitespace."
-  (propertize " " 'face (+modeline--face)))
+  (propertize " " 'face (+modeline-face)))
 
 (defun +modeline--window-number ()
   "Window number in mode-line."
@@ -112,7 +112,7 @@
        (+modeline--spc)
        (propertize
         num
-        'face (+modeline--face '+modeline-buffer-major-mode))
+        'face (+modeline-face '+modeline-buffer-major-mode-face))
        (+modeline--spc)))))
 
 (defun +modeline--buffer-default-directory ()
@@ -121,7 +121,7 @@
    (+modeline--spc)
    (propertize
     (abbreviate-file-name default-directory)
-    'face (+modeline--face '+modeline-buffer-path))
+    'face (+modeline-face '+modeline-buffer-path-face))
    (+modeline--spc)))
 
 (defun +modeline--buffer-info ()
@@ -131,12 +131,12 @@
    (propertize
     "%b"
     'face (if (and (buffer-modified-p) (not buffer-read-only))
-              (+modeline--face '+modeline-buffer-modified)
-            (+modeline--face '+modeline-buffer-file))
+              (+modeline-face '+modeline-buffer-modified-face)
+            (+modeline-face '+modeline-buffer-file-face))
     'help-echo (format "Buffer name\n%s" (or (buffer-file-name) (buffer-name)))
-    'mouse-face '+modeline-highlight)
+    'mouse-face '+modeline-highlight-face)
    (+modeline--spc)
-   (propertize "%I" 'face (+modeline--face))
+   (propertize "%I" 'face (+modeline-face))
    (+modeline--spc)))
 
 (defun +modeline--position ()
@@ -144,9 +144,9 @@
   (concat
    (+modeline--spc)
    (propertize "%l:%c %p%%"
-               'face (+modeline--face)
+               'face (+modeline-face)
                'help-echo "Buffer position"
-               'mouse-face '+modeline-highlight)
+               'mouse-face '+modeline-highlight-face)
    (+modeline--spc)))
 
 (defun +modeline--word-count ()
@@ -154,7 +154,7 @@
   (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
     (propertize
      (format " %dW " (count-words (point-min) (point-max)))
-     'face (+modeline--face))))
+     'face (+modeline-face))))
 
 (defun +modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
@@ -171,7 +171,7 @@
              "UTF-8")
             (t (upcase (symbol-name (plist-get sys :name))))))
     " ")
-   'face (+modeline--face)))
+   'face (+modeline-face)))
 
 (defun +modeline--text-scale ()
   "Text-Scale info in mode-line."
@@ -180,8 +180,8 @@
      (+modeline--spc)
      (propertize
       (format "(%s)" text-scale-mode-lighter)
-      'face (+modeline--face)
-      'mouse-face '+modeline-highlight
+      'face (+modeline-face)
+      'mouse-face '+modeline-highlight-face
       'help-echo (concat "Text scale " text-scale-mode-lighter))
      (+modeline--spc))))
 
@@ -192,8 +192,8 @@
      (+modeline--spc)
      (propertize
       eglot-menu-string
-      'face (+modeline--face 'eglot-mode-line)
-      'mouse-face '+modeline-highlight
+      'face (+modeline-face 'eglot-mode-line)
+      'mouse-face '+modeline-highlight-face
       'help-echo "Eglot: Emacs LSP client\nmouse-1: Eglot menu\nmouse-3: LSP server control menu"
       'keymap (let ((map (make-sparse-keymap)))
                 (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
@@ -207,12 +207,12 @@
    (+modeline--spc)
    (propertize
     (format-mode-line mode-name)
-    'face (+modeline--face '+modeline-buffer-major-mode)
+    'face (+modeline-face '+modeline-buffer-major-mode-face)
     'help-echo "Major mode
 mouse-1: Display major mode menu
 mouse-2: Show help for major mode
 mouse-3: Toggle minor modes"
-    'mouse-face '+modeline-highlight
+    'mouse-face '+modeline-highlight-face
     'local-map mode-line-major-mode-keymap)
    (+modeline--spc)))
 
@@ -222,7 +222,7 @@ mouse-3: Toggle minor modes"
     (unless (string-empty-p meta)
       (concat
        (+modeline--spc)
-       (propertize (concat "@" meta) 'face (+modeline--face '+modeline-vc-info))
+       (propertize (concat "@" meta) 'face (+modeline-face '+modeline-vc-info-face))
        (+modeline--spc)))))
 
 (defun +modeline--flymake ()
@@ -258,25 +258,25 @@ mouse-3: Toggle minor modes"
                          (concat
                           (propertize
                            (number-to-string .error)
-                           'face (+modeline--face '+modeline-error))
-                          (propertize "/" 'face (+modeline--face))
+                           'face (+modeline-face '+modeline-error-face))
+                          (propertize "/" 'face (+modeline-face))
                           (propertize
                            (number-to-string .warning)
-                           'face (+modeline--face '+modeline-warning))
-                          (propertize "/" 'face (+modeline--face))
+                           'face (+modeline-face '+modeline-warning-face))
+                          (propertize "/" 'face (+modeline-face))
                           (propertize
                            (number-to-string .debug)
-                           'face (+modeline--face '+modeline-debug))))))))
+                           'face (+modeline-face '+modeline-debug-face))))))))
         (concat
          (+modeline--spc)
          (propertize
           "!"
           'face
           (if (> .error 0)
-              (+modeline--face '+modeline-error)
+              (+modeline-face '+modeline-error-face)
             (if (> .warning 0)
-                (+modeline--face '+modeline-warning)
-              (+modeline--face '+modeline-debug))))
+                (+modeline-face '+modeline-warning-face)
+              (+modeline-face '+modeline-debug-face))))
          (propertize
           text
           'help-echo
@@ -286,7 +286,7 @@ mouse-1: Next error
 mouse-2: Show all errors
 mouse-3: Previous error"
                   .error .warning .debug)
-          'mouse-face '+modeline-highlight
+          'mouse-face '+modeline-highlight-face
           'local-map (let ((map (make-sparse-keymap)))
                        (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)
                        (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
@@ -332,7 +332,7 @@ mouse-3: Previous error"
      left-str
      (propertize
       " "
-      'face (+modeline--face)
+      'face (+modeline-face)
       'display
       `(space :align-to (,(- (window-pixel-width)
                              (window-scroll-bar-width)

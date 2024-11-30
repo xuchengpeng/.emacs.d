@@ -73,8 +73,6 @@
 (defvar eglot-menu-string)
 (defvar eglot-server-menu)
 (defvar flymake--state)
-(defvar text-scale-mode-amount)
-(defvar text-scale-mode-lighter)
 
 (declare-function aw-update "ext:ace-window")
 (declare-function flymake--diag-type "ext:flymake" t t)
@@ -155,15 +153,6 @@
              "UTF-8")
             (t (upcase (symbol-name (plist-get sys :name)))))))
    'face (+modeline-face)))
-
-(defun +modeline--text-scale ()
-  "Text-Scale info in mode-line."
-  (when (and (boundp 'text-scale-mode-lighter) (/= text-scale-mode-amount 0))
-    (propertize
-     (format "(%s)" text-scale-mode-lighter)
-     'face (+modeline-face)
-     'mouse-face '+modeline-highlight-face
-     'help-echo (concat "Text scale " text-scale-mode-lighter))))
 
 (defun +modeline--eglot ()
   "Eglot in mode-line."
@@ -265,8 +254,7 @@
   :group '+modeline)
 
 (defcustom +modeline-right
-  '(+modeline--text-scale
-    +modeline--buffer-encoding
+  '(+modeline--buffer-encoding
     +modeline--eglot
     +modeline--major-mode
     +modeline--vc-info

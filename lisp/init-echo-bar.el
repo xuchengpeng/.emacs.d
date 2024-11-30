@@ -11,7 +11,8 @@
   :group 'applications)
 
 (defcustom echo-bar-modules
-  '(echo-bar--selection-info
+  '(echo-bar--text-scale
+    echo-bar--selection-info
     echo-bar--word-count
     echo-bar--symbol-overlay
     echo-bar--multiple-cursors
@@ -43,10 +44,18 @@ If nil, don't update the echo bar automatically."
   :group 'echo-bar
   :type 'string)
 
+(defvar text-scale-mode-amount)
+(defvar text-scale-mode-lighter)
+
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
 (declare-function symbol-overlay-assoc "ext:symbol-overlay")
 (declare-function symbol-overlay-get-list "ext:symbol-overlay")
 (declare-function symbol-overlay-get-symbol "ext:symbol-overlay")
+
+(defun echo-bar--text-scale ()
+  "Text-Scale info."
+  (when (and (boundp 'text-scale-mode-lighter) (/= text-scale-mode-amount 0))
+    text-scale-mode-lighter))
 
 (defun echo-bar--selection-info ()
   "Display selection info."

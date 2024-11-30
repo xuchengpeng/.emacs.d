@@ -141,13 +141,6 @@
                'help-echo "Buffer position"
                'mouse-face '+modeline-highlight-face)))
 
-(defun +modeline--word-count ()
-  "Word count in mode-line."
-  (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
-    (propertize
-     (format "%dW" (count-words (point-min) (point-max)))
-     'face (+modeline-face))))
-
 (defun +modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
   (propertize
@@ -266,8 +259,7 @@
 (defcustom +modeline-left
   '(+modeline--window-number
     +modeline--buffer-info
-    +modeline--position
-    +modeline--word-count)
+    +modeline--position)
   "List of items on the left of mode-line."
   :type '(list function)
   :group '+modeline)

@@ -12,6 +12,7 @@
 
 (defcustom echo-bar-modules
   '(echo-bar--selection-info
+    echo-bar--word-count
     echo-bar--symbol-overlay
     echo-bar--multiple-cursors
     echo-bar--hostname
@@ -63,6 +64,11 @@ If nil, don't update the echo bar automatically."
              (t
               (format "%dC" (- end beg))))
        (format "-%dW" (count-words beg end))))))
+
+(defun echo-bar--word-count ()
+  "Word count."
+  (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
+    (format "%dW" (count-words (point-min) (point-max)))))
 
 (defun echo-bar--symbol-overlay ()
   "Display the number of matches for symbol overlay."

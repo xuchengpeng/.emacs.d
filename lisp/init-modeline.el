@@ -100,6 +100,10 @@
   "Whitespace."
   (propertize " " 'face (+modeline-face)))
 
+(defsubst +modeline--wspc ()
+  "Wide whitespace."
+  (propertize "  " 'face (+modeline-face)))
+
 (defun +modeline--window-number ()
   "Window number in mode-line."
   (let ((num (cond
@@ -108,26 +112,17 @@
                (window-parameter (selected-window) 'ace-window-path))
               (t ""))))
     (when (length> num 0)
-      (concat
-       (+modeline--spc)
-       (propertize
-        num
-        'face (+modeline-face '+modeline-buffer-major-mode-face))
-       (+modeline--spc)))))
+      (propertize num 'face (+modeline-face '+modeline-buffer-major-mode-face)))))
 
 (defun +modeline--buffer-default-directory ()
   "Display `default-directory'."
-  (concat
-   (+modeline--spc)
-   (propertize
-    (abbreviate-file-name default-directory)
-    'face (+modeline-face '+modeline-buffer-path-face))
-   (+modeline--spc)))
+  (propertize
+   (abbreviate-file-name default-directory)
+   'face (+modeline-face '+modeline-buffer-path-face)))
 
 (defun +modeline--buffer-info ()
   "Buffer info in mode-line."
   (concat
-   (+modeline--spc)
    (propertize
     "%b"
     'face (if (and (buffer-modified-p) (not buffer-read-only))
@@ -136,31 +131,27 @@
     'help-echo (format "Buffer name\n%s" (or (buffer-file-name) (buffer-name)))
     'mouse-face '+modeline-highlight-face)
    (+modeline--spc)
-   (propertize "%I" 'face (+modeline-face))
-   (+modeline--spc)))
+   (propertize "%I" 'face (+modeline-face))))
 
 (defun +modeline--position ()
   "Position in mode-line."
-  (concat
-   (+modeline--spc)
+  (format-mode-line
    (propertize "%l:%c %p%%"
                'face (+modeline-face)
                'help-echo "Buffer position"
-               'mouse-face '+modeline-highlight-face)
-   (+modeline--spc)))
+               'mouse-face '+modeline-highlight-face)))
 
 (defun +modeline--word-count ()
   "Word count in mode-line."
   (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
     (propertize
-     (format " %dW " (count-words (point-min) (point-max)))
+     (format "%dW" (count-words (point-min) (point-max)))
      'face (+modeline-face))))
 
 (defun +modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
   (propertize
    (concat
-    " "
     (pcase (coding-system-eol-type buffer-file-coding-system)
       (0 "LF ")
       (1 "CRLF ")
@@ -169,61 +160,45 @@
     (let ((sys (coding-system-plist buffer-file-coding-system)))
       (cond ((memq (plist-get sys :category) '(coding-category-undecided coding-category-utf-8))
              "UTF-8")
-            (t (upcase (symbol-name (plist-get sys :name))))))
-    " ")
+            (t (upcase (symbol-name (plist-get sys :name)))))))
    'face (+modeline-face)))
 
 (defun +modeline--text-scale ()
   "Text-Scale info in mode-line."
   (when (and (boundp 'text-scale-mode-lighter) (/= text-scale-mode-amount 0))
-    (concat
-     (+modeline--spc)
-     (propertize
-      (format "(%s)" text-scale-mode-lighter)
-      'face (+modeline-face)
-      'mouse-face '+modeline-highlight-face
-      'help-echo (concat "Text scale " text-scale-mode-lighter))
-     (+modeline--spc))))
+    (propertize
+     (format "(%s)" text-scale-mode-lighter)
+     'face (+modeline-face)
+     'mouse-face '+modeline-highlight-face
+     'help-echo (concat "Text scale " text-scale-mode-lighter))))
 
 (defun +modeline--eglot ()
   "Eglot in mode-line."
   (when (bound-and-true-p eglot--managed-mode)
-    (concat
-     (+modeline--spc)
-     (propertize
-      eglot-menu-string
-      'face (+modeline-face 'eglot-mode-line)
-      'mouse-face '+modeline-highlight-face
-      'help-echo "Eglot: Emacs LSP client\nmouse-1: Eglot menu\nmouse-3: LSP server control menu"
-      'keymap (let ((map (make-sparse-keymap)))
-                (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
-                (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
-                map))
-     (+modeline--spc))))
+    (propertize
+     eglot-menu-string
+     'face (+modeline-face 'eglot-mode-line)
+     'mouse-face '+modeline-highlight-face
+     'help-echo "Eglot: Emacs LSP client\nmouse-1: Eglot menu\nmouse-3: LSP server control menu"
+     'keymap (let ((map (make-sparse-keymap)))
+               (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
+               (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
+               map))))
 
 (defun +modeline--major-mode ()
   "Major mode in mode-line."
-  (concat
-   (+modeline--spc)
-   (propertize
-    (format-mode-line mode-name)
-    'face (+modeline-face '+modeline-buffer-major-mode-face)
-    'help-echo "Major mode
-mouse-1: Display major mode menu
-mouse-2: Show help for major mode
-mouse-3: Toggle minor modes"
-    'mouse-face '+modeline-highlight-face
-    'local-map mode-line-major-mode-keymap)
-   (+modeline--spc)))
+  (propertize
+   (format-mode-line mode-name)
+   'face (+modeline-face '+modeline-buffer-major-mode-face)
+   'help-echo "Major mode\nmouse-1: Display major mode menu\nmouse-2: Show help for major mode\nmouse-3: Toggle minor modes"
+   'mouse-face '+modeline-highlight-face
+   'local-map mode-line-major-mode-keymap))
 
 (defun +modeline--vc-info ()
   "Version control info in mode-line."
   (let ((meta (string-trim (format-mode-line '(vc-mode vc-mode)))))
     (unless (string-empty-p meta)
-      (concat
-       (+modeline--spc)
-       (propertize (concat "@" meta) 'face (+modeline-face '+modeline-vc-info-face))
-       (+modeline--spc)))))
+      (propertize (concat "@" meta) 'face (+modeline-face '+modeline-vc-info-face)))))
 
 (defun +modeline--flymake ()
   "Flymake in mode-line."
@@ -268,7 +243,6 @@ mouse-3: Toggle minor modes"
                            (number-to-string .debug)
                            'face (+modeline-face '+modeline-debug-face))))))))
         (concat
-         (+modeline--spc)
          (propertize
           "!"
           'face
@@ -280,19 +254,14 @@ mouse-3: Toggle minor modes"
          (propertize
           text
           'help-echo
-          (format "Flymake
-error:%d, warning:%d, debug:%d
-mouse-1: Next error
-mouse-2: Show all errors
-mouse-3: Previous error"
+          (format "Flymake\nerror:%d, warning:%d, debug:%d\nmouse-1: Next error\nmouse-2: Show all errors\nmouse-3: Previous error"
                   .error .warning .debug)
           'mouse-face '+modeline-highlight-face
           'local-map (let ((map (make-sparse-keymap)))
                        (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)
                        (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
                        (keymap-set map "<mode-line> <mouse-3>" #'flymake-goto-prev-error)
-                       map))
-         (+modeline--spc))))))
+                       map)))))))
 
 (defcustom +modeline-left
   '(+modeline--window-number
@@ -314,40 +283,28 @@ mouse-3: Previous error"
   :type '(list function)
   :group '+modeline)
 
-(defun +modeline--format-segments (segments)
+(defun +modeline--format (segments)
   "Return a string from a list of SEGMENTS."
-  (format-mode-line (mapcar
-                     (lambda (segment)
-                       `(:eval (,segment)))
-                     segments)))
-
-(defun +modeline--format (left-segments right-segments)
-  "Return a string from LEFT-SEGMENTS and RIGHT-SEGMENTS."
-  (let* ((left-str (+modeline--format-segments left-segments))
-         (right-str (+modeline--format-segments right-segments))
-         (right-width (progn
-                        (add-face-text-property 0 (length right-str) 'mode-line t right-str)
-                        (string-pixel-width right-str))))
-    (concat
-     left-str
-     (propertize
-      " "
-      'face (+modeline-face)
-      'display
-      `(space :align-to (,(- (window-pixel-width)
-                             (window-scroll-bar-width)
-                             (window-right-divider-width)
-                             (* (or (cdr (window-margins)) 1)
-                                (frame-char-width))
-                             right-width))))
-     right-str)))
+  (mapconcat
+   'identity
+   (cl-remove-if
+    #'(lambda (n) (eq (length n) 0))
+    (mapcar
+     #'(lambda (mod) (ignore-errors (funcall mod)))
+     segments))
+   (+modeline--wspc)))
 
 (defun +modeline--enable ()
   "Enable +modeline."
-  (setq-default mode-line-format
-                '((:eval (+modeline--format
-                          +modeline-left
-                          +modeline-right)))))
+  (setq-default mode-line-right-align-edge 'right-margin
+                mode-line-format
+                '((:eval (+modeline--spc))
+                  (:eval (+modeline--format +modeline-left))
+                  (:eval (+modeline--spc))
+                  mode-line-format-right-align
+                  (:eval (+modeline--spc))
+                  (:eval (+modeline--format +modeline-right))
+                  (:eval (+modeline--spc)))))
 
 (defun +modeline--disable ()
   "Disable +modeline."

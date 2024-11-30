@@ -1,5 +1,55 @@
 # Changelog
 
+## [2.3.0](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.7...v2.3.0) (2024-11-30)
+
+
+### Features
+
+* **echo-bar:** display text at end of the echo area ([8a05e82](https://github.com/xuchengpeng/.emacs.d/commit/8a05e8208b7ebb776c296ca8c0fdb17a9de5f4e4))
+
+
+### Bug Fixes
+
+* **base:** remove useless functions ([5df789b](https://github.com/xuchengpeng/.emacs.d/commit/5df789b85d57a7c0a73bda497db715e2747bb90e))
+* **completion:** refactoring ([6313e01](https://github.com/xuchengpeng/.emacs.d/commit/6313e0168d4f5420f9ebae6c16e37e481b061817))
+* **consult:** remove initial input when searching ([ff74d86](https://github.com/xuchengpeng/.emacs.d/commit/ff74d86eb85c24a57d48369489d2a4bdc6fd809a))
+* **dashboard:** refactoring ([c9f8eca](https://github.com/xuchengpeng/.emacs.d/commit/c9f8ecafa247e813b7ba77f0f98d7886ca7f54e6))
+* **echo-bar:** add remote hostname ([dab4ce7](https://github.com/xuchengpeng/.emacs.d/commit/dab4ce7fada419afb0b3d3d978ecf359a1be7b07))
+* **echo-bar:** customize selection and time style ([2d5500c](https://github.com/xuchengpeng/.emacs.d/commit/2d5500cf4ae5529241fa06d61700aec28cda4e8d))
+* **echo-bar:** display match and select info in echo-bar instead of modeline ([6046dd1](https://github.com/xuchengpeng/.emacs.d/commit/6046dd135ead7d1c405ac3b92d90bc226b420b99))
+* **echo-bar:** ignore errors when updating ([695bbbd](https://github.com/xuchengpeng/.emacs.d/commit/695bbbdcde4b7adc22ffde010f05ca5b49e8376a))
+* **echo-bar:** minor refactoring ([8120033](https://github.com/xuchengpeng/.emacs.d/commit/8120033f3156b79ed9f504cae65e7590a894f389))
+* **echo-bar:** remove all dead overlays ([9558dc9](https://github.com/xuchengpeng/.emacs.d/commit/9558dc98a8480cc83fc3e7215500234b37b827f9))
+* **echo-bar:** remove empty modules ([ebfa628](https://github.com/xuchengpeng/.emacs.d/commit/ebfa628615e984c16a5b569c95c76b371e6aedd6))
+* **echo-bar:** wrap the text to the next line if the last line of echo bar is too long ([b863950](https://github.com/xuchengpeng/.emacs.d/commit/b8639503c3db61d218572c44f91d152659f76b03))
+* **editing:** refactoring ([7823e66](https://github.com/xuchengpeng/.emacs.d/commit/7823e663d0ffc67f36451bfe852083f3513f362b))
+* **editing:** simply implement move-text ([630120b](https://github.com/xuchengpeng/.emacs.d/commit/630120b91820e8b2c08a94214802816783b1390e))
+* **eldoc:** remove eldoc-box ([135d72e](https://github.com/xuchengpeng/.emacs.d/commit/135d72e2e80ff5d605910127261b2c92ac65a1f6))
+* **keybinds:** search symbol at point with ripgrep ([d7aa637](https://github.com/xuchengpeng/.emacs.d/commit/d7aa637befb612ffae1bd223882dd6ec4c5dbd46))
+* **keybinds:** switch kill-buffer and kill-current-buffer ([78b34cd](https://github.com/xuchengpeng/.emacs.d/commit/78b34cd78319d70526ca2ff5d28c8be9a90d806d))
+* **minibuffer:** enable recursive minibuffers ([c2534d3](https://github.com/xuchengpeng/.emacs.d/commit/c2534d3dcc7f017d7c2641aed7f23dae9abdb605))
+* **modeline:** add face for vc-info ([947678c](https://github.com/xuchengpeng/.emacs.d/commit/947678c83876c66e45b9a237e8d06e74588b11ca))
+* **modeline:** add text icon before vc and flymake ([3bd8bf7](https://github.com/xuchengpeng/.emacs.d/commit/3bd8bf7486064eede2f6fb9d3bc7be1d07ba929e))
+* **modeline:** better help echo ([5a1fd3f](https://github.com/xuchengpeng/.emacs.d/commit/5a1fd3f41eeb3dc61d6e349589b7638909c0df3c))
+* **modeline:** better right align ([2250e4c](https://github.com/xuchengpeng/.emacs.d/commit/2250e4c03f0d16d5425ef0dc58b213d1624debc2))
+* **modeline:** move text scale info to echo-bar ([60441fc](https://github.com/xuchengpeng/.emacs.d/commit/60441fc2cef273f4a10378c1f21c32467fa06c3e))
+* **modeline:** move word count info to echo-bar ([0f7c186](https://github.com/xuchengpeng/.emacs.d/commit/0f7c186e0b62a6d439d004741a4be5d6f46ba004))
+* **modeline:** refactoring ([a37fbaa](https://github.com/xuchengpeng/.emacs.d/commit/a37fbaa97172930cc9d4a9b548d052df4dacb143))
+* **modeline:** remove workspace ([4c06e8f](https://github.com/xuchengpeng/.emacs.d/commit/4c06e8f82811743297906243172bb3a12507d70e))
+* **modeline:** rename faces ([1a03e5e](https://github.com/xuchengpeng/.emacs.d/commit/1a03e5e4fd5791a1274348080a1250779c9dddf7))
+* **modeline:** replace use of obsolete if-let and when-let ([a62a0be](https://github.com/xuchengpeng/.emacs.d/commit/a62a0bee959b1d7538d7c14c45b6c10d42b7c79d))
+* **modeline:** show buffer name in help echo if file name is nil ([0ea6886](https://github.com/xuchengpeng/.emacs.d/commit/0ea6886b132eabe1712b5d7607f06fdb3876fc8d))
+* **modeline:** show regular face if buffer is read only ([ed4e72b](https://github.com/xuchengpeng/.emacs.d/commit/ed4e72bfe0a612e7dcb57a53fd92f7804bd53af5))
+* **modeline:** use built-in right align ([059ab53](https://github.com/xuchengpeng/.emacs.d/commit/059ab53223808b919ccfd225eceb6d97413dea05))
+* **native-comp:** prevent runtime native compilation ([ad118d1](https://github.com/xuchengpeng/.emacs.d/commit/ad118d168d64926912169792fc17948cbcf796d8))
+* **org:** don't use tempel to insert org blog post meta ([3a4648e](https://github.com/xuchengpeng/.emacs.d/commit/3a4648e852bd0e7c0b995dfdb46a809b89caf162))
+* **packages:** refactoring ([9c82941](https://github.com/xuchengpeng/.emacs.d/commit/9c82941b28ba331c1738aecdd4c82ec64930aa32))
+* **ui:** don't use dialog box ([b58d25b](https://github.com/xuchengpeng/.emacs.d/commit/b58d25b0c6f32e8d880c1ecfa4392a8af8cc5ef2))
+* **ui:** extract function ([a45b9b1](https://github.com/xuchengpeng/.emacs.d/commit/a45b9b1655a714f785de1d5ddbd3017ae8bbc614))
+* **ui:** kill scratch after init ([1e06ff0](https://github.com/xuchengpeng/.emacs.d/commit/1e06ff02e3ec5ba0d34361a7c7c369d8b7aca5c8))
+* **ui:** mouse scroll one line at a time ([6819da9](https://github.com/xuchengpeng/.emacs.d/commit/6819da90ac2ea0c8adfd857beab3b024c8181148))
+* **ui:** revert killing scratch ([3c81083](https://github.com/xuchengpeng/.emacs.d/commit/3c810832ae4dcda631cf6c8a4f0cdfd8ce2a010a))
+
 ## [2.2.7](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.6...v2.2.7) (2024-09-20)
 
 

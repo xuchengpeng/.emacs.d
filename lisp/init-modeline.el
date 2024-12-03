@@ -209,44 +209,42 @@
                           ((> severity debug-level) (cl-incf .warning))
                           (t (cl-incf .debug))))))
                flymake--state)
-      (when-let* ((text
-                   (cond
-                    (some-waiting nil)
-                    ((null known) nil)
-                    (all-disabled nil)
-                    (t (when (> (+ .error .warning .debug) 0)
-                         (concat
-                          (propertize
-                           (number-to-string .error)
-                           'face (+modeline-face '+modeline-error-face))
-                          (propertize "/" 'face (+modeline-face))
-                          (propertize
-                           (number-to-string .warning)
-                           'face (+modeline-face '+modeline-warning-face))
-                          (propertize "/" 'face (+modeline-face))
-                          (propertize
-                           (number-to-string .debug)
-                           'face (+modeline-face '+modeline-debug-face))))))))
-        (concat
-         (propertize
-          "!"
-          'face
-          (if (> .error 0)
-              (+modeline-face '+modeline-error-face)
-            (if (> .warning 0)
-                (+modeline-face '+modeline-warning-face)
-              (+modeline-face '+modeline-debug-face))))
-         (propertize
-          text
-          'help-echo
-          (format "Flymake\nerror:%d, warning:%d, debug:%d\nmouse-1: Next error\nmouse-2: Show all errors\nmouse-3: Previous error"
-                  .error .warning .debug)
-          'mouse-face '+modeline-highlight-face
-          'local-map (let ((map (make-sparse-keymap)))
-                       (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)
-                       (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
-                       (keymap-set map "<mode-line> <mouse-3>" #'flymake-goto-prev-error)
-                       map)))))))
+      (cond
+       (some-waiting nil)
+       ((null known) nil)
+       (all-disabled nil)
+       (t (when (> (+ .error .warning .debug) 0)
+            (concat
+             (propertize
+              "!"
+              'face
+              (if (> .error 0)
+                  (+modeline-face '+modeline-error-face)
+                (if (> .warning 0)
+                    (+modeline-face '+modeline-warning-face)
+                  (+modeline-face '+modeline-debug-face))))
+             (propertize
+              (concat
+               (propertize
+                (number-to-string .error)
+                'face (+modeline-face '+modeline-error-face))
+               (propertize "/" 'face (+modeline-face))
+               (propertize
+                (number-to-string .warning)
+                'face (+modeline-face '+modeline-warning-face))
+               (propertize "/" 'face (+modeline-face))
+               (propertize
+                (number-to-string .debug)
+                'face (+modeline-face '+modeline-debug-face)))
+              'help-echo
+              (format "Flymake\nerror:%d, warning:%d, debug:%d\nmouse-1: Next error\nmouse-2: Show all errors\nmouse-3: Previous error"
+                      .error .warning .debug)
+              'mouse-face '+modeline-highlight-face
+              'local-map (let ((map (make-sparse-keymap)))
+                           (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)
+                           (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
+                           (keymap-set map "<mode-line> <mouse-3>" #'flymake-goto-prev-error)
+                           map)))))))))
 
 (defcustom +modeline-left
   '(+modeline--window-number

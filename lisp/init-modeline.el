@@ -133,11 +133,12 @@
 
 (defun +modeline--position ()
   "Position in mode-line."
-  (format-mode-line
-   (propertize "%l:%c %p%%"
-               'face (+modeline-face)
-               'help-echo "Buffer position"
-               'mouse-face '+modeline-highlight-face)))
+  (propertize
+   (format-mode-line "%l:%c %p%%")
+   'face (+modeline-face)
+   'help-echo "Buffer position\nmouse-1: Toggle Line and Column Number Display"
+   'mouse-face '+modeline-highlight-face
+   'local-map mode-line-column-line-number-mode-map))
 
 (defun +modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
@@ -162,10 +163,10 @@
      'face (+modeline-face 'eglot-mode-line)
      'mouse-face '+modeline-highlight-face
      'help-echo "Eglot: Emacs LSP client\nmouse-1: Eglot menu\nmouse-3: LSP server control menu"
-     'keymap (let ((map (make-sparse-keymap)))
-               (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
-               (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
-               map))))
+     'local-map (let ((map (make-sparse-keymap)))
+                  (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
+                  (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
+                  map))))
 
 (defun +modeline--major-mode ()
   "Major mode in mode-line."

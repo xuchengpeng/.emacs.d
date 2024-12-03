@@ -126,8 +126,10 @@
     'face (if (and (buffer-modified-p) (not buffer-read-only))
               (+modeline-face '+modeline-buffer-modified-face)
             (+modeline-face '+modeline-buffer-file-face))
-    'help-echo (format "Buffer name\n%s" (or (buffer-file-name) (buffer-name)))
-    'mouse-face '+modeline-highlight-face)
+    'help-echo (format "Buffer name: %s\nmouse-1: Previous buffer\nmouse-3: Next buffer"
+                       (or (buffer-file-name) (buffer-name)))
+    'mouse-face '+modeline-highlight-face
+    'local-map mode-line-buffer-identification-keymap)
    (+modeline--spc)
    (propertize "%I" 'face (+modeline-face))))
 

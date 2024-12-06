@@ -73,17 +73,15 @@
 (defvar eglot-menu-string)
 (defvar eglot-server-menu)
 (defvar flymake--state)
+(defvar flymake-menu)
 
 (declare-function aw-update "ext:ace-window")
 (declare-function flymake--diag-type "flymake" t t)
 (declare-function flymake--lookup-type-property "flymake")
 (declare-function flymake--state-diags "flymake" t t)
 (declare-function flymake-disabled-backends "flymake")
-(declare-function flymake-goto-next-error "flymake")
-(declare-function flymake-goto-prev-error "flymake")
 (declare-function flymake-reporting-backends "flymake")
 (declare-function flymake-running-backends "flymake")
-(declare-function flymake-show-buffer-diagnostics "flymake")
 (declare-function warning-numeric-level "warnings")
 
 (defun +modeline-face (&optional face)
@@ -236,14 +234,11 @@
                (propertize
                 (number-to-string .debug)
                 'face (+modeline-face '+modeline-debug-face)))
-              'help-echo
-              (format "Flymake\nerror:%d, warning:%d, debug:%d\nmouse-1: Next error\nmouse-2: Show all errors\nmouse-3: Previous error"
-                      .error .warning .debug)
+              'help-echo (format "Flymake\nerror:%d, warning:%d, debug:%d\nmouse-1: Flymake menu"
+                                 .error .warning .debug)
               'mouse-face '+modeline-highlight-face
               'local-map (let ((map (make-sparse-keymap)))
-                           (keymap-set map "<mode-line> <mouse-1>" #'flymake-goto-next-error)
-                           (keymap-set map "<mode-line> <mouse-2>" #'flymake-show-buffer-diagnostics)
-                           (keymap-set map "<mode-line> <mouse-3>" #'flymake-goto-prev-error)
+                           (keymap-set map "<mode-line> <mouse-1>" flymake-menu)
                            map)))))))))
 
 (defcustom +modeline-left

@@ -7,13 +7,7 @@
   :hook (after-init . vertico-mode)
   :config
   (setq vertico-resize nil
-        vertico-cycle t)
-  (setq-default completion-in-region-function
-                (lambda (&rest args)
-                  (apply (if vertico-mode
-                             #'consult-completion-in-region
-                           #'completion--in-region)
-                         args))))
+        vertico-cycle t))
 
 (use-package orderless
   :ensure t
@@ -29,27 +23,25 @@
   :after (vertico)
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
-  (keymap-global-set "<remap> <apropos>"                       'consult-apropos)
-  (keymap-global-set "<remap> <bookmark-jump>"                 'consult-bookmark)
-  (keymap-global-set "<remap> <evil-show-marks>"               'consult-mark)
-  (keymap-global-set "<remap> <evil-show-registers>"           'consult-register)
-  (keymap-global-set "<remap> <goto-line>"                     'consult-goto-line)
-  (keymap-global-set "<remap> <imenu>"                         'consult-imenu)
-  (keymap-global-set "<remap> <locate>"                        'consult-locate)
-  (keymap-global-set "<remap> <load-theme>"                    'consult-theme)
-  (keymap-global-set "<remap> <man>"                           'consult-man)
-  (keymap-global-set "<remap> <recentf-open-files>"            'consult-recent-file)
-  (keymap-global-set "<remap> <switch-to-buffer>"              'consult-buffer)
-  (keymap-global-set "<remap> <switch-to-buffer-other-window>" 'consult-buffer-other-window)
-  (keymap-global-set "<remap> <switch-to-buffer-other-frame>"  'consult-buffer-other-frame)
-  (keymap-global-set "<remap> <yank-pop>"                      'consult-yank-pop)
-  (keymap-global-set "C-r" 'consult-line)
-  (keymap-global-set "C-s" 'consult-line)
+  (keymap-global-set "<remap> <apropos>" #'consult-apropos)
+  (keymap-global-set "<remap> <bookmark-jump>" #'consult-bookmark)
+  (keymap-global-set "<remap> <goto-line>" #'consult-goto-line)
+  (keymap-global-set "<remap> <imenu>" #'consult-imenu)
+  (keymap-global-set "<remap> <Info-search>" #'consult-info)
+  (keymap-global-set "<remap> <locate>" #'consult-locate)
+  (keymap-global-set "<remap> <load-theme>" #'consult-theme)
+  (keymap-global-set "<remap> <man>" #'consult-man)
+  (keymap-global-set "<remap> <recentf-open-files>" #'consult-recent-file)
+  (keymap-global-set "<remap> <switch-to-buffer>" #'consult-buffer)
+  (keymap-global-set "<remap> <switch-to-buffer-other-window>" #'consult-buffer-other-window)
+  (keymap-global-set "<remap> <switch-to-buffer-other-frame>"  #'consult-buffer-other-frame)
+  (keymap-global-set "<remap> <yank-pop>" #'consult-yank-pop)
+  (keymap-global-set "C-r" #'consult-line)
+  (keymap-global-set "C-s" #'consult-line)
   :config
   (setq consult-narrow-key "<")
-  (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
+  (setq register-preview-delay 0.5)
   (with-eval-after-load 'xref
     (when (executable-find "rg")
       (setq xref-search-program 'ripgrep))

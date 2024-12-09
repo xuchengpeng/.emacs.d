@@ -179,9 +179,8 @@
 
 (defun +modeline--vc-info ()
   "Version control info in mode-line."
-  (let ((meta (string-trim (format-mode-line '(vc-mode vc-mode)))))
-    (unless (string-empty-p meta)
-      (propertize (concat "@" meta) 'face (+modeline-face '+modeline-vc-info-face)))))
+  (when vc-mode
+    (propertize (concat "@" (string-trim vc-mode)) 'face (+modeline-face '+modeline-vc-info-face))))
 
 (defun +modeline--flymake ()
   "Flymake in mode-line."

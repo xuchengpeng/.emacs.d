@@ -38,15 +38,15 @@
   (keymap-global-set "<remap> <yank-pop>" #'consult-yank-pop)
   (keymap-global-set "C-r" #'consult-line)
   (keymap-global-set "C-s" #'consult-line)
-  :config
-  (setq consult-narrow-key "<")
-  (advice-add #'register-preview :override #'consult-register-window)
-  (setq register-preview-delay 0.5)
   (with-eval-after-load 'xref
     (when (executable-find "rg")
       (setq xref-search-program 'ripgrep))
     (setq xref-show-xrefs-function #'consult-xref
-          xref-show-definitions-function #'consult-xref)))
+          xref-show-definitions-function #'consult-xref))
+  :config
+  (setq consult-narrow-key "<")
+  (advice-add #'register-preview :override #'consult-register-window)
+  (setq register-preview-delay 0.5))
 
 (defun +find-file (&optional dir initial)
   "Search for files in DIR matching input regexp given INITIAL input."

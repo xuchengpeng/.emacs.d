@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.3.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.3.0...v2.3.1) (2024-12-12)
+
+
+### Bug Fixes
+
+* **consult:** bind Info-search ([94dae34](https://github.com/xuchengpeng/.emacs.d/commit/94dae34c81d7ff07f6b19953f27396cea8c7e0da))
+* **consult:** customize xref while initializing ([453d663](https://github.com/xuchengpeng/.emacs.d/commit/453d66383c2369201dd90265ab47daf5f727ba5d))
+* **keybinds:** remove diagnostic in lsp ([ea44ad9](https://github.com/xuchengpeng/.emacs.d/commit/ea44ad94c5f0e2883efe4bd9cb481269edf3d0e0))
+* **modeline:** add buffer identification keymap ([3ca05d3](https://github.com/xuchengpeng/.emacs.d/commit/3ca05d3486c9e03f1fcebbff45c539b787e1cff6))
+* **modeline:** add column and line number mode map ([77d50bc](https://github.com/xuchengpeng/.emacs.d/commit/77d50bc9b810d17c4ec87ebd5c5f80c43e104ca3))
+* **modeline:** bind with flymake menu ([dd51da9](https://github.com/xuchengpeng/.emacs.d/commit/dd51da9ced600d4e2ee4929a30a85184c083cc6a))
+* **modeline:** declare flymake functions from built-in package ([4ffbe77](https://github.com/xuchengpeng/.emacs.d/commit/4ffbe776d58a544702f5fb3c7126a352c95add93))
+* **modeline:** refactoring flymake ([6b074cd](https://github.com/xuchengpeng/.emacs.d/commit/6b074cd3ab356c8b59f251b0a1e5bb71172ab270))
+* **modeline:** simply get vc info ([814faed](https://github.com/xuchengpeng/.emacs.d/commit/814faed5dbbba0a6605bd3d01e56603104de862b))
+
 ## [2.3.0](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.7...v2.3.0) (2024-11-30)
 
 

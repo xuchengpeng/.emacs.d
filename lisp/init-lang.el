@@ -9,21 +9,29 @@
 (use-package reformatter
   :ensure t)
 
-(reformatter-define lua-format
-  :program "stylua"
-  :args '("-"))
+(with-eval-after-load 'lua-mode
+  (when (executable-find "stylua")
+    (reformatter-define lua-format
+      :program "stylua"
+      :args '("-"))))
 
-(reformatter-define python-format
-  :program "black"
-  :args '("-q" "-"))
+(with-eval-after-load 'python
+  (when (executable-find "black")
+    (reformatter-define python-format
+      :program "black"
+      :args '("-q" "-"))))
 
-(reformatter-define sh-format
-  :program "shfmt"
-  :args `("-i" ,(number-to-string sh-basic-offset) "-"))
+(with-eval-after-load 'sh-script
+  (when (executable-find "shfmt")
+    (reformatter-define sh-format
+      :program "shfmt"
+      :args `("-i" ,(number-to-string sh-basic-offset) "-"))))
 
-(reformatter-define yaml-format
-  :program "prettier"
-  :args '("--parser" "yaml"))
+(with-eval-after-load 'yaml-ts-mode
+  (when (executable-find "prettier")
+    (reformatter-define yaml-format
+      :program "prettier"
+      :args '("--parser" "yaml"))))
 
 (use-package markdown-mode
   :ensure t

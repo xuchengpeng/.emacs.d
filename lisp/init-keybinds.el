@@ -47,7 +47,7 @@
   "o a" '("Org Agenda" . org-agenda)
   "o c" '("Org Capture" . org-capture)
   "o f" '("Flymake Diagnostic" . consult-flymake)
-  "o p" '("Org Publish Project" . org-publish-project)
+  "o p" '("Org Publish" . org-publish)
   "o d" '("Dired" . dired-jump)
   "o t" '("Terminal" . +shell)
 

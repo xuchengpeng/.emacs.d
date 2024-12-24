@@ -77,7 +77,7 @@
   :ensure t)
 
 (use-package ox-publish
-  :commands org-publish-project
+  :commands org-publish
   :config
   (setq org-export-in-background t
         org-html-htmlize-output-type 'inline-css

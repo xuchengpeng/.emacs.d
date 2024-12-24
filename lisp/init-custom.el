@@ -40,7 +40,7 @@ Examples:
   :type 'string
   :group 'dotemacs)
 
-(defcustom dotemacs-org-site-dir "~/org-site/"
+(defcustom dotemacs-org-blog-dir "~/org-blog/"
   "Org site directory."
   :type 'string
   :group 'dotemacs)

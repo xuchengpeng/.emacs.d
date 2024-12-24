@@ -21,7 +21,7 @@
 
   (defun +org-capture-org-blog-post ()
     (let* ((filename (read-from-minibuffer "New post filename: "))
-           (post-dir (expand-file-name (format "org/posts/%s" (format-time-string "%Y/%m")) dotemacs-org-site-dir)))
+           (post-dir (expand-file-name (format "org/posts/%s" (format-time-string "%Y/%m")) dotemacs-org-blog-dir)))
       (unless (file-exists-p post-dir)
         (make-directory post-dir t))
       (find-file (expand-file-name filename post-dir))
@@ -64,8 +64,9 @@
 
 (use-package org-clock
   :commands org-clock-save
-  :config
+  :init
   (setq org-clock-persist-file (expand-file-name "org-clock-save.el" dotemacs-cache-dir))
+  :config
   (setq org-clock-persist 'history
         org-clock-in-resume t
         org-clock-out-remove-zero-time-clocks t
@@ -84,10 +85,9 @@
         org-html-head-include-scripts nil
         org-html-validation-link nil)
   (setq org-publish-project-alist
-        `(;; Publish the posts
-          ("site-org"
-           :base-directory ,(expand-file-name "org" dotemacs-org-site-dir)
-           :publishing-directory ,(expand-file-name "public" dotemacs-org-site-dir)
+        `(("blog-posts"
+           :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
+           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
            :base-extension "org"
            :recursive t
            :publishing-function org-html-publish-to-html
@@ -104,25 +104,13 @@
            :html-preamble-format ,dotemacs-org-html-preamble-format
            :html-postamble t
            :html-postamble-format ,dotemacs-org-html-postamble-format)
-          ("site-js"
-           :base-directory ,(expand-file-name "js" dotemacs-org-site-dir)
-           :base-extension "js"
-           :publishing-directory ,(expand-file-name "public/js" dotemacs-org-site-dir)
+          ("blog-static"
+           :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
+           :base-extension "js\\|css\\|jpg\\|gif\\|png\\|svg\\|gif\\|ico"
+           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
            :recursive t
            :publishing-function org-publish-attachment)
-          ("site-css"
-           :base-directory ,(expand-file-name "css" dotemacs-org-site-dir)
-           :base-extension "css"
-           :publishing-directory ,(expand-file-name "public/css" dotemacs-org-site-dir)
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("site-images"
-           :base-directory ,(expand-file-name "images" dotemacs-org-site-dir)
-           :base-extension "jpg\\|gif\\|png\\|svg\\|gif\\|ico"
-           :publishing-directory ,(expand-file-name "public/images" dotemacs-org-site-dir)
-           :recursive t
-           :publishing-function org-publish-attachment)
-          ("site" :components ("site-org" "site-js" "site-css" "site-images")))))
+          ("blog" :components ("blog-posts" "blog-static")))))
 
 (provide 'init-org)
 ;;; init-org.el ends here

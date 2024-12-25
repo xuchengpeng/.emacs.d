@@ -106,7 +106,7 @@
            :html-postamble-format ,dotemacs-org-html-postamble-format)
           ("blog-static"
            :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
-           :base-extension "js\\|css\\|jpg\\|gif\\|png\\|svg\\|gif\\|ico"
+           :base-extension "js\\|css\\|jpg\\|gif\\|png\\|svg\\|gif\\|ico\\|webmanifest"
            :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
            :recursive t
            :publishing-function org-publish-attachment)

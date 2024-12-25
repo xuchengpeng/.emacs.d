@@ -91,6 +91,8 @@
            :base-extension "org"
            :recursive t
            :publishing-function org-html-publish-to-html
+           :description ,(format "This is %s's personal website, published with Emacs Org mode." user-full-name)
+           :keywords ,(format "%s, blog, technology, programming" user-full-name)
            :auto-sitemap nil
            :section-numbers nil
            :with-author nil

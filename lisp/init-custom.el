@@ -41,7 +41,7 @@ Examples:
   :group 'dotemacs)
 
 (defcustom dotemacs-org-blog-dir "~/org-blog/"
-  "Org site directory."
+  "Org blog directory."
   :type 'string
   :group 'dotemacs)
 
@@ -50,14 +50,12 @@ Examples:
   :type 'string
   :group 'dotemacs)
 
-(defcustom dotemacs-org-html-preamble-format '(("en" ""))
-  "Org html-preamble-format for ox-publish."
-  :type 'alist
+(defcustom dotemacs-org-html-preamble nil
+  "Org html-preamble for ox-publish."
   :group 'dotemacs)
 
-(defcustom dotemacs-org-html-postamble-format '(("en" ""))
-  "Org html-postamble-format for ox-publish."
-  :type 'alist
+(defcustom dotemacs-org-html-postamble nil
+  "Org html-postamble for ox-publish."
   :group 'dotemacs)
 
 (setq custom-file (expand-file-name "custom.el" dotemacs-local-dir))

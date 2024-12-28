@@ -224,6 +224,7 @@ If `NAMED-ONLY` is non-nil, return nil."
            :publishing-function org-html-publish-to-html
            :description ,(format "This is %s's personal website, published with Emacs Org mode." user-full-name)
            :keywords ,(format "%s, blog, technology, programming" user-full-name)
+           :headline-levels 4
            :section-numbers nil
            :with-author nil
            :with-priority t

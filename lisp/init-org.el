@@ -25,8 +25,7 @@
       (unless (file-exists-p post-dir)
         (make-directory post-dir t))
       (find-file (expand-file-name (format "%s-%s.org" (format-time-string "%Y%m%d") filename) post-dir))
-      (insert "#+TITLE: \n" "#+DATE: " (format-time-string "<%Y-%m-%d %a %H:%M>") "\n\n")
-      (insert "#+begin_preview\n#+end_preview\n")))
+      (insert "#+TITLE: \n" "#+DATE: " (format-time-string "<%Y-%m-%d %a %H:%M>") "\n")))
 
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates
@@ -136,42 +135,12 @@ If `NAMED-ONLY` is non-nil, return nil."
   (advice-add #'org-export-get-reference :around #'+org-html-stable-ids-get-reference)
   (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference)
 
-  (defun +org-blog-get-preview (file)
-    "The comments in FILE have to be on their own lines, prefereably before and after paragraphs."
-    (with-temp-buffer
-      (insert-file-contents file)
-      (goto-char (point-min))
-      (when-let* ((beg (re-search-forward "^#\\+BEGIN_PREVIEW$" nil t))
-                  (beg (+ 1 beg))
-                  (end (progn (re-search-forward "^#\\+END_PREVIEW$" nil t)
-                              (match-beginning 0))))
-        (buffer-substring beg end))))
-
-  (defun +org-publish-org-sitemap-preview (title list)
-    "Sitemap preview generation function."
-    (concat "#+TITLE: " title "\n"
-            "#+OPTIONS: toc:nil\n\n"
-            (org-list-to-subtree list)))
-
-  (defun +org-publish-org-sitemap-preview-format-entry (entry style project)
-    (cond ((not (directory-name-p entry))
-           (format "[[file:%s][%s]]\n%s"
-                   entry
-                   (org-publish-find-title entry project)
-                   (or (+org-blog-get-preview (expand-file-name (concat "org/" entry) dotemacs-org-blog-dir))
-                       "(No preview)")))
-          ((eq style 'tree)
-           ;; Return only last subdir.
-           (file-name-nondirectory (directory-file-name entry)))
-          (t entry)))
-
-  (defun +org-publish-org-sitemap-archives (title list)
-    "Sitemap archives generation function."
+  (defun +org-publish-sitemap (title list)
     (concat "#+TITLE: " title "\n"
             "#+OPTIONS: toc:nil\n\n"
             (org-list-to-org list)))
 
-  (defun +org-publish-org-sitemap-archives-format-entry (entry style project)
+  (defun +org-publish-sitemap-format-entry (entry style project)
     (cond ((not (directory-name-p entry))
            (format "%s [[file:%s][%s]]"
                    (format-time-string "%Y-%m-%d" (org-publish-find-date entry project))
@@ -182,46 +151,38 @@ If `NAMED-ONLY` is non-nil, return nil."
            (file-name-nondirectory (directory-file-name entry)))
           (t entry)))
 
-  (defun +org-sitemap-publish-to-html (plist filename pub-dir)
-    (when (or (equal "sitemap-archives.org" (file-name-nondirectory filename))
-              (equal "sitemap-preview.org" (file-name-nondirectory filename)))
-      (org-html-publish-to-html plist filename pub-dir)))
-
   (setq org-publish-project-alist
-        `(("blog-sitemap-archives"
-           :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
-           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
-           :publishing-function +org-sitemap-publish-to-html
+        `(("blog-posts"
+           :base-directory ,(expand-file-name "org/posts" dotemacs-org-blog-dir)
            :base-extension "org"
            :recursive t
-           :exclude "sitemap-preview.org\\|sitemap-archives.org\\|archives.org\\|404.org\\|about.org\\|search.org\\|index.org"
-           :auto-sitemap t
-           :sitemap-filename "sitemap-archives.org"
-           :sitemap-title "Sitemap Archives"
-           :sitemap-format-entry +org-publish-org-sitemap-archives-format-entry
-           :sitemap-function +org-publish-org-sitemap-archives
-           :sitemap-sort-files anti-chronologically)
-          ("blog-sitemap-preview"
-           :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
-           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
-           :publishing-function +org-sitemap-publish-to-html
-           :base-extension "org"
-           :recursive t
-           :exclude "sitemap-preview.org\\|sitemap-archives.org\\|archives.org\\|404.org\\|about.org\\|search.org\\|index.org"
-           :auto-sitemap t
-           :sitemap-filename "sitemap-preview.org"
-           :sitemap-title "Sitemap Preview"
-           :sitemap-style tree
-           :sitemap-format-entry +org-publish-org-sitemap-preview-format-entry
-           :sitemap-function +org-publish-org-sitemap-preview
-           :sitemap-sort-files anti-chronologically)
-          ("blog-posts"
-           :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
-           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
-           :base-extension "org"
-           :recursive t
-           :exclude "sitemap-preview.org\\|sitemap-archives.org"
            :publishing-function org-html-publish-to-html
+           :publishing-directory ,(expand-file-name "public/posts" dotemacs-org-blog-dir)
+           :description ,(format "This is %s's personal website, published with Emacs Org mode." user-full-name)
+           :keywords ,(format "%s, blog, technology, programming" user-full-name)
+           :headline-levels 4
+           :section-numbers nil
+           :with-author nil
+           :with-priority t
+           :with-toc t
+           :time-stamp-file nil
+           :html-doctype "html5"
+           :html-html5-fancy t
+           :html-head ,dotemacs-org-html-head
+           :html-preamble ,dotemacs-org-html-preamble
+           :html-postamble ,dotemacs-org-html-postamble
+           :auto-sitemap t
+           :sitemap-filename "index.org"
+           :sitemap-title "Posts"
+           :sitemap-format-entry +org-publish-sitemap-format-entry
+           :sitemap-function +org-publish-sitemap
+           :sitemap-sort-files anti-chronologically)
+          ("blog-pages"
+           :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
+           :base-extension "org"
+           :recursive nil
+           :publishing-function org-html-publish-to-html
+           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
            :description ,(format "This is %s's personal website, published with Emacs Org mode." user-full-name)
            :keywords ,(format "%s, blog, technology, programming" user-full-name)
            :headline-levels 4
@@ -242,7 +203,7 @@ If `NAMED-ONLY` is non-nil, return nil."
            :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
            :recursive t
            :publishing-function org-publish-attachment)
-          ("blog" :components ("blog-sitemap-archives" "blog-sitemap-preview" "blog-posts" "blog-static")))))
+          ("blog" :components ("blog-posts" "blog-pages" "blog-static")))))
 
 (provide 'init-org)
 ;;; init-org.el ends here

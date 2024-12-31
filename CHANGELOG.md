@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.3.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.3.0...v2.3.1) (2024-12-31)
+
+
+### Bug Fixes
+
+* **consult:** bind Info-search ([94dae34](https://github.com/xuchengpeng/.emacs.d/commit/94dae34c81d7ff07f6b19953f27396cea8c7e0da))
+* **consult:** customize xref while initializing ([453d663](https://github.com/xuchengpeng/.emacs.d/commit/453d66383c2369201dd90265ab47daf5f727ba5d))
+* **keybinds:** remove diagnostic in lsp ([ea44ad9](https://github.com/xuchengpeng/.emacs.d/commit/ea44ad94c5f0e2883efe4bd9cb481269edf3d0e0))
+* **lang:** define formatter after loading package ([ba84cd5](https://github.com/xuchengpeng/.emacs.d/commit/ba84cd5a5f043f4f1a77ba1bf7f7dd9f1574a784))
+* **modeline:** add buffer identification keymap ([3ca05d3](https://github.com/xuchengpeng/.emacs.d/commit/3ca05d3486c9e03f1fcebbff45c539b787e1cff6))
+* **modeline:** add column and line number mode map ([77d50bc](https://github.com/xuchengpeng/.emacs.d/commit/77d50bc9b810d17c4ec87ebd5c5f80c43e104ca3))
+* **modeline:** bind with flymake menu ([dd51da9](https://github.com/xuchengpeng/.emacs.d/commit/dd51da9ced600d4e2ee4929a30a85184c083cc6a))
+* **modeline:** declare flymake functions from built-in package ([4ffbe77](https://github.com/xuchengpeng/.emacs.d/commit/4ffbe776d58a544702f5fb3c7126a352c95add93))
+* **modeline:** refactoring flymake ([6b074cd](https://github.com/xuchengpeng/.emacs.d/commit/6b074cd3ab356c8b59f251b0a1e5bb71172ab270))
+* **modeline:** show current buffer name ([25252e9](https://github.com/xuchengpeng/.emacs.d/commit/25252e969fcce918a73e53e98c8470193691ea2a))
+* **modeline:** simply get vc info ([814faed](https://github.com/xuchengpeng/.emacs.d/commit/814faed5dbbba0a6605bd3d01e56603104de862b))
+* **org:** add preview for org blog post ([8a6654c](https://github.com/xuchengpeng/.emacs.d/commit/8a6654c36ccba933694b1ef489ad050a1447150b))
+* **org:** customize export headline-levels ([85ceafa](https://github.com/xuchengpeng/.emacs.d/commit/85ceafac11d1933c3be0607f85c93b0dd06f6cd7))
+* **org:** customize org blog directory ([15eb81b](https://github.com/xuchengpeng/.emacs.d/commit/15eb81b670041af9eec49a0e1b50e04987399b91))
+* **org:** export description and keywords meta tags ([0f7874f](https://github.com/xuchengpeng/.emacs.d/commit/0f7874f606a5fc8c12263d102bcff14a167338e8))
+* **org:** export html with org-publish ([3064ce2](https://github.com/xuchengpeng/.emacs.d/commit/3064ce27fdee2f8f4b6ce6278c8008c1c021b9a3))
+* **org:** export webmanifest ([3833bb8](https://github.com/xuchengpeng/.emacs.d/commit/3833bb8d0c5cb653493dd9afdc4737151f2a1a32))
+* **org:** improve org publish ([f2c03a0](https://github.com/xuchengpeng/.emacs.d/commit/f2c03a0174690aa163ff32d0544b66acc5833741))
+* **org:** remove org customization example ([4549016](https://github.com/xuchengpeng/.emacs.d/commit/45490168dcc9ed917451f098ac6fc87216b6c1bc))
+* **org:** remove post preview while publishing ([f267345](https://github.com/xuchengpeng/.emacs.d/commit/f26734599ee054b44202012ec5378d16d783462f))
+
 ## [2.3.0](https://github.com/xuchengpeng/.emacs.d/compare/v2.2.7...v2.3.0) (2024-11-30)
 
 

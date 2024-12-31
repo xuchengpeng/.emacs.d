@@ -120,7 +120,7 @@
   "Buffer info in mode-line."
   (concat
    (propertize
-    "%b"
+    (buffer-name)
     'face (if (and (buffer-modified-p) (not buffer-read-only))
               (+modeline-face '+modeline-buffer-modified-face)
             (+modeline-face '+modeline-buffer-file-face))

@@ -158,7 +158,7 @@ If `NAMED-ONLY` is non-nil, return nil."
            :recursive t
            :publishing-function org-html-publish-to-html
            :publishing-directory ,(expand-file-name "public/posts" dotemacs-org-blog-dir)
-           :description ,(format "This is %s's personal website, published with Emacs Org mode." user-full-name)
+           :description ,(format "This is %s's personal website, powered by Emacs & Org mode." user-full-name)
            :keywords ,(format "%s, blog, technology, programming" user-full-name)
            :headline-levels 4
            :section-numbers nil
@@ -183,7 +183,7 @@ If `NAMED-ONLY` is non-nil, return nil."
            :recursive nil
            :publishing-function org-html-publish-to-html
            :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
-           :description ,(format "This is %s's personal website, published with Emacs Org mode." user-full-name)
+           :description ,(format "This is %s's personal website, powered by Emacs & Org mode." user-full-name)
            :keywords ,(format "%s, blog, technology, programming" user-full-name)
            :headline-levels 4
            :section-numbers nil
@@ -200,9 +200,9 @@ If `NAMED-ONLY` is non-nil, return nil."
           ("blog-static"
            :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
            :base-extension "js\\|css\\|jpg\\|gif\\|png\\|svg\\|gif\\|ico\\|webmanifest"
-           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
            :recursive t
-           :publishing-function org-publish-attachment)
+           :publishing-function org-publish-attachment
+           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir))
           ("blog" :components ("blog-posts" "blog-pages" "blog-static")))))
 
 (provide 'init-org)

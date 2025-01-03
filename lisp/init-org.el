@@ -162,6 +162,14 @@ If `NAMED-ONLY` is non-nil, return nil."
            (file-name-nondirectory (directory-file-name entry)))
           (t entry)))
 
+  (defcustom +org-html-meta-description (format "This is %s's personal website, powered by Emacs & Org mode." user-full-name)
+    "Html meta description."
+    :type 'string)
+
+  (defcustom +org-html-meta-keywords (format "%s, blog, reading, technology, programming" user-full-name)
+    "Html meta keywords."
+    :type 'string)
+
   (setq org-publish-project-alist
         `(("blog-posts"
            :base-directory ,(expand-file-name "org/posts" dotemacs-org-blog-dir)
@@ -169,8 +177,8 @@ If `NAMED-ONLY` is non-nil, return nil."
            :recursive t
            :publishing-function org-html-publish-to-html
            :publishing-directory ,(expand-file-name "public/posts" dotemacs-org-blog-dir)
-           :description ,(format "This is %s's personal website, powered by Emacs & Org mode." user-full-name)
-           :keywords ,(format "%s, blog, technology, programming" user-full-name)
+           :description ,+org-html-meta-description
+           :keywords ,+org-html-meta-keywords
            :html-head ,dotemacs-org-html-head
            :html-preamble ,dotemacs-org-html-preamble
            :html-postamble ,dotemacs-org-html-postamble
@@ -186,8 +194,8 @@ If `NAMED-ONLY` is non-nil, return nil."
            :recursive nil
            :publishing-function org-html-publish-to-html
            :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
-           :description ,(format "This is %s's personal website, powered by Emacs & Org mode." user-full-name)
-           :keywords ,(format "%s, blog, technology, programming" user-full-name)
+           :description ,+org-html-meta-description
+           :keywords ,+org-html-meta-keywords
            :html-head ,dotemacs-org-html-head
            :html-preamble ,dotemacs-org-html-preamble
            :html-postamble ,dotemacs-org-html-postamble

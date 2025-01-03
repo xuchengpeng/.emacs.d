@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.3.2](https://github.com/xuchengpeng/.emacs.d/compare/v2.3.1...v2.3.2) (2025-01-03)
+
+
+### Bug Fixes
+
+* **license:** update copyright year ([a20a0f1](https://github.com/xuchengpeng/.emacs.d/commit/a20a0f100833c33e5e6aa83a5411f976fff9bfab))
+* **org:** customize html meta description and keywords ([3714461](https://github.com/xuchengpeng/.emacs.d/commit/3714461fdd5e1da61f6ef4294824176efa026d03))
+* **org:** html5 semantic elements ([9fdc092](https://github.com/xuchengpeng/.emacs.d/commit/9fdc0928325c6471d2c16e476f3b05c17614b709))
+* **org:** improve org html reference ([7f056ed](https://github.com/xuchengpeng/.emacs.d/commit/7f056edacf5ff38eb8d78c4da85aaea74977a2aa))
+* **org:** publish txt attachment ([a8625e1](https://github.com/xuchengpeng/.emacs.d/commit/a8625e1012d5eb54f969451b71e9c5cc9f253900))
+* **org:** update meta description while exporting ([d09ba43](https://github.com/xuchengpeng/.emacs.d/commit/d09ba438c66579b3097ddabe0e286d1d5640b263))
+
 ## [2.3.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.3.0...v2.3.1) (2024-12-31)
 
 

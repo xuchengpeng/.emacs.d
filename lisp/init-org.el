@@ -80,6 +80,18 @@
   :commands org-publish
   :config
   (setq org-export-in-background t
+        org-export-headline-levels 4
+        org-export-with-section-numbers nil
+        org-export-with-author nil
+        org-export-with-priority t
+        org-export-with-toc t
+        org-export-time-stamp-file nil
+        org-html-container-element "section"
+        org-html-divs '((preamble  "header" "preamble")
+                        (content   "main" "content")
+                        (postamble "footer" "postamble"))
+        org-html-doctype "html5"
+        org-html-html5-fancy t
         org-html-htmlize-output-type 'inline-css
         org-html-head-include-default-style nil
         org-html-head-include-scripts nil
@@ -159,14 +171,6 @@ If `NAMED-ONLY` is non-nil, return nil."
            :publishing-directory ,(expand-file-name "public/posts" dotemacs-org-blog-dir)
            :description ,(format "This is %s's personal website, powered by Emacs & Org mode." user-full-name)
            :keywords ,(format "%s, blog, technology, programming" user-full-name)
-           :headline-levels 4
-           :section-numbers nil
-           :with-author nil
-           :with-priority t
-           :with-toc t
-           :time-stamp-file nil
-           :html-doctype "html5"
-           :html-html5-fancy t
            :html-head ,dotemacs-org-html-head
            :html-preamble ,dotemacs-org-html-preamble
            :html-postamble ,dotemacs-org-html-postamble
@@ -184,14 +188,6 @@ If `NAMED-ONLY` is non-nil, return nil."
            :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
            :description ,(format "This is %s's personal website, powered by Emacs & Org mode." user-full-name)
            :keywords ,(format "%s, blog, technology, programming" user-full-name)
-           :headline-levels 4
-           :section-numbers nil
-           :with-author nil
-           :with-priority t
-           :with-toc t
-           :time-stamp-file nil
-           :html-doctype "html5"
-           :html-html5-fancy t
            :html-head ,dotemacs-org-html-head
            :html-preamble ,dotemacs-org-html-preamble
            :html-postamble ,dotemacs-org-html-postamble

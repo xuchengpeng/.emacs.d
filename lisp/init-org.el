@@ -109,21 +109,19 @@ nil."
       (downcase string))
      "-" "-"))
 
-  (defun +org-html-stable-ids-get-reference (orig-fun datum info)
+  (defun +org-export-stable-ids-get-reference (datum info)
     "Return a reference for DATUM with INFO.
 
     Raise an error if the ID was used in the document before."
-    (if +org-html-stable-ids
-        (let ((cache (plist-get info :internal-references))
-	          (id (+org-html-stable-ids-extract-id datum)))
-	      (or (car (rassq datum cache))
-	          (if (assoc id cache)
-		          (user-error "Duplicate ID: %s" id)
-	            (when id
-		          (push (cons id datum) cache)
-		          (plist-put info :internal-references cache)
-		          id))))
-      (funcall orig-fun datum info)))
+    (let ((cache (plist-get info :internal-references))
+	      (id (+org-html-stable-ids-extract-id datum)))
+	  (or (car (rassq datum cache))
+	      (if (assoc id cache)
+		      (user-error "Duplicate ID: %s" id)
+	        (when id
+		      (push (cons id datum) cache)
+		      (plist-put info :internal-references cache)
+		      id)))))
 
   (defun +org-html-stable-ids-reference (datum info &optional named-only)
     "Call `org-export-get-reference` to get a reference for DATUM with INFO.
@@ -132,8 +130,9 @@ If `NAMED-ONLY` is non-nil, return nil."
     (unless named-only
       (org-export-get-reference datum info)))
 
-  (advice-add #'org-export-get-reference :around #'+org-html-stable-ids-get-reference)
-  (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference)
+  (when +org-html-stable-ids
+    (advice-add #'org-export-get-reference :override #'+org-export-stable-ids-get-reference)
+    (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference))
 
   (defun +org-publish-sitemap (title list)
     (concat "#+TITLE: " title "\n"

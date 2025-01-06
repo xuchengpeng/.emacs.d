@@ -92,7 +92,7 @@
                         (postamble "footer" "postamble"))
         org-html-doctype "html5"
         org-html-html5-fancy t
-        org-html-htmlize-output-type 'inline-css
+        org-html-htmlize-output-type 'css
         org-html-head-include-default-style nil
         org-html-head-include-scripts nil
         org-html-validation-link nil)

@@ -113,12 +113,31 @@
            (file-name-nondirectory (directory-file-name entry)))
           (t entry)))
 
-  (defcustom +org-html-meta-description (format "This is %s's personal website, powered by Emacs & Org mode." user-full-name)
+  (defcustom +org-html-meta-description
+    (format "This is %s's personal website, powered by Emacs & Org mode." user-full-name)
     "Html meta description."
     :type 'string)
 
-  (defcustom +org-html-meta-keywords (format "%s, blog, reading, technology, programming" user-full-name)
+  (defcustom +org-html-meta-keywords
+    (format "%s, blog, reading, technology, programming" user-full-name)
     "Html meta keywords."
+    :type 'string)
+
+  (defun +org-file-contents (file)
+    (with-temp-buffer
+      (insert-file-contents (expand-file-name file dotemacs-org-blog-dir))
+      (buffer-string)))
+
+  (defcustom +org-html-head (+org-file-contents "html/head.html")
+    "Html head."
+    :type 'string)
+
+  (defcustom +org-html-header (+org-file-contents "html/header.html")
+    "Html header."
+    :type 'string)
+
+  (defcustom +org-html-footer (+org-file-contents "html/footer.html")
+    "Html footer."
     :type 'string)
 
   (setq org-publish-project-alist
@@ -130,9 +149,9 @@
            :publishing-directory ,(expand-file-name "public/posts" dotemacs-org-blog-dir)
            :description ,+org-html-meta-description
            :keywords ,+org-html-meta-keywords
-           :html-head ,dotemacs-org-html-head
-           :html-preamble ,dotemacs-org-html-preamble
-           :html-postamble ,dotemacs-org-html-postamble
+           :html-head ,+org-html-head
+           :html-preamble ,+org-html-header
+           :html-postamble ,+org-html-footer
            :auto-sitemap t
            :sitemap-filename "index.org"
            :sitemap-title "Posts"
@@ -147,9 +166,9 @@
            :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
            :description ,+org-html-meta-description
            :keywords ,+org-html-meta-keywords
-           :html-head ,dotemacs-org-html-head
-           :html-preamble ,dotemacs-org-html-preamble
-           :html-postamble ,dotemacs-org-html-postamble
+           :html-head ,+org-html-head
+           :html-preamble ,+org-html-header
+           :html-postamble ,+org-html-footer
            :auto-sitemap nil)
           ("blog-static"
            :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)

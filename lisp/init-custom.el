@@ -45,19 +45,6 @@ Examples:
   :type 'string
   :group 'dotemacs)
 
-(defcustom dotemacs-org-html-head ""
-  "Org html-head for ox-publish."
-  :type 'string
-  :group 'dotemacs)
-
-(defcustom dotemacs-org-html-preamble nil
-  "Org html-preamble for ox-publish."
-  :group 'dotemacs)
-
-(defcustom dotemacs-org-html-postamble nil
-  "Org html-postamble for ox-publish."
-  :group 'dotemacs)
-
 (setq custom-file (expand-file-name "custom.el" dotemacs-local-dir))
 (when (file-exists-p custom-file)
   (load custom-file nil 'nomessage))

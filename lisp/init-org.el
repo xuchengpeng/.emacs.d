@@ -86,6 +86,7 @@
         org-export-with-priority t
         org-export-with-toc t
         org-export-time-stamp-file nil
+        org-html-checkbox-type 'html
         org-html-container-element "section"
         org-html-divs '((preamble  "header" "preamble")
                         (content   "main" "content")

@@ -162,7 +162,7 @@ If prefix OTHER is set, prompt for a directory to search from."
   (add-hook 'prog-mode-hook 'tempel-setup-capf)
   (add-hook 'text-mode-hook 'tempel-setup-capf)
   :config
-  (setq tempel-path (nconc (ensure-list tempel-path) dotemacs-tempel-path)))
+  (setq tempel-path (append (ensure-list tempel-path) dotemacs-tempel-path)))
 
 (provide 'init-completion)
 ;;; init-completion.el ends here

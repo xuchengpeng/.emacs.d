@@ -46,6 +46,7 @@
         markdown-make-gfm-checkboxes-buttons t
         markdown-gfm-uppercase-checkbox t
         markdown-fontify-whole-heading-line t
+        markdown-fontify-code-blocks-natively t
         markdown-content-type "application/xhtml+xml"
         markdown-css-paths
         '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"

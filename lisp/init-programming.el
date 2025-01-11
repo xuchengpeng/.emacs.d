@@ -75,5 +75,9 @@
                                     (when (treesit-language-available-p 'elisp)
                                       (treesit-parser-create 'elisp)))))
 
+(use-package gptel
+  :ensure t
+  :commands (gptel gptel-send gptel-rewrite))
+
 (provide 'init-programming)
 ;;; init-programming.el ends here

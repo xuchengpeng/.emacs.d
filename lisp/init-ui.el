@@ -131,7 +131,6 @@
 (add-hook 'server-after-make-frame-hook #'+init-fonts)
 
 (use-package which-key
-  :ensure t
   :hook (after-init . which-key-mode)
   :custom
   (which-key-sort-order #'which-key-key-order-alpha)

@@ -173,20 +173,20 @@ If `NAMED-ONLY` is non-nil, return nil."
     "Html meta keywords."
     :type 'string)
 
-  (defun +org-file-contents (file)
+  (defun +org-blog-file-contents (file)
     (with-temp-buffer
       (insert-file-contents (expand-file-name file dotemacs-org-blog-dir))
       (buffer-string)))
 
-  (defcustom +org-html-head (+org-file-contents "html/head.html")
+  (defcustom +org-html-head (+org-blog-file-contents "html/head.html")
     "Html head."
     :type 'string)
 
-  (defcustom +org-html-header (+org-file-contents "html/header.html")
+  (defcustom +org-html-header (+org-blog-file-contents "html/header.html")
     "Html header."
     :type 'string)
 
-  (defcustom +org-html-footer (+org-file-contents "html/footer.html")
+  (defcustom +org-html-footer (+org-blog-file-contents "html/footer.html")
     "Html footer."
     :type 'string)
 

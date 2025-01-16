@@ -177,16 +177,17 @@
 
 (defun +init-ui ()
   "Initialize UI."
-  (when (fboundp 'pixel-scroll-precision-mode)
-    (pixel-scroll-precision-mode t))
+  (pixel-scroll-precision-mode t)
 
   (load-theme 'modus-operandi :no-confirm)
 
   (require 'ace-window)
   (require 'init-modeline)
   (+modeline-mode)
+
   (require 'init-echo-bar)
   (echo-bar-mode)
+
   (require 'init-dashboard)
   (add-hook
    'dashboard-mode-hook

@@ -98,10 +98,6 @@
         org-html-head-include-scripts nil
         org-html-validation-link nil)
 
-  (defcustom +org-html-stable-ids t
-    "Non-nil means to use stable IDs in the exported document."
-    :type 'boolean)
-
   (defun +org-html-stable-ids-extract-id (datum)
     "Extract a reference from a DATUM.
 
@@ -143,9 +139,14 @@ If `NAMED-ONLY` is non-nil, return nil."
     (unless named-only
       (org-export-get-reference datum info)))
 
-  (when +org-html-stable-ids
+  (defun +org-publish (oldfun project &optional force async)
     (advice-add #'org-export-get-reference :override #'+org-export-stable-ids-get-reference)
-    (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference))
+    (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference)
+    (funcall oldfun project force async)
+    (advice-remove #'org-export-get-reference #'+org-export-stable-ids-get-reference)
+    (advice-remove #'org-html--reference #'+org-html-stable-ids-reference))
+
+  (advice-add #'org-publish :around #'+org-publish)
 
   (defun +org-publish-sitemap (title list)
     (concat "#+TITLE: " title "\n"

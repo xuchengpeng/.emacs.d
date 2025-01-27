@@ -112,11 +112,10 @@ nil."
 
   (defun +org-html-stable-ids-to-kebab-case (string)
     "Convert STRING to kebab-case."
-    (string-trim
-     (replace-regexp-in-string
-      "[^a-z0-9]+" "-"
-      (downcase string))
-     "-" "-"))
+    (downcase
+     (string-trim
+      (replace-regexp-in-string "[^A-Za-z0-9\u4e00-\u9fa5]+" "-" string)
+      "-" "-")))
 
   (defun +org-export-stable-ids-get-reference (datum info)
     "Return a reference for DATUM with INFO.

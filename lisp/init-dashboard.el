@@ -62,13 +62,13 @@
   (keymap-set dashboard-mode-map "r" 'recentf-open-files)
   (keymap-set dashboard-mode-map "g" 'consult-ripgrep)
   (keymap-set dashboard-mode-map "p" 'project-switch-project)
-  (keymap-set dashboard-mode-map "b" 'bookmark-jump)
+  (keymap-set dashboard-mode-map "a" 'org-agenda)
   (let* ((menu
           '(("Find file" . "f")
             ("Recently opened files" . "r")
             ("Grep text" . "g")
             ("Open project" . "p")
-            ("Jump to bookmark" . "b"))))
+            ("Agenda" . "a"))))
     (insert "\n\n")
     (dolist (line menu (point))
       (insert (dashboard--center

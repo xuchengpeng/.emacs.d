@@ -49,7 +49,11 @@
           ("HOLD" . warning)
           ("WAIT" . warning)
           ("CANCELLED" . error)
-          ("PROJECT" . font-lock-doc-face)))
+          ("PROJECT" . font-lock-doc-face))
+        org-priority-faces
+        '((?A . error)
+          (?B . warning)
+          (?C . success)))
 
   (org-babel-do-load-languages
    'org-babel-load-languages

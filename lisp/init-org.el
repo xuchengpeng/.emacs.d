@@ -15,6 +15,7 @@
   (setq org-directory dotemacs-org-dir
         org-id-locations-file (expand-file-name ".orgids" org-directory)
         org-agenda-files (list org-directory)
+        org-agenda-window-setup 'current-window
         org-persist-directory (expand-file-name "org-persist" dotemacs-cache-dir)
         org-publish-timestamp-directory (expand-file-name "org-timestamps/" dotemacs-cache-dir)
         org-startup-indented t)

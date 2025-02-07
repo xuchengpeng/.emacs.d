@@ -10,8 +10,11 @@
   (keymap-global-set "C-c c" 'org-capture)
   :config
   (keymap-set org-mode-map "C-c t" '("Toggle" . (keymap)))
-  (keymap-set org-mode-map "C-c t i" 'org-toggle-inline-images)
-  (keymap-set org-mode-map "C-c t l" 'org-toggle-link-display)
+  (keymap-set org-mode-map "C-c t c" #'org-toggle-checkbox)
+  (keymap-set org-mode-map "C-c t h" #'org-toggle-heading)
+  (keymap-set org-mode-map "C-c t i" #'org-toggle-inline-images)
+  (keymap-set org-mode-map "C-c t l" #'org-toggle-link-display)
+  (keymap-set org-mode-map "C-c t t" #'org-toggle-timestamp-type)
   (setq org-directory dotemacs-org-dir
         org-id-locations-file (expand-file-name ".orgids" org-directory)
         org-agenda-files (list org-directory)

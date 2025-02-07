@@ -34,14 +34,14 @@
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates
         `(("t" "Todo" entry
-           (file ,(expand-file-name "todo.org" org-directory))
-           "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+           (file+headline "todo.org" "Todo")
+           "* TODO %?\n%i\n%a")
           ("n" "Notes" entry
-           (file ,(expand-file-name "notes.org" org-directory))
-           "* :NOTE: %?\n%U\n%a\n" :clock-in t :clock-resume t)
+           (file+headline "notes.org" "Notes")
+           "* %u %?\n%i\n%a")
           ("j" "Journal" entry
            (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
-           "* %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
+           "* %U %?\%i\n%a")
           ("o" "Org Blog Post" plain
            (function +org-capture-org-blog-post)
            "" :jump-to-captured t :immediate-finish t)))

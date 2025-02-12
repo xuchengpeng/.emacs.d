@@ -58,7 +58,6 @@
           (csharp-mode . csharp-ts-mode)
           (css-mode . css-ts-mode)
           (go-mode . go-ts-mode)
-          (go-mod-mode . go-mod-ts-mode)
           (java-mode . java-ts-mode)
           (javascript-mode . js-ts-mode)
           (js-mode . js-ts-mode)

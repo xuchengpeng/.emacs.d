@@ -162,9 +162,9 @@ If `NAMED-ONLY` is non-nil, return nil."
 
   (defun +org-publish-sitemap-format-entry (entry style project)
     (cond ((not (directory-name-p entry))
-           (format "%s [[file:%s][%s]]"
-                   (format-time-string "%Y-%m-%d" (org-publish-find-date entry project))
+           (format "[[file:%s][%s - %s]]"
                    entry
+                   (format-time-string "%b %d, %Y" (org-publish-find-date entry project))
                    (org-publish-find-title entry project)))
           ((eq style 'tree)
            ;; Return only last subdir.

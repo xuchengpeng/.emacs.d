@@ -32,4 +32,5 @@
 (require 'init-programming)
 (require 'init-lang)
 
+(provide 'init)
 ;;; init.el ends here

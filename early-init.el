@@ -15,4 +15,5 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 (setq-default mode-line-format nil)
 
+(provide 'early-init)
 ;;; early-init.el ends here

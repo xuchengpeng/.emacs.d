@@ -14,3 +14,6 @@
         ("melpa" . "/path/to/elpa-mirror/melpa/")))
 
 (setq dotemacs-tempel-path '("/path/to/tempel/templates"))
+
+(provide 'custom)
+;;; custom.el ends here

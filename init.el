@@ -2,8 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-(when (version< emacs-version "29.1")
-  (error "Detected Emacs %s. Emacs version should be 29.1 or higher" emacs-version))
+(when (version< emacs-version "30.1")
+  (error "Detected Emacs %s. Emacs version should be 30.1 or higher" emacs-version))
 
 (setq gc-cons-threshold most-positive-fixnum)
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 20 1024 1024))))

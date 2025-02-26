@@ -18,7 +18,8 @@
       visible-bell nil)
 
 (blink-cursor-mode -1)
-(setq blink-matching-paren nil)
+(setq blink-matching-paren nil
+      blink-matching-paren-highlight-offscreen t)
 (setq x-stretch-cursor nil)
 
 ;; middle-click paste at point, not at click
@@ -73,7 +74,8 @@
   (setq show-paren-delay 0.1
         show-paren-highlight-openparen t
         show-paren-when-point-inside-paren t
-        show-paren-when-point-in-periphery t))
+        show-paren-when-point-in-periphery t
+        show-paren-context-when-offscreen t))
 
 (use-package dired
   :commands (dired dired-jump)

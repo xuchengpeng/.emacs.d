@@ -12,12 +12,6 @@
   (keymap-set symbol-overlay-mode-map "M-n" 'symbol-overlay-jump-next)
   (keymap-set symbol-overlay-mode-map "M-p" 'symbol-overlay-jump-prev))
 
-(use-package hl-todo
-  :ensure t
-  :hook (prog-mode . hl-todo-mode)
-  :config
-  (setq hl-todo-highlight-punctuation ":"))
-
 (use-package diff-hl
   :ensure t
   :hook ((after-init . global-diff-hl-mode)
@@ -77,6 +71,25 @@
 (use-package gptel
   :ensure t
   :commands (gptel gptel-send gptel-rewrite))
+
+(defvar +highlight-keywords
+  '(("\\<\\(TODO\\|FIXME\\|BUG\\)\\>" 1 'error prepend)
+    ("\\<\\(NOTE\\|HACK\\|MAYBE\\)\\>" 1 'warning prepend)))
+
+(define-minor-mode +highlight-keywords-mode
+  "Highlight keywords, like TODO, FIXME..."
+  :global nil
+  (if +highlight-keywords-mode
+      (font-lock-add-keywords nil +highlight-keywords)
+    (font-lock-remove-keywords nil +highlight-keywords))
+
+  ;; Fontify the current buffer
+  (when (bound-and-true-p font-lock-mode)
+    (if (fboundp 'font-lock-flush)
+        (font-lock-flush)
+      (with-no-warnings (font-lock-fontify-buffer)))))
+
+(add-hook 'prog-mode-hook #'+highlight-keywords-mode)
 
 (provide 'init-programming)
 ;;; init-programming.el ends here

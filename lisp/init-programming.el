@@ -75,9 +75,7 @@
 
   ;; Fontify the current buffer
   (when (bound-and-true-p font-lock-mode)
-    (if (fboundp 'font-lock-flush)
-        (font-lock-flush)
-      (with-no-warnings (font-lock-fontify-buffer)))))
+    (font-lock-flush)))
 
 (add-hook 'prog-mode-hook #'+highlight-keywords-mode)
 

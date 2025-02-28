@@ -1,11 +1,11 @@
-name: CI
+name: build
 
 on:
   pull_request:
   push:
 
 jobs:
-  tests:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -22,13 +22,3 @@ jobs:
           ln -s $(pwd) $HOME/.emacs.d
           emacs --version
           emacs --debug-init --batch -l init.el
-  release:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    needs:
-      - tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: googleapis/release-please-action@v4
-        id: release
-        with:
-          release-type: simple

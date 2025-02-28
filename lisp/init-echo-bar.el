@@ -14,7 +14,6 @@
   '(echo-bar--text-scale
     echo-bar--selection-info
     echo-bar--word-count
-    echo-bar--symbol-overlay
     echo-bar--multiple-cursors
     echo-bar--hostname
     echo-bar--time)
@@ -48,9 +47,6 @@ If nil, don't update the echo bar automatically."
 (defvar text-scale-mode-lighter)
 
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
-(declare-function symbol-overlay-assoc "ext:symbol-overlay")
-(declare-function symbol-overlay-get-list "ext:symbol-overlay")
-(declare-function symbol-overlay-get-symbol "ext:symbol-overlay")
 
 (defun echo-bar--text-scale ()
   "Text-Scale info."
@@ -78,18 +74,6 @@ If nil, don't update the echo bar automatically."
   "Word count."
   (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
     (format "%dW" (count-words (point-min) (point-max)))))
-
-(defun echo-bar--symbol-overlay ()
-  "Display the number of matches for symbol overlay."
-  (when (and (bound-and-true-p symbol-overlay-keywords-alist)
-             (not (bound-and-true-p symbol-overlay-temp-symbol)))
-    (let* ((keyword (symbol-overlay-assoc (symbol-overlay-get-symbol t)))
-           (symbol (car keyword))
-           (before (symbol-overlay-get-list -1 symbol))
-           (after (symbol-overlay-get-list 1 symbol))
-           (count (length before)))
-      (when (symbol-overlay-assoc symbol)
-        (format "%s:%d/%d" symbol (+ count 1) (+ count (length after)))))))
 
 (defun echo-bar--multiple-cursors ()
   "Display the number of multiple cursors."

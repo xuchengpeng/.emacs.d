@@ -1,5 +1,46 @@
 # Changelog
 
+## [2.3.2](https://github.com/xuchengpeng/.emacs.d/compare/v2.3.1...v2.3.2) (2025-02-28)
+
+
+### Bug Fixes
+
+* **ci:** add emacs 30.1 ([dd4d306](https://github.com/xuchengpeng/.emacs.d/commit/dd4d30606a356511be8456f43df4a191635b820a))
+* **custom:** update example custom.el ([810e807](https://github.com/xuchengpeng/.emacs.d/commit/810e807539201a3e11e10f0324095472106f98d9))
+* **dashboard:** add org agenda, remove bookmark ([21ac4de](https://github.com/xuchengpeng/.emacs.d/commit/21ac4de5d1030e301fdc93c4a3edaab81ec9649d))
+* **emacs:** avoid using nconc ([799a8f2](https://github.com/xuchengpeng/.emacs.d/commit/799a8f24c53facfca268b388c4b972fbdce5381f))
+* **feature:** add provide at end of files ([5290d45](https://github.com/xuchengpeng/.emacs.d/commit/5290d45b2d1238e517e058be3adceee67c732834))
+* **gptel:** add gptel ([e828db6](https://github.com/xuchengpeng/.emacs.d/commit/e828db67583a805ece8e6069c8184568685a4561))
+* **keybinds:** bind gptel ([2870153](https://github.com/xuchengpeng/.emacs.d/commit/2870153a9a1bdbbaae254d494b7d76ed6ac757ab))
+* **license:** update copyright year ([a20a0f1](https://github.com/xuchengpeng/.emacs.d/commit/a20a0f100833c33e5e6aa83a5411f976fff9bfab))
+* **markdown:** fontify code blocks natively ([5cf666a](https://github.com/xuchengpeng/.emacs.d/commit/5cf666afcf47b5f110b3639742492bcd24afbcbb))
+* **org:** add priority faces ([1867ce1](https://github.com/xuchengpeng/.emacs.d/commit/1867ce12b2aa08fcffd46bde92f9f27131754c5f))
+* **org:** bind more org toggle commands ([1a8e36c](https://github.com/xuchengpeng/.emacs.d/commit/1a8e36c2d8f21685c85950448def734082a496d1))
+* **org:** change date style of post list ([40a5a39](https://github.com/xuchengpeng/.emacs.d/commit/40a5a39bc9203dfee2da67df72fe0edee9383250))
+* **org:** customize html meta description and keywords ([3714461](https://github.com/xuchengpeng/.emacs.d/commit/3714461fdd5e1da61f6ef4294824176efa026d03))
+* **org:** delete meta settings ([c3aa783](https://github.com/xuchengpeng/.emacs.d/commit/c3aa7836cc96709776767248b4c1e8cafbb9b042))
+* **org:** don't use babel during export ([32f85f9](https://github.com/xuchengpeng/.emacs.d/commit/32f85f9fcc693b990224c99b2ec4249dda9252d0))
+* **org:** export checkbox with html type ([de56d8a](https://github.com/xuchengpeng/.emacs.d/commit/de56d8ac371d9ad9ea6eb70bd4b67259d8e97c2a))
+* **org:** export the CSS selectors only ([34fbe8a](https://github.com/xuchengpeng/.emacs.d/commit/34fbe8a51b882681ce5cda7b1061785994408e92))
+* **org:** html5 semantic elements ([9fdc092](https://github.com/xuchengpeng/.emacs.d/commit/9fdc0928325c6471d2c16e476f3b05c17614b709))
+* **org:** improve org html reference ([7f056ed](https://github.com/xuchengpeng/.emacs.d/commit/7f056edacf5ff38eb8d78c4da85aaea74977a2aa))
+* **org:** match chinese characters ([b6ab1da](https://github.com/xuchengpeng/.emacs.d/commit/b6ab1da0d903754cdf37384968d33b667d76c547))
+* **org:** only enable stable ids when publishing project ([721b023](https://github.com/xuchengpeng/.emacs.d/commit/721b023ee9b0e81594aca8132148b320631046a0))
+* **org:** optimize capture templates ([814b8f1](https://github.com/xuchengpeng/.emacs.d/commit/814b8f19e327ce13d83cb0e9eb9458110d8c9e7b))
+* **org:** proper function name ([7e86666](https://github.com/xuchengpeng/.emacs.d/commit/7e86666ede48844fb31ec8edd34195bea20528ca))
+* **org:** publish head,header,footer from html assets ([9eb8ec4](https://github.com/xuchengpeng/.emacs.d/commit/9eb8ec4fd67cdc3fc908d47d8d26d353a1a3d923))
+* **org:** publish txt attachment ([a8625e1](https://github.com/xuchengpeng/.emacs.d/commit/a8625e1012d5eb54f969451b71e9c5cc9f253900))
+* **org:** remove duplicated type ([54ecc42](https://github.com/xuchengpeng/.emacs.d/commit/54ecc426c03fccad6b92f6f807495e49c3084970))
+* **org:** remove reference override ([cf275e0](https://github.com/xuchengpeng/.emacs.d/commit/cf275e092be40f2a0d9db5161e2ade7778240f06))
+* **org:** setup agenda with current window ([c99648e](https://github.com/xuchengpeng/.emacs.d/commit/c99648ebb8f422e832e23272736bf732d600bcb3))
+* **org:** update meta description while exporting ([d09ba43](https://github.com/xuchengpeng/.emacs.d/commit/d09ba438c66579b3097ddabe0e286d1d5640b263))
+* **prog:** simply highlight keywords ([2a63ad3](https://github.com/xuchengpeng/.emacs.d/commit/2a63ad3338c05d880524387e45a08c2d66449453))
+* **prog:** use built-in hi-lock instead of symbol-overlay ([f9133f3](https://github.com/xuchengpeng/.emacs.d/commit/f9133f32cdc63988e05c45634065e65986909fa0))
+* **tree-sitter:** remove go-mod-ts-mode ([33dcea7](https://github.com/xuchengpeng/.emacs.d/commit/33dcea74906db51ca77c8d3d1e310f7a94febc3f))
+* **ui:** enable pixel scroll after init ([3c62d5d](https://github.com/xuchengpeng/.emacs.d/commit/3c62d5d922ceadb638c253541aaf9cd8150ab77b))
+* **ui:** show paren context when offscreen ([1926bf3](https://github.com/xuchengpeng/.emacs.d/commit/1926bf3b333de8db1294e19301b7b79cf6750dd5))
+* **which-key:** which-key is builtin now ([faa6334](https://github.com/xuchengpeng/.emacs.d/commit/faa63348014d5c192c57f111d278d54ca69cba66))
+
 ## [2.3.1](https://github.com/xuchengpeng/.emacs.d/compare/v2.3.0...v2.3.1) (2024-12-31)
 
 

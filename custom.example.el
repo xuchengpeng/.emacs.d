@@ -2,6 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
+(setenv "http_proxy" "http://user:password@proxy.server.com:port")
+(setenv "https_proxy" "http://user:password@proxy.server.com:port")
+(setenv "no_proxy" ".xxxx.com,.inner,localhost,127.0.0.1")
+(setenv "GPTEL_GEMINI_KEY" "xxxxxxxxxxxxxxxxx")
+
 (setq user-full-name "Chuck"
       user-mail-address "xxxxxx@xxx.com")
 

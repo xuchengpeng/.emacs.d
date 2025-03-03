@@ -60,7 +60,13 @@
 
 (use-package gptel
   :ensure t
-  :commands (gptel gptel-send gptel-rewrite))
+  :commands (gptel gptel-send gptel-rewrite)
+  :config
+  (setq gptel-model 'gemini-2.0-flash
+        gptel-backend (gptel-make-gemini "Gemini"
+                        :key (lambda () (getenv "GPTEL_GEMINI_KEY"))
+                        :stream nil)
+        gptel-use-curl nil))
 
 (defvar +highlight-keywords
   '(("\\<\\(TODO\\|FIXME\\|BUG\\)\\>" 1 'error prepend)

@@ -2,7 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'package)
+(setq load-prefer-newer t
+      package-enable-at-startup nil
+      package-user-dir (expand-file-name "elpa" dotemacs-local-dir))
 
 (defun +set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."
@@ -19,11 +21,6 @@
 
 (unless (eq dotemacs-package-archives 'custom)
   (+set-package-archives dotemacs-package-archives))
-
-(setq load-prefer-newer t
-      package-enable-at-startup nil
-      package-user-dir (expand-file-name "elpa" dotemacs-local-dir)
-      package-gnupghome-dir (expand-file-name "gnupg" package-user-dir))
 
 (package-initialize)
 

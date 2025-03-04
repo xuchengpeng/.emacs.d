@@ -62,11 +62,10 @@
   "Conduct a text search in files under the current folder.
 If prefix OTHER is set, prompt for a directory to search from."
   (interactive "P")
-  (let ((default-directory
-          (if other
-              (read-directory-name "Search directory: ")
-            default-directory)))
-    (consult-ripgrep default-directory (thing-at-point 'symbol))))
+  (let ((dir (if other
+                 (read-directory-name "Search directory: ")
+               default-directory)))
+    (consult-ripgrep dir nil)))
 
 (defun +search-other-cwd ()
   "Conduct a text search in another directory."

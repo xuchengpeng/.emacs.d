@@ -1,4 +1,4 @@
-;;; init-modeline.el --- modeline. -*- lexical-binding: t; -*-
+;;; init-modeline.el --- modeline  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

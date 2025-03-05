@@ -1,4 +1,4 @@
-;;; init-programming.el --- programming. -*- lexical-binding: t; -*-
+;;; init-programming.el --- programming  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

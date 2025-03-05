@@ -1,4 +1,4 @@
-;;; init-custom.el --- Custom. -*- lexical-binding: t; -*-
+;;; init-custom.el --- Custom file  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

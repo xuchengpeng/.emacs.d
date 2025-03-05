@@ -1,4 +1,4 @@
-;;; init-shell.el -- Init shell. -*- lexical-binding: t -*-
+;;; init-shell.el -- Init shell  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

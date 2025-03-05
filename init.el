@@ -1,4 +1,4 @@
-;;; init.el --- dotemacs's configuration. -*- lexical-binding: t; -*-
+;;; init.el --- dotemacs's configuration  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -21,8 +21,8 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 (require 'init-custom)
-(require 'init-base)
 (require 'init-packages)
+(require 'init-base)
 (require 'init-keybinds)
 (require 'init-ui)
 (require 'init-editing)

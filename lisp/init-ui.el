@@ -1,4 +1,4 @@
-;;; init-ui.el --- UI configurations. -*- lexical-binding: t; -*-
+;;; init-ui.el --- UI configurations  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

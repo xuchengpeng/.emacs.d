@@ -1,4 +1,4 @@
-;;; init-editing.el --- Editing utils. -*- lexical-binding: t; -*-
+;;; init-editing.el --- Editing utils  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

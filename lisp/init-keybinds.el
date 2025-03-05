@@ -1,4 +1,4 @@
-;;; init-keybinds.el --- dotemacs keybindings. -*- lexical-binding: t; -*-
+;;; init-keybinds.el --- dotemacs keybindings  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

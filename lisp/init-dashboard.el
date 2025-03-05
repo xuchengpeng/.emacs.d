@@ -1,4 +1,4 @@
-;;; init-dashboard.el --- dashboard. -*- lexical-binding: t; -*-
+;;; init-dashboard.el --- dashboard  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

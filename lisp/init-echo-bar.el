@@ -1,4 +1,4 @@
-;;; init-echo-bar.el --- Display text at end of the echo area. -*- lexical-binding: t; -*-
+;;; init-echo-bar.el --- Display text at end of the echo area  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 

@@ -37,8 +37,6 @@
 
 (setq use-short-answers t)
 
-(setq enable-recursive-minibuffers t)
-
 (setq-default major-mode 'fundamental-mode)
 (setq use-file-dialog nil
       use-dialog-box nil

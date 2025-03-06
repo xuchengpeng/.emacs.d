@@ -96,19 +96,18 @@ If prefix OTHER is set, prompt for a directory to search from."
 
 (use-package emacs
   :ensure nil
-  :init
+  :custom
+  ;; Support opening new minibuffers from inside existing minibuffers.
+  (enable-recursive-minibuffers t)
   ;; TAB cycle if there are only few candidates
-  (setq completion-cycle-threshold 3)
-
+  (completion-cycle-threshold 3)
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
-  (setq tab-always-indent 'complete)
-
+  (tab-always-indent 'complete)
   ;; Emacs 30 and newer: Disable Ispell completion function.
-  (setq text-mode-ispell-word-completion nil)
-
+  (text-mode-ispell-word-completion nil)
   ;; Hide commands in M-x which do not apply to the current mode.
-  (setq read-extended-command-predicate #'command-completion-default-include-p))
+  (read-extended-command-predicate #'command-completion-default-include-p))
 
 (use-package corfu
   :ensure t

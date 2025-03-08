@@ -29,7 +29,11 @@
       (unless (file-exists-p post-dir)
         (make-directory post-dir t))
       (find-file (expand-file-name (format "%s-%s.org" (format-time-string "%Y%m%d") filename) post-dir))
-      (insert "#+TITLE: \n" "#+DATE: " (format-time-string "<%Y-%m-%d %a %H:%M>") "\n")))
+      (insert "#+TITLE: \n"
+              "#+AUTHOR: \n"
+              "#+DATE: " (format-time-string "<%Y-%m-%d %a %H:%M>") "\n"
+              "#+INCLUDE: ../org-macros.setup\n"
+              "\n{{{post-meta}}}\n")))
 
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates

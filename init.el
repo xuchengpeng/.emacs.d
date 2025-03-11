@@ -27,8 +27,8 @@
 (require 'init-ui)
 (require 'init-editing)
 (require 'init-completion)
-(require 'init-shell)
 (require 'init-org)
+(require 'init-tools)
 (require 'init-programming)
 (require 'init-lang)
 

@@ -1,4 +1,4 @@
-;;; init-shell.el -- Init shell  -*- lexical-binding: t -*-
+;;; init-tools.el -- Tools configuration  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -60,5 +60,14 @@
       (eshell)
     (vterm)))
 
-(provide 'init-shell)
-;;; init-shell.el ends here
+(use-package elfeed
+  :ensure t
+  :commands (elfeed)
+  :config
+  (setq elfeed-db-directory (expand-file-name "elfeed" dotemacs-local-dir)
+        elfeed-feeds '("https://planet.emacslife.com/atom.xml")
+        elfeed-search-filter "@1-month-ago "
+        url-queue-timeout 30))
+
+(provide 'init-tools)
+;;; init-tools.el ends here

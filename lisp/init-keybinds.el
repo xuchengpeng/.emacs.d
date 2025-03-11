@@ -46,6 +46,7 @@
   "o"   '("Open" . (keymap))
   "o a" '("Org Agenda" . org-agenda)
   "o c" '("Org Capture" . org-capture)
+  "o e" '("Elfeed" . elfeed)
   "o f" '("Flymake Diagnostic" . consult-flymake)
   "o g" '("gptel" . gptel)
   "o p" '("Org Publish" . org-publish)

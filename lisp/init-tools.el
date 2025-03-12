@@ -60,6 +60,15 @@
       (eshell)
     (vterm)))
 
+(use-package gptel
+  :ensure t
+  :commands (gptel gptel-send gptel-rewrite)
+  :config
+  (setq gptel-model 'gemini-2.0-flash
+        gptel-backend (gptel-make-gemini "Gemini"
+                        :key (lambda () (getenv "GPTEL_GEMINI_KEY"))
+                        :stream nil)))
+
 (use-package elfeed
   :ensure t
   :commands (elfeed)

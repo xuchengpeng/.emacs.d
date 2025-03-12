@@ -2,13 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package diff-hl
-  :ensure t
-  :hook ((after-init . global-diff-hl-mode)
-         (dired-mode . diff-hl-dired-mode))
-  :config
-  (diff-hl-flydiff-mode 1))
-
 (use-package flymake
   :hook (prog-mode . flymake-mode)
   :config
@@ -58,15 +51,12 @@
                                     (when (treesit-language-available-p 'elisp)
                                       (treesit-parser-create 'elisp)))))
 
-(use-package gptel
+(use-package diff-hl
   :ensure t
-  :commands (gptel gptel-send gptel-rewrite)
+  :hook ((after-init . global-diff-hl-mode)
+         (dired-mode . diff-hl-dired-mode))
   :config
-  (setq gptel-model 'gemini-2.0-flash
-        gptel-backend (gptel-make-gemini "Gemini"
-                        :key (lambda () (getenv "GPTEL_GEMINI_KEY"))
-                        :stream nil)
-        gptel-use-curl nil))
+  (diff-hl-flydiff-mode 1))
 
 (defvar +highlight-keywords
   '(("\\<\\(TODO\\|FIXME\\|BUG\\)\\>" 1 'error prepend)

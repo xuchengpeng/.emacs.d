@@ -179,6 +179,9 @@
   "Initialize UI."
   (pixel-scroll-precision-mode t)
 
+  (setq modus-themes-common-palette-overrides
+        '((border-mode-line-active unspecified)
+          (border-mode-line-inactive unspecified)))
   (load-theme 'modus-operandi :no-confirm)
 
   (require 'ace-window)

@@ -45,6 +45,11 @@ Examples:
   :type 'string
   :group 'dotemacs)
 
+(defcustom dotemacs-note-dir "~/note/"
+  "Note directory."
+  :type 'string
+  :group 'dotemacs)
+
 (setq custom-file (expand-file-name "custom.el" dotemacs-local-dir))
 (when (file-exists-p custom-file)
   (load custom-file nil 'nomessage))

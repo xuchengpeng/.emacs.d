@@ -78,5 +78,38 @@
         elfeed-search-filter "@1-month-ago "
         url-queue-timeout 30))
 
+(use-package denote
+  :ensure t
+  :hook (dired-mode . denote-dired-mode)
+  :init
+  (defun +denote-find ()
+    "Find in denote directory."
+    (interactive)
+    (require 'denote)
+    (consult-fd denote-directory nil))
+
+  (defun +denote-grep ()
+    "Grep in denote directory."
+    (interactive)
+    (require 'denote)
+    (consult-ripgrep denote-directory nil))
+
+  (defvar-keymap +denote-map
+    :doc "Denote map."
+    "n" #'denote
+    "d" #'denote-sort-dired
+    "l" #'denote-link
+    "L" #'denote-add-links
+    "b" #'denote-backlinks
+    "r" #'denote-rename-file
+    "R" #'denote-rename-file-using-front-matter
+    "f" #'+denote-find
+    "g" #'+denote-grep)
+  (keymap-global-set "C-c n" +denote-map)
+  :config
+  (setq denote-directory dotemacs-note-dir
+        denote-prompts '(title keywords subdirectory))
+  (denote-rename-buffer-mode 1))
+
 (provide 'init-tools)
 ;;; init-tools.el ends here

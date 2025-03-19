@@ -24,11 +24,11 @@
         org-startup-indented t)
 
   (defun +org-capture-org-blog-post ()
-    (let* ((filename (read-from-minibuffer "New post: "))
+    (let* ((filename (read-from-minibuffer "New post file: "))
            (post-dir (expand-file-name "org/posts" dotemacs-org-blog-dir)))
       (unless (file-exists-p post-dir)
         (make-directory post-dir t))
-      (find-file (expand-file-name (format "%s-%s.org" (format-time-string "%Y%m%d") filename) post-dir))
+      (find-file (expand-file-name (format "%s-%s.org" (format-time-string "%Y-%m-%d") filename) post-dir))
       (insert "#+TITLE: \n"
               "#+AUTHOR: \n"
               "#+DATE: " (format-time-string "<%Y-%m-%d %a %H:%M>") "\n"

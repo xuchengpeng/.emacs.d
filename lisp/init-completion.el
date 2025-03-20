@@ -80,7 +80,7 @@ If prefix OTHER is set, prompt for a directory to search from."
   (keymap-global-set "C-;" 'embark-dwim)
   (keymap-global-set "C-h B" 'embark-bindings)
   (setq prefix-help-command #'embark-prefix-help-command)
-  (keymap-set embark-general-map "." #'set-mark-command))
+  (keymap-set embark-general-map "." #'mark))
 
 (use-package embark-consult
   :ensure t

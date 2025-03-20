@@ -97,6 +97,8 @@
   (defvar-keymap +denote-map
     :doc "Denote map."
     "n" #'denote
+    "s" #'denote-subdirectory
+    "t" #'denote-type
     "d" #'denote-sort-dired
     "l" #'denote-link
     "L" #'denote-add-links
@@ -107,8 +109,7 @@
     "g" #'+denote-grep)
   (keymap-global-set "C-c n" +denote-map)
   :config
-  (setq denote-directory dotemacs-note-dir
-        denote-prompts '(title keywords subdirectory))
+  (setq denote-directory dotemacs-note-dir)
   (denote-rename-buffer-mode 1))
 
 (provide 'init-tools)

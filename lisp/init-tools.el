@@ -86,13 +86,13 @@
     "Find in denote directory."
     (interactive)
     (require 'denote)
-    (consult-fd denote-directory nil))
+    (funcall-interactively 'consult-fd (denote-directory)))
 
   (defun +denote-grep ()
     "Grep in denote directory."
     (interactive)
     (require 'denote)
-    (consult-ripgrep denote-directory nil))
+    (funcall-interactively 'consult-ripgrep (denote-directory)))
 
   (defvar-keymap +denote-map
     :doc "Denote map."

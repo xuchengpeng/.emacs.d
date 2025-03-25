@@ -7,31 +7,21 @@
   (setq c-ts-mode-indent-offset 4))
 
 (use-package reformatter
-  :ensure t)
-
-(with-eval-after-load 'lua-mode
-  (when (executable-find "stylua")
-    (reformatter-define lua-format
-      :program "stylua"
-      :args '("-"))))
-
-(with-eval-after-load 'python
-  (when (executable-find "black")
-    (reformatter-define python-format
-      :program "black"
-      :args '("-q" "-"))))
-
-(with-eval-after-load 'sh-script
-  (when (executable-find "shfmt")
-    (reformatter-define sh-format
-      :program "shfmt"
-      :args `("-i" ,(number-to-string sh-basic-offset) "-"))))
-
-(with-eval-after-load 'yaml-ts-mode
-  (when (executable-find "prettier")
-    (reformatter-define yaml-format
-      :program "prettier"
-      :args '("--parser" "yaml"))))
+  :ensure t
+  :after (:any python sh-script json-mode markdown-mode)
+  :config
+  (reformatter-define python-format
+    :program "black"
+    :args '("-q" "-"))
+  (reformatter-define sh-format
+    :program "shfmt"
+    :args `("-i" ,(number-to-string sh-basic-offset) "-"))
+  (reformatter-define json-format
+    :program "prettier"
+    :args '("--parser" "json"))
+  (reformatter-define markdown-format
+    :program "prettier"
+    :args '("--parser" "markdown")))
 
 (use-package markdown-mode
   :ensure t
@@ -60,11 +50,7 @@
                 "<script>document.addEventListener('DOMContentLoaded', () => { document.body.classList.add('markdown-body'); document.querySelectorAll('pre[lang] > code').forEach((code) => { code.classList.add(code.parentElement.lang); }); document.querySelectorAll('pre > code').forEach((code) => { hljs.highlightBlock(code); }); });</script>"))
   (when (executable-find "pandoc")
     (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "--mathjax" "--highlight-style=pygments")))
-  (keymap-set markdown-mode-command-map "i" markdown-mode-style-map)
-
-  (reformatter-define markdown-format
-    :program "prettier"
-    :args '("--parser" "markdown")))
+  (keymap-set markdown-mode-command-map "i" markdown-mode-style-map))
 
 (provide 'init-lang)
 ;;; init-lang.el ends here

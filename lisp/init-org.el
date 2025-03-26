@@ -31,9 +31,7 @@
       (find-file (expand-file-name (format "%s-%s.org" (format-time-string "%Y-%m-%d") filename) post-dir))
       (insert "#+TITLE: \n"
               "#+AUTHOR: \n"
-              "#+DATE: " (format-time-string "<%Y-%m-%d %a %H:%M>") "\n"
-              "#+INCLUDE: ../org-macros.setup\n"
-              "\n{{{post-meta}}}\n")))
+              "#+DATE: " (format-time-string "<%Y-%m-%d %a %H:%M>") "\n")))
 
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates

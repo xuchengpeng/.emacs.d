@@ -34,43 +34,46 @@
   (keymap-global-set "<remap> <recentf-open-files>" #'consult-recent-file)
   (keymap-global-set "<remap> <switch-to-buffer>" #'consult-buffer)
   (keymap-global-set "<remap> <switch-to-buffer-other-window>" #'consult-buffer-other-window)
-  (keymap-global-set "<remap> <switch-to-buffer-other-frame>"  #'consult-buffer-other-frame)
+  (keymap-global-set "<remap> <switch-to-buffer-other-frame>" #'consult-buffer-other-frame)
+  (keymap-global-set "<remap> <switch-to-buffer-other-tab>" #'consult-buffer-other-tab)
   (keymap-global-set "<remap> <yank-pop>" #'consult-yank-pop)
-  (keymap-global-set "C-r" #'consult-line)
-  (keymap-global-set "C-s" #'consult-line)
+  ;; M-g bindings in `goto-map'
+  (keymap-global-set "M-g e" #'consult-compile-error)
+  (keymap-global-set "M-g f" #'consult-flymake)
+  (keymap-global-set "M-g g" #'consult-goto-line)
+  (keymap-global-set "M-g M-g" #'consult-goto-line)
+  (keymap-global-set "M-g o" #'consult-outline)
+  (keymap-global-set "M-g m" #'consult-mark)
+  (keymap-global-set "M-g k" #'consult-global-mark)
+  (keymap-global-set "M-g i" #'consult-imenu)
+  (keymap-global-set "M-g I" #'consult-imenu-multi)
+  ;; M-s bindings in `search-map'
+  (keymap-global-set "M-s d" #'consult-fd)
+  (keymap-global-set "M-s c" #'consult-locate)
+  (keymap-global-set "M-s g" #'consult-grep)
+  (keymap-global-set "M-s G" #'consult-git-grep)
+  (keymap-global-set "M-s r" #'consult-ripgrep)
+  (keymap-global-set "M-s l" #'consult-line)
+  (keymap-global-set "M-s L" #'consult-line)
+  (keymap-global-set "M-s k" #'consult-keep-lines)
+  (keymap-global-set "M-s u" #'consult-focus-lines)
+  ;; Isearch integration
+  (keymap-global-set "M-s e" #'consult-isearch-history)
+  (keymap-set isearch-mode-map "M-e" #'consult-isearch-history)
+  (keymap-set isearch-mode-map "M-s e" #'consult-isearch-history)
+  (keymap-set isearch-mode-map "M-s l" #'consult-line)
+  (keymap-set isearch-mode-map "M-s L" #'consult-line-multi)
+  ;; Minibuffer history
+  (keymap-set minibuffer-local-map "M-s" #'consult-history)
+  (keymap-set minibuffer-local-map "M-r" #'consult-history)
   (with-eval-after-load 'xref
-    (when (executable-find "rg")
-      (setq xref-search-program 'ripgrep))
-    (setq xref-show-xrefs-function #'consult-xref
+    (setq xref-search-program 'ripgrep
+          xref-show-xrefs-function #'consult-xref
           xref-show-definitions-function #'consult-xref))
   :config
   (setq consult-narrow-key "<")
   (advice-add #'register-preview :override #'consult-register-window)
   (setq register-preview-delay 0.5))
-
-(defun +find-file (&optional dir initial)
-  "Search for files in DIR matching input regexp given INITIAL input."
-  (interactive "P")
-  (cond
-   ((executable-find "fd")
-    (consult-fd dir initial))
-   ((executable-find "find")
-    (consult-find dir initial))
-   (find-file dir initial)))
-
-(defun +search-cwd (&optional other)
-  "Conduct a text search in files under the current folder.
-If prefix OTHER is set, prompt for a directory to search from."
-  (interactive "P")
-  (let ((dir (if other
-                 (read-directory-name "Search directory: ")
-               default-directory)))
-    (consult-ripgrep dir nil)))
-
-(defun +search-other-cwd ()
-  "Conduct a text search in another directory."
-  (interactive)
-  (+search-cwd 'other))
 
 (use-package embark
   :ensure t
@@ -151,14 +154,14 @@ If prefix OTHER is set, prompt for a directory to search from."
   (keymap-global-set "M-+" 'tempel-complete)
   (keymap-global-set "M-*" 'tempel-insert)
 
-  (defun tempel-setup-capf ()
+  (defun +tempel-setup-capf ()
     (setq-local completion-at-point-functions
                 (cons #'tempel-expand
                       completion-at-point-functions)))
 
-  (add-hook 'conf-mode-hook 'tempel-setup-capf)
-  (add-hook 'prog-mode-hook 'tempel-setup-capf)
-  (add-hook 'text-mode-hook 'tempel-setup-capf)
+  (add-hook 'conf-mode-hook #'+tempel-setup-capf)
+  (add-hook 'prog-mode-hook #'+tempel-setup-capf)
+  (add-hook 'text-mode-hook #'+tempel-setup-capf)
   :config
   (setq tempel-path (append (ensure-list tempel-path) dotemacs-tempel-path)))
 

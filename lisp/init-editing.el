@@ -100,11 +100,10 @@
 
 (use-package avy
   :ensure t
-  :commands (avy-goto-char avy-goto-line avy-goto-word-1)
+  :commands (avy-goto-char avy-goto-word-1)
   :init
-  (keymap-global-set "M-g c" 'avy-goto-char)
-  (keymap-global-set "M-g g" 'avy-goto-line)
-  (keymap-global-set "M-g w" 'avy-goto-word-1)
+  (keymap-global-set "M-g c" #'avy-goto-char)
+  (keymap-global-set "M-g w" #'avy-goto-word-1)
   :config
   (setq avy-all-windows nil
         avy-all-windows-alt t

@@ -29,7 +29,7 @@
 
   "f"   '("Files" . (keymap))
   "f d" '("Find Directory" . dired)
-  "f f" '("Find File" . +find-file)
+  "f f" '("Find File" . consult-fd)
   "f r" '("Recent Files" . recentf-open-files)
   "f s" '("Save Buffer" . save-buffer)
   "f w" '("Write File" . write-file)
@@ -59,16 +59,13 @@
   "q r" '("Restart Emacs" . restart-emacs)
 
   "s"   '("Search" . (keymap))
-  "s b" '("Buffer" . consult-line)
-  "s B" '("Multiple Buffers" . consult-line-multi)
-  "s d" '("Current Directory" . +search-cwd)
-  "s D" '("Other Directory" . +search-other-cwd)
-  "s f" '("Locate" . locate)
+  "s c" '("Locate" . locate)
   "s g" '("Grep" . consult-grep)
   "s i" '("Imenu" . imenu)
+  "s l" '("Line" . consult-line)
+  "s L" '("Multiple Lines" . consult-line-multi)
   "s m" '("Bookmark" . bookmark-jump)
   "s r" '("Ripgrep" . consult-ripgrep)
-  "s s" '("Symbol" . (lambda () (interactive) (consult-ripgrep nil (thing-at-point 'symbol))))
 
   "t"   '("Toggle" . (keymap))
   "t f" '("Flymake" . flymake-mode)

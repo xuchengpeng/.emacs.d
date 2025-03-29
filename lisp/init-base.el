@@ -29,16 +29,20 @@
 (set-terminal-coding-system 'utf-8)
 (setq-default buffer-file-coding-system 'utf-8-unix)
 (setq default-input-method nil)
-(setq locale-coding-system 'utf-8
-      system-time-locale "C")
+(setq system-time-locale "C")
 (if (eq system-type 'windows-nt)
-    (setq-default process-coding-system-alist
-                  '(("[pP][lL][iI][nN][kK]" utf-8 . gbk)
-                    ("[cC][mM][dD][pP][rR][oO][xX][yY]" utf-8 . gbk)
-                    ("rg" utf-8 . gbk)
-                    ("fd" utf-8 . gbk)
-                    ("grep" utf-8 . gbk)))
-  (set-selection-coding-system 'utf-8))
+    (progn
+      (setq locale-coding-system 'gbk)
+      (setq-default process-coding-system-alist
+                    '(("[pP][lL][iI][nN][kK]" utf-8 . gbk)
+                      ("[cC][mM][dD][pP][rR][oO][xX][yY]" utf-8 . gbk)
+                      ("rg" utf-8 . gbk)
+                      ("fd" utf-8 . gbk)
+                      ("grep" utf-8 . gbk))))
+  (progn
+    (setq locale-coding-system 'utf-8)
+    (set-clipboard-coding-system 'utf-8)
+    (set-selection-coding-system 'utf-8)))
 
 (defun dotemacs-call-process (command &rest args)
   "Execute COMMAND with ARGS synchronously.

@@ -5,9 +5,6 @@
 (when (version< emacs-version "30.1")
   (error "Detected Emacs %s. Emacs version should be 30.1 or higher" emacs-version))
 
-(setq gc-cons-threshold most-positive-fixnum)
-(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 20 1024 1024))))
-
 (defvar dotemacs-dir user-emacs-directory
   "The root dir of the Emacs dotemacs distribution.")
 (defvar dotemacs-local-dir (expand-file-name ".local" dotemacs-dir)

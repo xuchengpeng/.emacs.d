@@ -3,6 +3,8 @@
 ;;; Code:
 
 (setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 32 1024 1024))))
+
 (setq native-comp-jit-compilation nil)
 (setq package-enable-at-startup nil)
 (setq load-prefer-newer t)

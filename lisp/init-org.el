@@ -17,14 +17,10 @@
         org-startup-indented t)
 
   (defun +org-capture-org-blog-post ()
-    (let* ((filename (read-from-minibuffer "New post file: "))
-           (post-dir (expand-file-name "org/posts" dotemacs-org-blog-dir)))
-      (unless (file-exists-p post-dir)
-        (make-directory post-dir t))
-      (find-file (expand-file-name (format "%s-%s.org" (format-time-string "%Y-%m-%d") filename) post-dir))
-      (insert "#+TITLE: \n"
-              "#+AUTHOR: \n"
-              "#+DATE: " (format-time-string "<%Y-%m-%d %a %H:%M>") "\n")))
+    (let* ((filename (read-from-minibuffer "New post file: ")))
+      (expand-file-name
+       (format "org/posts/%s-%s.org" (format-time-string "%Y-%m-%d") filename)
+       dotemacs-org-blog-dir)))
 
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates
@@ -36,10 +32,10 @@
            "* %u %?\n%i\n%a")
           ("j" "Journal" entry
            (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
-           "* %U %?\%i\n%a")
+           "* %U %?\n%i\n%a")
           ("o" "Org Blog Post" plain
-           (function +org-capture-org-blog-post)
-           "" :jump-to-captured t :immediate-finish t)))
+           (file +org-capture-org-blog-post)
+           "#+TITLE: \n#+AUTHOR: \n#+DATE: %T\n" :jump-to-captured t)))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "PROJECT(p)" "|" "DONE(d)" "CANCELLED(c)"))

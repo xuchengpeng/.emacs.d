@@ -57,6 +57,15 @@ code of the process and OUTPUT is its stdout output."
 (defvar +gc-idle-timer nil
   "Idle timer for GC.")
 
+(defvar +gc-last-gc-time 0.1
+  "Last GC time.")
+
+(defmacro +gc-time (&rest body)
+  "Measure and return the time it takes to evaluate BODY."
+  `(let ((time (current-time)))
+     ,@body
+     (float-time (time-since time))))
+
 (defun +gc-set-high-threshold ()
   "Set high threshold for GC."
   (setq gc-cons-threshold #x4000000))
@@ -65,11 +74,12 @@ code of the process and OUTPUT is its stdout output."
   "Set low threshold for GC."
   (when (timerp +gc-idle-timer)
     (cancel-timer +gc-idle-timer))
-  (setq +gc-idle-timer (run-with-timer 15 nil #'+gc-idle-garbage-collect)))
+  (setq +gc-idle-timer
+        (run-with-timer (* 10 +gc-last-gc-time) nil #'+gc-idle-garbage-collect)))
 
 (defun +gc-idle-garbage-collect ()
   "GC after idle delay."
-  (garbage-collect)
+  (setq +gc-last-gc-time (+gc-time (garbage-collect)))
   (setq gc-cons-threshold 800000))
 
 (defun +gc-setup ()

@@ -54,40 +54,5 @@ code of the process and OUTPUT is its stdout output."
               -1)
           (string-trim (buffer-string)))))
 
-(defvar +gc-idle-timer nil
-  "Idle timer for GC.")
-
-(defvar +gc-last-gc-time 0.1
-  "Last GC time.")
-
-(defmacro +gc-time (&rest body)
-  "Measure and return the time it takes to evaluate BODY."
-  `(let ((time (current-time)))
-     ,@body
-     (float-time (time-since time))))
-
-(defun +gc-set-high-threshold ()
-  "Set high threshold for GC."
-  (setq gc-cons-threshold #x4000000))
-
-(defun +gc-set-low-threshold ()
-  "Set low threshold for GC."
-  (when (timerp +gc-idle-timer)
-    (cancel-timer +gc-idle-timer))
-  (setq +gc-idle-timer
-        (run-with-timer (* 10 +gc-last-gc-time) nil #'+gc-idle-garbage-collect)))
-
-(defun +gc-idle-garbage-collect ()
-  "GC after idle delay."
-  (setq +gc-last-gc-time (+gc-time (garbage-collect)))
-  (setq gc-cons-threshold 800000))
-
-(defun +gc-setup ()
-  "GC setup."
-  (add-hook 'pre-command-hook #'+gc-set-high-threshold)
-  (add-hook 'post-command-hook #'+gc-set-low-threshold))
-
-(add-hook 'emacs-startup-hook #'+gc-setup)
-
 (provide 'init-base)
 ;;; init-base.el ends here

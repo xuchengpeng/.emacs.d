@@ -54,7 +54,7 @@
   (keymap-global-set "M-s G" #'consult-git-grep)
   (keymap-global-set "M-s r" #'consult-ripgrep)
   (keymap-global-set "M-s l" #'consult-line)
-  (keymap-global-set "M-s L" #'consult-line)
+  (keymap-global-set "M-s L" #'consult-line-multi)
   (keymap-global-set "M-s k" #'consult-keep-lines)
   (keymap-global-set "M-s u" #'consult-focus-lines)
   ;; Isearch integration

@@ -2,25 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(setq-default cursor-in-non-selected-windows nil
-              bidi-display-reordering nil
-              bidi-paragraph-direction 'left-to-right)
-(setq bidi-inhibit-bpa t
-      highlight-nonselected-windows nil
-      auto-mode-case-fold nil
-      inhibit-compacting-font-caches t
-      read-process-output-max (* 4 1024 1024)  ; 4MB
-      fast-but-imprecise-scrolling t
-      redisplay-skip-fontification-on-input t)
-
 (when (boundp 'w32-get-true-file-attributes)
   (setq w32-get-true-file-attributes nil    ; decrease file IO workload
         w32-pipe-read-delay 0               ; faster IPC
         w32-pipe-buffer-size (* 64 1024)))  ; read more at a time (was 4K)
-
-(setq menu-bar-mode nil
-      tool-bar-mode nil
-      scroll-bar-mode nil)
 
 (set-charset-priority 'unicode)
 (set-language-environment "UTF-8")

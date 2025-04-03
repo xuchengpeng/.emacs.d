@@ -2,7 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-(setq find-file-visit-truename t
+(setq delete-by-moving-to-trash (not noninteractive)
+      find-file-visit-truename t
       vc-follow-symlinks t
       find-file-suppress-same-file-warnings t)
 
@@ -65,7 +66,7 @@
         savehist-save-minibuffer-history t
         savehist-autosave-interval 300
         savehist-additional-variables
-        '(mark-ring global-mark-ring search-ring regexp-search-ring extended-command-history)))
+        '(kill-ring register-alist mark-ring global-mark-ring search-ring regexp-search-ring)))
 
 (use-package saveplace
   :hook (after-init . save-place-mode)

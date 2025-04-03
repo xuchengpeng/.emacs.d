@@ -8,6 +8,7 @@
       scroll-margin 0
       scroll-preserve-screen-position t
       auto-window-vscroll nil
+      fast-but-imprecise-scrolling t
       ;; mouse
       mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
       mouse-wheel-scroll-amount-horizontal 1)
@@ -18,40 +19,20 @@
       visible-bell nil)
 
 (blink-cursor-mode -1)
-(setq blink-matching-paren nil
-      blink-matching-paren-highlight-offscreen t)
+(setq blink-matching-paren nil)
 (setq x-stretch-cursor nil)
-
-;; middle-click paste at point, not at click
 (setq mouse-yank-at-point t)
-
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))
-        " - Emacs")
-      icon-title-format frame-title-format)
-
-(setq window-resize-pixelwise nil
-      frame-resize-pixelwise t)
-
 (setq use-short-answers t)
+(setq redisplay-skip-fontification-on-input t)
 
-(setq-default major-mode 'fundamental-mode)
-(setq use-file-dialog nil
-      use-dialog-box nil
-      inhibit-startup-screen t
-      inhibit-startup-echo-area-message user-login-name
-      inhibit-default-init t
-      initial-major-mode 'fundamental-mode
-      initial-scratch-message nil)
-(advice-add #'display-startup-echo-area-message :override #'ignore)
-(advice-add #'display-startup-screen :override #'ignore)
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
 
 (use-package display-line-numbers
   :hook ((prog-mode text-mode conf-mode) . display-line-numbers-mode)
-  :config
-  (setq-default display-line-numbers-width 3))
+  :init
+  (setq-default display-line-numbers-width 3
+                display-line-numbers-widen t))
 
 (use-package winner
   :hook (window-configuration-change . winner-mode)
@@ -198,7 +179,7 @@
 
   (+tab-bar-init))
 
-(add-hook 'after-init-hook #'+init-ui)
+(add-hook 'window-setup-hook #'+init-ui)
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

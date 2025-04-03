@@ -2,9 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(setq load-prefer-newer t
-      package-enable-at-startup nil
-      package-user-dir (expand-file-name "elpa" dotemacs-local-dir))
+(setq package-user-dir (expand-file-name "elpa" dotemacs-local-dir))
 
 (defun +set-package-archives (archives)
   "Switch to specific package ARCHIVES repository."

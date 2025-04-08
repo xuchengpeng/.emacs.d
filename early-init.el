@@ -23,7 +23,7 @@
 
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t
-      window-resize-pixelwise t
+      window-resize-pixelwise nil
       inhibit-startup-screen t
       inhibit-startup-echo-area-message user-login-name
       inhibit-startup-buffer-menu t

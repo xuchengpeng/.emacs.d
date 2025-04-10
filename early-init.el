@@ -8,18 +8,18 @@
           (lambda ()
             (setq gc-cons-threshold (* 64 1024 1024)
                   gc-cons-percentage 0.1)))
+(setq garbage-collection-messages init-file-debug)
 
-(let ((old-value file-name-handler-alist))
-  (setq file-name-handler-alist nil)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (setq file-name-handler-alist
-                    (delete-dups (append file-name-handler-alist old-value))))
-            101))
-
-(setq native-comp-jit-compilation nil)
-(setq package-enable-at-startup nil)
 (setq load-prefer-newer t)
+(setq package-enable-at-startup nil)
+(setq native-comp-jit-compilation nil)
+
+(setq debug-on-error init-file-debug)
+(setq jka-compr-verbose init-file-debug)
+(setq byte-compile-warnings init-file-debug
+      byte-compile-verbose init-file-debug)
+(setq warning-minimum-level (if init-file-debug :warning :error)
+      warning-suppress-types '((lexical-binding)))
 
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t
@@ -60,6 +60,14 @@
 
 (setq auto-mode-case-fold nil
       read-process-output-max (* 4 1024 1024))
+
+(let ((old-value file-name-handler-alist))
+  (setq file-name-handler-alist nil)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq file-name-handler-alist
+                    (delete-dups (append file-name-handler-alist old-value))))
+            101))
 
 (provide 'early-init)
 ;;; early-init.el ends here

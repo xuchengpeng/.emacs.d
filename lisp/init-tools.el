@@ -76,7 +76,14 @@
   (setq elfeed-db-directory (expand-file-name "elfeed" dotemacs-local-dir)
         elfeed-feeds '("https://planet.emacslife.com/atom.xml")
         elfeed-search-filter "@1-month-ago "
-        url-queue-timeout 30))
+        url-queue-timeout 30)
+
+  (add-hook 'elfeed-show-mode-hook (lambda () (setq-local shr-use-fonts nil)))
+
+  (defun +kill-elfeed-buffers ()
+    (dolist (buf '("*elfeed-entry*" "*elfeed-search*" "*elfeed-log*"))
+            (ignore-errors (kill-buffer buf))))
+  (advice-add 'elfeed-search-quit-window :after #'+kill-elfeed-buffers))
 
 (use-package denote
   :ensure t

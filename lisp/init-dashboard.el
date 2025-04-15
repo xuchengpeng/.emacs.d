@@ -26,7 +26,7 @@
   (setq-local display-line-numbers-type nil)
   (setq-local global-hl-line-mode nil))
 
-(defvar dashboard--width 80
+(defvar dashboard--width 40
   "Current width of the home buffer.")
 
 (defun dashboard--center (len s)
@@ -86,36 +86,36 @@
    (propertize
     (dashboard--center
      dashboard--width
-     (format "emacs loaded %d packages in %.2fms"
+     (format "Emacs loaded %d packages in %.3fs"
              (length package-activated-list)
-             (* 1000.0 (float-time (time-subtract after-init-time before-init-time)))))
+             (float-time (time-subtract after-init-time before-init-time))))
     'face 'font-lock-comment-face)
    "\n"))
 
 (defun dashboard--reload ()
   "Reload dashboard."
-  (when (or (not (eq dashboard--width (window-width)))
-            (not (buffer-live-p (get-buffer dashboard-name))))
-    (setq dashboard--width (window-width))
+  (unless (buffer-live-p (get-buffer dashboard-name))
     (with-current-buffer (get-buffer-create dashboard-name)
       (set-window-buffer nil (current-buffer))
-      (let ((pt (point))
-            (buffer-read-only nil))
+      (let ((pt (point)))
         (erase-buffer)
         (run-hooks 'dashboard-widgets)
         (goto-char pt))
       (unless (eq major-mode 'dashboard-mode)
         (dashboard-mode))
+      (dashboard--resize)
       (current-buffer))))
 
 (defun dashboard--resize (&optional _)
   "Resize dashboard."
-  (let ((space-win (get-buffer-window dashboard-name))
-        (frame-win (frame-selected-window)))
-    (when (and space-win
-               (not (window-minibuffer-p frame-win)))
-      (with-selected-window space-win
-        (dashboard--reload)))))
+  (let (buffer-list-update-hook
+        window-configuration-change-hook
+        window-size-change-functions)
+    (when-let* ((windows (get-buffer-window-list dashboard-name nil t)))
+      (dolist (win windows)
+        (set-window-start win 0)
+        (set-window-fringes win 0)
+        (set-window-margins win (max 0 (/ (- (window-total-width win) dashboard--width) 2)))))))
 
 (defun dashboard-initialize ()
   "Initialize dashboard."

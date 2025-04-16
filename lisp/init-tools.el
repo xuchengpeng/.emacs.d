@@ -89,31 +89,18 @@
   :ensure t
   :hook (dired-mode . denote-dired-mode)
   :init
-  (defun +denote-find ()
-    "Find in denote directory."
-    (interactive)
-    (require 'denote)
-    (funcall-interactively 'consult-fd (denote-directory)))
-
-  (defun +denote-grep ()
-    "Grep in denote directory."
-    (interactive)
-    (require 'denote)
-    (funcall-interactively 'consult-ripgrep (denote-directory)))
-
   (defvar-keymap +denote-map
     :doc "Denote map."
     "n" #'denote
     "s" #'denote-subdirectory
     "t" #'denote-type
-    "d" #'denote-sort-dired
+    "d" #'denote-dired
+    "g" #'denote-grep
     "l" #'denote-link
     "L" #'denote-add-links
     "b" #'denote-backlinks
     "r" #'denote-rename-file
-    "R" #'denote-rename-file-using-front-matter
-    "f" #'+denote-find
-    "g" #'+denote-grep)
+    "R" #'denote-rename-file-using-front-matter)
   (keymap-global-set "C-c n" +denote-map)
   :config
   (setq denote-directory dotemacs-note-dir)

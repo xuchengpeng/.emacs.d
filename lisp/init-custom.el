@@ -21,7 +21,8 @@ Expects either a `font-spec', or a font string.
 
 Examples:
   (setq dotemacs-font (font-spec :family \"Fira Mono\" :size 12))
-  (setq dotemacs-font \"Terminus (TTF):pixelsize=12:antialias=off\")"
+  (setq dotemacs-font \"Terminus (TTF):pixelsize=12:antialias=off\")
+  (setq dotemacs-font \"Iosevka SS14-13\")"
   :type 'sexp
   :group 'dotemacs)
 

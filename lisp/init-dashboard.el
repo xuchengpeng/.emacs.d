@@ -108,14 +108,15 @@
 
 (defun dashboard--resize (&optional _)
   "Resize dashboard."
-  (let (buffer-list-update-hook
-        window-configuration-change-hook
-        window-size-change-functions)
-    (when-let* ((windows (get-buffer-window-list dashboard-name nil t)))
-      (dolist (win windows)
-        (set-window-start win 0)
-        (set-window-fringes win 0)
-        (set-window-margins win (max 0 (/ (- (window-total-width win) dashboard--width) 2)))))))
+  (ignore-errors
+    (let (buffer-list-update-hook
+          window-configuration-change-hook
+          window-size-change-functions)
+      (when-let* ((windows (get-buffer-window-list dashboard-name nil t)))
+        (dolist (win windows)
+          (set-window-start win 0)
+          (set-window-fringes win 0)
+          (set-window-margins win (max 0 (/ (- (window-total-width win) dashboard--width) 2))))))))
 
 (defun dashboard-initialize ()
   "Initialize dashboard."

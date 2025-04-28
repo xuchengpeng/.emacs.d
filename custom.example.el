@@ -9,11 +9,12 @@
 (setq user-full-name "Chuck"
       user-mail-address "xxxxxx@xxx.com")
 
-(setq dotemacs-font (font-spec :family "IBM Plex Mono" :size 17)
-      dotemacs-cn-font (font-spec :family "LXGW WenKai"))
+(setq dotemacs-font "Iosevka SS14-13"
+      dotemacs-cn-font "LXGW WenKai")
 
 (setq dotemacs-package-archives 'custom) ;; melpa, tuna, custom
-(setq package-archives
+(setq package-check-signature nil
+      package-archives
       '(("gnu"   . "/path/to/elpa-mirror/gnu/")
         ("melpa" . "/path/to/elpa-mirror/melpa/")))
 
@@ -24,7 +25,6 @@
   (setq gptel-use-curl nil))
 
 (with-eval-after-load 'elfeed
-  (setq elfeed-use-curl nil)
-  (add-hook 'elfeed-show-mode-hook (lambda () (setq-local shr-use-fonts nil))))
+  (setq elfeed-use-curl nil))
 
 ;;; custom.el ends here

@@ -44,10 +44,7 @@
                 "<script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>"
                 "<script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>"
                 "<script>hljs.highlightAll();</script>"))
-  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "--mathjax" "--highlight-style=pygments"))
-  (add-hook 'markdown-mode-hook
-            (lambda ()
-              (keymap-local-set dotemacs-localleader-key markdown-mode-command-map))))
+  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "--mathjax" "--highlight-style=pygments")))
 
 (provide 'init-lang)
 ;;; init-lang.el ends here

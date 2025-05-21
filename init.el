@@ -20,7 +20,6 @@
 (require 'init-custom)
 (require 'init-packages)
 (require 'init-base)
-(require 'init-keybinds)
 (require 'init-ui)
 (require 'init-editing)
 (require 'init-completion)

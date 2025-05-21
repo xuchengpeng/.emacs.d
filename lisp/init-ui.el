@@ -121,8 +121,8 @@
   (which-key-sort-order #'which-key-key-order-alpha)
   (which-key-sort-uppercase-first nil)
   (which-key-add-column-padding 1)
-  (which-key-max-display-columns nil)
-  (which-key-min-display-lines 4))
+  :config
+  (require 'init-keybinds))
 
 (use-package ace-window
   :ensure t

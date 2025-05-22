@@ -41,10 +41,12 @@
         markdown-xhtml-header-content
         (concat "<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>"
                 "<style> body { box-sizing: border-box; max-width: 900px; width: 100%; margin: 0 auto; padding: 0 10px; } </style>"
-                "<script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>"
+                "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css' />"
+                "<script defer src='https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js'></script>"
+                "<script defer src='https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js' onload='renderMathInElement(document.body);'></script>"
                 "<script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>"
                 "<script>hljs.highlightAll();</script>"))
-  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "--mathjax" "--highlight-style=pygments")))
+  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "--katex" "--highlight-style=pygments")))
 
 (provide 'init-lang)
 ;;; init-lang.el ends here

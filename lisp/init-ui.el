@@ -140,25 +140,36 @@
 (keymap-global-set "C-M-9" (lambda () (interactive) (+adjust-transparency nil 2)))
 (keymap-global-set "C-M-0" (lambda () (interactive) (set-frame-parameter nil 'alpha-background 100)))
 
-(defun +tab-bar-tab-name-format (tab i)
-  "Format a TAB name of tab index I."
-  (propertize
-   (concat
-    " "
-    (when tab-bar-tab-hints
-      (format "%d " i))
-    (alist-get 'name tab)
-    " ")
-   'face (funcall tab-bar-tab-face-function tab)))
-
-(defun +tab-bar-init ()
-  "Tab bar initialize."
+(use-package tab-bar
+  :defer t
+  :config
+  (defun +tab-bar-tab-name-format (tab i)
+    "Format a TAB name of tab index I."
+    (propertize
+     (concat
+      " "
+      (when tab-bar-tab-hints
+        (format "%d " i))
+      (alist-get 'name tab)
+      " ")
+     'face (funcall tab-bar-tab-face-function tab)))
   (setq tab-bar-separator "\u200B"
-        tab-bar-tab-hints nil
+        tab-bar-tab-hints t
         tab-bar-close-button-show nil
         tab-bar-auto-width nil
         tab-bar-format '(tab-bar-format-tabs tab-bar-separator)
         tab-bar-tab-name-format-function #'+tab-bar-tab-name-format))
+
+(use-package tab-line
+  :defer t
+  :config
+  (defun +tab-line-tab-name-buffer (buffer &optional _buffers)
+    "Generate tab name from BUFFER."
+    (concat " " (buffer-name buffer) " "))
+  (setq tab-line-new-button-show nil
+        tab-line-close-button-show nil
+        tab-line-separator "\u200B"
+        tab-line-tab-name-function #'+tab-line-tab-name-buffer))
 
 (defun +init-ui ()
   "Initialize UI."
@@ -177,11 +188,12 @@
   (add-hook
    'dashboard-mode-hook
    (lambda ()
-     (setq-local +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+     (setq-local tab-line-exclude t
+                 +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
                  +modeline-right '(+modeline--major-mode))))
   (dashboard-initialize)
 
-  (+tab-bar-init))
+  (global-tab-line-mode t))
 
 (add-hook 'window-setup-hook #'+init-ui)
 

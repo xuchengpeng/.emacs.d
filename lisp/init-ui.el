@@ -152,7 +152,8 @@
         (format "%d " i))
       (alist-get 'name tab)
       " ")
-     'face (funcall tab-bar-tab-face-function tab)))
+     'face (funcall tab-bar-tab-face-function tab)
+     'mouse-face 'tab-bar-tab-highlight))
   (setq tab-bar-separator "\u200B"
         tab-bar-tab-hints t
         tab-bar-close-button-show nil

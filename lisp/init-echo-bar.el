@@ -11,11 +11,12 @@
   :group 'applications)
 
 (defcustom echo-bar-modules
-  '(echo-bar--text-scale
+  '(echo-bar--tab-bar-name
     echo-bar--selection-info
     echo-bar--word-count
     echo-bar--multiple-cursors
     echo-bar--hostname
+    echo-bar--text-scale
     echo-bar--time)
   "List of items displayed in the echo bar."
   :group 'echo-bar
@@ -47,11 +48,19 @@ If nil, don't update the echo bar automatically."
 (defvar text-scale-mode-lighter)
 
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
+(declare-function tab-bar--current-tab "tab-bar")
+
+(defun echo-bar--tab-bar-name ()
+  "Tab bar name."
+  (when (fboundp 'tab-bar-mode)
+    (propertize
+     (alist-get 'name (tab-bar--current-tab))
+     'face 'font-lock-constant-face)))
 
 (defun echo-bar--text-scale ()
   "Text-Scale info."
   (when (and (boundp 'text-scale-mode-lighter) (/= text-scale-mode-amount 0))
-    text-scale-mode-lighter))
+    (propertize text-scale-mode-lighter 'face 'font-lock-comment-face)))
 
 (defun echo-bar--selection-info ()
   "Display selection info."
@@ -59,37 +68,42 @@ If nil, don't update the echo bar automatically."
     (let* ((beg (region-beginning))
            (end (region-end))
            (lines (count-lines beg (min end (point-max)))))
-      (concat
-       (cond ((bound-and-true-p rectangle-mark-mode)
-              (let ((cols (abs (- (save-excursion (goto-char end) (current-column))
-                                  (save-excursion (goto-char beg) (current-column))))))
-                (format "%dx%dB" lines cols)))
-             ((> lines 1)
-              (format "%dC-%dL" (- end beg) lines))
-             (t
-              (format "%dC" (- end beg))))
-       (format "-%dW" (count-words beg end))))))
+      (propertize
+       (concat
+        (cond ((bound-and-true-p rectangle-mark-mode)
+               (let ((cols (abs (- (save-excursion (goto-char end) (current-column))
+                                   (save-excursion (goto-char beg) (current-column))))))
+                 (format "%dx%dB" lines cols)))
+              ((> lines 1)
+               (format "%dC-%dL" (- end beg) lines))
+              (t
+               (format "%dC" (- end beg))))
+        (format "-%dW" (count-words beg end)))
+       'face 'font-lock-doc-face))))
 
 (defun echo-bar--word-count ()
   "Word count."
   (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
-    (format "%dW" (count-words (point-min) (point-max)))))
+    (propertize (format "%dW" (count-words (point-min) (point-max)))
+                'face 'font-lock-doc-face)))
 
 (defun echo-bar--multiple-cursors ()
   "Display the number of multiple cursors."
   (when (bound-and-true-p multiple-cursors-mode)
     (when-let* ((count (mc/num-cursors)))
-      (format "mc:%d" count))))
+      (propertize (format "mc:%d" count) 'face 'font-lock-doc-face))))
 
 (defun echo-bar--hostname ()
   "Display remote hostname."
   (when buffer-file-name
     (when-let* ((host (file-remote-p buffer-file-name 'host)))
-      (concat "@" host))))
+      (propertize (concat "@" host) 'face 'font-lock-builtin-face))))
 
 (defun echo-bar--time ()
   "Display time."
-  (format-time-string "[%Y-%m-%d %H:%M %a]"))
+  (propertize
+   (format-time-string "[%Y-%m-%d %H:%M %a]")
+   'face 'font-lock-comment-face))
 
 (defvar echo-bar-text nil
   "The text currently displayed in the echo bar.")

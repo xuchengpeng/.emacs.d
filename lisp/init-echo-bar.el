@@ -44,7 +44,6 @@ If nil, don't update the echo bar automatically."
   :group 'echo-bar
   :type 'string)
 
-(defvar text-scale-mode-amount)
 (defvar text-scale-mode-lighter)
 
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
@@ -59,7 +58,7 @@ If nil, don't update the echo bar automatically."
 
 (defun echo-bar--text-scale ()
   "Text-Scale info."
-  (when (and (boundp 'text-scale-mode-lighter) (/= text-scale-mode-amount 0))
+  (when (bound-and-true-p text-scale-mode)
     (propertize text-scale-mode-lighter 'face 'font-lock-comment-face)))
 
 (defun echo-bar--selection-info ()

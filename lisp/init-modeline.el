@@ -64,11 +64,6 @@
   "Face for errors in the mode-line."
   :group '+modeline-faces)
 
-(defface +modeline-vc-info-face
-  '((t (:inherit (+modeline-default-face success bold))))
-  "Face for vc-info in the mode-line."
-  :group '+modeline-faces)
-
 (defvar eglot-menu)
 (defvar eglot-menu-string)
 (defvar eglot-server-menu)
@@ -179,8 +174,20 @@
 
 (defun +modeline--vc-info ()
   "Version control info in mode-line."
-  (when vc-mode
-    (propertize (concat "@" (string-trim vc-mode)) 'face (+modeline-face '+modeline-vc-info-face))))
+  (when (and vc-mode buffer-file-name)
+    (let* ((backend (vc-backend buffer-file-name))
+           (state (vc-state buffer-file-name backend))
+           (mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+"))))
+      (cond ((memq state '(edited added))
+             (propertize (concat "*" mode) 'face (+modeline-face '+modeline-debug-face)))
+            ((eq state 'needs-merge)
+             (propertize (concat "?" mode) 'face (+modeline-face '+modeline-debug-face)))
+            ((eq state 'needs-update)
+             (propertize (concat "!" mode) 'face (+modeline-face '+modeline-warning-face)))
+            ((memq state '(removed conflict unregistered))
+             (propertize (concat "!" mode) 'face (+modeline-face '+modeline-error-face)))
+            (t
+             (propertize (concat "@" mode) 'face (+modeline-face '+modeline-debug-face)))))))
 
 (defun +modeline--flymake ()
   "Flymake in mode-line."

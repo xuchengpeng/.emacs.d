@@ -44,6 +44,60 @@ If nil, don't update the echo bar automatically."
   :group 'echo-bar
   :type 'string)
 
+(defface echo-bar-default-face
+  '((t :inherit default))
+  "Echo bar default face."
+  :group 'echo-bar)
+
+(defface echo-bar-red-face
+  '((((background light)) :foreground "#a60000")
+    (((background dark)) :foreground "#ff5f59")
+    (t :inherit echo-bar-default-face))
+  "Echo bar red face."
+  :group 'echo-bar)
+
+(defface echo-bar-green-face
+  '((((background light)) :foreground "#006800")
+    (((background dark)) :foreground "#44bc44")
+    (t :inherit echo-bar-default-face))
+  "Echo bar green face."
+  :group 'echo-bar)
+
+(defface echo-bar-yellow-face
+  '((((background light)) :foreground "#6f5500")
+    (((background dark)) :foreground "#d0bc00")
+    (t :inherit echo-bar-default-face))
+  "Echo bar yellow face."
+  :group 'echo-bar)
+
+(defface echo-bar-blue-face
+  '((((background light)) :foreground "#0031a9")
+    (((background dark)) :foreground "#2fafff")
+    (t :inherit echo-bar-default-face))
+  "Echo bar blue face."
+  :group 'echo-bar)
+
+(defface echo-bar-magenta-face
+  '((((background light)) :foreground "#721045")
+    (((background dark)) :foreground "#feacd0")
+    (t :inherit echo-bar-default-face))
+  "Echo bar magenta face."
+  :group 'echo-bar)
+
+(defface echo-bar-cyan-face
+  '((((background light)) :foreground "#005e8b")
+    (((background dark)) :foreground "#00d3d0")
+    (t :inherit echo-bar-default-face))
+  "Echo bar cyan face."
+  :group 'echo-bar)
+
+(defface echo-bar-gray-face
+  '((((background light)) :foreground "#595959")
+    (((background dark)) :foreground "#989898")
+    (t :inherit echo-bar-default-face))
+  "Echo bar gray face."
+  :group 'echo-bar)
+
 (defvar text-scale-mode-lighter)
 
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
@@ -54,12 +108,12 @@ If nil, don't update the echo bar automatically."
   (when (fboundp 'tab-bar-mode)
     (propertize
      (alist-get 'name (tab-bar--current-tab))
-     'face 'font-lock-constant-face)))
+     'face 'echo-bar-blue-face)))
 
 (defun echo-bar--text-scale ()
   "Text-Scale info."
   (when (bound-and-true-p text-scale-mode)
-    (propertize text-scale-mode-lighter 'face 'font-lock-comment-face)))
+    (propertize text-scale-mode-lighter 'face 'echo-bar-gray-face)))
 
 (defun echo-bar--selection-info ()
   "Display selection info."
@@ -78,31 +132,30 @@ If nil, don't update the echo bar automatically."
               (t
                (format "%dC" (- end beg))))
         (format "-%dW" (count-words beg end)))
-       'face 'font-lock-doc-face))))
+       'face 'echo-bar-yellow-face))))
 
 (defun echo-bar--word-count ()
   "Word count."
   (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
     (propertize (format "%dW" (count-words (point-min) (point-max)))
-                'face 'font-lock-doc-face)))
+                'face 'echo-bar-yellow-face)))
 
 (defun echo-bar--multiple-cursors ()
   "Display the number of multiple cursors."
   (when (bound-and-true-p multiple-cursors-mode)
-    (when-let* ((count (mc/num-cursors)))
-      (propertize (format "mc:%d" count) 'face 'font-lock-doc-face))))
+    (propertize (format "mc:%d" (mc/num-cursors)) 'face 'echo-bar-cyan-face)))
 
 (defun echo-bar--hostname ()
   "Display remote hostname."
   (when buffer-file-name
     (when-let* ((host (file-remote-p buffer-file-name 'host)))
-      (propertize (concat "@" host) 'face 'font-lock-builtin-face))))
+      (propertize (concat "@" host) 'face 'echo-bar-cyan-face))))
 
 (defun echo-bar--time ()
   "Display time."
   (propertize
    (format-time-string "[%Y-%m-%d %H:%M %a]")
-   'face 'font-lock-comment-face))
+   'face 'echo-bar-gray-face))
 
 (defvar echo-bar-text nil
   "The text currently displayed in the echo bar.")

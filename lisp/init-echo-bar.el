@@ -233,9 +233,7 @@ If nil, don't update the echo bar automatically."
   (dolist (buf '(" *Echo Area 0*" " *Echo Area 1*"))
     (with-current-buffer (get-buffer-create buf)
       (remove-overlays (point-min) (point-max))
-      (let ((new-overlay (make-overlay (point-max) (point-max) nil t t)))
-        (overlay-put new-overlay 'priority 1)
-        (push new-overlay echo-bar-overlays))))
+      (push (make-overlay (point-max) (point-max) nil t t) echo-bar-overlays)))
 
   ;; Start the timer to automatically update
   (when echo-bar-update-interval

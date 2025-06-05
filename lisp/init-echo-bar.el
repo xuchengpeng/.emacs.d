@@ -154,7 +154,7 @@ If nil, don't update the echo bar automatically."
 (defun echo-bar--time ()
   "Display time."
   (propertize
-   (format-time-string "[%Y-%m-%d %H:%M %a]")
+   (format-time-string "[%Y-%m-%d %H:%M]")
    'face 'echo-bar-gray-face))
 
 (defvar echo-bar-text nil

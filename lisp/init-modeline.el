@@ -191,61 +191,57 @@
 
 (defun +modeline--flymake ()
   "Flymake in mode-line."
-  (when (bound-and-true-p flymake-mode)
+  (when (and (bound-and-true-p flymake-mode) (bound-and-true-p flymake--state))
     (let* ((known (hash-table-keys flymake--state))
            (running (flymake-running-backends))
            (disabled (flymake-disabled-backends))
            (reported (flymake-reporting-backends))
            (all-disabled (and disabled (null running)))
-           (some-waiting (cl-set-difference running reported))
-           (warning-level (warning-numeric-level :warning))
-           (debug-level (warning-numeric-level :debug))
-           (.error 0)
-           (.warning 0)
-           (.debug 0))
-      (maphash (lambda (_b state)
-                 (cl-loop
-                  with diags = (flymake--state-diags state)
-                  for diag in diags do
-                  (let ((severity (flymake--lookup-type-property (flymake--diag-type diag) 'severity
-                                                                 (warning-numeric-level :error))))
-                    (cond ((> severity warning-level) (cl-incf .error))
-                          ((> severity debug-level) (cl-incf .warning))
-                          (t (cl-incf .debug))))))
-               flymake--state)
+           (some-waiting (cl-set-difference running reported)))
       (cond
-       (some-waiting nil)
-       ((null known) nil)
-       (all-disabled nil)
-       (t (when (> (+ .error .warning .debug) 0)
-            (concat
-             (propertize
-              "!"
-              'face
-              (if (> .error 0)
-                  (+modeline-face '+modeline-error-face)
-                (if (> .warning 0)
-                    (+modeline-face '+modeline-warning-face)
-                  (+modeline-face '+modeline-debug-face))))
-             (propertize
-              (concat
-               (propertize
-                (number-to-string .error)
-                'face (+modeline-face '+modeline-error-face))
-               (propertize "/" 'face (+modeline-face))
-               (propertize
-                (number-to-string .warning)
-                'face (+modeline-face '+modeline-warning-face))
-               (propertize "/" 'face (+modeline-face))
-               (propertize
-                (number-to-string .debug)
-                'face (+modeline-face '+modeline-debug-face)))
-              'help-echo (format "Flymake\nerror:%d, warning:%d, debug:%d\nmouse-1: Flymake menu"
-                                 .error .warning .debug)
-              'mouse-face '+modeline-highlight-face
-              'local-map (let ((map (make-sparse-keymap)))
-                           (keymap-set map "<mode-line> <mouse-1>" flymake-menu)
-                           map)))))))))
+       (some-waiting (propertize "!" 'face (+modeline-face '+modeline-debug-face)))
+       ((null known) (propertize "!" 'face (+modeline-face '+modeline-error-face)))
+       (all-disabled (propertize "!" 'face (+modeline-face '+modeline-warning-face)))
+       (t (let ((warning-level (warning-numeric-level :warning))
+                (debug-level (warning-numeric-level :debug))
+                (.error 0)
+                (.warning 0)
+                (.debug 0))
+            (maphash (lambda (_b state)
+                       (cl-loop
+                        with diags = (flymake--state-diags state)
+                        for diag in diags do
+                        (let ((severity (flymake--lookup-type-property (flymake--diag-type diag) 'severity
+                                                                       (warning-numeric-level :error))))
+                          (cond ((> severity warning-level) (cl-incf .error))
+                                ((> severity debug-level) (cl-incf .warning))
+                                (t (cl-incf .debug))))))
+                     flymake--state)
+            (propertize
+             (concat
+              (propertize
+               "!"
+               'face
+               (cond ((> .error 0) (+modeline-face '+modeline-error-face))
+                     ((> .warning 0) (+modeline-face '+modeline-warning-face))
+                     (t (+modeline-face '+modeline-debug-face))))
+              (propertize
+               (number-to-string .error)
+               'face (+modeline-face '+modeline-error-face))
+              (propertize "/" 'face (+modeline-face))
+              (propertize
+               (number-to-string .warning)
+               'face (+modeline-face '+modeline-warning-face))
+              (propertize "/" 'face (+modeline-face))
+              (propertize
+               (number-to-string .debug)
+               'face (+modeline-face '+modeline-debug-face)))
+             'help-echo (format "Flymake\nerror:%d, warning:%d, debug:%d\nmouse-1: Flymake menu"
+                                .error .warning .debug)
+             'mouse-face '+modeline-highlight-face
+             'local-map (let ((map (make-sparse-keymap)))
+                          (keymap-set map "<mode-line> <mouse-1>" flymake-menu)
+                          map))))))))
 
 (defcustom +modeline-left
   '(+modeline--window-number

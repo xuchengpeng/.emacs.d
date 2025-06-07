@@ -5,9 +5,10 @@
 (use-package vertico
   :ensure t
   :hook (after-init . vertico-mode)
-  :config
-  (setq vertico-resize nil
-        vertico-cycle t))
+  :custom
+  (vertico-count 15)
+  (vertico-resize nil)
+  (vertico-cycle t))
 
 (use-package orderless
   :ensure t

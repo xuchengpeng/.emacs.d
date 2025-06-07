@@ -192,9 +192,7 @@
      (setq-local tab-line-exclude t
                  +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
                  +modeline-right '(+modeline--major-mode))))
-  (dashboard-initialize)
-
-  (global-tab-line-mode t))
+  (dashboard-initialize))
 
 (add-hook 'window-setup-hook #'+init-ui)
 

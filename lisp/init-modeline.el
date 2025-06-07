@@ -137,18 +137,29 @@
 
 (defun +modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
-  (propertize
-   (concat
+  (concat
+   (propertize
     (pcase (coding-system-eol-type buffer-file-coding-system)
-      (0 "LF ")
-      (1 "CRLF ")
-      (2 "CR ")
+      (0 "LF")
+      (1 "CRLF")
+      (2 "CR")
       (_ ""))
-    (let ((sys (coding-system-plist buffer-file-coding-system)))
+    'face (+modeline-face)
+    'mouse-face '+modeline-highlight-face
+    'help-echo "End-of-line style\nmouse-1: Cycle change"
+    'local-map (let ((map (make-sparse-keymap)))
+                 (keymap-set map "<mode-line> <mouse-1>" #'mode-line-change-eol)
+                 map))
+   (+modeline--spc)
+   (let ((sys (coding-system-plist buffer-file-coding-system)))
+     (propertize
       (cond ((memq (plist-get sys :category) '(coding-category-undecided coding-category-utf-8))
              "UTF-8")
-            (t (upcase (symbol-name (plist-get sys :name)))))))
-   'face (+modeline-face)))
+            (t (upcase (symbol-name (plist-get sys :name)))))
+      'face (+modeline-face)
+      'mouse-face '+modeline-highlight-face
+      'help-echo 'mode-line-mule-info-help-echo
+      'local-map mode-line-coding-system-map))))
 
 (defun +modeline--eglot ()
   "Eglot in mode-line."

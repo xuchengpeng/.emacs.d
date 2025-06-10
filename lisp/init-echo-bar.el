@@ -106,14 +106,12 @@ If nil, don't update the echo bar automatically."
 (defun echo-bar--tab-bar-name ()
   "Tab bar name."
   (when (fboundp 'tab-bar-mode)
-    (propertize
-     (alist-get 'name (tab-bar--current-tab))
-     'face 'echo-bar-blue-face)))
+    (propertize (alist-get 'name (tab-bar--current-tab)) 'face 'echo-bar-blue-face)))
 
 (defun echo-bar--text-scale ()
   "Text-Scale info."
   (when (bound-and-true-p text-scale-mode)
-    (propertize text-scale-mode-lighter 'face 'echo-bar-gray-face)))
+    (propertize (format "(%s)" text-scale-mode-lighter) 'face 'echo-bar-gray-face)))
 
 (defun echo-bar--selection-info ()
   "Display selection info."
@@ -153,9 +151,7 @@ If nil, don't update the echo bar automatically."
 
 (defun echo-bar--time ()
   "Display time."
-  (propertize
-   (format-time-string "[%Y-%m-%d %H:%M]")
-   'face 'echo-bar-gray-face))
+  (propertize (format-time-string "[%Y-%m-%d %H:%M]") 'face 'echo-bar-gray-face))
 
 (defvar echo-bar-text nil
   "The text currently displayed in the echo bar.")

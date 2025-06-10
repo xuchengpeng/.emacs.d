@@ -64,9 +64,6 @@
   "Face for errors in the mode-line."
   :group '+modeline-faces)
 
-(defvar eglot-menu)
-(defvar eglot-menu-string)
-(defvar eglot-server-menu)
 (defvar flymake--state)
 (defvar flymake-menu)
 
@@ -168,19 +165,6 @@
       'help-echo 'mode-line-mule-info-help-echo
       'local-map mode-line-coding-system-map))))
 
-(defun +modeline--eglot ()
-  "Eglot in mode-line."
-  (when (bound-and-true-p eglot--managed-mode)
-    (propertize
-     eglot-menu-string
-     'face (+modeline-face 'eglot-mode-line)
-     'mouse-face '+modeline-highlight-face
-     'help-echo "Eglot: Emacs LSP client\nmouse-1: Eglot menu\nmouse-3: LSP server control menu"
-     'local-map (let ((map (make-sparse-keymap)))
-                  (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
-                  (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
-                  map))))
-
 (defun +modeline--major-mode ()
   "Major mode in mode-line."
   (propertize
@@ -276,7 +260,6 @@
 
 (defcustom +modeline-right
   '(+modeline--buffer-encoding
-    +modeline--eglot
     +modeline--major-mode
     +modeline--vc-info
     +modeline--flymake)

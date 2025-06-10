@@ -12,6 +12,7 @@
 
 (defcustom echo-bar-modules
   '(echo-bar--tab-bar-name
+    echo-bar--eglot
     echo-bar--selection-info
     echo-bar--word-count
     echo-bar--multiple-cursors
@@ -98,6 +99,7 @@ If nil, don't update the echo bar automatically."
   "Echo bar gray face."
   :group 'echo-bar)
 
+(defvar eglot-menu-string)
 (defvar text-scale-mode-lighter)
 
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
@@ -152,6 +154,11 @@ If nil, don't update the echo bar automatically."
 (defun echo-bar--time ()
   "Display time."
   (propertize (format-time-string "[%Y-%m-%d %H:%M]") 'face 'echo-bar-gray-face))
+
+(defun echo-bar--eglot ()
+  "Display eglot."
+  (when (bound-and-true-p eglot--managed-mode)
+    (propertize eglot-menu-string 'face 'echo-bar-green-face)))
 
 (defvar echo-bar-text nil
   "The text currently displayed in the echo bar.")

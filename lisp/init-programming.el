@@ -23,7 +23,8 @@
                          (eglot-ensure))))
   :init
   (setq eglot-autoshutdown t
-        eglot-send-changes-idle-time 0.5))
+        eglot-send-changes-idle-time 0.5
+        eglot-events-buffer-config '(:size 0 :format full)))
 
 ;; treesit support
 (when (and (fboundp 'treesit-available-p)

@@ -183,16 +183,20 @@
      (let* ((backend (vc-backend buffer-file-name))
             (state (vc-state buffer-file-name backend))
             (mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+"))))
-       (cond ((memq state '(edited added))
-              (propertize (concat "*" mode) 'face '+modeline-debug-face))
-             ((eq state 'needs-merge)
-              (propertize (concat "?" mode) 'face '+modeline-debug-face))
-             ((eq state 'needs-update)
-              (propertize (concat "!" mode) 'face '+modeline-warning-face))
-             ((memq state '(removed conflict unregistered))
-              (propertize (concat "!" mode) 'face '+modeline-error-face))
-             (t
-              (propertize (concat "@" mode) 'face '+modeline-debug-face)))))))
+       (propertize
+        (cond ((memq state '(edited added))
+               (propertize (concat "*" mode) 'face '+modeline-debug-face))
+              ((eq state 'needs-merge)
+               (propertize (concat "?" mode) 'face '+modeline-debug-face))
+              ((eq state 'needs-update)
+               (propertize (concat "!" mode) 'face '+modeline-warning-face))
+              ((memq state '(removed conflict unregistered))
+               (propertize (concat "!" mode) 'face '+modeline-error-face))
+              (t
+               (propertize (concat "@" mode) 'face '+modeline-debug-face)))
+        'help-echo (get-text-property 0 'help-echo mode)
+        'mouse-face '+modeline-highlight-face
+        'local-map (get-text-property 0 'local-map mode))))))
 
 (defun +modeline--vc-info ()
   "Version control info in mode-line."

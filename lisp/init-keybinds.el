@@ -60,6 +60,7 @@
   "s r" #'consult-ripgrep
 
   "t f" #'flymake-mode
+  "t h" #'hs-toggle-hiding
   "t l" #'display-line-numbers-mode
   "t s" #'flyspell-mode
   "t t" #'modus-themes-toggle

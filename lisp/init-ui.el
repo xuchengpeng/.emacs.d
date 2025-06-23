@@ -172,11 +172,21 @@
         tab-line-separator "\u200B"
         tab-line-tab-name-function #'+tab-line-tab-name-buffer))
 
+(defun +reapply-themes ()
+  "Forcibly load the themes listed in `custom-enabled-themes'."
+  (dolist (theme custom-enabled-themes)
+    (unless (custom-theme-p theme)
+      (load-theme theme)))
+  (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
+
 (defun +init-ui ()
   "Initialize UI."
   (pixel-scroll-precision-mode t)
 
-  (load-theme 'modus-operandi :no-confirm)
+  (setq custom-safe-themes t)
+  (unless custom-enabled-themes
+    (setq custom-enabled-themes '(modus-operandi)))
+  (+reapply-themes)
 
   (require 'ace-window)
   (require 'init-modeline)

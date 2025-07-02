@@ -33,10 +33,9 @@
         ediff-split-window-function 'split-window-horizontally))
 
 (use-package display-line-numbers
-  :hook ((prog-mode text-mode conf-mode) . display-line-numbers-mode)
+  :hook ((prog-mode conf-mode toml-ts-mode yaml-ts-mode) . display-line-numbers-mode)
   :init
-  (setq-default display-line-numbers-width 3
-                display-line-numbers-widen t))
+  (setq display-line-numbers-width-start t))
 
 (use-package winner
   :hook (window-configuration-change . winner-mode)

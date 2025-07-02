@@ -69,7 +69,6 @@
         dired-recursive-copies  'always
         dired-recursive-deletes 'top
         dired-create-destination-dirs 'ask
-        dired-listing-switches "-alh --group-directories-first"
         image-dired-dir (expand-file-name "image-dired" dotemacs-cache-dir)
         image-dired-db-file (expand-file-name "db.el" image-dired-dir)
         image-dired-gallery-dir (expand-file-name "gallery" image-dired-dir)
@@ -77,6 +76,11 @@
         image-dired-temp-rotate-image-file (expand-file-name "temp-rotate-image" image-dired-dir)
         image-dired-thumb-size 150)
   :config
+  (setq dired-listing-switches "-ahlv --group-directories-first")
+  (when (eq system-type 'darwin)
+    (when-let* ((gls (executable-find "gls")))
+      (setq insert-directory-program gls
+            dired-listing-switches "-ahl")))
   (keymap-set dired-mode-map "C-c C-e" #'wdired-change-to-wdired-mode)
   (put 'dired-find-alternate-file 'disabled nil)
   (add-hook

@@ -175,11 +175,24 @@
         tab-line-separator "\u200B"
         tab-line-tab-name-function #'+tab-line-tab-name-buffer))
 
+(defun +init-theme ()
+  "Initialize theme."
+  (require-theme 'modus-themes)
+  (setq modus-themes-common-palette-overrides
+        '((fringe unspecified)
+          (fg-line-number-inactive fg-dim)
+          (fg-line-number-active fg-main)
+          (bg-line-number-inactive unspecified)
+          (bg-line-number-active unspecified)
+          (border-mode-line-active unspecified)
+          (border-mode-line-inactive unspecified)))
+  (load-theme 'modus-operandi :no-confirm))
+
 (defun +init-ui ()
   "Initialize UI."
   (pixel-scroll-precision-mode t)
 
-  (load-theme 'modus-operandi :no-confirm)
+  (+init-theme)
 
   (require 'ace-window)
   (require 'init-modeline)

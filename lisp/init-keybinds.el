@@ -63,7 +63,6 @@
   "t h" #'hs-toggle-hiding
   "t l" #'display-line-numbers-mode
   "t s" #'flyspell-mode
-  "t t" #'modus-themes-toggle
   "t v" #'visible-mode
   "t w" #'visual-line-mode
   "t z" #'toggle-frame-fullscreen)

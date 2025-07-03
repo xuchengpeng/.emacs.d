@@ -186,7 +186,8 @@
           (bg-line-number-active unspecified)
           (border-mode-line-active unspecified)
           (border-mode-line-inactive unspecified)))
-  (load-theme 'modus-operandi :no-confirm))
+  (load-theme 'modus-operandi :no-confirm)
+  (keymap-global-set "<f5>" #'modus-themes-toggle))
 
 (defun +init-ui ()
   "Initialize UI."

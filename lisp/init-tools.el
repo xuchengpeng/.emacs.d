@@ -36,7 +36,7 @@
      'eshell-mode-hook
      (lambda ()
        (setq-local hscroll-margin 0
-                   +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+                   +modeline-left '(+modeline--buffer-default-directory)
                    +modeline-right '(+modeline--major-mode))
        (visual-line-mode)))
     (with-eval-after-load 'em-alias
@@ -50,7 +50,7 @@
     (add-hook
      'vterm-mode-hook
      (lambda ()
-       (setq-local +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+       (setq-local +modeline-left '(+modeline--buffer-default-directory)
                    +modeline-right '(+modeline--major-mode))))))
 
 (defun +shell ()

@@ -67,7 +67,6 @@
 (defvar flymake--state)
 (defvar flymake-menu)
 
-(declare-function aw-update "ext:ace-window")
 (declare-function flymake--diag-type "flymake" t t)
 (declare-function flymake--handle-report "flymake")
 (declare-function flymake--lookup-type-property "flymake")
@@ -98,16 +97,6 @@
 (defsubst +modeline--wspc ()
   "Wide whitespace."
   (propertize "  " 'face (+modeline-face)))
-
-(defun +modeline--window-number ()
-  "Window number in mode-line."
-  (let ((num (cond
-              ((boundp 'ace-window-display-mode)
-               (aw-update)
-               (window-parameter (selected-window) 'ace-window-path))
-              (t ""))))
-    (when (length> num 0)
-      (propertize num 'face (+modeline-face '+modeline-buffer-major-mode-face)))))
 
 (defun +modeline--buffer-default-directory ()
   "Display `default-directory'."
@@ -255,8 +244,7 @@
     (+modeline-display-text +modeline--flymake)))
 
 (defcustom +modeline-left
-  '(+modeline--window-number
-    +modeline--buffer-info
+  '(+modeline--buffer-info
     +modeline--position)
   "List of items on the left of mode-line."
   :type '(list function)

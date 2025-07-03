@@ -85,7 +85,7 @@
   (add-hook
    'dired-mode-hook
    (lambda ()
-     (setq-local +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+     (setq-local +modeline-left '(+modeline--buffer-default-directory)
                  +modeline-right '(+modeline--major-mode)))))
 
 (use-package dired-x
@@ -207,7 +207,7 @@
    'dashboard-mode-hook
    (lambda ()
      (setq-local tab-line-exclude t
-                 +modeline-left '(+modeline--window-number +modeline--buffer-default-directory)
+                 +modeline-left '(+modeline--buffer-default-directory)
                  +modeline-right '(+modeline--major-mode))))
   (dashboard-initialize))
 

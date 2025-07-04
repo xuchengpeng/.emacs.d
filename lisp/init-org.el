@@ -16,6 +16,12 @@
         org-publish-timestamp-directory (expand-file-name "org-timestamps/" dotemacs-cache-dir)
         org-startup-indented t)
 
+  (add-hook
+   'org-agenda-mode-hook
+   (lambda ()
+     (setq-local +modeline-left '(+modeline--buffer-name)
+                 +modeline-right '(+modeline--major-mode))))
+
   (defun +org-capture-org-blog-post ()
     (let* ((filename (read-from-minibuffer "New post file: ")))
       (expand-file-name

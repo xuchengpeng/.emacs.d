@@ -127,6 +127,10 @@
   :config
   (require 'init-keybinds))
 
+(use-package windmove
+  :ensure nil
+  :hook (after-init . (lambda () (windmove-default-keybindings 'super))))
+
 (use-package ace-window
   :ensure t
   :commands ace-window

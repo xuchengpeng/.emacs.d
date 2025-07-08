@@ -2,6 +2,19 @@
 ;;; Commentary:
 ;;; Code:
 
+(cond
+ ((eq system-type 'windows-nt)
+  (setq w32-lwindow-modifier 'super
+        w32-rwindow-modifier 'super)
+  (w32-register-hot-key [s-]))
+ ((eq system-type 'darwin)
+  (setq mac-command-modifier      'super
+        ns-command-modifier       'super
+        mac-option-modifier       'meta
+        ns-option-modifier        'meta
+        mac-right-option-modifier 'none
+        ns-right-option-modifier  'none)))
+
 (with-eval-after-load 'transient
   (setq transient-levels-file (expand-file-name "transient/levels.el" dotemacs-cache-dir)
         transient-values-file (expand-file-name "transient/values.el" dotemacs-cache-dir)

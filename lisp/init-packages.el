@@ -9,11 +9,13 @@
   (let ((proto (if (gnutls-available-p) "https" "http")))
     (cond
      ((eq archives 'melpa)
-      (setq package-archives `(("gnu"   . ,(format "%s://elpa.gnu.org/packages/" proto))
-                               ("melpa" . ,(format "%s://melpa.org/packages/" proto)))))
+      (setq package-archives `(("gnu"    . ,(format "%s://elpa.gnu.org/packages/" proto))
+                               ("nongnu" . ,(format "%s://elpa.nongnu.org/nongnu/" proto))
+                               ("melpa"  . ,(format "%s://melpa.org/packages/" proto)))))
      ((eq archives 'tuna)
-      (setq package-archives `(("gnu"   . ,(format "%s://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/" proto))
-                               ("melpa" . ,(format "%s://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/" proto)))))
+      (setq package-archives `(("gnu"    . ,(format "%s://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/" proto))
+                               ("nongnu" . ,(format "%s://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/" proto))
+                               ("melpa"  . ,(format "%s://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/" proto)))))
      (t
       (error "Unknown archives: '%s'" archives)))))
 

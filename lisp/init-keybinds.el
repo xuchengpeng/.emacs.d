@@ -57,7 +57,7 @@
   "o f" #'consult-flymake
   "o g" #'gptel
   "o p" #'org-publish
-  "o s" #'+shell
+  "o s" #'eshell
 
   "q k" #'save-buffers-kill-emacs
   "q q" #'save-buffers-kill-terminal

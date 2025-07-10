@@ -14,7 +14,8 @@
         org-agenda-window-setup 'current-window
         org-persist-directory (expand-file-name "org-persist" dotemacs-cache-dir)
         org-publish-timestamp-directory (expand-file-name "org-timestamps/" dotemacs-cache-dir)
-        org-startup-indented t)
+        org-startup-indented t
+        org-tags-column 0)
 
   (add-hook
    'org-agenda-mode-hook

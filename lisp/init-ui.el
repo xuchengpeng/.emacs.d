@@ -191,7 +191,9 @@
           (border-mode-line-active unspecified)
           (border-mode-line-inactive unspecified)))
   (load-theme 'modus-operandi :no-confirm)
-  (keymap-global-set "<f5>" #'modus-themes-toggle))
+  (keymap-global-set "<f5>" #'modus-themes-toggle)
+  (keymap-global-set "C-<f5>" #'modus-themes-select)
+  (keymap-global-set "M-<f5>" #'modus-themes-rotate))
 
 (defun +init-ui ()
   "Initialize UI."

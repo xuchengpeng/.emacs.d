@@ -75,7 +75,7 @@
 
   (defun +kill-elfeed-buffers ()
     (dolist (buf '("*elfeed-entry*" "*elfeed-search*" "*elfeed-log*"))
-            (ignore-errors (kill-buffer buf))))
+      (ignore-errors (kill-buffer buf))))
   (advice-add 'elfeed-search-quit-window :after #'+kill-elfeed-buffers))
 
 (use-package denote

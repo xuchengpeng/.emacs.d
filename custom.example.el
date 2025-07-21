@@ -15,8 +15,9 @@
 (setq dotemacs-package-archives 'custom) ;; melpa, tuna, custom
 (setq package-check-signature nil
       package-archives
-      '(("gnu"   . "/path/to/elpa-mirror/gnu/")
-        ("melpa" . "/path/to/elpa-mirror/melpa/")))
+      '(("gnu"    . "/path/to/elpa-mirror/gnu/")
+        ("nongnu" . "/path/to/elpa-mirror/nongnu/")
+        ("melpa"  . "/path/to/elpa-mirror/melpa/")))
 
 (setq dotemacs-tempel-path '("/path/to/tempel/templates"))
 

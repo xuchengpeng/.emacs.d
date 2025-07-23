@@ -67,7 +67,6 @@
         dired-auto-revert-buffer #'dired-buffer-stale-p
         dired-recursive-copies  'always
         dired-recursive-deletes 'top
-        dired-create-destination-dirs 'ask
         image-dired-dir (expand-file-name "image-dired" dotemacs-cache-dir)
         image-dired-db-file (expand-file-name "db.el" image-dired-dir)
         image-dired-gallery-dir (expand-file-name "gallery" image-dired-dir)

@@ -60,7 +60,7 @@
         show-paren-context-when-offscreen t))
 
 (use-package dired
-  :commands (dired dired-jump)
+  :commands dired
   :init
   (setq dired-dwim-target t
         dired-hide-details-hide-symlink-targets nil

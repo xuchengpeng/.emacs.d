@@ -52,7 +52,7 @@
 
   "o a" #'org-agenda
   "o c" #'org-capture
-  "o d" #'dired-jump
+  "o d" #'dired
   "o e" #'elfeed
   "o f" #'consult-flymake
   "o g" #'gptel

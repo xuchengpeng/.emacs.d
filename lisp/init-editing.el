@@ -56,7 +56,10 @@
   :commands recentf-open-files
   :custom
   (recentf-save-file (expand-file-name "recentf" dotemacs-cache-dir))
-  (recentf-max-saved-items 200))
+  (recentf-max-saved-items 200)
+  (recentf-exclude '("\\.tar$" "\\.tbz2$" "\\.tbz$" "\\.tgz$" "\\.bz2$" "\\.bz$"
+                     "\\.gz$" "\\.gzip$" "\\.xz$" "\\.zip$" "\\.7z$" "\\.rar$"
+                     "COMMIT_EDITMSG\\'" "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$")))
 
 (use-package savehist
   :hook (after-init . savehist-mode)

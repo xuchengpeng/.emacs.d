@@ -24,7 +24,8 @@
                  +modeline-right '(+modeline--major-mode))))
 
   (defun +org-capture-org-blog-post ()
-    (let* ((filename (read-from-minibuffer "New post file: ")))
+    (let* ((title (read-from-minibuffer "New post TITLE: "))
+           (filename (downcase (string-trim (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title) "-" "-"))))
       (expand-file-name
        (format "org/posts/%s-%s.org" (format-time-string "%Y-%m-%d") filename)
        dotemacs-org-blog-dir)))

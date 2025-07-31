@@ -43,7 +43,7 @@
            "* %U %?\n%i\n%a")
           ("o" "Org Blog Post" plain
            (file +org-capture-org-blog-post)
-           "#+TITLE: \n#+AUTHOR: \n#+DATE: %T\n" :jump-to-captured t)))
+           "#+TITLE: \n#+AUTHOR: \n#+DESCRIPTION: \n#+KEYWORDS: \n#+DATE: %T\n" :jump-to-captured t)))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "PROJECT(p)" "|" "DONE(d)" "CANCELLED(c)"))

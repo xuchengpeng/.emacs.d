@@ -23,11 +23,12 @@
      (setq-local +modeline-left '(+modeline--buffer-name)
                  +modeline-right '(+modeline--major-mode))))
 
-  (defun +org-capture-org-blog-post ()
-    (let* ((title (read-from-minibuffer "New post TITLE: "))
+  (defun +org-capture-org-blog ()
+    (let* ((dir (completing-read "Select subdirectory: " '("posts" "notes")))
+           (title (read-from-minibuffer "New file TITLE: "))
            (filename (downcase (string-trim (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title) "-" "-"))))
       (expand-file-name
-       (format "org/posts/%s-%s.org" (format-time-string "%Y-%m-%d") filename)
+       (format "org/%s/%s-%s.org" dir (format-time-string "%Y-%m-%d") filename)
        dotemacs-org-blog-dir)))
 
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
@@ -41,8 +42,8 @@
           ("j" "Journal" entry
            (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
            "* %U %?\n%i\n%a")
-          ("o" "Org Blog Post" plain
-           (file +org-capture-org-blog-post)
+          ("o" "Org Blog" plain
+           (file +org-capture-org-blog)
            "#+TITLE: \n#+AUTHOR: \n#+DESCRIPTION: \n#+KEYWORDS: \n#+DATE: %T\n" :jump-to-captured t)))
 
   (setq org-todo-keywords
@@ -204,6 +205,21 @@ If `NAMED-ONLY` is non-nil, return nil."
            :sitemap-format-entry +org-publish-sitemap-format-entry
            :sitemap-function +org-publish-sitemap
            :sitemap-sort-files anti-chronologically)
+          ("blog-notes"
+           :base-directory ,(expand-file-name "org/notes" dotemacs-org-blog-dir)
+           :base-extension "org"
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :publishing-directory ,(expand-file-name "public/notes" dotemacs-org-blog-dir)
+           :html-head ,+org-html-head
+           :html-preamble ,+org-html-header
+           :html-postamble ,+org-html-footer
+           :auto-sitemap t
+           :sitemap-filename "index.org"
+           :sitemap-title "Notes"
+           :sitemap-format-entry +org-publish-sitemap-format-entry
+           :sitemap-function +org-publish-sitemap
+           :sitemap-sort-files anti-chronologically)
           ("blog-pages"
            :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
            :base-extension "org"
@@ -220,7 +236,7 @@ If `NAMED-ONLY` is non-nil, return nil."
            :recursive t
            :publishing-function org-publish-attachment
            :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir))
-          ("blog" :components ("blog-posts" "blog-pages" "blog-static")))))
+          ("blog" :components ("blog-posts" "blog-notes" "blog-pages" "blog-static")))))
 
 (provide 'init-org)
 ;;; init-org.el ends here

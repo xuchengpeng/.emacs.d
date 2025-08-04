@@ -49,7 +49,11 @@
   (setq multisession-directory (expand-file-name "multisession" dotemacs-cache-dir)))
 
 (use-package autorevert
-  :hook (after-init . global-auto-revert-mode))
+  :hook (after-init . global-auto-revert-mode)
+  :custom
+  (auto-revert-verbose t)
+  (auto-revert-use-notify nil)
+  (auto-revert-stop-on-user-input nil))
 
 (use-package recentf
   :hook (after-init . recentf-mode)

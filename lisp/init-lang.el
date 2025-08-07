@@ -46,7 +46,7 @@
                 "<script defer src='https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js' onload='renderMathInElement(document.body);'></script>"
                 "<script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>"
                 "<script>hljs.highlightAll();</script>"))
-  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "--katex" "--highlight-style=pygments")))
+  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "-s" "--katex" "--highlight-style=pygments")))
 
 (provide 'init-lang)
 ;;; init-lang.el ends here

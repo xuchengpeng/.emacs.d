@@ -16,7 +16,7 @@ jobs:
         with:
           version: ${{ matrix.emacs_version }}
       - name: Check out .emacs.d
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up test
         run: |
           ln -s $(pwd) $HOME/.emacs.d

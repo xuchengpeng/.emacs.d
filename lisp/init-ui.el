@@ -178,6 +178,20 @@
         tab-line-separator "\u200B"
         tab-line-tab-name-function #'+tab-line-tab-name-buffer))
 
+(defcustom +themes-to-toggle '(modus-operandi modus-vivendi)
+  "Specify two themes for `+themes-toggle' command."
+  :type 'list
+  :group 'dotemacs)
+
+(defun +themes-toggle ()
+  "Toggle between the two `+themes-to-toggle'."
+  (interactive)
+  (when-let* ((one (car +themes-to-toggle))
+              (two (cadr +themes-to-toggle))
+              (theme (if (eq (car custom-enabled-themes) one) two one)))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme :no-confirm)))
+
 (defun +init-theme ()
   "Initialize theme."
   (require-theme 'modus-themes)
@@ -189,10 +203,9 @@
           (bg-line-number-active unspecified)
           (border-mode-line-active unspecified)
           (border-mode-line-inactive unspecified)))
-  (load-theme 'modus-operandi :no-confirm)
-  (keymap-global-set "<f5>" #'modus-themes-toggle)
-  (keymap-global-set "C-<f5>" #'modus-themes-select)
-  (keymap-global-set "M-<f5>" #'modus-themes-rotate))
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme (car +themes-to-toggle) :no-confirm)
+  (keymap-global-set "<f5>" #'+themes-toggle))
 
 (defun +init-ui ()
   "Initialize UI."

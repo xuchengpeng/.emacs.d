@@ -50,17 +50,17 @@
   :group '+modeline-faces)
 
 (defface +modeline-debug-face
-  '((t (:inherit (+modeline-default-face success))))
+  '((t (:inherit (+modeline-default-face success bold))))
   "Face for debug-level messages in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-warning-face
-  '((t (:inherit (+modeline-default-face warning))))
+  '((t (:inherit (+modeline-default-face warning bold))))
   "Face for warnings in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-error-face
-  '((t (:inherit (+modeline-default-face error))))
+  '((t (:inherit (+modeline-default-face error bold))))
   "Face for errors in the mode-line."
   :group '+modeline-faces)
 

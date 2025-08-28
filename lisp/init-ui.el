@@ -4,7 +4,7 @@
 
 (setq hscroll-margin 2
       hscroll-step 1
-      scroll-conservatively 101
+      scroll-conservatively 10
       scroll-margin 0
       scroll-preserve-screen-position t
       auto-window-vscroll nil

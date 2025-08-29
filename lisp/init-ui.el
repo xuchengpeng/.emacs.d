@@ -213,7 +213,6 @@
 
   (+init-theme)
 
-  (require 'ace-window)
   (require 'init-modeline)
   (+modeline-mode)
 

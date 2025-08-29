@@ -11,8 +11,7 @@
   :group 'applications)
 
 (defcustom echo-bar-modules
-  '(echo-bar--project
-    echo-bar--eglot
+  '(echo-bar--eglot
     echo-bar--selection-info
     echo-bar--word-count
     echo-bar--multiple-cursors
@@ -103,11 +102,6 @@ If nil, don't update the echo bar automatically."
 (defvar text-scale-mode-lighter)
 
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
-
-(defun echo-bar--project ()
-  "Project name."
-  (when-let* ((name (project-name (project-current))))
-    (propertize name 'face 'echo-bar-blue-face)))
 
 (defun echo-bar--text-scale ()
   "Text-Scale info."

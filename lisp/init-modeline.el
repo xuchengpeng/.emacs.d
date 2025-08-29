@@ -111,15 +111,65 @@
    'face (if (and (buffer-modified-p) (not buffer-read-only))
              (+modeline-face '+modeline-buffer-modified-face)
            (+modeline-face '+modeline-buffer-file-face))
-   'help-echo (format "Buffer name: %s\nmouse-1: Previous buffer\nmouse-3: Next buffer"
-                      (or (buffer-file-name) (buffer-name)))
-   'mouse-face '+modeline-highlight-face
-   'local-map mode-line-buffer-identification-keymap))
+   'help-echo (format "Buffer name: %s" (buffer-name))
+   'mouse-face '+modeline-highlight-face))
+
+(defun +modeline--project-root ()
+  "Get project root directory.
+Return `default-directory' if no project was found."
+  (abbreviate-file-name
+   (or
+    (when-let* ((project (project-current)))
+      (expand-file-name
+       (if (fboundp 'project-root)
+           (project-root project)
+         (car (with-no-warnings
+                (project-roots project))))))
+    default-directory)))
+
+(defun +modeline--buffer-file-name ()
+  "Buffer file name in mode-line."
+  (let* ((root-path (file-local-name (+modeline--project-root)))
+         (file-path (file-local-name (or (buffer-file-name (buffer-base-buffer)) ""))))
+    (concat
+     ;; Project directory
+     (propertize (concat (file-name-nondirectory (directory-file-name root-path)) "/")
+                 'face (+modeline-face '+modeline-buffer-path-face))
+     ;; Relative path
+     (propertize
+      (when-let* ((relative-path (file-relative-name
+                                  (or (file-name-directory file-path) "./")
+                                  root-path)))
+        (if (string= relative-path "./")
+            ""
+          (if (<= (length relative-path) 50)
+              relative-path
+            ;; Shrink path
+            (let ((split (string-split relative-path "/" 'omit-nulls)))
+              (concat
+               (mapconcat
+                (lambda (str)
+                  ;; Return first character or first two characters if hidden
+                  (substring str 0 (if (string-prefix-p "." str) 2 1)))
+                split
+                "/")
+               "/")))))
+      'face (+modeline-face '+modeline-buffer-path-face))
+     ;; File name
+     (propertize
+      (file-name-nondirectory file-path)
+      'face (if (buffer-modified-p)
+                (+modeline-face '+modeline-buffer-modified-face)
+              (+modeline-face '+modeline-buffer-file-face))
+      'help-echo (format "Buffer name\n%s" file-path)
+      'mouse-face '+modeline-highlight-face))))
 
 (defun +modeline--buffer-info ()
   "Buffer info in mode-line."
   (concat
-   (+modeline--buffer-name)
+   (if buffer-file-name
+       (+modeline--buffer-file-name)
+     (+modeline--buffer-name))
    (+modeline--spc)
    (propertize "%I" 'face (+modeline-face))))
 

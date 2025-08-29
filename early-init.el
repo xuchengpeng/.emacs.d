@@ -35,11 +35,7 @@
 (advice-add #'display-startup-echo-area-message :override #'ignore)
 (advice-add #'display-startup-screen :override #'ignore)
 
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))
-        " - Emacs")
+(setq frame-title-format '("%b - Emacs")
       icon-title-format frame-title-format)
 
 (push '(fullscreen . maximized) default-frame-alist)

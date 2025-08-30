@@ -99,5 +99,17 @@
   (setq denote-directory dotemacs-note-dir)
   (denote-rename-buffer-mode 1))
 
+(use-package denote-org
+  :ensure t
+  :commands (denote-org-extract-org-subtree))
+
+(use-package denote-silo
+  :ensure t
+  :commands (denote-silo-create-note
+             denote-silo-open-or-create
+             denote-silo-select-silo-then-command
+             denote-silo-dired
+             denote-silo-cd))
+
 (provide 'init-tools)
 ;;; init-tools.el ends here

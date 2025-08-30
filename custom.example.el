@@ -28,4 +28,9 @@
 (with-eval-after-load 'elfeed
   (setq elfeed-use-curl nil))
 
+(use-package catppuccin-themes
+  :vc (:url "https://github.com/xuchengpeng/catppuccin-themes")
+  :init
+  (setq +themes-to-toggle '(catppuccin-latte catppuccin-mocha)))
+
 ;;; custom.el ends here

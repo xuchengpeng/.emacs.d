@@ -178,6 +178,11 @@
         tab-line-separator "\u200B"
         tab-line-tab-name-function #'+tab-line-tab-name-buffer))
 
+(defun +themes-load (theme)
+  "Load THEME while disabling other themes."
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme theme :no-confirm))
+
 (defcustom +themes-to-toggle '(modus-operandi modus-vivendi)
   "Specify two themes for `+themes-toggle' command."
   :type 'list
@@ -189,8 +194,7 @@
   (when-let* ((one (car +themes-to-toggle))
               (two (cadr +themes-to-toggle))
               (theme (if (eq (car custom-enabled-themes) one) two one)))
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme theme :no-confirm)))
+    (+themes-load theme)))
 
 (defun +init-theme ()
   "Initialize theme."
@@ -203,8 +207,8 @@
           (bg-line-number-active unspecified)
           (border-mode-line-active unspecified)
           (border-mode-line-inactive unspecified)))
-  (mapc #'disable-theme custom-enabled-themes)
-  (load-theme (car +themes-to-toggle) :no-confirm)
+  (when-let* ((theme (car +themes-to-toggle)))
+    (+themes-load theme))
   (keymap-global-set "<f5>" #'+themes-toggle))
 
 (defun +init-ui ()

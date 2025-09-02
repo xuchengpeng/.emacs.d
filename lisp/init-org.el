@@ -24,7 +24,7 @@
                  +modeline-right '(+modeline--major-mode))))
 
   (defun +org-capture-org-blog ()
-    (let* ((dir (completing-read "Select subdirectory: " '("posts" "notes")))
+    (let* ((dir (completing-read "Select subdirectory: " '("posts")))
            (title (read-from-minibuffer "New file TITLE: "))
            (filename (downcase (string-trim (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title) "-" "-"))))
       (expand-file-name
@@ -205,21 +205,6 @@ If `NAMED-ONLY` is non-nil, return nil."
            :sitemap-format-entry +org-publish-sitemap-format-entry
            :sitemap-function +org-publish-sitemap
            :sitemap-sort-files anti-chronologically)
-          ("blog-notes"
-           :base-directory ,(expand-file-name "org/notes" dotemacs-org-blog-dir)
-           :base-extension "org"
-           :recursive t
-           :publishing-function org-html-publish-to-html
-           :publishing-directory ,(expand-file-name "public/notes" dotemacs-org-blog-dir)
-           :html-head ,+org-html-head
-           :html-preamble ,+org-html-header
-           :html-postamble ,+org-html-footer
-           :auto-sitemap t
-           :sitemap-filename "index.org"
-           :sitemap-title "Notes"
-           :sitemap-format-entry +org-publish-sitemap-format-entry
-           :sitemap-function +org-publish-sitemap
-           :sitemap-sort-files anti-chronologically)
           ("blog-pages"
            :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
            :base-extension "org"
@@ -236,7 +221,7 @@ If `NAMED-ONLY` is non-nil, return nil."
            :recursive t
            :publishing-function org-publish-attachment
            :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir))
-          ("blog" :components ("blog-posts" "blog-notes" "blog-pages" "blog-static")))))
+          ("blog" :components ("blog-posts" "blog-pages" "blog-static")))))
 
 (provide 'init-org)
 ;;; init-org.el ends here

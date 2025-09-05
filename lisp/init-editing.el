@@ -42,7 +42,7 @@
 (add-to-list 'auto-mode-alist '("/LICENSE\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("rc\\'" . conf-mode))
 
-(setq bookmark-default-file (expand-file-name "bookmarks" dotemacs-cache-dir)
+(setq bookmark-default-file (expand-file-name "bookmarks.eld" dotemacs-cache-dir)
       project-list-file (expand-file-name "projects" dotemacs-cache-dir))
 
 (with-eval-after-load 'multisession
@@ -63,7 +63,8 @@
   (recentf-max-saved-items 200)
   (recentf-exclude '("\\.tar$" "\\.tbz2$" "\\.tbz$" "\\.tgz$" "\\.bz2$" "\\.bz$"
                      "\\.gz$" "\\.gzip$" "\\.xz$" "\\.zip$" "\\.7z$" "\\.rar$"
-                     "COMMIT_EDITMSG\\'" "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$")))
+                     "COMMIT_EDITMSG\\'" "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
+                     "bookmarks.eld" "/elfeed/")))
 
 (use-package savehist
   :hook (after-init . savehist-mode)

@@ -40,6 +40,7 @@
   (keymap-global-set "<remap> <yank-pop>" #'consult-yank-pop)
   ;; M-g bindings in `goto-map'
   (keymap-global-set "M-g e" #'consult-compile-error)
+  (keymap-global-set "M-g r" #'consult-grep-match)
   (keymap-global-set "M-g f" #'consult-flymake)
   (keymap-global-set "M-g g" #'consult-goto-line)
   (keymap-global-set "M-g M-g" #'consult-goto-line)

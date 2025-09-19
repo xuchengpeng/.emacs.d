@@ -47,13 +47,12 @@
            "#+TITLE: \n#+AUTHOR: \n#+DESCRIPTION: \n#+KEYWORDS: \n#+DATE: %T\n" :jump-to-captured t)))
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "PROJECT(p)" "|" "DONE(d)" "CANCELLED(c)"))
+        '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c)"))
         org-todo-keyword-faces
         '(("STARTED" . (:inherit (bold font-lock-constant-face)))
           ("HOLD" . (:inherit (bold warning)))
           ("WAIT" . (:inherit (bold warning)))
-          ("CANCELLED" . (:inherit (bold error)))
-          ("PROJECT" . (:inherit (bold font-lock-string-face))))
+          ("CANCELLED" . (:inherit (bold error))))
         org-priority-faces
         '((?A . error)
           (?B . warning)

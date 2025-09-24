@@ -40,13 +40,11 @@
         '("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css")
         markdown-xhtml-header-content
         (concat "<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>"
-                "<style> body { box-sizing: border-box; max-width: 900px; width: 100%; margin: 0 auto; padding: 0 10px; } </style>"
-                "<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css' />"
-                "<script defer src='https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js'></script>"
-                "<script defer src='https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js' onload='renderMathInElement(document.body);'></script>"
+                "<style> *, ::after, ::before, ::backdrop, ::file-selector-button { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid; } body { max-width: 72rem; width: 100%; margin: 0 auto; padding: 1em; } </style>"
+                "<script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js'></script>"
                 "<script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>"
-                "<script>hljs.highlightAll();</script>"))
-  (setq markdown-command '("pandoc" "--from=markdown" "--to=html5" "-s" "--katex" "--highlight-style=pygments")))
+                "<script>hljs.highlightAll();</script>")
+        markdown-command '("pandoc" "--from=markdown" "--to=html" "--mathjax" "--highlight-style=pygments")))
 
 (provide 'init-lang)
 ;;; init-lang.el ends here

@@ -198,6 +198,8 @@ If `NAMED-ONLY` is non-nil, return nil."
            :html-head ,+org-html-head
            :html-preamble ,+org-html-header
            :html-postamble ,+org-html-footer
+           :html-mathjax-options ((path "https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"))
+           :html-mathjax-template "<script id=\"MathJax-script\" async src=\"%PATH\"></script>"
            :auto-sitemap t
            :sitemap-filename "index.org"
            :sitemap-title "Posts"
@@ -213,6 +215,8 @@ If `NAMED-ONLY` is non-nil, return nil."
            :html-head ,+org-html-head
            :html-preamble ,+org-html-header
            :html-postamble ,+org-html-footer
+           :html-mathjax-options ((path "https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"))
+           :html-mathjax-template "<script id=\"MathJax-script\" async src=\"%PATH\"></script>"
            :auto-sitemap nil)
           ("blog-static"
            :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)

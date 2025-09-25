@@ -111,8 +111,9 @@
    'face (if (and (buffer-modified-p) (not buffer-read-only))
              (+modeline-face '+modeline-buffer-modified-face)
            (+modeline-face '+modeline-buffer-file-face))
-   'help-echo (format "Buffer name: %s" (buffer-name))
-   'mouse-face '+modeline-highlight-face))
+   'help-echo (format "Buffer name: %s\nmouse-1: Previous buffer\nmouse-3: Next buffer" (buffer-name))
+   'mouse-face '+modeline-highlight-face
+   'local-map mode-line-buffer-identification-keymap))
 
 (defun +modeline--project-root ()
   "Get project root directory.
@@ -161,8 +162,9 @@ Return `default-directory' if no project was found."
       'face (if (buffer-modified-p)
                 (+modeline-face '+modeline-buffer-modified-face)
               (+modeline-face '+modeline-buffer-file-face))
-      'help-echo (format "Buffer name\n%s" file-path)
-      'mouse-face '+modeline-highlight-face))))
+      'help-echo (format "Buffer name: %s\nmouse-1: Previous buffer\nmouse-3: Next buffer" file-path)
+      'mouse-face '+modeline-highlight-face
+      'local-map mode-line-buffer-identification-keymap))))
 
 (defun +modeline--buffer-info ()
   "Buffer info in mode-line."

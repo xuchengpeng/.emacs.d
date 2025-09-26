@@ -104,6 +104,18 @@
    (abbreviate-file-name default-directory)
    'face (+modeline-face '+modeline-buffer-path-face)))
 
+(defvar-keymap +modeline--buffers-menu
+  :doc "Buffers menu in mode-line."
+  :name "Buffers"
+  "<list-buffers>" '(menu-item "List buffers" list-buffers)
+  "<switch-to-buffer>" '(menu-item "Switch to buffer" switch-to-buffer)
+  "<next-buffer>" '(menu-item "Next buffer" next-buffer)
+  "<previous-buffer>" '(menu-item "Previous buffer" previous-buffer))
+
+(defvar-keymap +modeline--buffers-menu-map
+  :doc "Buffers menu map in mode-line."
+  "<mode-line> <mouse-1>" +modeline--buffers-menu)
+
 (defun +modeline--buffer-name ()
   "Buffer name in mode-line."
   (propertize
@@ -111,9 +123,9 @@
    'face (if (and (buffer-modified-p) (not buffer-read-only))
              (+modeline-face '+modeline-buffer-modified-face)
            (+modeline-face '+modeline-buffer-file-face))
-   'help-echo (format "Buffer name: %s\nmouse-1: Previous buffer\nmouse-3: Next buffer" (buffer-name))
+   'help-echo (format "Buffer name: %s\nmouse-1: Buffers menu" (buffer-name))
    'mouse-face '+modeline-highlight-face
-   'local-map mode-line-buffer-identification-keymap))
+   'local-map +modeline--buffers-menu-map))
 
 (defun +modeline--project-root ()
   "Get project root directory.
@@ -162,9 +174,9 @@ Return `default-directory' if no project was found."
       'face (if (buffer-modified-p)
                 (+modeline-face '+modeline-buffer-modified-face)
               (+modeline-face '+modeline-buffer-file-face))
-      'help-echo (format "Buffer name: %s\nmouse-1: Previous buffer\nmouse-3: Next buffer" file-path)
+      'help-echo (format "Buffer name: %s\nmouse-1: Buffers menu" file-path)
       'mouse-face '+modeline-highlight-face
-      'local-map mode-line-buffer-identification-keymap))))
+      'local-map +modeline--buffers-menu-map))))
 
 (defun +modeline--buffer-info ()
   "Buffer info in mode-line."

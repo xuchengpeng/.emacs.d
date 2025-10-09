@@ -24,7 +24,8 @@
   :init
   (setq eglot-autoshutdown t
         eglot-send-changes-idle-time 0.5
-        eglot-events-buffer-config '(:size 0 :format full)))
+        eglot-events-buffer-config '(:size 0 :format full)
+        eglot-code-action-indications '(eldoc-hint)))
 
 ;; treesit support
 (when (and (fboundp 'treesit-available-p)

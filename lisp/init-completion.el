@@ -164,9 +164,7 @@
 
   (add-hook 'conf-mode-hook #'+tempel-setup-capf)
   (add-hook 'prog-mode-hook #'+tempel-setup-capf)
-  (add-hook 'text-mode-hook #'+tempel-setup-capf)
-  :config
-  (setq tempel-path (append (ensure-list tempel-path) dotemacs-tempel-path)))
+  (add-hook 'text-mode-hook #'+tempel-setup-capf))
 
 (provide 'init-completion)
 ;;; init-completion.el ends here

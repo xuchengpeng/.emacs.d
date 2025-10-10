@@ -19,8 +19,6 @@
         ("nongnu" . "/path/to/elpa-mirror/nongnu/")
         ("melpa"  . "/path/to/elpa-mirror/melpa/")))
 
-(setq dotemacs-tempel-path '("/path/to/tempel/templates"))
-
 (with-eval-after-load 'gptel
   (setenv "GPTEL_GEMINI_KEY" "xxxxxxxxxxxxxxxxx")
   (setq gptel-use-curl nil))

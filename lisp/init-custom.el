@@ -31,11 +31,6 @@ Examples:
   :type 'sexp
   :group 'dotemacs)
 
-(defcustom dotemacs-tempel-path nil
-  "A list of template files."
-  :type '(repeat string)
-  :group 'dotemacs)
-
 (defcustom dotemacs-org-dir "~/org/"
   "Org directory."
   :type 'string

@@ -114,8 +114,9 @@
     (when dotemacs-cn-font
       (set-fontset-font t 'han dotemacs-cn-font))))
 
-(add-hook 'after-init-hook #'+init-fonts)
-(add-hook 'server-after-make-frame-hook #'+init-fonts)
+(if (daemonp)
+    (add-hook 'server-after-make-frame-hook #'+init-fonts)
+  (add-hook 'after-init-hook #'+init-fonts))
 
 (use-package which-key
   :hook (after-init . which-key-mode)

@@ -44,7 +44,7 @@
                 "<script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js'></script>"
                 "<script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>"
                 "<script>hljs.highlightAll();</script>")
-        markdown-command '("pandoc" "--from=markdown" "--to=html" "--mathjax" "--highlight-style=pygments")))
+        markdown-command "marked"))
 
 (provide 'init-lang)
 ;;; init-lang.el ends here

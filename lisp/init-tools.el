@@ -87,7 +87,7 @@
     "n" #'denote
     "s" #'denote-subdirectory
     "t" #'denote-type
-    "d" #'denote-dired
+    "d" #'denote-sort-dired
     "g" #'denote-grep
     "l" #'denote-link
     "L" #'denote-add-links

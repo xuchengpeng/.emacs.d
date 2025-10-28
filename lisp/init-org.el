@@ -220,7 +220,7 @@ If `NAMED-ONLY` is non-nil, return nil."
            :auto-sitemap nil)
           ("blog-static"
            :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
-           :base-extension "js\\|css\\|jpg\\|png\\|svg\\|gif\\|ico\\|txt\\|webmanifest"
+           :base-extension "js\\|css\\|jpg\\|png\\|svg\\|gif\\|ico\\|txt\\|webmanifest\\|woff2"
            :recursive t
            :publishing-function org-publish-attachment
            :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir))

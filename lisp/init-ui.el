@@ -179,10 +179,16 @@
         tab-line-separator "\u200B"
         tab-line-tab-name-function #'+tab-line-tab-name-buffer))
 
+(defcustom +themes-after-load-theme-hook nil
+  "Hook that runs after loading a theme."
+  :type 'hook
+  :group 'dotemacs)
+
 (defun +themes-load (theme)
   "Load THEME while disabling other themes."
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme :no-confirm))
+  (load-theme theme :no-confirm)
+  (run-hooks '+themes-after-load-theme-hook))
 
 (defcustom +themes-to-toggle '(modus-operandi modus-vivendi)
   "Specify two themes for `+themes-toggle' command."

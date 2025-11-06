@@ -41,6 +41,6 @@
        `(echo-bar-magenta-face ((,c :foreground ,mauve)))
        `(echo-bar-cyan-face ((,c :foreground ,teal)))
        `(echo-bar-gray-face ((,c :foreground ,overlay2))))))
-  (add-hook 'enable-theme-functions #'+catppuccin-themes-custom-faces))
+  (add-hook '+themes-after-load-theme-hook #'+catppuccin-themes-custom-faces))
 
 ;;; custom.el ends here

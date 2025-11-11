@@ -179,33 +179,10 @@
         tab-line-separator "\u200B"
         tab-line-tab-name-function #'+tab-line-tab-name-buffer))
 
-(defcustom +themes-after-load-theme-hook nil
-  "Hook that runs after loading a theme."
-  :type 'hook
-  :group 'dotemacs)
-
-(defun +themes-load (theme)
-  "Load THEME while disabling other themes."
-  (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme :no-confirm)
-  (run-hooks '+themes-after-load-theme-hook))
-
-(defcustom +themes-to-toggle '(modus-operandi modus-vivendi)
-  "Specify two themes for `+themes-toggle' command."
-  :type 'list
-  :group 'dotemacs)
-
-(defun +themes-toggle ()
-  "Toggle between the two `+themes-to-toggle'."
-  (interactive)
-  (when-let* ((one (car +themes-to-toggle))
-              (two (cadr +themes-to-toggle))
-              (theme (if (eq (car custom-enabled-themes) one) two one)))
-    (+themes-load theme)))
-
 (defun +init-theme ()
   "Initialize theme."
-  (require-theme 'modus-themes)
+  (unless (require 'modus-themes nil t)
+    (require-theme 'modus-themes))
   (setq modus-themes-common-palette-overrides
         '((fringe unspecified)
           (fg-line-number-inactive fg-dim)
@@ -214,9 +191,8 @@
           (bg-line-number-active unspecified)
           (border-mode-line-active bg-mode-line-active)
           (border-mode-line-inactive bg-mode-line-inactive)))
-  (when-let* ((theme (car +themes-to-toggle)))
-    (+themes-load theme))
-  (keymap-global-set "<f5>" #'+themes-toggle))
+  (modus-themes-load-theme (car modus-themes-to-toggle))
+  (keymap-global-set "<f5>" #'modus-themes-toggle))
 
 (defun +init-ui ()
   "Initialize UI."

@@ -28,19 +28,21 @@
 
 (use-package catppuccin-themes
   :vc (:url "https://github.com/xuchengpeng/catppuccin-themes")
+  :after (modus-themes)
   :init
-  (setq +themes-to-toggle '(catppuccin-latte catppuccin-mocha))
-
+  (setq modus-themes-to-toggle '(catppuccin-latte catppuccin-mocha))
+  :config
+  (catppuccin-themes-take-over-modus-themes-mode 1)
   (defun +catppuccin-themes-custom-faces (&rest _)
-    (catppuccin-themes-with-colors
-      (custom-set-faces
-       `(echo-bar-red-face ((,c :foreground ,red)))
-       `(echo-bar-green-face ((,c :foreground ,green)))
-       `(echo-bar-yellow-face ((,c :foreground ,yellow)))
-       `(echo-bar-blue-face ((,c :foreground ,blue)))
-       `(echo-bar-magenta-face ((,c :foreground ,mauve)))
-       `(echo-bar-cyan-face ((,c :foreground ,teal)))
-       `(echo-bar-gray-face ((,c :foreground ,overlay2))))))
-  (add-hook '+themes-after-load-theme-hook #'+catppuccin-themes-custom-faces))
+    (modus-themes-with-colors
+     (custom-set-faces
+      `(echo-bar-red-face ((,c :foreground ,red)))
+      `(echo-bar-green-face ((,c :foreground ,green)))
+      `(echo-bar-yellow-face ((,c :foreground ,yellow)))
+      `(echo-bar-blue-face ((,c :foreground ,blue)))
+      `(echo-bar-magenta-face ((,c :foreground ,mauve)))
+      `(echo-bar-cyan-face ((,c :foreground ,teal)))
+      `(echo-bar-gray-face ((,c :foreground ,overlay2))))))
+  (add-hook 'modus-themes-after-load-theme-hook #'+catppuccin-themes-custom-faces))
 
 ;;; custom.el ends here

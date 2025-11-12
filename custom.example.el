@@ -26,23 +26,29 @@
 (with-eval-after-load 'elfeed
   (setq elfeed-use-curl nil))
 
-(use-package catppuccin-themes
-  :vc (:url "https://github.com/xuchengpeng/catppuccin-themes")
-  :after (modus-themes)
-  :init
-  (setq modus-themes-to-toggle '(catppuccin-latte catppuccin-mocha))
-  :config
-  (catppuccin-themes-take-over-modus-themes-mode 1)
-  (defun +catppuccin-themes-custom-faces (&rest _)
-    (modus-themes-with-colors
-     (custom-set-faces
-      `(echo-bar-red-face ((,c :foreground ,red)))
-      `(echo-bar-green-face ((,c :foreground ,green)))
-      `(echo-bar-yellow-face ((,c :foreground ,yellow)))
-      `(echo-bar-blue-face ((,c :foreground ,blue)))
-      `(echo-bar-magenta-face ((,c :foreground ,mauve)))
-      `(echo-bar-cyan-face ((,c :foreground ,teal)))
-      `(echo-bar-gray-face ((,c :foreground ,overlay2))))))
-  (add-hook 'modus-themes-after-load-theme-hook #'+catppuccin-themes-custom-faces))
+(with-eval-after-load 'init-ui
+  (defun +init-theme-override ()
+    (use-package modus-themes
+      :disabled
+      :ensure t)
+    (use-package catppuccin-themes
+      :vc (:url "https://github.com/xuchengpeng/catppuccin-themes")
+      :config
+      (catppuccin-themes-take-over-modus-themes-mode 1)
+      (defun +catppuccin-themes-custom-faces (&rest _)
+        (modus-themes-with-colors
+          (custom-set-faces
+           `(echo-bar-red-face ((,c :foreground ,red)))
+           `(echo-bar-green-face ((,c :foreground ,green)))
+           `(echo-bar-yellow-face ((,c :foreground ,yellow)))
+           `(echo-bar-blue-face ((,c :foreground ,blue)))
+           `(echo-bar-magenta-face ((,c :foreground ,mauve)))
+           `(echo-bar-cyan-face ((,c :foreground ,teal)))
+           `(echo-bar-gray-face ((,c :foreground ,overlay2))))))
+      (add-hook 'modus-themes-after-load-theme-hook #'+catppuccin-themes-custom-faces)
+      (modus-themes-load-theme 'catppuccin-latte)
+      (setq modus-themes-to-toggle '(catppuccin-latte catppuccin-mocha))
+      (keymap-global-set "<f5>" #'modus-themes-toggle)))
+  (advice-add #'+init-theme :override #'+init-theme-override))
 
 ;;; custom.el ends here

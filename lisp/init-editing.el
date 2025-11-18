@@ -17,6 +17,9 @@
       backup-directory-alist (list (cons "." (expand-file-name "backup" dotemacs-cache-dir)))
       tramp-backup-directory-alist backup-directory-alist)
 
+(setq-default vc-handled-backends '(Git SVN))
+(setq vc-git-diff-switches '("--histogram"))
+
 (setq auto-save-default nil
       auto-save-list-file-prefix (expand-file-name "autosave" dotemacs-cache-dir)
       tramp-auto-save-directory  (expand-file-name "tramp-autosave" dotemacs-cache-dir))

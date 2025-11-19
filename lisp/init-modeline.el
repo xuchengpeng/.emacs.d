@@ -30,7 +30,7 @@
   :group '+modeline-faces)
 
 (defface +modeline-buffer-path-face
-  '((t (:inherit (+modeline-emphasis-face bold))))
+  '((t (:inherit (+modeline-emphasis-face bold) :slant normal)))
   "Face used for the dirname part of the buffer path."
   :group '+modeline-faces)
 
@@ -45,7 +45,7 @@
   :group '+modeline-faces)
 
 (defface +modeline-buffer-major-mode-face
-  '((t (:inherit (+modeline-emphasis-face bold))))
+  '((t (:inherit (+modeline-emphasis-face bold) :slant normal)))
   "Face used for the major-mode segment in the mode-line."
   :group '+modeline-faces)
 

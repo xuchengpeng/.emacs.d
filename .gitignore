@@ -6,6 +6,8 @@ org/*.*
 server/
 *.data
 *.elc
+*.eln
+*.eld
 *~
 /projects
 /tramp

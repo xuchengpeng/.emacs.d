@@ -95,7 +95,8 @@
 (defun dashboard--reload ()
   "Reload dashboard."
   (unless (buffer-live-p (get-buffer dashboard-name))
-    (with-current-buffer (get-buffer-create dashboard-name)
+    (with-current-buffer (get-buffer-create "*scratch*")
+      (rename-buffer dashboard-name)
       (set-window-buffer nil (current-buffer))
       (let ((pt (point)))
         (erase-buffer)

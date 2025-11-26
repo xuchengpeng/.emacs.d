@@ -21,10 +21,10 @@
 
 (with-eval-after-load 'gptel
   (setenv "GPTEL_GEMINI_KEY" "xxxxxxxxxxxxxxxxx")
-  (setq gptel-use-curl nil))
+  (setq gptel-curl-extra-args '("--insecure")))
 
 (with-eval-after-load 'elfeed
-  (setq elfeed-use-curl nil))
+  (setq elfeed-curl-extra-arguments '("--insecure")))
 
 (with-eval-after-load 'init-ui
   (defun +init-theme-override ()

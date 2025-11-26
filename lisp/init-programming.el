@@ -56,9 +56,7 @@
 (use-package diff-hl
   :ensure t
   :hook ((after-init . global-diff-hl-mode)
-         (dired-mode . diff-hl-dired-mode))
-  :config
-  (diff-hl-flydiff-mode 1))
+         (dired-mode . diff-hl-dired-mode)))
 
 (defvar +highlight-keywords
   '(("\\<\\(TODO\\|FIXME\\|BUG\\)\\>" 1 'error prepend)

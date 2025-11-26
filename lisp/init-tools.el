@@ -68,8 +68,7 @@
   :config
   (setq elfeed-db-directory (expand-file-name "elfeed" dotemacs-cache-dir)
         elfeed-feeds '("https://planet.emacslife.com/atom.xml")
-        elfeed-search-filter "@1-month-ago "
-        url-queue-timeout 30)
+        elfeed-search-filter "@1-month-ago ")
 
   (add-hook 'elfeed-show-mode-hook
             (lambda ()

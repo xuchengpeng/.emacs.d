@@ -176,7 +176,10 @@
   :ensure t
   :commands vundo
   :init
-  (keymap-global-set "C-x u" 'vundo))
+  (keymap-global-set "C-x u" 'vundo)
+  (setq undo-limit 256000           ; 256kb (default is 160kb)
+        undo-strong-limit 2000000   ; 2mb   (default is 240kb)
+        undo-outer-limit 36000000)) ; 36mb  (default is 24mb)
 
 (provide 'init-editing)
 ;;; init-editing.el ends here

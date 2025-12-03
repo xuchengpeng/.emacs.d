@@ -59,8 +59,8 @@
   :config
   (setq gptel-model 'gemini-2.5-flash
         gptel-backend (gptel-make-gemini "Gemini"
-                        :key (lambda () (getenv "GPTEL_GEMINI_KEY"))
-                        :stream nil)))
+                        :key #'gptel-api-key
+                        :stream t)))
 
 (use-package elfeed
   :ensure t

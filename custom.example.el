@@ -20,7 +20,6 @@
         ("melpa"  . "/path/to/elpa-mirror/melpa/")))
 
 (with-eval-after-load 'gptel
-  (setenv "GPTEL_GEMINI_KEY" "xxxxxxxxxxxxxxxxx")
   (setq gptel-curl-extra-args '("--insecure")))
 
 (with-eval-after-load 'elfeed

@@ -10,6 +10,10 @@
                   gc-cons-percentage 0.1)))
 (setq garbage-collection-messages init-file-debug)
 
+(when (eq system-type 'windows-nt)
+  (setq load-suffixes '(".elc" ".el"))
+  (setq load-file-rep-suffixes '("")))
+
 (setq load-prefer-newer t)
 (setq package-enable-at-startup nil)
 (setq native-comp-jit-compilation nil)

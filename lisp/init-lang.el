@@ -11,8 +11,8 @@
   :after (:any python sh-script json-mode markdown-mode)
   :config
   (reformatter-define python-format
-    :program "black"
-    :args '("-q" "-"))
+    :program "ruff"
+    :args '("format" "-"))
   (reformatter-define sh-format
     :program "shfmt"
     :args `("-i" ,(number-to-string sh-basic-offset) "-"))

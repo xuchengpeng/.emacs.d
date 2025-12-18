@@ -53,6 +53,13 @@
                                     (when (treesit-language-available-p 'elisp)
                                       (treesit-parser-create 'elisp)))))
 
+(use-package colorful-mode
+  :ensure t
+  :custom
+  (colorful-use-prefix t)
+  (css-fontify-colors nil)
+  :hook (after-init . global-colorful-mode))
+
 (use-package diff-hl
   :ensure t
   :hook ((after-init . global-diff-hl-mode)

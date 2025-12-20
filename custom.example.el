@@ -10,7 +10,9 @@
       user-mail-address "xxxxxx@xxx.com")
 
 (setq dotemacs-font "Iosevka SS14-13"
-      dotemacs-cn-font "LXGW WenKai")
+      dotemacs-cn-font "LXGW WenKai"
+      dotemacs-symbol-font "Segoe UI Symbol"
+      dotemacs-emoji-font "Noto Color Emoji")
 
 (setq dotemacs-package-archives 'custom) ;; melpa, tuna, custom
 (setq package-check-signature nil

@@ -112,7 +112,11 @@
     (when dotemacs-font
       (set-face-attribute 'default nil :font dotemacs-font))
     (when dotemacs-cn-font
-      (set-fontset-font t 'han dotemacs-cn-font))))
+      (set-fontset-font t 'han dotemacs-cn-font))
+    (when dotemacs-symbol-font
+      (set-fontset-font t 'symbol dotemacs-symbol-font))
+    (when dotemacs-emoji-font
+      (set-fontset-font t 'emoji dotemacs-emoji-font))))
 
 (if (daemonp)
     (add-hook 'server-after-make-frame-hook #'+init-fonts)

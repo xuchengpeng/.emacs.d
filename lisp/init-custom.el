@@ -31,6 +31,16 @@ Examples:
   :type 'sexp
   :group 'dotemacs)
 
+(defcustom dotemacs-symbol-font nil
+  "The symbol font to use."
+  :type 'sexp
+  :group 'dotemacs)
+
+(defcustom dotemacs-emoji-font nil
+  "The emoji font to use."
+  :type 'sexp
+  :group 'dotemacs)
+
 (defcustom dotemacs-org-dir "~/org/"
   "Org directory."
   :type 'string

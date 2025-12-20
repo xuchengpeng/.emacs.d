@@ -196,7 +196,7 @@ If nil, don't update the echo bar automatically."
              (when (>
                     (echo-bar--str-len
                      (car (last (string-split (substring-no-properties (or (current-message) "")) "\n"))))
-                    (- (frame-width) wid 5))
+                    (- (frame-width) wid))
                "\n")
              spc
              text))

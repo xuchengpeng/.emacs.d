@@ -80,6 +80,10 @@
       (ignore-errors (kill-buffer buf))))
   (advice-add 'elfeed-search-quit-window :after #'+kill-elfeed-buffers))
 
+(defcustom dotemacs-note-dir "~/note/"
+  "Note directory."
+  :type 'string)
+
 (use-package denote
   :ensure t
   :hook (dired-mode . denote-dired-mode)

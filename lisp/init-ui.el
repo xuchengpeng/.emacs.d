@@ -106,6 +106,25 @@
   (setq dired-create-destination-dirs 'ask
         dired-vc-rename-file t))
 
+(defcustom dotemacs-font nil
+  "The default font to use.
+
+Expects either a `font-spec', or a font string.
+
+Examples:
+  (setq dotemacs-font (font-spec :family \"Fira Mono\" :size 12))
+  (setq dotemacs-font \"Terminus (TTF):pixelsize=12:antialias=off\")
+  (setq dotemacs-font \"Iosevka SS14-13\")")
+
+(defcustom dotemacs-cn-font nil
+  "The chinese font to use.")
+
+(defcustom dotemacs-symbol-font nil
+  "The symbol font to use.")
+
+(defcustom dotemacs-emoji-font nil
+  "The emoji font to use.")
+
 (defun +init-fonts ()
   "Set english and chinese fonts."
   (when (display-graphic-p)

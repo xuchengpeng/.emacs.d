@@ -17,7 +17,10 @@
 (let ((default-directory (expand-file-name "site-lisp" dotemacs-dir)))
   (normal-top-level-add-subdirs-to-load-path))
 
-(require 'init-custom)
+(setq custom-file (expand-file-name "custom.el" dotemacs-local-dir))
+(when (file-exists-p custom-file)
+  (load custom-file nil 'nomessage))
+
 (require 'init-packages)
 (require 'init-base)
 (require 'init-ui)

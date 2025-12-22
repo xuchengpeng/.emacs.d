@@ -2,6 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 
+(defcustom dotemacs-package-archives 'melpa
+  "Set package archives from which to fetch."
+  :type '(choice
+          (const :tag "Melpa" melpa)
+          (const :tag "Tuna" tuna)
+          (const :tag "Custom" custom)))
+
 (setq package-user-dir (expand-file-name "elpa" dotemacs-local-dir))
 
 (defun +set-package-archives (archives)

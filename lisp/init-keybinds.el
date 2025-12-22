@@ -56,7 +56,6 @@
   "o e" #'elfeed
   "o f" #'consult-flymake
   "o g" #'gptel
-  "o p" #'org-publish
   "o s" #'eshell
 
   "q k" #'save-buffers-kill-emacs

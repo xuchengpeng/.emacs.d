@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+(defcustom dotemacs-org-dir "~/org/"
+  "Org directory."
+  :type 'string)
+
 (use-package org
   :mode ("\\.org$" . org-mode)
   :init
@@ -23,28 +27,17 @@
      (setq-local +modeline-left '(+modeline--buffer-name)
                  +modeline-right '(+modeline--major-mode))))
 
-  (defun +org-capture-org-blog ()
-    (let* ((dir (completing-read "Select subdirectory: " '("posts")))
-           (title (read-from-minibuffer "New file TITLE: "))
-           (filename (downcase (string-trim (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title) "-" "-"))))
-      (expand-file-name
-       (format "org/%s/%s-%s.org" dir (format-time-string "%Y-%m-%d") filename)
-       dotemacs-org-blog-dir)))
-
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates
-        `(("t" "Todo" entry
+        '(("t" "Todo" entry
            (file+headline "todo.org" "Todo")
            "* TODO %?\n%i\n%a")
           ("n" "Notes" entry
            (file+headline "notes.org" "Notes")
            "* %u %?\n%i\n%a")
           ("j" "Journal" entry
-           (file+olp+datetree ,(expand-file-name "journal.org" org-directory))
-           "* %U %?\n%i\n%a")
-          ("o" "Org Blog" plain
-           (file +org-capture-org-blog)
-           "#+TITLE: \n#+AUTHOR: \n#+DESCRIPTION: \n#+KEYWORDS: \n#+DATE: %T\n" :jump-to-captured t)))
+           (file+olp+datetree "journal.org")
+           "* %U %?\n%i\n%a")))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c)"))
@@ -83,9 +76,26 @@
 (use-package htmlize
   :ensure t)
 
+(defcustom dotemacs-org-blog-dir "~/org-blog/"
+  "Org blog directory."
+  :type 'string)
+
 (use-package ox-publish
   :commands org-publish
   :config
+  (defun +org-capture-org-blog ()
+    (let* ((dir (completing-read "Select subdirectory: " '("posts")))
+           (title (read-from-minibuffer "New file TITLE: "))
+           (filename (downcase (string-trim (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title) "-" "-"))))
+      (expand-file-name
+       (format "org/%s/%s-%s.org" dir (format-time-string "%Y-%m-%d") filename)
+       dotemacs-org-blog-dir)))
+  (add-to-list 'org-capture-templates
+               '("o" "Org Blog" plain
+                 (file +org-capture-org-blog)
+                 "#+TITLE: \n#+AUTHOR: \n#+DESCRIPTION: \n#+KEYWORDS: \n#+DATE: %T\n" :jump-to-captured t)
+               t)
+
   (setq org-export-in-background t
         org-export-headline-levels 4
         org-export-with-section-numbers nil

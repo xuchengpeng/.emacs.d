@@ -41,16 +41,6 @@ Examples:
   :type 'sexp
   :group 'dotemacs)
 
-(defcustom dotemacs-org-dir "~/org/"
-  "Org directory."
-  :type 'string
-  :group 'dotemacs)
-
-(defcustom dotemacs-org-blog-dir "~/org-blog/"
-  "Org blog directory."
-  :type 'string
-  :group 'dotemacs)
-
 (defcustom dotemacs-note-dir "~/note/"
   "Note directory."
   :type 'string

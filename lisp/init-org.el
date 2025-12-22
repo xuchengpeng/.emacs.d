@@ -17,7 +17,6 @@
         org-agenda-files (list org-directory)
         org-agenda-window-setup 'current-window
         org-persist-directory (expand-file-name "org-persist" dotemacs-cache-dir)
-        org-publish-timestamp-directory (expand-file-name "org-timestamps/" dotemacs-cache-dir)
         org-startup-indented t
         org-tags-column 0)
 
@@ -76,27 +75,11 @@
 (use-package htmlize
   :ensure t)
 
-(defcustom dotemacs-org-blog-dir "~/org-blog/"
-  "Org blog directory."
-  :type 'string)
-
 (use-package ox-publish
   :commands org-publish
   :config
-  (defun +org-capture-org-blog ()
-    (let* ((dir (completing-read "Select subdirectory: " '("posts")))
-           (title (read-from-minibuffer "New file TITLE: "))
-           (filename (downcase (string-trim (replace-regexp-in-string "[^A-Za-z0-9]+" "-" title) "-" "-"))))
-      (expand-file-name
-       (format "org/%s/%s-%s.org" dir (format-time-string "%Y-%m-%d") filename)
-       dotemacs-org-blog-dir)))
-  (add-to-list 'org-capture-templates
-               '("o" "Org Blog" plain
-                 (file +org-capture-org-blog)
-                 "#+TITLE: \n#+AUTHOR: \n#+DESCRIPTION: \n#+KEYWORDS: \n#+DATE: %T\n" :jump-to-captured t)
-               t)
-
-  (setq org-export-in-background t
+  (setq org-publish-timestamp-directory (expand-file-name "org-timestamps/" dotemacs-cache-dir)
+        org-export-in-background t
         org-export-headline-levels 4
         org-export-with-section-numbers nil
         org-export-with-author nil
@@ -156,85 +139,17 @@ If `NAMED-ONLY` is non-nil, return nil."
     (unless named-only
       (org-export-get-reference datum info)))
 
-  (defun +org-publish (oldfun project &optional force async)
+  (defun +org-html-stable-ids-enable ()
+    "Enable html stable ids."
+    (interactive)
     (advice-add #'org-export-get-reference :override #'+org-export-stable-ids-get-reference)
-    (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference)
-    (funcall oldfun project force async)
+    (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference))
+
+  (defun +org-html-stable-ids-disable ()
+    "Disable html stable ids."
+    (interactive)
     (advice-remove #'org-export-get-reference #'+org-export-stable-ids-get-reference)
-    (advice-remove #'org-html--reference #'+org-html-stable-ids-reference))
-
-  (advice-add #'org-publish :around #'+org-publish)
-
-  (defun +org-publish-sitemap (title list)
-    (concat "#+TITLE: " title "\n"
-            "#+OPTIONS: toc:nil\n\n"
-            (org-list-to-org list)))
-
-  (defun +org-publish-sitemap-format-entry (entry style project)
-    (cond ((not (directory-name-p entry))
-           (format "[[file:%s][%s - %s]]"
-                   entry
-                   (format-time-string "%b %d, %Y" (org-publish-find-date entry project))
-                   (org-publish-find-title entry project)))
-          ((eq style 'tree)
-           ;; Return only last subdir.
-           (file-name-nondirectory (directory-file-name entry)))
-          (t entry)))
-
-  (defun +org-blog-file-contents (file)
-    (with-temp-buffer
-      (insert-file-contents (expand-file-name file dotemacs-org-blog-dir))
-      (buffer-string)))
-
-  (defcustom +org-html-head (+org-blog-file-contents "html/head.html")
-    "Html head."
-    :type 'string)
-
-  (defcustom +org-html-header (+org-blog-file-contents "html/header.html")
-    "Html header."
-    :type 'string)
-
-  (defcustom +org-html-footer (+org-blog-file-contents "html/footer.html")
-    "Html footer."
-    :type 'string)
-
-  (setq org-publish-project-alist
-        `(("blog-posts"
-           :base-directory ,(expand-file-name "org/posts" dotemacs-org-blog-dir)
-           :base-extension "org"
-           :recursive t
-           :publishing-function org-html-publish-to-html
-           :publishing-directory ,(expand-file-name "public/posts" dotemacs-org-blog-dir)
-           :html-head ,+org-html-head
-           :html-preamble ,+org-html-header
-           :html-postamble ,+org-html-footer
-           :html-mathjax-options ((path "https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"))
-           :html-mathjax-template "<script id=\"MathJax-script\" async src=\"%PATH\"></script>"
-           :auto-sitemap t
-           :sitemap-filename "index.org"
-           :sitemap-title "Posts"
-           :sitemap-format-entry +org-publish-sitemap-format-entry
-           :sitemap-function +org-publish-sitemap
-           :sitemap-sort-files anti-chronologically)
-          ("blog-pages"
-           :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
-           :base-extension "org"
-           :recursive nil
-           :publishing-function org-html-publish-to-html
-           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir)
-           :html-head ,+org-html-head
-           :html-preamble ,+org-html-header
-           :html-postamble ,+org-html-footer
-           :html-mathjax-options ((path "https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"))
-           :html-mathjax-template "<script id=\"MathJax-script\" async src=\"%PATH\"></script>"
-           :auto-sitemap nil)
-          ("blog-static"
-           :base-directory ,(expand-file-name "org" dotemacs-org-blog-dir)
-           :base-extension "js\\|css\\|jpg\\|png\\|svg\\|gif\\|ico\\|txt\\|webmanifest\\|woff2"
-           :recursive t
-           :publishing-function org-publish-attachment
-           :publishing-directory ,(expand-file-name "public" dotemacs-org-blog-dir))
-          ("blog" :components ("blog-posts" "blog-pages" "blog-static")))))
+    (advice-remove #'org-html--reference #'+org-html-stable-ids-reference)))
 
 (provide 'init-org)
 ;;; init-org.el ends here

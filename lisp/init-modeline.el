@@ -238,19 +238,17 @@ Return `default-directory' if no project was found."
    +modeline--vc-info
    (when (and vc-mode buffer-file-name)
      (let* ((backend (vc-backend buffer-file-name))
-            (state (vc-state buffer-file-name backend))
             (mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+"))))
        (propertize
-        (cond ((memq state '(edited added))
-               (propertize (concat "*" mode) 'face '+modeline-debug-face))
-              ((eq state 'needs-merge)
-               (propertize (concat "?" mode) 'face '+modeline-debug-face))
-              ((eq state 'needs-update)
-               (propertize (concat "!" mode) 'face '+modeline-warning-face))
-              ((memq state '(removed conflict unregistered))
-               (propertize (concat "!" mode) 'face '+modeline-error-face))
-              (t
-               (propertize (concat "@" mode) 'face '+modeline-debug-face)))
+        (concat
+         (propertize (concat "@" mode) 'face '+modeline-debug-face)
+         (when (eq backend 'Git)
+           (when-let* ((numstat (split-string
+                                 (cdr (dotemacs-call-process "git" "diff" "--numstat" "--" buffer-file-name))
+                                 "[ \t]+"))
+                       (insertions (nth 0 numstat))
+                       (deletions (nth 1 numstat)))
+             (format "(+%s-%s)" insertions deletions))))
         'help-echo (get-text-property 0 'help-echo mode)
         'mouse-face '+modeline-highlight-face
         'local-map (get-text-property 0 'local-map mode))))))

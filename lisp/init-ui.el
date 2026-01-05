@@ -161,6 +161,12 @@ Examples:
   :init
   (keymap-global-set "<remap> <other-window>" 'ace-window))
 
+(use-package pulsar
+  :ensure t
+  :hook (after-init . pulsar-global-mode)
+  :config
+  (setq pulsar-iterations 5))
+
 (defun +adjust-transparency (frame incr)
   "Adjust the background transparency of FRAME by increment INCR."
   (let* ((oldalpha (or (frame-parameter frame 'alpha-background) 100))

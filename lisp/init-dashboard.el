@@ -23,8 +23,7 @@
   (setq-local tab-width 2)
   (setq-local scroll-preserve-screen-position nil)
   (setq-local auto-hscroll-mode nil)
-  (setq-local display-line-numbers-type nil)
-  (setq-local global-hl-line-mode nil))
+  (setq-local display-line-numbers-type nil))
 
 (defvar dashboard--width 40
   "Current width of the home buffer.")

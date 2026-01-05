@@ -46,9 +46,10 @@
           "*esh command on file*"))))
 
 (use-package hl-line
-  :hook ((after-init . global-hl-line-mode)
-         ((eshell-mode shell-mode term-mode vterm-mode) .
-          (lambda () (setq-local global-hl-line-mode nil)))))
+  :commands hl-line-mode
+  :config
+  (setq hl-line-sticky-flag nil
+        global-hl-line-sticky-flag nil))
 
 (use-package paren
   :hook (after-init . show-paren-mode)
@@ -60,7 +61,7 @@
         show-paren-context-when-offscreen t))
 
 (use-package dired
-  :commands dired
+  :hook (dired-mode . hl-line-mode)
   :init
   (setq dired-dwim-target t
         dired-hide-details-hide-symlink-targets nil

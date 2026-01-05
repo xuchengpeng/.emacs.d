@@ -72,7 +72,7 @@
   "s r" #'consult-ripgrep
 
   "t f" #'flymake-mode
-  "t h" #'hs-toggle-hiding
+  "t h" #'hl-line-mode
   "t l" #'display-line-numbers-mode
   "t s" #'flyspell-mode
   "t v" #'visible-mode

@@ -72,8 +72,7 @@
 
   (add-hook 'elfeed-show-mode-hook
             (lambda ()
-              (setq-local shr-use-fonts nil
-                          global-hl-line-mode nil)))
+              (setq-local shr-use-fonts nil)))
 
   (defun +kill-elfeed-buffers ()
     (dolist (buf '("*elfeed-entry*" "*elfeed-search*" "*elfeed-log*"))

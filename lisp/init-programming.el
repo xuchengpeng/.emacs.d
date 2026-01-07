@@ -53,6 +53,10 @@
                                     (when (treesit-language-available-p 'elisp)
                                       (treesit-parser-create 'elisp)))))
 
+(use-package apheleia
+  :ensure t
+  :hook (prog-mode . apheleia-mode))
+
 (use-package colorful-mode
   :ensure t
   :custom

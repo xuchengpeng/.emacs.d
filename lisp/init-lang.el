@@ -6,23 +6,6 @@
   (setq-default c-basic-offset 4)
   (setq c-ts-mode-indent-offset 4))
 
-(use-package reformatter
-  :ensure t
-  :after (:any python sh-script json-mode markdown-mode)
-  :config
-  (reformatter-define python-format
-    :program "ruff"
-    :args '("format" "-"))
-  (reformatter-define sh-format
-    :program "shfmt"
-    :args `("-i" ,(number-to-string sh-basic-offset) "-"))
-  (reformatter-define json-format
-    :program "prettier"
-    :args '("--parser" "json"))
-  (reformatter-define markdown-format
-    :program "prettier"
-    :args '("--parser" "markdown")))
-
 (use-package markdown-mode
   :ensure t
   :mode ("/README\\(?:\\.md\\)?\\'" . gfm-mode)

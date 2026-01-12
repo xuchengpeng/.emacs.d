@@ -40,10 +40,11 @@
 (use-package winner
   :hook (window-configuration-change . winner-mode)
   :config
-  (setq winner-boring-buffers (append winner-boring-buffers
-        '("*Compile-Log*" "*inferior-lisp*" "*Fuzzy Completions*"
-          "*Apropos*" "*Help*" "*cvs*" "*Buffer List*" "*Ibuffer*"
-          "*esh command on file*"))))
+  (setq winner-boring-buffers
+        (append winner-boring-buffers
+                '("*Compile-Log*" "*inferior-lisp*" "*Fuzzy Completions*"
+                  "*Apropos*" "*Help*" "*cvs*" "*Buffer List*" "*Ibuffer*"
+                  "*esh command on file*"))))
 
 (use-package hl-line
   :commands hl-line-mode

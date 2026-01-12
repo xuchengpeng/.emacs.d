@@ -14,7 +14,7 @@
       dotemacs-symbol-font "Segoe UI Symbol"
       dotemacs-emoji-font "Noto Color Emoji")
 
-(setq dotemacs-package-archives 'custom) ;; melpa, tuna, custom
+(setq dotemacs-package-archives nil) ;; melpa, tuna, nil
 (setq package-check-signature nil
       package-archives
       '(("gnu"    . "/path/to/elpa-mirror/gnu/")
@@ -30,12 +30,12 @@
 (with-eval-after-load 'init-ui
   (defun +init-theme-override ()
     (use-package modus-themes
-      :disabled
       :ensure t)
     (use-package catppuccin-themes
       :vc (:url "https://github.com/xuchengpeng/catppuccin-themes")
-      :config
+      :init
       (catppuccin-themes-take-over-modus-themes-mode 1)
+      :config
       (defun +catppuccin-themes-custom-faces (&rest _)
         (modus-themes-with-colors
           (custom-set-faces

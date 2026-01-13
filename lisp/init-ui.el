@@ -179,7 +179,11 @@ Examples:
                    previous-buffer
                    recenter-top-bottom
                    scroll-down-command
-                   scroll-up-command))
+                   scroll-up-command
+                   windmove-down
+                   windmove-left
+                   windmove-right
+                   windmove-up))
       (advice-add cmd :after #'+pulse-momentary-line))))
 
 (defun +adjust-transparency (frame incr)

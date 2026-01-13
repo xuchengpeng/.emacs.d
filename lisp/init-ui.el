@@ -162,11 +162,25 @@ Examples:
   :init
   (keymap-global-set "<remap> <other-window>" 'ace-window))
 
-(use-package pulsar
-  :ensure t
-  :hook (after-init . pulsar-global-mode)
-  :config
-  (setq pulsar-iterations 5))
+(use-package pulse
+  :ensure nil
+  :hook (after-init . +pulse-init)
+  :init
+  (defun +pulse-momentary-line (&rest _)
+    "Pulse current line."
+    (pulse-momentary-highlight-one-line (point)))
+  (defun +pulse-init ()
+    "Pulse init."
+    (dolist (cmd '(ace-window
+                   backward-page
+                   forward-page
+                   next-buffer
+                   other-window
+                   previous-buffer
+                   recenter-top-bottom
+                   scroll-down-command
+                   scroll-up-command))
+      (advice-add cmd :after #'+pulse-momentary-line))))
 
 (defun +adjust-transparency (frame incr)
   "Adjust the background transparency of FRAME by increment INCR."

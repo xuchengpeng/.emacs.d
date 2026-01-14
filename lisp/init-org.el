@@ -62,10 +62,10 @@
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c)"))
         org-todo-keyword-faces
-        '(("STARTED" . (:inherit (bold font-lock-constant-face)))
-          ("HOLD" . (:inherit (bold warning)))
-          ("WAIT" . (:inherit (bold warning)))
-          ("CANCELLED" . (:inherit (bold error))))
+        '(("STARTED" . font-lock-constant-face)
+          ("HOLD" . warning)
+          ("WAIT" . warning)
+          ("CANCELLED" . error))
         org-priority-faces
         '((?A . error)
           (?B . warning)

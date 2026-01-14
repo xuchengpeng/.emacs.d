@@ -11,7 +11,8 @@
   :group 'applications)
 
 (defcustom echo-bar-modules
-  '(echo-bar--eglot
+  '(echo-bar--input-method
+    echo-bar--eglot
     echo-bar--selection-info
     echo-bar--word-count
     echo-bar--multiple-cursors
@@ -102,6 +103,11 @@ If nil, don't update the echo bar automatically."
 (defvar text-scale-mode-lighter)
 
 (declare-function mc/num-cursors "ext:multiple-cursors-core")
+
+(defun echo-bar--input-method ()
+  "Input method info."
+  (when current-input-method-title
+    (propertize current-input-method-title 'face 'echo-bar-blue-face)))
 
 (defun echo-bar--text-scale ()
   "Text-Scale info."

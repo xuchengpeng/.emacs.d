@@ -57,10 +57,7 @@
            "* TODO %?\n%i\n%a")
           ("n" "Notes" entry
            (file+headline "notes.org" "Notes")
-           "* %u %?\n%i\n%a")
-          ("j" "Journal" entry
-           (file+olp+datetree "journal.org")
-           "* %U %?\n%i\n%a")))
+           "* %u %?\n%i\n%a")))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c)"))

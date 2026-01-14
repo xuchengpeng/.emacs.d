@@ -79,8 +79,8 @@
       (ignore-errors (kill-buffer buf))))
   (advice-add 'elfeed-search-quit-window :after #'+kill-elfeed-buffers))
 
-(defcustom dotemacs-note-dir "~/note/"
-  "Note directory."
+(defcustom dotemacs-notes-dir "~/notes/"
+  "Note's directory."
   :type 'string)
 
 (use-package denote
@@ -101,7 +101,7 @@
     "R" #'denote-rename-file-using-front-matter)
   (keymap-global-set "C-c n" +denote-map)
   :config
-  (setq denote-directory dotemacs-note-dir)
+  (setq denote-directory dotemacs-notes-dir)
   (denote-rename-buffer-mode 1))
 
 (use-package denote-org

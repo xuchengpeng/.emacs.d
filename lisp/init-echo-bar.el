@@ -107,7 +107,7 @@ If nil, don't update the echo bar automatically."
 (defun echo-bar--input-method ()
   "Input method info."
   (when current-input-method-title
-    (propertize current-input-method-title 'face 'echo-bar-blue-face)))
+    (propertize current-input-method-title 'face '(:inherit (bold echo-bar-blue-face)))))
 
 (defun echo-bar--text-scale ()
   "Text-Scale info."

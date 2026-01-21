@@ -13,11 +13,11 @@
 (use-package orderless
   :ensure t
   :after (vertico)
-  :config
-  (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles basic partial-completion)))
-        orderless-component-separator #'orderless-escapable-split-on-space))
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles partial-completion))))
+  (completion-category-defaults nil) ;; Disable defaults, use our settings
+  (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
 
 (use-package consult
   :ensure t
@@ -102,6 +102,9 @@
 (use-package emacs
   :ensure nil
   :custom
+  ;; Enable context menu. `vertico-multiform-mode' adds a menu in the minibuffer
+  ;; to switch display modes.
+  (context-menu-mode t)
   ;; Support opening new minibuffers from inside existing minibuffers.
   (enable-recursive-minibuffers t)
   ;; TAB cycle if there are only few candidates
@@ -112,7 +115,23 @@
   ;; Emacs 30 and newer: Disable Ispell completion function.
   (text-mode-ispell-word-completion nil)
   ;; Hide commands in M-x which do not apply to the current mode.
-  (read-extended-command-predicate #'command-completion-default-include-p))
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  :init
+  (setq
+   ;; One column view with annotations
+   completions-format 'one-column
+   completions-detailed t
+   completions-group t
+   ;; Sort candidates by history position
+   completions-sort 'historical
+   ;; Allow navigating from the minibuffer
+   minibuffer-visible-completions 'up-down
+   ;; Show completions eagerly and update automatically
+   completion-eager-update t
+   completion-eager-display t
+   ;; Disable noise (inline help also blocks input)
+   completion-show-help nil
+   completion-show-inline-help nil))
 
 (use-package corfu
   :ensure t

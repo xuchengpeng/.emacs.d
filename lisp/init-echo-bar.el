@@ -152,7 +152,7 @@ If nil, don't update the echo bar automatically."
 
 (defun echo-bar--time ()
   "Display time."
-  (propertize (format-time-string "[%Y-%m-%d %H:%M]") 'face 'echo-bar-gray-face))
+  (propertize (format-time-string "%Y-%m-%d %H:%M %a") 'face 'echo-bar-gray-face))
 
 (defun echo-bar--eglot ()
   "Display eglot."

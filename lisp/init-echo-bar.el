@@ -202,7 +202,7 @@ If nil, don't update the echo bar automatically."
              (when (>
                     (echo-bar--str-len
                      (car (last (string-split (substring-no-properties (or (current-message) "")) "\n"))))
-                    (- (frame-width) wid))
+                    (- (frame-width) wid) 2)
                "\n")
              spc
              text))
@@ -239,7 +239,7 @@ If nil, don't update the echo bar automatically."
 
   ;; Start the timer to automatically update
   (when echo-bar-update-interval
-    (run-with-timer 0 echo-bar-update-interval 'echo-bar-update))
+    (run-with-timer 0.5 echo-bar-update-interval 'echo-bar-update))
 
   ;; Add the setup function to the minibuffer hook
   (add-hook 'minibuffer-setup-hook #'echo-bar--minibuffer-setup))

@@ -42,17 +42,6 @@
   (with-eval-after-load 'em-alias
     (setq eshell-command-aliases-list (append eshell-command-aliases-list +eshell-aliases))))
 
-(unless (eq system-type 'windows-nt)
-  (use-package vterm
-    :ensure t
-    :commands (vterm vterm-other-window)
-    :config
-    (add-hook
-     'vterm-mode-hook
-     (lambda ()
-       (setq-local +modeline-left '(+modeline--buffer-name)
-                   +modeline-right '(+modeline--major-mode))))))
-
 (use-package gptel
   :ensure t
   :commands (gptel gptel-send gptel-rewrite)

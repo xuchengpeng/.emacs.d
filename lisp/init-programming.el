@@ -55,7 +55,8 @@
 
 (use-package apheleia
   :ensure t
-  :commands apheleia-format-buffer)
+  :commands apheleia-format-buffer
+  :hook (prog-mode . apheleia-mode))
 
 (use-package colorful-mode
   :ensure t

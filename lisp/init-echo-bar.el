@@ -12,6 +12,7 @@
 
 (defcustom echo-bar-modules
   '(echo-bar--input-method
+    echo-bar--project
     echo-bar--eglot
     echo-bar--selection-info
     echo-bar--word-count
@@ -107,7 +108,7 @@ If nil, don't update the echo bar automatically."
 (defun echo-bar--input-method ()
   "Input method info."
   (when current-input-method-title
-    (propertize current-input-method-title 'face '(:inherit (bold echo-bar-blue-face)))))
+    (propertize current-input-method-title 'face '(:inherit (bold echo-bar-magenta-face)))))
 
 (defun echo-bar--text-scale ()
   "Text-Scale info."
@@ -158,6 +159,11 @@ If nil, don't update the echo bar automatically."
   "Display eglot."
   (when (bound-and-true-p eglot--managed-mode)
     (propertize eglot-menu-string 'face 'echo-bar-green-face)))
+
+(defun echo-bar--project ()
+  "Display project."
+  (when-let* ((project (project-name (project-current))))
+    (propertize project 'face 'echo-bar-blue-face)))
 
 (defvar echo-bar-text nil
   "The text currently displayed in the echo bar.")

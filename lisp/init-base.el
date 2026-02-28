@@ -7,27 +7,18 @@
         w32-pipe-read-delay 0               ; faster IPC
         w32-pipe-buffer-size (* 64 1024)))  ; read more at a time (was 4K)
 
-(set-charset-priority 'unicode)
 (set-language-environment "UTF-8")
-(set-default-coding-systems 'utf-8-unix)
-(set-keyboard-coding-system 'utf-8-unix)
-(set-terminal-coding-system 'utf-8-unix)
-(setq-default buffer-file-coding-system 'utf-8-unix)
-(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+(if (eq system-type 'windows-nt)
+    (setq-default buffer-file-coding-system 'utf-8-unix
+                  process-coding-system-alist
+                  '(("cmdproxy" utf-8 . gbk)
+                    ("rg" utf-8 . gbk)
+                    ("fd" utf-8 . gbk)
+                    ("grep" utf-8 . gbk)))
+  (set-selection-coding-system 'utf-8))
+;; `set-language-environment' also sets `default-input-method'.
 (setq default-input-method nil)
 (setq system-time-locale "C")
-(if (eq system-type 'windows-nt)
-    (progn
-      (setq locale-coding-system 'gbk)
-      (setq-default process-coding-system-alist
-                    '(("[pP][lL][iI][nN][kK]" utf-8 . gbk)
-                      ("[cC][mM][dD][pP][rR][oO][xX][yY]" utf-8 . gbk)
-                      ("rg" utf-8 . gbk)
-                      ("fd" utf-8 . gbk)
-                      ("grep" utf-8 . gbk))))
-  (progn
-    (setq locale-coding-system 'utf-8)
-    (set-selection-coding-system 'utf-8)))
 
 (defun dotemacs-call-process (command &rest args)
   "Execute COMMAND with ARGS synchronously.

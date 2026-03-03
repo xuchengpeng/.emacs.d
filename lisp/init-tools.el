@@ -82,7 +82,7 @@
     "s" #'denote-subdirectory
     "t" #'denote-type
     "d" #'denote-sort-dired
-    "g" #'denote-grep
+    "G" #'denote-grep
     "l" #'denote-link
     "L" #'denote-add-links
     "b" #'denote-backlinks
@@ -104,6 +104,16 @@
              denote-silo-select-silo-then-command
              denote-silo-dired
              denote-silo-cd))
+
+(use-package consult-denote
+  :ensure t
+  :commands (consult-denote-find consult-denote-grep)
+  :custom
+  (consult-denote-grep-command #'consult-ripgrep)
+  (consult-denote-find-command #'consult-fd)
+  :init
+  (keymap-set +denote-map "f" #'consult-denote-find)
+  (keymap-set +denote-map "g" #'consult-denote-grep))
 
 (provide 'init-tools)
 ;;; init-tools.el ends here

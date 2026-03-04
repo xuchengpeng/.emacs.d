@@ -122,9 +122,10 @@
 
 (use-package expreg
   :ensure t
-  :commands (expreg-expand)
+  :commands (expreg-expand expreg-contract)
   :init
-  (keymap-global-set "C-=" 'expreg-expand))
+  (keymap-global-set "C-=" #'expreg-expand)
+  (keymap-global-set "C--" #'expreg-contract))
 
 (use-package multiple-cursors
   :ensure t

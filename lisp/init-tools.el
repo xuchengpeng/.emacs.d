@@ -76,12 +76,24 @@
   :ensure t
   :hook (dired-mode . denote-dired-mode)
   :init
+  (defun +denote-fd ()
+    "Find in denote directory."
+    (interactive)
+    (require 'denote)
+    (consult-fd denote-directory nil))
+  (defun +denote-ripgrep ()
+    "Grep in denote directory."
+    (interactive)
+    (require 'denote)
+    (consult-ripgrep denote-directory nil))
   (defvar-keymap +denote-map
     :doc "Denote map."
     "n" #'denote
     "s" #'denote-subdirectory
     "t" #'denote-type
     "d" #'denote-sort-dired
+    "f" #'+denote-fd
+    "g" #'+denote-ripgrep
     "G" #'denote-grep
     "l" #'denote-link
     "L" #'denote-add-links
@@ -104,16 +116,6 @@
              denote-silo-select-silo-then-command
              denote-silo-dired
              denote-silo-cd))
-
-(use-package consult-denote
-  :ensure t
-  :commands (consult-denote-find consult-denote-grep)
-  :custom
-  (consult-denote-grep-command #'consult-ripgrep)
-  (consult-denote-find-command #'consult-fd)
-  :init
-  (keymap-set +denote-map "f" #'consult-denote-find)
-  (keymap-set +denote-map "g" #'consult-denote-grep))
 
 (provide 'init-tools)
 ;;; init-tools.el ends here

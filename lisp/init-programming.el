@@ -70,22 +70,5 @@
   :hook ((after-init . global-diff-hl-mode)
          (dired-mode . diff-hl-dired-mode)))
 
-(defvar +highlight-keywords
-  '(("\\<\\(TODO\\|FIXME\\|BUG\\)\\>" 1 'error prepend)
-    ("\\<\\(NOTE\\|HACK\\|MAYBE\\)\\>" 1 'warning prepend)))
-
-(define-minor-mode +highlight-keywords-mode
-  "Highlight keywords, like TODO, FIXME..."
-  :global nil
-  (if +highlight-keywords-mode
-      (font-lock-add-keywords nil +highlight-keywords)
-    (font-lock-remove-keywords nil +highlight-keywords))
-
-  ;; Fontify the current buffer
-  (when (bound-and-true-p font-lock-mode)
-    (font-lock-flush)))
-
-(add-hook 'prog-mode-hook #'+highlight-keywords-mode)
-
 (provide 'init-programming)
 ;;; init-programming.el ends here

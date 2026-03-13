@@ -49,6 +49,7 @@
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . html-ts-mode))
   (add-hook 'emacs-lisp-mode-hook (lambda ()
                                     (when (treesit-language-available-p 'elisp)
                                       (treesit-parser-create 'elisp)))))

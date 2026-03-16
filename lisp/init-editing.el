@@ -40,6 +40,8 @@
 
 (setq kill-do-not-save-duplicates t)
 
+(setq isearch-lazy-count t)
+
 (add-hook 'text-mode-hook #'visual-line-mode)
 
 (add-to-list 'auto-mode-alist '("/LICENSE\\'" . text-mode))

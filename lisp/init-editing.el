@@ -22,7 +22,16 @@
 
 (setq auto-save-default nil
       auto-save-list-file-prefix (expand-file-name "autosave" dotemacs-cache-dir)
-      tramp-auto-save-directory  (expand-file-name "tramp-autosave" dotemacs-cache-dir))
+      tramp-auto-save-directory  (expand-file-name "tramp-autosave" dotemacs-cache-dir)
+      auto-save-visited-predicate
+      (lambda ()
+        (and (not (buffer-live-p (get-buffer " *vundo tree*")))
+             (not (string-suffix-p "gpg" (file-name-extension (buffer-name)) t))
+             (not (eq (buffer-base-buffer
+                       (get-buffer (concat "CAPTURE-" (buffer-name))))
+                      (current-buffer)))
+             (or (not (boundp 'corfu--total)) (zerop corfu--total)))))
+(add-hook 'after-init-hook #'auto-save-visited-mode)
 
 ;; Indentation
 (setq-default tab-width 4

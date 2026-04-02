@@ -31,7 +31,7 @@
                        (get-buffer (concat "CAPTURE-" (buffer-name))))
                       (current-buffer)))
              (or (not (boundp 'corfu--total)) (zerop corfu--total)))))
-(add-hook 'after-init-hook #'auto-save-visited-mode)
+;; (add-hook 'after-init-hook #'auto-save-visited-mode)
 
 ;; Indentation
 (setq-default tab-width 4

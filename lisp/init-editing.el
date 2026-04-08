@@ -47,7 +47,8 @@
       require-final-newline t
       tabify-regexp "^\t* [ \t]+")
 
-(setq kill-do-not-save-duplicates t)
+(setq kill-do-not-save-duplicates t
+      save-interprogram-paste-before-kill t)
 
 (setq isearch-lazy-count t)
 

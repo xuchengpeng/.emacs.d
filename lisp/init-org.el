@@ -50,14 +50,11 @@
      (setq-local +modeline-left '(+modeline--buffer-name)
                  +modeline-right '(+modeline--major-mode))))
 
-  (setq org-default-notes-file (expand-file-name "notes.org" dotemacs-notes-dir)
+  (setq org-default-notes-file (expand-file-name "notes.org" dotemacs-local-dir)
         org-capture-templates
         '(("t" "Todo" entry
            (file+headline "todo.org" "Todo")
-           "* TODO %?\n%i\n%a")
-          ("n" "Notes" entry
-           (file+headline org-default-notes-file "Notes")
-           "* %u %?\n%i\n%a")))
+           "* TODO %^{Title}%?\nDEADLINE: %^T\n")))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s)" "HOLD(h)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c)"))

@@ -253,16 +253,7 @@ Examples:
   (+modeline-mode)
 
   (require 'init-echo-bar)
-  (echo-bar-mode)
-
-  (require 'init-dashboard)
-  (add-hook
-   'dashboard-mode-hook
-   (lambda ()
-     (setq-local tab-line-exclude t
-                 +modeline-left '(+modeline--buffer-default-directory)
-                 +modeline-right '(+modeline--major-mode))))
-  (dashboard-initialize))
+  (echo-bar-mode))
 
 (add-hook 'window-setup-hook #'+init-ui)
 

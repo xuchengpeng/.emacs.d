@@ -22,7 +22,6 @@
 (use-package consult
   :ensure t
   :after (vertico)
-  :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
   (keymap-global-set "<remap> <apropos>" #'consult-apropos)
   (keymap-global-set "<remap> <bookmark-jump>" #'consult-bookmark)
@@ -88,8 +87,7 @@
   (keymap-set embark-general-map "." #'mark))
 
 (use-package embark-consult
-  :ensure t
-  :hook (embark-collect-mode . consult-preview-at-point-mode))
+  :ensure t)
 
 (use-package marginalia
   :ensure t

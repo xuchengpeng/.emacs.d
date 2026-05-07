@@ -61,12 +61,7 @@
 
   (add-hook 'elfeed-show-mode-hook
             (lambda ()
-              (setq-local shr-use-fonts nil)))
-
-  (defun +kill-elfeed-buffers ()
-    (dolist (buf '("*elfeed-entry*" "*elfeed-search*" "*elfeed-log*"))
-      (ignore-errors (kill-buffer buf))))
-  (advice-add 'elfeed-search-quit-window :after #'+kill-elfeed-buffers))
+              (setq-local shr-use-fonts nil))))
 
 (defcustom dotemacs-notes-dir "~/notes/"
   "Note's directory."

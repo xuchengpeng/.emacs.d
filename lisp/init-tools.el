@@ -56,9 +56,7 @@
   :commands (elfeed)
   :config
   (setq elfeed-db-directory (expand-file-name "elfeed" dotemacs-cache-dir)
-        elfeed-feeds '("https://planet.emacslife.com/atom.xml")
-        elfeed-search-filter "@1-month-ago ")
-
+        elfeed-feeds '("https://planet.emacslife.com/atom.xml"))
   (add-hook 'elfeed-show-mode-hook
             (lambda ()
               (setq-local shr-use-fonts nil))))

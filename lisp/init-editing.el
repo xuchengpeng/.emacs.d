@@ -54,9 +54,6 @@
 
 (add-hook 'text-mode-hook #'visual-line-mode)
 
-(add-to-list 'auto-mode-alist '("/LICENSE\\'" . text-mode))
-(add-to-list 'auto-mode-alist '("rc\\'" . conf-mode))
-
 (setq bookmark-default-file (expand-file-name "bookmarks.eld" dotemacs-cache-dir)
       project-list-file (expand-file-name "projects" dotemacs-cache-dir))
 

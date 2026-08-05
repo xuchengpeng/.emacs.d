@@ -63,6 +63,7 @@
   :ensure t
   :custom
   (colorful-use-prefix t)
+  (colorful-only-strings 'only-prog)
   (css-fontify-colors nil)
   :hook (after-init . global-colorful-mode))
 

@@ -115,7 +115,7 @@
 (defun +delete-trailing-whitespace ()
   "Delete trailing whitespace before save."
   (setq show-trailing-whitespace t)
-  (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
+  (delete-trailing-whitespace-mode 1))
 (add-hook 'prog-mode-hook #'+delete-trailing-whitespace)
 
 (use-package avy

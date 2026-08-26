@@ -1,4 +1,4 @@
-;;; init-editing.el --- Editing utils  -*- lexical-binding: t -*-
+;;; init-editor.el --- Editing utils  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -191,5 +191,5 @@
         undo-strong-limit 2000000   ; 2mb   (default is 240kb)
         undo-outer-limit 36000000)) ; 36mb  (default is 24mb)
 
-(provide 'init-editing)
-;;; init-editing.el ends here
+(provide 'init-editor)
+;;; init-editor.el ends here

@@ -24,12 +24,11 @@
 (require 'init-packages)
 (require 'init-base)
 (require 'init-ui)
-(require 'init-editing)
+(require 'init-editor)
 (require 'init-completion)
 (require 'init-org)
 (require 'init-tools)
 (require 'init-programming)
-(require 'init-lang)
 
 (provide 'init)
 ;;; init.el ends here

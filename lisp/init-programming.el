@@ -2,6 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package elisp-mode
+  :ensure nil
+  :custom
+  (elisp-fontify-semantically t))
+
 (use-package flymake
   :hook (prog-mode . flymake-mode)
   :init
@@ -27,7 +32,6 @@
         eglot-events-buffer-config '(:size 0 :format full)
         eglot-code-action-indications '(eldoc-hint)))
 
-;; treesit support
 (use-package treesit
   :ensure nil
   :custom

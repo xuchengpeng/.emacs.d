@@ -12,11 +12,7 @@
 
 (defcustom echo-bar-modules
   '(echo-bar--input-method
-    echo-bar--project
-    echo-bar--eglot
-    echo-bar--selection-info
     echo-bar--word-count
-    echo-bar--multiple-cursors
     echo-bar--hostname
     echo-bar--text-scale
     echo-bar--time)
@@ -100,10 +96,7 @@ If nil, don't update the echo bar automatically."
   "Echo bar gray face."
   :group 'echo-bar)
 
-(defvar eglot-menu-string)
 (defvar text-scale-mode-lighter)
-
-(declare-function mc/num-cursors "ext:multiple-cursors-core")
 
 (defun echo-bar--input-method ()
   "Input method info."
@@ -115,35 +108,11 @@ If nil, don't update the echo bar automatically."
   (when (bound-and-true-p text-scale-mode)
     (propertize (format "(%s)" text-scale-mode-lighter) 'face 'echo-bar-gray-face)))
 
-(defun echo-bar--selection-info ()
-  "Display selection info."
-  (when mark-active
-    (let* ((beg (region-beginning))
-           (end (region-end))
-           (lines (count-lines beg (min end (point-max)))))
-      (propertize
-       (concat
-        (cond ((bound-and-true-p rectangle-mark-mode)
-               (let ((cols (abs (- (save-excursion (goto-char end) (current-column))
-                                   (save-excursion (goto-char beg) (current-column))))))
-                 (format "%dx%dB" lines cols)))
-              ((> lines 1)
-               (format "%dC-%dL" (- end beg) lines))
-              (t
-               (format "%dC" (- end beg))))
-        (format "-%dW" (count-words beg end)))
-       'face 'echo-bar-yellow-face))))
-
 (defun echo-bar--word-count ()
   "Word count."
   (when (member major-mode '(text-mode markdown-mode gfm-mode org-mode))
     (propertize (format "%dW" (count-words (point-min) (point-max)))
                 'face 'echo-bar-yellow-face)))
-
-(defun echo-bar--multiple-cursors ()
-  "Display the number of multiple cursors."
-  (when (bound-and-true-p multiple-cursors-mode)
-    (propertize (format "mc:%d" (mc/num-cursors)) 'face 'echo-bar-cyan-face)))
 
 (defun echo-bar--hostname ()
   "Display remote hostname."
@@ -154,16 +123,6 @@ If nil, don't update the echo bar automatically."
 (defun echo-bar--time ()
   "Display time."
   (propertize (format-time-string "%Y-%m-%d %H:%M %a") 'face 'echo-bar-gray-face))
-
-(defun echo-bar--eglot ()
-  "Display eglot."
-  (when (bound-and-true-p eglot--managed-mode)
-    (propertize eglot-menu-string 'face 'echo-bar-green-face)))
-
-(defun echo-bar--project ()
-  "Display project."
-  (when-let* ((project (project-name (project-current))))
-    (propertize project 'face 'echo-bar-blue-face)))
 
 (defvar echo-bar-text nil
   "The text currently displayed in the echo bar.")

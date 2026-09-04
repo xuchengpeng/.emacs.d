@@ -20,7 +20,7 @@
   :group '+modeline-faces)
 
 (defface +modeline-emphasis-face
-  '((t (:inherit (+modeline-default-face mode-line-emphasis))))
+  '((t (:inherit (+modeline-default-face mode-line-emphasis) :slant normal)))
   "Face used for emphasis."
   :group '+modeline-faces)
 
@@ -64,6 +64,9 @@
   "Face for errors in the mode-line."
   :group '+modeline-faces)
 
+(defvar eglot-menu)
+(defvar eglot-menu-string)
+(defvar eglot-server-menu)
 (defvar flymake--state)
 (defvar flymake-menu)
 
@@ -74,6 +77,7 @@
 (declare-function flymake-disabled-backends "flymake")
 (declare-function flymake-reporting-backends "flymake")
 (declare-function flymake-running-backends "flymake")
+(declare-function mc/num-cursors "ext:multiple-cursors-core")
 (declare-function warning-numeric-level "warnings")
 
 (defun +modeline-face (&optional face)
@@ -143,6 +147,43 @@
    'help-echo "Buffer position\nmouse-1: Toggle Line and Column Number Display"
    'mouse-face '+modeline-highlight-face
    'local-map mode-line-column-line-number-mode-map))
+
+(defun +modeline--multiple-cursors ()
+  "Display the number of multiple cursors."
+  (when (and (bound-and-true-p multiple-cursors-mode) (mode-line-window-selected-p))
+    (propertize (format "mc:%d" (mc/num-cursors)) 'face '+modeline-emphasis-face)))
+
+(defun +modeline--selection-info ()
+  "Selection info in mode-line."
+  (when (and mark-active (mode-line-window-selected-p))
+    (let* ((beg (region-beginning))
+           (end (region-end))
+           (lines (count-lines beg (min end (point-max)))))
+      (propertize
+       (concat
+        (cond ((bound-and-true-p rectangle-mark-mode)
+               (let ((cols (abs (- (save-excursion (goto-char end) (current-column))
+                                   (save-excursion (goto-char beg) (current-column))))))
+                 (format "%dx%dB" lines cols)))
+              ((> lines 1)
+               (format "%dC %dL" (- end beg) lines))
+              (t
+               (format "%dC" (- end beg))))
+        (format " %dW" (count-words beg end)))
+       'face '+modeline-emphasis-face))))
+
+(defun +modeline--eglot ()
+  "Eglot in mode-line."
+  (when (bound-and-true-p eglot--managed-mode)
+    (propertize
+     eglot-menu-string
+     'face (+modeline-face 'eglot-mode-line)
+     'mouse-face '+modeline-highlight-face
+     'help-echo "Eglot: Emacs LSP client\nmouse-1: Eglot menu\nmouse-3: LSP server control menu"
+     'local-map (let ((map (make-sparse-keymap)))
+                  (keymap-set map "<mode-line> <mouse-1>" eglot-menu)
+                  (keymap-set map "<mode-line> <mouse-3>" eglot-server-menu)
+                  map))))
 
 (defun +modeline--buffer-encoding ()
   "Buffer encoding in mode-line."
@@ -259,13 +300,16 @@
 
 (defcustom +modeline-left
   '(+modeline--buffer-info
-    +modeline--position)
+    +modeline--position
+    +modeline--multiple-cursors
+    +modeline--selection-info)
   "List of items on the left of mode-line."
   :type '(list function)
   :group '+modeline)
 
 (defcustom +modeline-right
-  '(+modeline--buffer-encoding
+  '(+modeline--eglot
+    +modeline--buffer-encoding
     +modeline--major-mode
     +modeline--vc-info
     +modeline--flymake)

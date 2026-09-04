@@ -2,8 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
-(when (version< emacs-version "30.1")
-  (error "Detected Emacs %s. Emacs version should be 30.1 or higher" emacs-version))
+(when (version< emacs-version "31.1")
+  (error "Detected Emacs %s. Emacs version should be 31.1 or higher" emacs-version))
 
 (defvar dotemacs-dir user-emacs-directory
   "The root dir of the Emacs dotemacs distribution.")

@@ -12,10 +12,7 @@
 (defvar dotemacs-cache-dir (expand-file-name ".cache" dotemacs-dir)
   "Where cache files are stored.")
 
-(dolist (dir '("site-lisp" "lisp"))
-  (push (expand-file-name dir dotemacs-dir) load-path))
-(let ((default-directory (expand-file-name "site-lisp" dotemacs-dir)))
-  (normal-top-level-add-subdirs-to-load-path))
+(push (expand-file-name "lisp" dotemacs-dir) load-path)
 
 (setq custom-file (expand-file-name "custom.el" dotemacs-local-dir))
 (when (file-exists-p custom-file)

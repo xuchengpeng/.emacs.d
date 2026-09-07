@@ -20,7 +20,7 @@
   :group '+modeline-faces)
 
 (defface +modeline-emphasis-face
-  '((t (:inherit (+modeline-default-face mode-line-emphasis) :slant normal)))
+  '((t (:inherit (+modeline-default-face mode-line-emphasis))))
   "Face used for emphasis."
   :group '+modeline-faces)
 
@@ -29,38 +29,57 @@
   "Face used for highlighting."
   :group '+modeline-faces)
 
-(defface +modeline-buffer-path-face
-  '((t (:inherit (+modeline-emphasis-face bold) :slant normal)))
-  "Face used for the dirname part of the buffer path."
-  :group '+modeline-faces)
-
-(defface +modeline-buffer-file-face
-  '((t (:inherit (+modeline-default-face mode-line-buffer-id bold))))
+(defface +modeline-buffer-id-face
+  '((t (:inherit (+modeline-default-face mode-line-buffer-id))))
   "Face used for the filename part of the mode-line buffer path."
   :group '+modeline-faces)
 
+(defface +modeline-buffer-path-face
+  '((((background light)) :foreground "#0031a9" :weight bold)
+    (((background dark)) :foreground "#2fafff" :weight bold)
+    (t :inherit +modeline-default-face))
+  "Face used for the dirname part of the buffer path."
+  :group '+modeline-faces)
+
 (defface +modeline-buffer-modified-face
-  '((t (:inherit (+modeline-default-face warning bold) :background unspecified)))
+  '((((background light)) :foreground "#6f5500" :weight bold)
+    (((background dark)) :foreground "#d0bc00" :weight bold)
+    (t :inherit +modeline-default-face))
   "Face used for the \\='unsaved\\=' symbol in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-buffer-major-mode-face
-  '((t (:inherit (+modeline-emphasis-face bold) :slant normal)))
+  '((((background light)) :foreground "#0031a9" :weight bold)
+    (((background dark)) :foreground "#2fafff" :weight bold)
+    (t :inherit +modeline-default-face))
   "Face used for the major-mode segment in the mode-line."
   :group '+modeline-faces)
 
-(defface +modeline-debug-face
-  '((t (:inherit (+modeline-default-face success bold))))
-  "Face for debug-level messages in the mode-line."
+(defface +modeline-vc-face
+  '((((background light)) :foreground "#006800" :weight bold)
+    (((background dark)) :foreground "#44bc44" :weight bold)
+    (t :inherit +modeline-default-face))
+  "Face for vc in the mode-line."
+  :group '+modeline-faces)
+
+(defface +modeline-info-face
+  '((((background light)) :foreground "#005e8b" :weight bold)
+    (((background dark)) :foreground "#00d3d0" :weight bold)
+    (t :inherit +modeline-default-face))
+  "Face for infos in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-warning-face
-  '((t (:inherit (+modeline-default-face warning bold))))
+  '((((background light)) :foreground "#6f5500" :weight bold)
+    (((background dark)) :foreground "#d0bc00" :weight bold)
+    (t :inherit +modeline-default-face))
   "Face for warnings in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-error-face
-  '((t (:inherit (+modeline-default-face error bold))))
+  '((((background light)) :foreground "#a60000" :weight bold)
+    (((background dark)) :foreground "#ff5f59" :weight bold)
+    (t :inherit +modeline-default-face))
   "Face for errors in the mode-line."
   :group '+modeline-faces)
 
@@ -83,10 +102,10 @@
 (defun +modeline-face (&optional face)
   "Display FACE in the selected window."
   (if (mode-line-window-selected-p)
-      (or (and (facep face) `(:inherit (+modeline-default-face ,face)))
-          '(:inherit (+modeline-default-face mode-line-active)))
-    (or (and (facep face) `(:inherit (+modeline-default-face mode-line-inactive ,face)))
-        '(:inherit (+modeline-default-face mode-line-inactive)))))
+      `(:inherit (+modeline-default-face
+                  ,(cond ((facep face) face)
+                         (t 'mode-line-active))))
+    `(:inherit (+modeline-default-face mode-line-inactive ,(when (facep face) face)))))
 
 (defun +modeline-display-text (text)
   "Display TEXT in mode-line."
@@ -126,7 +145,7 @@
    (buffer-name)
    'face (if (and (buffer-modified-p) (not buffer-read-only))
              (+modeline-face '+modeline-buffer-modified-face)
-           (+modeline-face '+modeline-buffer-file-face))
+           (+modeline-face '+modeline-buffer-id-face))
    'help-echo (format "Buffer name: %s\nmouse-1: Buffers menu"
                       (or (buffer-file-name) (buffer-name)))
    'mouse-face '+modeline-highlight-face
@@ -229,15 +248,8 @@
      (let* ((backend (vc-backend buffer-file-name))
             (mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+"))))
        (propertize
-        (concat
-         (propertize (concat "@" mode) 'face '+modeline-debug-face)
-         (when (eq backend 'Git)
-           (when-let* ((numstat (split-string
-                                 (cdr (dotemacs-call-process "git" "diff" "--numstat" "--" buffer-file-name))
-                                 "[ \t]+"))
-                       (insertions (nth 0 numstat))
-                       (deletions (nth 1 numstat)))
-             (format "(+%s-%s)" insertions deletions))))
+        (concat "@" mode)
+        'face '+modeline-vc-face
         'help-echo (get-text-property 0 'help-echo mode)
         'mouse-face '+modeline-highlight-face
         'local-map (get-text-property 0 'local-map mode))))))
@@ -258,7 +270,7 @@
           (all-disabled (and disabled (null running)))
           (some-waiting (cl-set-difference running reported)))
      (cond
-      (some-waiting (propertize "!!" 'face '+modeline-debug-face))
+      (some-waiting (propertize "!!" 'face '+modeline-info-face))
       ((null known) (propertize "!!" 'face '+modeline-error-face))
       (all-disabled (propertize "!!" 'face '+modeline-warning-face))
       (t (let ((warning-level (warning-numeric-level :warning))
@@ -280,12 +292,12 @@
             (concat
              (propertize "!" 'face (cond ((> .error 0) '+modeline-error-face)
                                          ((> .warning 0) '+modeline-warning-face)
-                                         (t '+modeline-debug-face)))
+                                         (t '+modeline-info-face)))
              (propertize (number-to-string .error) 'face '+modeline-error-face)
              "/"
              (propertize (number-to-string .warning) 'face '+modeline-warning-face)
              "/"
-             (propertize (number-to-string .debug) 'face '+modeline-debug-face))
+             (propertize (number-to-string .debug) 'face '+modeline-info-face))
             'help-echo (format "Flymake\nerror:%d, warning:%d, debug:%d\nmouse-1: Flymake menu"
                                .error .warning .debug)
             'mouse-face '+modeline-highlight-face

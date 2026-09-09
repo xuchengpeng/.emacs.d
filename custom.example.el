@@ -29,27 +29,30 @@
 
 (with-eval-after-load 'init-ui
   (defun +init-theme-override ()
-    (use-package modus-themes
-      :ensure t)
     (use-package catppuccin-themes
       :vc (:url "https://github.com/xuchengpeng/catppuccin-themes")
-      :init
-      (catppuccin-themes-take-over-modus-themes-mode 1)
       :config
-      (defun +catppuccin-themes-custom-faces (&rest _)
-        (modus-themes-with-colors
+      (defun +themes-custom-faces (&rest _)
+        (catppuccin-themes-with-colors
           (custom-set-faces
-           `(echo-bar-red-face ((,c :foreground ,red)))
-           `(echo-bar-green-face ((,c :foreground ,green)))
-           `(echo-bar-yellow-face ((,c :foreground ,yellow)))
-           `(echo-bar-blue-face ((,c :foreground ,blue)))
-           `(echo-bar-magenta-face ((,c :foreground ,magenta)))
-           `(echo-bar-cyan-face ((,c :foreground ,cyan)))
-           `(echo-bar-gray-face ((,c :foreground ,fg-dim))))))
-      (add-hook 'modus-themes-after-load-theme-hook #'+catppuccin-themes-custom-faces)
-      (modus-themes-load-theme 'catppuccin-latte)
-      (setq modus-themes-to-toggle '(catppuccin-latte catppuccin-mocha))
-      (keymap-global-set "<f5>" #'modus-themes-toggle)))
+           `(+modeline-emphasis-face ((t :foreground ,sky)))
+           `(+modeline-buffer-path-face ((t :foreground ,blue :weight bold)))
+           `(+modeline-buffer-modified-face ((t :foreground ,yellow :weight bold)))
+           `(+modeline-buffer-major-mode-face ((t :foreground ,blue :weight bold)))
+           `(+modeline-vc-face ((t :foreground ,green :weight bold)))
+           `(+modeline-error-face ((t :foreground ,red :weight bold)))
+           `(+modeline-warning-face ((t :foreground ,yellow :weight bold)))
+           `(+modeline-info-face ((t :foreground ,teal :weight bold)))
+           `(echo-bar-red-face ((t :foreground ,red)))
+           `(echo-bar-green-face ((t :foreground ,green)))
+           `(echo-bar-yellow-face ((t :foreground ,yellow)))
+           `(echo-bar-blue-face ((t :foreground ,blue)))
+           `(echo-bar-magenta-face ((t :foreground ,mauve)))
+           `(echo-bar-cyan-face ((t :foreground ,sky)))
+           `(echo-bar-gray-face ((t :foreground ,subtext0))))))
+      (add-hook 'catppuccin-themes-after-load-theme-hook #'+themes-custom-faces)
+      (catppuccin-themes-load-theme 'catppuccin-latte)
+      (keymap-global-set "<f5>" #'catppuccin-themes-toggle)))
   (advice-add #'+init-theme :override #'+init-theme-override))
 
 ;;; custom.el ends here

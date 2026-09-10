@@ -9,10 +9,10 @@
 (setq user-full-name "Chuck"
       user-mail-address "xxxxxx@xxx.com")
 
-(setq dotemacs-font "Iosevka SS14-13"
-      dotemacs-cn-font "LXGW WenKai"
+(setq dotemacs-font "JetBrainsMono NF-13.5"
+      dotemacs-cn-font "LXGW WenKai Mono"
       dotemacs-symbol-font "Segoe UI Symbol"
-      dotemacs-emoji-font "Noto Color Emoji")
+      dotemacs-emoji-font "Segoe UI Emoji")
 
 (setq dotemacs-package-archives nil) ;; melpa, tuna, nil
 (setq package-check-signature nil

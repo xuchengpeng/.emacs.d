@@ -20,69 +20,65 @@
   :group '+modeline-faces)
 
 (defface +modeline-emphasis-face
-  '((((background light)) :foreground "#04a5e5" :slant italic)
-    (((background dark)) :foreground "#89dceb" :slant italic)
-    (t :inherit +modeline-default-face))
+  '((t (:inherit (+modeline-default-face mode-line-emphasis))))
   "Face used for emphasis."
   :group '+modeline-faces)
 
 (defface +modeline-highlight-face
-  '((((background light)) :foreground "#4c4f69" :background "#ccd0da" :box "#4c4f69")
-    (((background dark)) :foreground "#cdd6f4" :background "#313244" :box "#cdd6f4")
-    (t :inherit +modeline-default-face))
+  '((t (:inherit (+modeline-default-face mode-line-highlight))))
   "Face used for highlighting."
   :group '+modeline-faces)
 
 (defface +modeline-buffer-id-face
-  '((t (:inherit (+modeline-default-face :weight bold))))
+  '((t (:inherit (+modeline-default-face mode-line-buffer-id))))
   "Face used for the filename part of the mode-line buffer path."
   :group '+modeline-faces)
 
 (defface +modeline-buffer-path-face
-  '((((background light)) :foreground "#1e66f5" :weight bold)
-    (((background dark)) :foreground "#89b4fa" :weight bold)
+  '((((background light)) :foreground "#0031a9" :weight bold)
+    (((background dark)) :foreground "#2fafff" :weight bold)
     (t :inherit +modeline-default-face))
   "Face used for the dirname part of the buffer path."
   :group '+modeline-faces)
 
 (defface +modeline-buffer-modified-face
-  '((((background light)) :foreground "#df8e1d" :weight bold)
-    (((background dark)) :foreground "#f9e2af" :weight bold)
+  '((((background light)) :foreground "#6f5500" :weight bold)
+    (((background dark)) :foreground "#d0bc00" :weight bold)
     (t :inherit +modeline-default-face))
   "Face used for the \\='unsaved\\=' symbol in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-buffer-major-mode-face
-  '((((background light)) :foreground "#1e66f5" :weight bold)
-    (((background dark)) :foreground "#89b4fa" :weight bold)
+  '((((background light)) :foreground "#0031a9" :weight bold)
+    (((background dark)) :foreground "#2fafff" :weight bold)
     (t :inherit +modeline-default-face))
   "Face used for the major-mode segment in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-vc-face
-  '((((background light)) :foreground "#40a02b" :weight bold)
-    (((background dark)) :foreground "#a6e3a1" :weight bold)
+  '((((background light)) :foreground "#006800" :weight bold)
+    (((background dark)) :foreground "#44bc44" :weight bold)
     (t :inherit +modeline-default-face))
   "Face for vc in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-info-face
-  '((((background light)) :foreground "#179299" :weight bold)
-    (((background dark)) :foreground "#94e2d5" :weight bold)
+  '((((background light)) :foreground "#005e8b" :weight bold)
+    (((background dark)) :foreground "#00d3d0" :weight bold)
     (t :inherit +modeline-default-face))
   "Face for infos in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-warning-face
-  '((((background light)) :foreground "#df8e1d" :weight bold)
-    (((background dark)) :foreground "#f9e2af" :weight bold)
+  '((((background light)) :foreground "#6f5500" :weight bold)
+    (((background dark)) :foreground "#d0bc00" :weight bold)
     (t :inherit +modeline-default-face))
   "Face for warnings in the mode-line."
   :group '+modeline-faces)
 
 (defface +modeline-error-face
-  '((((background light)) :foreground "#d20f39" :weight bold)
-    (((background dark)) :foreground "#f38ba8" :weight bold)
+  '((((background light)) :foreground "#a60000" :weight bold)
+    (((background dark)) :foreground "#ff5f59" :weight bold)
     (t :inherit +modeline-default-face))
   "Face for errors in the mode-line."
   :group '+modeline-faces)

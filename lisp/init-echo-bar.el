@@ -48,50 +48,50 @@ If nil, don't update the echo bar automatically."
   :group 'echo-bar)
 
 (defface echo-bar-red-face
-  '((((background light)) :foreground "#d20f39")
-    (((background dark)) :foreground "#f38ba8")
+  '((((background light)) :foreground "#a60000")
+    (((background dark)) :foreground "#ff5f59")
     (t :inherit echo-bar-default-face))
   "Echo bar red face."
   :group 'echo-bar)
 
 (defface echo-bar-green-face
-  '((((background light)) :foreground "#40a02b")
-    (((background dark)) :foreground "#a6e3a1")
+  '((((background light)) :foreground "#006800")
+    (((background dark)) :foreground "#44bc44")
     (t :inherit echo-bar-default-face))
   "Echo bar green face."
   :group 'echo-bar)
 
 (defface echo-bar-yellow-face
-  '((((background light)) :foreground "#df8e1d")
-    (((background dark)) :foreground "#f9e2af")
+  '((((background light)) :foreground "#6f5500")
+    (((background dark)) :foreground "#d0bc00")
     (t :inherit echo-bar-default-face))
   "Echo bar yellow face."
   :group 'echo-bar)
 
 (defface echo-bar-blue-face
-  '((((background light)) :foreground "#1e66f5")
-    (((background dark)) :foreground "#89b4fa")
+  '((((background light)) :foreground "#0031a9")
+    (((background dark)) :foreground "#2fafff")
     (t :inherit echo-bar-default-face))
   "Echo bar blue face."
   :group 'echo-bar)
 
 (defface echo-bar-magenta-face
-  '((((background light)) :foreground "#8839ef")
-    (((background dark)) :foreground "#cba6f7")
+  '((((background light)) :foreground "#721045")
+    (((background dark)) :foreground "#feacd0")
     (t :inherit echo-bar-default-face))
   "Echo bar magenta face."
   :group 'echo-bar)
 
 (defface echo-bar-cyan-face
-  '((((background light)) :foreground "#04a5e5")
-    (((background dark)) :foreground "#89dceb")
+  '((((background light)) :foreground "#005e8b")
+    (((background dark)) :foreground "#00d3d0")
     (t :inherit echo-bar-default-face))
   "Echo bar cyan face."
   :group 'echo-bar)
 
 (defface echo-bar-gray-face
-  '((((background light)) :foreground "#6c6f85")
-    (((background dark)) :foreground "#a6adc8")
+  '((((background light)) :foreground "#595959")
+    (((background dark)) :foreground "#989898")
     (t :inherit echo-bar-default-face))
   "Echo bar gray face."
   :group 'echo-bar)

@@ -239,24 +239,17 @@
    'mouse-face '+modeline-highlight-face
    'local-map mode-line-major-mode-keymap))
 
-(defvar-local +modeline--vc-info nil)
-(defun +modeline--update-vc-info (&rest _)
-  "Update version control info in mode-line."
-  (setq
-   +modeline--vc-info
-   (when (and vc-mode buffer-file-name)
-     (let* ((backend (vc-backend buffer-file-name))
-            (mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+"))))
-       (propertize
-        (concat "@" mode)
-        'face '+modeline-vc-face
-        'help-echo (get-text-property 0 'help-echo mode)
-        'mouse-face '+modeline-highlight-face
-        'local-map (get-text-property 0 'local-map mode))))))
-
 (defun +modeline--vc-info ()
   "Version control info in mode-line."
-  (+modeline-display-text +modeline--vc-info))
+  (when (and vc-mode buffer-file-name)
+    (let* ((backend (vc-backend buffer-file-name))
+           (mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+"))))
+      (propertize
+       (concat "@" mode)
+       'face (+modeline-face '+modeline-vc-face)
+       'help-echo (get-text-property 0 'help-echo mode)
+       'mouse-face '+modeline-highlight-face
+       'local-map (get-text-property 0 'local-map mode)))))
 
 (defvar-local +modeline--flymake nil)
 (defun +modeline--update-flymake (&rest _)
@@ -351,17 +344,11 @@
                   (:eval (+modeline--spc))
                   (:eval (+modeline--format +modeline-right))
                   (:eval (+modeline--spc))))
-  (add-hook 'find-file-hook #'+modeline--update-vc-info)
-  (add-hook 'after-save-hook #'+modeline--update-vc-info)
-  (advice-add #'vc-refresh-state :after #'+modeline--update-vc-info)
   (advice-add #'flymake--handle-report :after #'+modeline--update-flymake))
 
 (defun +modeline--disable ()
   "Disable +modeline."
   (setq-default mode-line-format nil)
-  (remove-hook 'find-file-hook #'+modeline--update-vc-info)
-  (remove-hook 'after-save-hook #'+modeline--update-vc-info)
-  (advice-remove #'vc-refresh-state #'+modeline--update-vc-info)
   (advice-remove #'flymake--handle-report #'+modeline--update-flymake))
 
 (define-minor-mode +modeline-mode

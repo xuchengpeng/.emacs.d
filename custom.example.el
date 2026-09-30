@@ -32,10 +32,10 @@
     (use-package catppuccin-themes
       :vc (:url "https://github.com/xuchengpeng/catppuccin-themes")
       :config
-      (defun +themes-custom-faces (&rest _)
+      (defun +catppuccin-themes-custom-faces (&rest _)
         (catppuccin-themes-with-colors
           (custom-set-faces
-           `(+modeline-emphasis-face ((t :foreground ,sky)))
+           `(+modeline-emphasis-face ((t :foreground ,sky :slant italic)))
            `(+modeline-buffer-path-face ((t :foreground ,blue :weight bold)))
            `(+modeline-buffer-modified-face ((t :foreground ,yellow :weight bold)))
            `(+modeline-buffer-major-mode-face ((t :foreground ,blue :weight bold)))
@@ -50,7 +50,7 @@
            `(echo-bar-magenta-face ((t :foreground ,mauve)))
            `(echo-bar-cyan-face ((t :foreground ,sky)))
            `(echo-bar-gray-face ((t :foreground ,subtext0))))))
-      (add-hook 'catppuccin-themes-after-load-theme-hook #'+themes-custom-faces)
+      (add-hook 'catppuccin-themes-after-load-theme-hook #'+catppuccin-themes-custom-faces)
       (catppuccin-themes-load-theme 'catppuccin-latte)
       (keymap-global-set "<f5>" #'catppuccin-themes-toggle)))
   (advice-add #'+init-theme :override #'+init-theme-override))

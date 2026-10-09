@@ -6,6 +6,18 @@
   "Org directory."
   :type 'string)
 
+(defcustom dotemacs-ob-load-languages
+  '((C . t)
+    (emacs-lisp . t)
+    (python . t)
+    (js . t)
+    (css . t)
+    (sass . t)
+    (shell . t)
+    (plantuml . t))
+  "Alist of org babel languages."
+  :type 'alist)
+
 (use-package org
   :mode ("\\.org$" . org-mode)
   :init
@@ -20,6 +32,7 @@
         org-startup-indented t
         org-log-into-drawer t
         org-tags-column 0
+        org-confirm-babel-evaluate nil
         org-agenda-tags-column 0
         org-agenda-custom-commands
         '(("d" "Daily Agenda"
@@ -70,14 +83,7 @@
 
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((C . t)
-     (emacs-lisp . t)
-     (python . t)
-     (js . t)
-     (css . t)
-     (sass . t)
-     (shell . t)
-     (plantuml . t))))
+   dotemacs-ob-load-languages))
 
 (use-package org-clock
   :commands org-clock-save

@@ -102,6 +102,7 @@
 (use-package ox-publish
   :commands org-publish
   :config
+  (require 'ox-html)
   (setq org-publish-timestamp-directory (expand-file-name "org-timestamps/" dotemacs-cache-dir)
         org-export-in-background t
         org-export-headline-levels 4
@@ -170,17 +171,59 @@ If `NAMED-ONLY` is non-nil, return nil."
     (unless named-only
       (org-export-get-reference datum info)))
 
-  (defun +org-html-stable-ids-enable ()
-    "Enable html stable ids."
-    (interactive)
-    (advice-add #'org-export-get-reference :override #'+org-export-stable-ids-get-reference)
-    (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference))
+  (advice-add #'org-export-get-reference :override #'+org-export-stable-ids-get-reference)
+  (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference)
 
-  (defun +org-html-stable-ids-disable ()
-    "Disable html stable ids."
+  (org-export-define-derived-backend
+   '+org-html 'html
+   :translate-alist '((template . +org-html-template))
+   :menu-entry '(?h "Export to HTML"
+                    ((?b "+org-html to buffer" +org-html-export-as-html)
+                     (?f "+org-html to file" +org-html-export-to-html))))
+
+  (defun +org-html-template (contents info)
+    "Return complete document string after HTML conversion.
+CONTENTS is the transcoded contents string.  INFO is a plist
+holding export options."
+    (concat
+     "<!DOCTYPE html>\n"
+     "<html lang=\"en\" class=\"scroll-smooth\">\n"
+     "<head>\n"
+     "<meta charset=\"utf-8\">\n"
+     "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+     (format "<title>%s</title>\n" (org-export-data (plist-get info :title) info))
+     "<link rel=\"stylesheet\" href=\"https://orgmode.org/worg/style/worg.css\">\n"
+     "<style> body { max-width: 72rem; width: 100%; margin: 0 auto; padding: 1em; } </style>\n"
+     (when (and (memq (plist-get info :with-latex) '(mathjax t))
+                (org-element-map (plist-get info :parse-tree)
+                    '(latex-fragment latex-environment) #'identity info t nil t))
+       "<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js\"></script>\n")
+     "</head>\n"
+     "<body>\n"
+     "<header>\n"
+     (format "<h1>%s</h1>\n" (org-export-data (plist-get info :title) info))
+     "</header>\n"
+     "<main>\n"
+     contents
+     "</main>\n"
+     "<footer>\n"
+     "<p>Powered by <a href=\"https://www.gnu.org/software/emacs/\">Emacs</a></p>\n"
+     "</footer>\n"
+     "</body>\n"
+     "</html>"))
+
+  (defun +org-html-export-as-html (&optional async subtreep visible-only body-only ext-plist)
+    "Export current buffer to a HTML buffer."
     (interactive)
-    (advice-remove #'org-export-get-reference #'+org-export-stable-ids-get-reference)
-    (advice-remove #'org-html--reference #'+org-html-stable-ids-reference)))
+    (org-export-to-buffer '+org-html "*+org-html export*"
+      async subtreep visible-only body-only ext-plist
+      (lambda () (set-auto-mode t))))
+
+  (defun +org-html-export-to-html (&optional async subtreep visible-only body-only ext-plist)
+    "Export current buffer to a HTML file."
+    (let* ((file (org-export-output-file-name ".html" subtreep)))
+      (org-export-to-file '+org-html file
+        async subtreep visible-only body-only ext-plist))))
 
 (provide 'init-org)
 ;;; init-org.el ends here

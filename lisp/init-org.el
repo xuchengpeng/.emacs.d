@@ -174,12 +174,11 @@ If `NAMED-ONLY` is non-nil, return nil."
   (advice-add #'org-export-get-reference :override #'+org-export-stable-ids-get-reference)
   (advice-add #'org-html--reference :override #'+org-html-stable-ids-reference)
 
-  (org-export-define-derived-backend
-   '+org-html 'html
-   :translate-alist '((template . +org-html-template))
-   :menu-entry '(?h "Export to HTML"
-                    ((?b "+org-html to buffer" +org-html-export-as-html)
-                     (?f "+org-html to file" +org-html-export-to-html))))
+  (org-export-define-derived-backend '+org-html 'html
+    :translate-alist '((template . +org-html-template))
+    :menu-entry '(?h "Export to HTML"
+                     ((?b "+org-html to buffer" +org-html-export-as-html)
+                      (?f "+org-html to file" +org-html-export-to-html))))
 
   (defun +org-html-template (contents info)
     "Return complete document string after HTML conversion.
@@ -195,8 +194,7 @@ holding export options."
      "<link rel=\"stylesheet\" href=\"https://orgmode.org/worg/style/worg.css\">\n"
      "<style> body { max-width: 72rem; width: 100%; margin: 0 auto; padding: 1em; } </style>\n"
      (when (and (memq (plist-get info :with-latex) '(mathjax t))
-                (org-element-map (plist-get info :parse-tree)
-                    '(latex-fragment latex-environment) #'identity info t nil t))
+                (org-element-map (plist-get info :parse-tree) '(latex-fragment latex-environment) #'identity info t nil t))
        "<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js\"></script>\n")
      "</head>\n"
      "<body>\n"

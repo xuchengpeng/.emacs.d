@@ -39,8 +39,7 @@
 
 (use-package apheleia
   :ensure t
-  :commands apheleia-format-buffer
-  :hook (prog-mode . apheleia-mode))
+  :commands apheleia-format-buffer)
 
 (use-package colorful-mode
   :ensure t

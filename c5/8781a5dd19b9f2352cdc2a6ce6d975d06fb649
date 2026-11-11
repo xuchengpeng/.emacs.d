@@ -1,0 +1,16 @@
+lisp/init-org.el
+  h_76dde7977e1f21 177-181,197
+lisp/init-programming.el
+  h_76dde7977e1f21 42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "10.11.1",
+  "base_commit_sha": "c58781a5dd19b9f2352cdc2a6ce6d975d06fb649",
+  "prompts": {},
+  "humans": {
+    "h_76dde7977e1f21": {
+      "author": "xuchengpeng <chuckxcp@qq.com>"
+    }
+  }
+}

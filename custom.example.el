@@ -27,6 +27,10 @@
 (with-eval-after-load 'elfeed
   (setq elfeed-curl-extra-arguments '("--insecure")))
 
+(with-eval-after-load 'init-org
+  (cl-pushnew '(mermaid . t) dotemacs-ob-load-languages)
+  (setq ob-mermaid-default-config-file "~/.emacs.d/user-lisp/ob-mermaid/mermaid-config-emacs.json"))
+
 (with-eval-after-load 'init-ui
   (defun +init-theme-override ()
     (use-package catppuccin-themes

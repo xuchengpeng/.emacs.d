@@ -1,0 +1,14 @@
+custom.example.el
+  h_76dde7977e1f21 32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "10.11.1",
+  "base_commit_sha": "8699754f6ad307013e5760cd9a22e28b2d169b95",
+  "prompts": {},
+  "humans": {
+    "h_76dde7977e1f21": {
+      "author": "xuchengpeng <chuckxcp@qq.com>"
+    }
+  }
+}

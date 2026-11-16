@@ -46,7 +46,7 @@
   :ensure t
   :commands (gptel gptel-send gptel-rewrite)
   :config
-  (setq gptel-model 'gemini-3.8-flash
+  (setq gptel-model 'gemini-4-hydrogen
         gptel-backend (gptel-make-gemini "Gemini"
                         :key #'gptel-api-key
                         :stream t)))

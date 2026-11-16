@@ -1,0 +1,14 @@
+lisp/init-tools.el
+  h_76dde7977e1f21 49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "10.11.1",
+  "base_commit_sha": "170ebff1010f69c2f5bf63523e14ed032a89c79d",
+  "prompts": {},
+  "humans": {
+    "h_76dde7977e1f21": {
+      "author": "xuchengpeng <chuckxcp@qq.com>"
+    }
+  }
+}

@@ -192,7 +192,7 @@ holding export options."
      "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
      (format "<title>%s</title>\n" (org-export-data (plist-get info :title) info))
      "<link rel=\"stylesheet\" href=\"https://orgmode.org/worg/style/worg.css\">\n"
-     "<style> body { max-width: 72rem; width: 100%; margin: 0 auto; padding: 1em; } </style>\n"
+     "<style> html { background: initial; }  body { max-width: 64rem; width: 100%; margin: 0 auto; padding: 1em; } </style>\n"
      (when (and (memq (plist-get info :with-latex) '(mathjax t))
                 (org-element-map (plist-get info :parse-tree) '(latex-fragment latex-environment) #'identity info t nil t))
        "<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js\"></script>\n")
